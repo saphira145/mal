@@ -1,0 +1,34 @@
+<?php
+
+
+	// ■■ ログイン処理 ■■
+
+    // Save employee_number
+    if ( isset($justInput["ngdFW034"]['employeeNumber']) && $justInput["ngdFW034"]['employeeNumber'] )
+    {
+        $employeeNumber = $justInput["ngdFW034"]['employeeNumber'];
+
+        // Check employee_number
+        $result = true;
+
+        if ( $result ) {
+            // Save employee_number
+            $encryptNumber = base64_encode('2015mal-' . $employeeNumber . '-secret');
+            setcookie('employee_number', $encryptNumber, 0, "/", $path["host"]["name"] );
+
+            // Set cookie for salesPromotion to showing in SaleMode
+            setcookie( "salesPromotion", "ON", 0, "/", $path["host"]["name"] );
+
+            // Save log
+            $class["loginLog_1"]->insert_loginLog_by_employeeNumber($employeeNumber);
+
+            // Redirect
+            header("Location: /mald/sagacite/");
+            exit;
+        }
+
+    }
+
+
+
+?>

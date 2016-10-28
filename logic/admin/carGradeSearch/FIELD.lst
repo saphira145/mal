@@ -1,0 +1,27 @@
+
+
+// 車種コード（検索）
+searchModelCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// メーカーコード（検索）
+searchMakerCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// メーカー名（検索）
+searchModelName
+	convert,  0,  trim,
+
+// ページ番号
+pageNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+
+

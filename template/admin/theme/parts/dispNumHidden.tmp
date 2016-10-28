@@ -1,0 +1,2 @@
+	<input type="hidden" name="prioritySortIDs" value="{val prioritySortIDs}" />
+	<input type="hidden" name="dispSortIDs" value="{val dispSortIDs}" />

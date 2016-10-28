@@ -1,0 +1,18 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_maker=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+<div class="contentSection">
+	<p class="actionMsg">以下の内容を削除します。よろしければ「削除する」ボタンを押してください。</p>
+	<p class="actionMsg"><span>※削除を実行しますと、関連するデータと画像が削除されます。</span></p>
+
+	{file parts/display.tmp}
+
+	<form action="{val UNIT_URL}/de/{val makerCode}/" method="post" name="form_deleteExecute">
+		{dbTicket}
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="戻る" class="btnW01" onclick="location.href='{val UNIT_URL}'; return false;" />
+			<input type="submit" value="削除する" class="btnW01" />
+		</div>
+	</form>
+</div>

@@ -1,0 +1,24 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	for( $i=0; $i<count( $output["makerList"] ); $i++ ) {
+		$output["makerList"][$i]["index"] = $i;
+	}
+
+	if( count( $output["makerList"] ) > 0 ) {
+		$output["makerListDisp"] = 1;
+	}
+
+	// 生産国リスト取得
+	$output["makerInfo"]["countryList"] = set_checked ( $ini["country"], $output["makerInfo"]["countryID"], "value", "selected" );
+
+	for( $i=0; $i<count( $output["makerList"] ); $i++ ) {
+		// 生産国リスト取得
+		$output["makerList"][$i]["countryList"] = set_checked ( $ini["country"], $output["makerList"][$i]["countryID"], "value", "selected" );
+	}
+
+
+?>

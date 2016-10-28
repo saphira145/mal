@@ -1,0 +1,108 @@
+
+<div id="changeTargetCar">
+	<div class="actionBox">
+		<h2 class="faRefresh">車種を変更する</h2>
+		<div class="carGradeNum">該当数<span>{val rankingSearchForm.carGradeNum}</span>車種</div>
+	<!--/#actionBox--></div>
+	<div class="searchForm">
+
+<!--{set carPriceList}-->
+		<div class="carPriceList">
+			<span class="trians"></span>
+			<span class="clearChecked clearBtn"><a href="javascript:void(0)" class="faUndo">クリア</a></span>
+			<h2 class="faCaretDown">予算</h2>
+			<ul class="priceBox">
+	<!--{loop carPriceList}-->
+				<li class="setCol<!--{set carPriceList/selected}--> selected<!--{/set}-->">
+					<label class="price">
+						<span class="priceName">{val carPriceList/name|lengthCut:12}</span>
+						<input type="checkbox" name="priceList"  value="P{val carPriceList/ID|zeroPadding:3}"  onclick="setPriceCheck('P{val carPriceList/ID|zeroPadding:3}')" />
+						<span class="priceItem">
+							<span class="priceCnt">{val carPriceList/carCnt}</span>
+						</span>
+					</label>
+				</li>
+			<!--{loop_count_pad carPriceList=6}-->
+				<li class="noData">&nbsp;</li>
+			<!--{/loop_count_pad}-->
+	<!--{/loop}-->
+			</ul>
+		</div>
+<!--{/set}-->
+
+<!--{set makerList}-->
+		<div class="makerList">
+			<span class="trians"></span>
+			<div class="clearChecked"><a href="javascript:void(0)" class="faUndo">クリア</a></div>
+			<h2 class="faCaretDown" >メーカー(複数選択可)</h2>
+			<ul class="makerBox">
+	<!--{loop makerList}-->
+				<!--{set makerList/makerCode}-->
+				<li class="setCol">
+					<label class="maker">
+						<span class="makerName">
+							{val makerList/makerName}
+						</span>
+						<input type="checkbox" name="makerList" value="M{val makerList/makerCode|zeroPadding:3}" onclick="getCarGradeNum('M{val makerList/makerCode|zeroPadding:3}')" />
+						<span class="makerItem">
+							<span class="makerCnt">{val makerList/carCnt}</span>
+						</span>
+					</label>
+				</li>
+				<!--{/set}-->
+				<!--{unset makerList/makerCode}-->
+				<li class="noData">&nbsp;</li>
+				<!--{/unset}-->
+			<!--{loop_count_pad makerList=10}-->
+				<li class="noData">&nbsp;</li>
+			<!--{/loop_count_pad}-->
+	<!--{/loop}-->
+			</ul>
+		</div>
+<!--{/set}-->
+
+<!--{set bodyTypeList}-->
+		<div class="typehList">
+			<span class="trians"></span>
+			<div class="clearChecked"><a href="javascript:void(0)" class="faUndo">クリア</a></div>
+			<h2 class="faCaretDown">タイプ(複数選択可)</h2>
+			<ul class="typeBox">
+	<!--{loop bodyTypeList}-->
+				<li class="setCol {val bodyTypeList/css}">
+					<label class="bodyType">
+						<span class="bodyTypeName"  style="background-image:url({val BASE_DIR}/_common/img/bodyType/{val bodyTypeList/icon}.png);"></span>
+						{val bodyTypeList/disp}
+						<input type="checkbox" name="bodyTypeList"  value="B{val bodyTypeList/ID|zeroPadding:3}" onclick="getCarGradeNum('B{val bodyTypeList/ID|zeroPadding:3}')" />
+						<span class="bodyTypeItem">
+							<span class="bodyTypeCnt">{val bodyTypeList/carCnt}</span>
+						</span>
+					</label>
+				</li>
+			<!--{loop_count_pad bodyTypeList=7}-->
+				<li class="noData">&nbsp;</li>
+			<!--{/loop_count_pad}-->
+	<!--{/loop}-->
+			</ul>
+		</div>
+	<!--{/set}-->
+<!--/.searchForm--></div>
+	<div class="searchBtn">
+		<a href="javascript:void(0)" data-linkName="no" onclick="tb_remove();$(document).scrollTop(0);" class="faTimesCircle">キャンセル</a>
+		<div class="carGradeNum">該当数<span>{val rankingSearchForm.carGradeNum}</span>車種</div>
+		<a href="javascript:void(0)" data-linkName="ok" onclick="changeTargetCarSelectModel();" class="faChevronRight">この条件のクルマを選ぶ</a>
+	<!--/.searchBtn--></div>
+<!--/#changeTargetCar--></div>
+
+<script type="text/javascript">
+	getCarGradeNum();
+
+	/* マウスオーバー設定 */
+	setMouseOverEvent();
+
+	/* チェックボックス(IE8) */
+	setCheckBoxEvent();
+
+	/* 初期設定 */
+	defaultPrice();
+	
+</script>

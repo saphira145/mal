@@ -1,0 +1,15 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	for( $i=0; $i<count( $output["makerList"] ); $i++ ) {
+		$makerInfo = $class["makerAdmin_1"]->get_info( $output["makerList"][$i]["makerCode"] );
+		$output["makerList"][$i]["makerName"] = $makerInfo["makerName"];
+		$output["makerList"][$i]["no"]        = $i + 1;
+	}
+
+
+
+?>

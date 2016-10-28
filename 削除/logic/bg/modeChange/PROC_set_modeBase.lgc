@@ -1,0 +1,32 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// デフォルト
+	$defaultValue["baseMode"] = $ini["modeChange"]["defaultId"]["basePrice"];
+	foreach( $ini["lease"]["defaultValue"] as $key => $val ){
+		$defaultValue[$key] = $val;
+	}
+
+	// クッキー(ベース価格変更)
+	$cookieName = "lease_" . str_replace(" ", "_", $output["model"]["modelNameEng"]);
+	if( $_COOKIE[ $cookieName ] ){
+		list($cookieValue["baseMode"], $cookieValue["profit"] ) = explode(",", $_COOKIE[$cookieName] );
+	}
+
+	/**** 条件の設定(優先度：クッキー、デフォルト) */
+	$checkArr = array("baseMode", "profit");
+
+	foreach( $checkArr as $key){
+		if( isset($cookieValue[$key]) ){
+			// COOKIE
+			$output[$key] = $cookieValue[$key];
+		} else {
+			// デフォルト
+			$output[$key] = $defaultValue[$key];
+		}
+	}
+
+?>

@@ -1,0 +1,21 @@
+@charset "utf-8";
+/*
+	テスト環境判別用に使用。
+	本番にはアップしない事！！
+*/
+@media screen and (max-device-width: 1024px){
+	
+	body{
+		padding-top: 40px;
+	}
+}
+
+body{
+	background: url(./development.png) no-repeat left top, url(../_common/img/bg/bg_gray.png);
+	background-attachment: fixed;
+}
+
+body#popup{
+	padding-top: 30px;
+	background-attachment: scroll;
+}

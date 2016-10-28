@@ -1,0 +1,8 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input menu_member=1}
+{input passwordNotMust=1}
+
+{file modifyInputCommon.tmp}
+
+

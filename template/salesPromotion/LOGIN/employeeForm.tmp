@@ -1,0 +1,20 @@
+{frame /_common/outerFrame_err.tmp}
+{input SALESPROMOTION_FLG=1}
+
+<div class="salesLoginBox">
+	<div class="actionMsg mrgB_10"><h2 class="mrgB_0 txt_center faLock">ログイン</h2></div>
+	<form name="loginForm" method="post" id="employee_login_form">
+		<input type="hidden" name="st" value="tr" />
+		<div class="form">
+			<div class="actionMsg" style="display: none;"><span></span></div>
+			<table>
+				<tr>
+					<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID</th>
+					<td><input type="text" name="ngdFW034[employeeNumber]" value="" id="employee_number" class="text" /></td>
+				</tr>
+			</table>
+		</div>
+		<div class="btnArea"><a href="javascript:void(0)" onclick="$('#employee_login_form').submit();" class="faSignIn">ログイン</a></div>
+	</form>
+</div>
+<!--/ #contents -->

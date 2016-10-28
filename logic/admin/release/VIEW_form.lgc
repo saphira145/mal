@@ -1,0 +1,90 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	global $ini;
+
+	// 月のプルダウン
+	$output["monthList"] = get_monthSelect( $output["reserveInfo"]["reserveDatetime"]["month"] );
+
+	// 日のプルダウン
+	$output["dayList"] = get_daySelect( $output["reserveInfo"]["reserveDatetime"]["day"] );
+
+	// 時のプルダウン
+	// 分のプルダウン
+	if( $output["reserveInfo"]["reserveDatetime"]["hour"] === "" ) {
+		$output["reserveInfo"]["reserveDatetime"]["hour"] = 99;
+	}
+	$output["hourList"] = get_hourSelect( $output["reserveInfo"]["reserveDatetime"]["hour"] );
+
+	// 分のプルダウン
+	if( $output["reserveInfo"]["reserveDatetime"]["min"] === "" ) {
+		$output["reserveInfo"]["reserveDatetime"]["min"] = 99;
+	}
+	$output["minList"] = get_minSelect( $output["reserveInfo"]["reserveDatetime"]["min"], $ini["reserveSet"]["limit"] );
+
+
+
+
+	// 車種グレード更新情報取得
+	$output["carGradeUpdateInfo"]          = get_tableAdminInfo( "carGrade" );
+
+	// 視界更新情報取得
+	$output["viewUpdateInfo"]              = get_tableAdminInfo( "view" );
+
+	// 運転席周り更新情報取得
+	$output["seatCircumferenceUpdateInfo"] = get_tableAdminInfo( "seatCircumference" );
+
+	// 空調更新情報取得
+	$output["airConditioningUpdateInfo"]   = get_tableAdminInfo( "airConditioning" );
+
+	// オーディオ更新情報取得
+	$output["audioUpdateInfo"]             = get_tableAdminInfo( "audio" );
+
+	// シート・内装更新情報取得
+	$output["seatInteriorUpdateInfo"]      = get_tableAdminInfo( "seatInterior" );
+
+	// 外装更新情報取得
+	$output["exteriorUpdateInfo"]          = get_tableAdminInfo( "exterior" );
+
+	// 足回り更新情報取得
+	$output["footSurroundingsUpdateInfo"]  = get_tableAdminInfo( "footSurroundings" );
+
+	// 安全更新情報取得
+	$output["safetyUpdateInfo"]            = get_tableAdminInfo( "safety" );
+
+	// 車種バリュー更新情報取得
+	$output["carThemeUpdateInfo"]          = get_tableAdminInfo( "carTheme" );
+
+	// リース料(調達価格・諸税)更新情報取得
+	$output["leaseUpdateInfo"]             = get_tableAdminInfo( "lease" );
+
+	// リース料(残価・メンテ料)更新情報取得
+	$output["leaseValueUpdateInfo"]        = get_tableAdminInfo( "leaseValue" );
+
+	// メンテナンス料更新情報取得
+	$output["maintenanceUpdateInfo"]        = get_tableAdminInfo( "maintenanceFee" );
+
+
+	// テストモード切替
+	if( $output["modeFlg"] == "" ) {
+		if( $_COOKIE["testDispMode"] == "" ) {
+			$output["defaultModeFlg"] = 1;
+		}
+		else{
+			$output["testModeFlg"] = 1;
+		}
+	}
+	else{
+		if( $output["modeFlg"] == 1 ) {
+			$output["testModeFlg"] = 1;
+		}
+		else{
+			$output["defaultModeFlg"] = 1;
+		}
+	}
+
+
+?>

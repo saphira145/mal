@@ -1,0 +1,15 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// 入力値入れ替え
+	for( $i = 0 , $iMax = count($ini["bodyType"]); $i < $iMax; $i++ ){
+		$setNum = $i + 1;
+		$output["themeInfo"]["makerCode_{$setNum}"] = $output["themeInfo"]["bodyType"][$i]["makerCode"];
+		$output["themeInfo"]["modelCode_{$setNum}"] = $output["themeInfo"]["bodyType"][$i]["modelCode"];
+	}
+
+
+?>

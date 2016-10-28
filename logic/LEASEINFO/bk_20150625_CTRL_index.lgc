@@ -1,0 +1,40 @@
+<?php
+
+	/* -------------------------------------
+		ロジックコントロール
+	------------------------------------- */
+	// 比較画面から遷移してきた時のみ、事前設定(cookie)からオプション情報を取得する
+	$user_agent = $_SERVER['HTTP_USER_AGENT'];
+	preg_match('/(MSIE)\s([0-9\.]+)/', $user_agent, $matches);
+	if( $_COOKIE["leasePreset"] && ( preg_match( "#/COMPARE/#", $path["referer"]["url"] ) || ( !empty($matches) && $matches[2] >=9 && empty($path["referer"]["url"])) )){
+		list($lease["gasoline"], $lease["voluntaryInsurance"], $lease["carAddDate"], $tmp_lease["option"] ) = explode(",", $_COOKIE["leasePreset"] );
+
+		if( !empty($tmp_lease["option"]) ){
+			$tmp_optionList = explode("-", $tmp_lease["option"]);
+			for( $i = 0, $iMax = count($tmp_optionList); $i < $iMax; $i++ ){
+				$tmp_option = explode("I", $tmp_optionList[$i]);
+				$justInput["option"][] = sprintf( "LO%03d", $tmp_option[0] ) . sprintf( "I%01d", $tmp_option[1] );
+			}
+		}
+	}
+
+	// 入力チェックの実行（常にチェックする場合は、第二パラメータに "everyTime" と入れること）
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// http環境の場合、エラー画面を表示する
+	$salesPromotionFlg = get_dispModeSalesPromotionFlg();
+
+	if( $salesPromotionFlg != 1 || $ini["system"]["errRank"] == 1 || $ini["system"]["errRank"] == 2 ) {
+		$ini["system"]["errRank"] = 1;
+		return 404;
+	}
+
+	// 入力値変換
+	$this->callPROC( "convert_input" );
+
+	// バリューの取得
+	$this->callPROC( "get_list" );
+
+	// 表示
+	$this->callVIEW( "index" );
+?>

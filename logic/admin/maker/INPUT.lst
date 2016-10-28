@@ -1,0 +1,28 @@
+ids
+	a, makerCode                            = makerCode                  // メーカーコード                name="makerCode"
+
+
+targetMakerCode
+	a, targetMakerCode                      = makerCode                  // メーカーコード                name="	targetMakerCode"
+
+
+sortIDs
+	a, dispSortIDs                          = sortIDs                    // ソートID                name="dispSortIDs"
+
+
+addFields
+	a, makerInfo.makerCode                  = addMakerCode               // メーカー名                name="makerInfo[makerName]"
+	a, makerInfo.makerName                  = makerName                  // メーカー名                name="makerInfo[makerName]"
+	a, makerInfo.makerNameEng               = makerNameEng               // メーカー名（英字）        name="makerInfo[makerNameEng]"
+	a, makerInfo.countryID                  = countryID                  // 生産国                    name="makerInfo[countryID]"
+	a, makerInfo.dispNum                    = dispNum                    // 表示順                    name="makerInfo[dispNum]"
+
+
+modifyFields
+	a, makerList/makerCode                  = makerCode                                                     // メーカーコード        name="makerList[{val makerList/index}][makerCode]"
+	a, makerList/makerName                  = modifyMakerName({makerList/makerCode}:{targetMakerCode})      // メーカー名            name="makerList[{val makerList/index}][makerName]"
+	a, makerList/makerNameEng               = modifyMakerNameEng({makerList/makerCode}:{targetMakerCode})   // メーカー名（英字）    name="makerList[{val makerList/index}][makerNameEng]"
+	a, makerList/countryID                  = modifyCountryID({makerList/makerCode}:{targetMakerCode})      // 生産国                name="makerList[{val makerList/index}][countryID]"
+	a, makerList/dispNum                    = dispNum                                                       // 表示順                name="makerList[{val makerList/index}][dispNum]"
+	a, makerList/index                      = index                                                         // インデックス          name="makerList[{val makerList/index}][index]"
+

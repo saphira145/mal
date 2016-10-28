@@ -1,0 +1,13 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// 会員情報を表示用に変換
+	$output["memberInfo"]        = $class["memberAdmin_1"]->convert_Info( $output["memberInfo"] );
+
+	if( empty($output["memberInfo"]["defaultExpirationDatetime"]) ){
+		$output["memberInfo"]["defaultExpirationDatetime"] = date("Y-m-d" , mktime(0, 0, 0, $output["memberInfo"]["expirationDatetime"]["month"], $output["memberInfo"]["expirationDatetime"]["day"], $output["memberInfo"]["expirationDatetime"]["year"]));
+	}
+?>

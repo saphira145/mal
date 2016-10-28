@@ -1,0 +1,21 @@
+<?php
+
+
+	// Check login status
+    if( $class["session"]->loginStatus ){
+        $retJSON['error'] = false;
+        $retJSON['msg'] = 'ログイン成功！';
+    } else {
+        $retJSON['error'] = true;
+        $retJSON['msg'] = 'ＩＤまたはパスワードが違います';
+    }
+
+    // ----------------------------------------------------------------
+    // JSONの出力
+    header("content-type: application/x-javascript; charset=utf-8");
+    die(json_encode($retJSON));
+    exit;
+
+
+
+?>

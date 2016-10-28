@@ -1,0 +1,13 @@
+<?php
+
+	// ステータスリストの取得
+	$output["statusType"]     = get_themeStatusSelect( $output["themeInfo"]["statusType"] );
+
+	// テーマアイコンの取得
+	$output["themeIcon"] = get_themeIconSelect( $output["themeInfo"]["iconNo"] );
+
+	// 表示用に変換
+	$output["themeInfo"] = $class["themeAdmin_1"]->convert_Info( $output["themeInfo"] );
+
+	
+?>

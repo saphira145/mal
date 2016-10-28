@@ -1,0 +1,29 @@
+{input jsList/jsName=/_common/js/sort.js}
+
+<table class="tblForm">
+	<tr>
+		<th class="w140">表示順</th>
+		<td>
+<!--{set dispSortIDs+err}-->
+	<!--{loop dispSortIDs+err}-->
+			<p class="err_txt">{val dispSortIDs+err/msg}</p>
+	<!--{/loop}-->
+<!--{/set}-->
+			<table class="tbl_sort">
+				<tr>
+					<td class="w220">
+						<select id="selectboxIDs" name="makerList[][sort]" size="{val listAmount}" multiple class="w60">
+							<!--{loop makerList}-->
+							<option value="{val makerList/makerCode}">{val makerList/makerName}</option>
+						<!--{/loop}-->
+						</select>
+					</td>
+					<td>
+						<input type="button" value="↑" onclick='moveUpElement("selectboxIDs"); return false;' class="w_40"><br />
+						<input type="button" value="↓" onclick='moveDownElement("selectboxIDs"); return false;' class="w_40">
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>

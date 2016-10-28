@@ -1,0 +1,19 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	for( $i = 0, $iMax = $ini["pageLimit"]["newCarAdmin"]; $i < $iMax; $i++){
+		unset($inpNewCar);
+		$inpNewCar["newCarInfo"] = $output["newCarInfo"][$i];
+
+		$class["newCarAdmin_1"]->update_DB( $inpNewCar );
+
+	}
+	
+	// 更新成功
+	$output["modify_sucessFlg"] = 1;
+
+?>

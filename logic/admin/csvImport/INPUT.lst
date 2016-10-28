@@ -1,0 +1,7 @@
+confirmFields
+	a, importCSVFile      = importCSVFile({importCSVFile.name}:{importCSVFile.type}:{importCSVFile.size}:{importCSVFile.tmp_name}:{importCSVFile.error})          // ファイル             name="importCSVFile"
+
+
+executeFields
+	a, tmpFaqCSVName                       = tmpFaqCSVName            // 一時ファイル名             name="tmpFaqCSVName"
+

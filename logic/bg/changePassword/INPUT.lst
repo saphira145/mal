@@ -1,0 +1,5 @@
+fields
+	a, email           = email
+	a, password        = password({.email})
+	a, passwordNew     = passwordNew
+	a, passwordConfirm = passwordConfirm({.passwordNew})

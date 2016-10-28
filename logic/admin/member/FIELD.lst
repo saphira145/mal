@@ -1,0 +1,59 @@
+// 所属グループ
+salesGroup
+	convert,  0,  numeric,
+	check,  100,  salesGroupEqual,       選択してください
+
+
+// 権限レベル
+authorityLevel
+	convert,  0,  numeric,
+	check,  100,  must,                  選択してください
+	check,  200,  authorityLevelEqual({1}),  この権限レベルは選択できません。
+
+// パスワード有効日数フラグ
+expirationDay
+	convert,  0,  trim,
+
+
+// パスワード有効期限
+expirationDatetime
+	convert,  0,  trim,
+	check,   100,  dateFormat,           年月日の形式が正しくありません
+
+
+// 姓
+familyNameSales
+	convert,  0,  trim,
+	filter,   0,  length_cut(50),
+	check,  100,  length(0-30),     姓の文字数が制限値外です*
+
+// 名
+givenNameSales
+	convert,  0,  trim,
+	filter,   0,  length_cut(50),   
+	check,  100,  length(0-30),     名の文字数が制限値外です＊
+
+
+
+
+// ★★★★★★★★★★★ 以下、not must
+
+// 名前
+companyName_not_must
+	filter,   0,  length_cut(100),
+	check,  200,  length(-100),      文字数が制限値外です
+
+
+
+
+
+
+// 権限レベル
+authorityLevel_not_must
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// 所属グループ
+salesGroup_not_must
+	convert,  0,  1byte,
+	convert,  0,  trim,

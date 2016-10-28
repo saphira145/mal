@@ -1,0 +1,60 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/openWindowBtnActionAdmin.js}
+{input menu_maintenance=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection maintenanceList">
+	<h2 class="mrgB_0">▼メンテナンス料の設定</h2>
+	<p class="actionMsg">メンテナンス料を設定し、「更新」ボタンを押してください。</p>
+
+	<form name="maintenance" id="maintenance" method="post" action="{val UNIT_URL}/">
+		<input type="hidden" name="st" value="me" />
+		{dbTicket}
+
+		<!--{set maintenance_sucessFlg}-->
+		<p class="actionMsg"><span>更新が完了しました。</span></p>
+		<!--{/set}-->
+		
+		<!--{set errSetFlag}-->
+		<p class="err">入力値に不備があります。</p>
+		<!--{/set}-->
+		<div><!--{set maintenanceDatetime.workDatetime.year}-->最終更新日時&nbsp;{val maintenanceDatetime.workDatetime.year}-{val maintenanceDatetime.workDatetime.month|zeroPadding:2}-{val maintenanceDatetime.workDatetime.day|zeroPadding:2} {val maintenanceDatetime.workDatetime.hour|zeroPadding:2}:{val maintenanceDatetime.workDatetime.min|zeroPadding:2}<!--{/set}--></div>
+		<table class="tblForm">
+			<tr>
+				<th rowspan="2"></th>
+			<!--{loop paynumList}-->
+				<td colspan="2"  class="txt_center">{val paynumList/name}</td>
+			<!--{/loop}-->
+			</tr>
+			<tr>
+
+<!--{loop paynumList}-->
+	<!--{loop paynumList/mileageList}-->
+				<td class="txt_center">{val paynumList/mileageList/distance} km</td>
+	<!--{/loop}-->
+<!--{/loop}-->
+
+			</tr>
+		<!--{loop maintenanceList}-->
+			<tr>
+				<th class="w160">
+					{val maintenanceList/mainteID}<br>
+					{val maintenanceList/name}
+					<input type="hidden" name="maintenanceList[{val maintenanceList/mainteNo}][mainteID]" value="{val maintenanceList/mainteID}" />
+				</th>
+		<!--{loop maintenanceList/mainte}-->
+				<td class="txt_center <!--{set maintenanceList/mainte/mainteFee+err}-->errBgCol<!--{/set}-->">
+					<input type="hidden" name="maintenanceList[{val maintenanceList/mainteNo}][mainte][{val maintenanceList/mainte/num}][payNumID]" value="{val maintenanceList/mainte/payNumID}" />
+					<input type="hidden" name="maintenanceList[{val maintenanceList/mainteNo}][mainte][{val maintenanceList/mainte/num}][mileageID]" value="{val maintenanceList/mainte/mileageID}" />
+					<input class="w15" type="text" name="maintenanceList[{val maintenanceList/mainteNo}][mainte][{val maintenanceList/mainte/num}][mainteFee]"  value="{val maintenanceList/mainte/mainteFee}"  />&nbsp;円
+				</td>
+		<!--{/loop}-->
+			</tr>
+		<!--{/loop}-->
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="更新" class="btnW01" onClick="confirmDialog('maintenance', 'メンテナンス料'); return false;">
+		</div>
+	</form>
+</div>

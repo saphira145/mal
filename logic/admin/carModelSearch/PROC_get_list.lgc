@@ -1,0 +1,13 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	list( $output["carModelList"], $output["pageInfo"] ) = $class["carModelSearchAdmin_1"]->get_list( $output );
+
+
+
+
+?>

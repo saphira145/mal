@@ -1,0 +1,11 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_maker=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+<div class="contentSection">
+	<p class="actionMsg">表示順情報の変更が完了しました。</p>
+
+	<div class="btnArea txt_left">
+		<input type="button" value="メーカーリストに戻る" class="btnW01" onClick="location.href='{val UNIT_URL}'; return false;" />
+	</div>
+</div>

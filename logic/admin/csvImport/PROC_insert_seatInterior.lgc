@@ -1,0 +1,589 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_seatInterior( $insertData );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "seatInterior", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "seatInterior", "reserve", $reserveDatetime );
+	}
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$carGradeID = $val;
+			}
+
+			// シート地_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$seatGroundName = $val;
+			}
+
+			// シート地_有無（３フィールド目）
+			if( $key == 2 ) {
+				$seatGroundType = $val;
+			}
+
+			// シート地_注目（４フィールド目）
+			if( $key == 3 ) {
+				$seatGroundSpot = $val;
+			}
+
+			// 運転席・助手席パワーシート_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$powerSeatName = $val;
+			}
+
+			// 運転席・助手席パワーシート_有無（６フィールド目）
+			if( $key == 5 ) {
+				$powerSeatType = $val;
+			}
+
+			// 運転席・助手席パワーシート_注目（７フィールド目）
+			if( $key == 6 ) {
+				$powerSeatSpot = $val;
+			}
+
+			// セカンドパワーシート_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$secondPowerSeatName = $val;
+			}
+
+			// セカンドパワーシート_有無（９フィールド目）
+			if( $key == 8 ) {
+				$secondPowerSeatType = $val;
+			}
+
+			// セカンドパワーシート_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$secondPowerSeatSpot = $val;
+			}
+
+			// シートリフター_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$seatLifterName = $val;
+			}
+
+			// シートリフター_有無（１２フィールド目）
+			if( $key == 11 ) {
+				$seatLifterType = $val;
+			}
+
+			// シートリフター_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$seatLifterSpot = $val;
+			}
+
+			// フロントアームレスト_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$frontArmWrestName = $val;
+			}
+
+			// フロントアームレスト_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$frontArmWrestType = $val;
+			}
+
+			// フロントアームレスト_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$frontArmWrestSpot = $val;
+			}
+
+			// リヤ(セカンド)アームレスト_正式名（１７フィールド目）
+			if( $key == 16 ) {
+				$secondArmWrestName = $val;
+			}
+
+			// リヤ(セカンド)アームレスト_有無（１８フィールド目）
+			if( $key == 17 ) {
+				$secondArmWrestType = $val;
+			}
+
+			// リヤ(セカンド)アームレスト_注目（１９フィールド目）
+			if( $key == 18 ) {
+				$secondArmWrestSpot = $val;
+			}
+
+			// リヤ(セカンド)シートリクライニング_正式名（２０フィールド目）
+			if( $key == 19 ) {
+				$secondSeatRecliningName = $val;
+			}
+
+			// リヤ(セカンド)シートリクライニング_有無（２１フィールド目）
+			if( $key == 20 ) {
+				$secondSeatRecliningType = $val;
+			}
+
+			// リヤ(セカンド)シートリクライニング_注目（２２フィールド目）
+			if( $key == 21 ) {
+				$secondSeatRecliningSpot = $val;
+			}
+
+			// リヤ(セカンド)シートスライド_正式名（２３フィールド目）
+			if( $key == 22 ) {
+				$secondSeatSlideName = $val;
+			}
+
+			// リヤ(セカンド)シートスライド_有無（２４フィールド目）
+			if( $key == 23 ) {
+				$secondSeatSlideType = $val;
+			}
+
+			// リヤ(セカンド)シートスライド_注目（２５フィールド目）
+			if( $key == 24 ) {
+				$secondSeatSlideSpot = $val;
+			}
+
+			// リヤ(セカンド)シート機構_正式名（２６フィールド目）
+			if( $key == 25 ) {
+				$secondSeatMechanismName = $val;
+			}
+
+			// リヤ(セカンド)シート機構_有無（２７フィールド目）
+			if( $key == 26 ) {
+				$secondSeatMechanismType = $val;
+			}
+
+			// リヤ(セカンド)シート機構_注目（２８フィールド目）
+			if( $key == 27 ) {
+				$secondSeatMechanismSpot = $val;
+			}
+
+			// リヤ(セカンド)シート形状_正式名（２９フィールド目）
+			if( $key == 28 ) {
+				$secondSeatShapeName = $val;
+			}
+
+			// リヤ(セカンド)シート形状_有無（３０フィールド目）
+			if( $key == 29 ) {
+				$secondSeatShapeType = $val;
+			}
+
+			// リヤ(セカンド)シート形状_注目（３１フィールド目）
+			if( $key == 30 ) {
+				$secondSeatShapeSpot = $val;
+			}
+
+			// リヤ(セカンド)可倒式シート_正式名（３２フィールド目）
+			if( $key == 31 ) {
+				$secondFoldingSeatShapeName = $val;
+			}
+
+			// リヤ(セカンド)可倒式シート_有無（３３フィールド目）
+			if( $key == 32 ) {
+				$secondFoldingSeatShapeType = $val;
+			}
+
+			// リヤ(セカンド)可倒式シート_注目（３４フィールド目）
+			if( $key == 33 ) {
+				$secondFoldingSeatShapeSpot = $val;
+			}
+
+			// サードアームレスト_正式名（３５フィールド目）
+			if( $key == 34 ) {
+				$thirdArmWrestName = $val;
+			}
+
+			// サードアームレスト_有無（３６フィールド目）
+			if( $key == 35 ) {
+				$thirdArmWrestType = $val;
+			}
+
+			// サードアームレスト_注目（３７フィールド目）
+			if( $key == 36 ) {
+				$thirdArmWrestSpot = $val;
+			}
+
+			// サードシートスライド_正式名（３８フィールド目）
+			if( $key == 37 ) {
+				$thirdSeatSlideName = $val;
+			}
+
+			// サードシートスライド_有無（３９フィールド目）
+			if( $key == 38 ) {
+				$thirdSeatSlideType = $val;
+			}
+
+			// サードシートスライド_注目（４０フィールド目）
+			if( $key == 39 ) {
+				$thirdSeatSlideSpot = $val;
+			}
+
+			// サードシートリクライニング_正式名（４１フィールド目）
+			if( $key == 40 ) {
+				$thirdSeatRecliningName = $val;
+			}
+
+			// サードシートリクライニング_有無（４２フィールド目）
+			if( $key == 41 ) {
+				$thirdSeatRecliningType = $val;
+			}
+
+			// サードシートリクライニング_注目（４３フィールド目）
+			if( $key == 42 ) {
+				$thirdSeatRecliningSpot = $val;
+			}
+
+			// サードシート機構_正式名（４４フィールド目）
+			if( $key == 43 ) {
+				$thirdSeatMechanismName = $val;
+			}
+
+			// サードシート機構_有無（４５フィールド目）
+			if( $key == 44 ) {
+				$thirdSeatMechanismType = $val;
+			}
+
+			// サードシート機構_注目（４６フィールド目）
+			if( $key == 45 ) {
+				$thirdSeatMechanismSpot = $val;
+			}
+
+			// サードシート形状_正式名（４７フィールド目）
+			if( $key == 46 ) {
+				$thirdSeatShapeName = $val;
+			}
+
+			// サードシート形状_有無（４８フィールド目）
+			if( $key == 47 ) {
+				$thirdSeatShapeType = $val;
+			}
+
+			// サードシート形状_注目（４９フィールド目）
+			if( $key == 48 ) {
+				$thirdSeatShapeSpot = $val;
+			}
+
+			// サードパワーシート_正式名（５０フィールド目）
+			if( $key == 49 ) {
+				$thirdPowerSeatName = $val;
+			}
+
+			// サードパワーシート_有無（５１フィールド目）
+			if( $key == 50 ) {
+				$thirdPowerSeatType = $val;
+			}
+
+			// サードパワーシート_注目（５２フィールド目）
+			if( $key == 51 ) {
+				$thirdPowerSeatSpot = $val;
+			}
+
+			// サード可倒式シート_正式名（５３フィールド目）
+			if( $key == 52 ) {
+				$thirdFoldingSeatShapeName = $val;
+			}
+
+			// サード可倒式シート_有無（５４フィールド目）
+			if( $key == 53 ) {
+				$thirdFoldingSeatShapeType = $val;
+			}
+
+			// サード可倒式シート_注目（５５フィールド目）
+			if( $key == 54 ) {
+				$thirdFoldingSeatShapeSpot = $val;
+			}
+
+			// シートアレンジ_正式名（５６フィールド目）
+			if( $key == 55 ) {
+				$seatArrangementName = $val;
+			}
+
+			// シートアレンジ_有無（５７フィールド目）
+			if( $key == 56 ) {
+				$seatArrangementType = $val;
+			}
+
+			// シートアレンジ_注目（５８フィールド目）
+			if( $key == 57 ) {
+				$seatArrangementSpot = $val;
+			}
+
+			// シートトレイ_正式名（５９フィールド目）
+			if( $key == 58 ) {
+				$seatTrayName = $val;
+			}
+
+			// シートトレイ_有無（６０フィールド目）
+			if( $key == 59 ) {
+				$seatTrayType = $val;
+			}
+
+			// シートトレイ_注目（６１フィールド目）
+			if( $key == 60 ) {
+				$seatTraySpot = $val;
+			}
+
+			// オットマン_正式名（６２フィールド目）
+			if( $key == 61 ) {
+				$ottomanName = $val;
+			}
+
+			// オットマン_有無（６３フィールド目）
+			if( $key == 62 ) {
+				$ottomanType = $val;
+			}
+
+			// オットマン_注目（６４フィールド目）
+			if( $key == 63 ) {
+				$ottomanSpot = $val;
+			}
+
+			// オートドライビングポジションメモリー_正式名（６５フィールド目）
+			if( $key == 64 ) {
+				$autoDrivingPositionMemoryName = $val;
+			}
+
+			// オートドライビングポジションメモリー_有無（６６フィールド目）
+			if( $key == 65 ) {
+				$autoDrivingPositionMemoryType = $val;
+			}
+
+			// オートドライビングポジションメモリー_注目（６７フィールド目）
+			if( $key == 66 ) {
+				$autoDrivingPositionMemorySpot = $val;
+			}
+
+			// 車内電源_正式名（６８フィールド目）
+			if( $key == 67 ) {
+				$carInPowerName = $val;
+			}
+
+			// 車内電源_有無（６９フィールド目）
+			if( $key == 68 ) {
+				$carInPowerType = $val;
+			}
+
+			// 車内電源_注目（７０フィールド目）
+			if( $key == 69 ) {
+				$carInPowerSpot = $val;
+			}
+
+			// シートバックポケット_正式名（７１フィールド目）
+			if( $key == 70 ) {
+				$seatBackPocketName = $val;
+			}
+
+			// シートバックポケット_有無（７２フィールド目）
+			if( $key == 71 ) {
+				$seatBackPocketType = $val;
+			}
+
+			// シートバックポケット_注目（７３フィールド目）
+			if( $key == 72 ) {
+				$seatBackPocketSpot = $val;
+			}
+
+			// ヒーターシート_正式名（７４フィールド目）
+			if( $key == 73 ) {
+				$heaterSeatName = $val;
+			}
+
+			// ヒーターシート_有無（７５フィールド目）
+			if( $key == 74 ) {
+				$heaterSeatType = $val;
+			}
+
+			// ヒーターシート_注目（７６フィールド目）
+			if( $key == 75 ) {
+				$heaterSeatSpot = $val;
+			}
+
+			// エアコンディションシート_正式名（７７フィールド目）
+			if( $key == 76 ) {
+				$airConditionerSeatName = $val;
+			}
+
+			// エアコンディションシート_有無（７８フィールド目）
+			if( $key == 77 ) {
+				$airConditionerSeatType = $val;
+			}
+
+			// エアコンディションシート_注目（７９フィールド目）
+			if( $key == 78 ) {
+				$airConditionerSeatSpot = $val;
+			}
+
+			// 床下収納_正式名（８０フィールド目）
+			if( $key == 79 ) {
+				$floorStorageName = $val;
+			}
+
+			// 床下収納_有無（８１フィールド目）
+			if( $key == 80 ) {
+				$floorStorageType = $val;
+			}
+
+			// 床下収納_注目（８２フィールド目）
+			if( $key == 81 ) {
+				$floorStorageSpot = $val;
+			}
+
+
+		}
+
+		// 登録用配列に入れ替える
+		$data["carGradeID"]                          = $carGradeID;
+		$data["seatGroundName"]                      = $seatGroundName;
+		$data["seatGroundType"]                      = CSV2DB_commonType( $seatGroundType );
+		$data["seatGroundSpot"]                      = CSV2DB_commonSpot( $seatGroundSpot );
+		$data["powerSeatName"]                       = $powerSeatName;
+		$data["powerSeatType"]                       = CSV2DB_commonType( $powerSeatType );
+		$data["powerSeatSpot"]                       = CSV2DB_commonSpot( $powerSeatSpot );
+		$data["secondPowerSeatName"]                 = $secondPowerSeatName;
+		$data["secondPowerSeatType"]                 = CSV2DB_commonType( $secondPowerSeatType );
+		$data["secondPowerSeatSpot"]                 = CSV2DB_commonSpot( $secondPowerSeatSpot );
+		$data["seatLifterName"]                      = $seatLifterName;
+		$data["seatLifterType"]                      = CSV2DB_commonType( $seatLifterType );
+		$data["seatLifterSpot"]                      = CSV2DB_commonSpot( $seatLifterSpot );
+		$data["frontArmWrestName"]                   = $frontArmWrestName;
+		$data["frontArmWrestType"]                   = CSV2DB_commonType( $frontArmWrestType );
+		$data["frontArmWrestSpot"]                   = CSV2DB_commonSpot( $frontArmWrestSpot );
+		$data["secondArmWrestName"]                  = $secondArmWrestName;
+		$data["secondArmWrestType"]                  = CSV2DB_commonType( $secondArmWrestType );
+		$data["secondArmWrestSpot"]                  = CSV2DB_commonSpot( $secondArmWrestSpot );
+		$data["secondSeatRecliningName"]             = $secondSeatRecliningName;
+		$data["secondSeatRecliningType"]             = CSV2DB_commonType( $secondSeatRecliningType );
+		$data["secondSeatRecliningSpot"]             = CSV2DB_commonSpot( $secondSeatRecliningSpot );
+		$data["secondSeatSlideName"]                 = $secondSeatSlideName;
+		$data["secondSeatSlideType"]                 = CSV2DB_commonType( $secondSeatSlideType );
+		$data["secondSeatSlideSpot"]                 = CSV2DB_commonSpot( $secondSeatSlideSpot );
+		$data["secondSeatMechanismName"]             = $secondSeatMechanismName;
+		$data["secondSeatMechanismType"]             = CSV2DB_commonType( $secondSeatMechanismType );
+		$data["secondSeatMechanismSpot"]             = CSV2DB_commonSpot( $secondSeatMechanismSpot );
+		$data["secondSeatShapeName"]                 = $secondSeatShapeName;
+		$data["secondSeatShapeType"]                 = CSV2DB_commonType( $secondSeatShapeType );
+		$data["secondSeatShapeSpot"]                 = CSV2DB_commonSpot( $secondSeatShapeSpot );
+		$data["secondFoldingSeatShapeName"]          = $secondFoldingSeatShapeName;
+		$data["secondFoldingSeatShapeType"]          = CSV2DB_commonType( $secondFoldingSeatShapeType );
+		$data["secondFoldingSeatShapeSpot"]          = CSV2DB_commonSpot( $secondFoldingSeatShapeSpot );
+		$data["thirdArmWrestName"]                   = $thirdArmWrestName;
+		$data["thirdArmWrestType"]                   = CSV2DB_commonType( $thirdArmWrestType );
+		$data["thirdArmWrestSpot"]                   = CSV2DB_commonSpot( $thirdArmWrestSpot );
+		$data["thirdSeatSlideName"]                  = $thirdSeatSlideName;
+		$data["thirdSeatSlideType"]                  = CSV2DB_commonType( $thirdSeatSlideType );
+		$data["thirdSeatSlideSpot"]                  = CSV2DB_commonSpot( $thirdSeatSlideSpot );
+		$data["thirdSeatRecliningName"]              = $thirdSeatRecliningName;
+		$data["thirdSeatRecliningType"]              = CSV2DB_commonType( $thirdSeatRecliningType );
+		$data["thirdSeatRecliningSpot"]              = CSV2DB_commonSpot( $thirdSeatRecliningSpot );
+		$data["thirdSeatMechanismName"]              = $thirdSeatMechanismName;
+		$data["thirdSeatMechanismType"]              = CSV2DB_commonType( $thirdSeatMechanismType );
+		$data["thirdSeatMechanismSpot"]              = CSV2DB_commonSpot( $thirdSeatMechanismSpot );
+		$data["thirdSeatShapeName"]                  = $thirdSeatShapeName;
+		$data["thirdSeatShapeType"]                  = CSV2DB_commonType( $thirdSeatShapeType );
+		$data["thirdSeatShapeSpot"]                  = CSV2DB_commonSpot( $thirdSeatShapeSpot );
+		$data["thirdPowerSeatName"]                  = $thirdPowerSeatName;
+		$data["thirdPowerSeatType"]                  = CSV2DB_commonType( $thirdPowerSeatType );
+		$data["thirdPowerSeatSpot"]                  = CSV2DB_commonSpot( $thirdPowerSeatSpot );
+		$data["thirdFoldingSeatShapeName"]           = $thirdFoldingSeatShapeName;
+		$data["thirdFoldingSeatShapeType"]           = CSV2DB_commonType( $thirdFoldingSeatShapeType );
+		$data["thirdFoldingSeatShapeSpot"]           = CSV2DB_commonSpot( $thirdFoldingSeatShapeSpot );
+		$data["seatArrangementName"]                 = $seatArrangementName;
+		$data["seatArrangementType"]                 = CSV2DB_commonType( $seatArrangementType );
+		$data["seatArrangementSpot"]                 = CSV2DB_commonSpot( $seatArrangementSpot );
+		$data["seatTrayName"]                        = $seatTrayName;
+		$data["seatTrayType"]                        = CSV2DB_commonType( $seatTrayType );
+		$data["seatTraySpot"]                        = CSV2DB_commonSpot( $seatTraySpot );
+		$data["ottomanName"]                         = $ottomanName;
+		$data["ottomanType"]                         = CSV2DB_commonType( $ottomanType );
+		$data["ottomanSpot"]                         = CSV2DB_commonSpot( $ottomanSpot );
+		$data["autoDrivingPositionMemoryName"]       = $autoDrivingPositionMemoryName;
+		$data["autoDrivingPositionMemoryType"]       = CSV2DB_commonType( $autoDrivingPositionMemoryType );
+		$data["autoDrivingPositionMemorySpot"]       = CSV2DB_commonSpot( $autoDrivingPositionMemorySpot );
+		$data["carInPowerName"]                      = $carInPowerName;
+		$data["carInPowerType"]                      = CSV2DB_commonType( $carInPowerType );
+		$data["carInPowerSpot"]                      = CSV2DB_commonSpot( $carInPowerSpot );
+		$data["seatBackPocketName"]                  = $seatBackPocketName;
+		$data["seatBackPocketType"]                  = CSV2DB_commonType( $seatBackPocketType );
+		$data["seatBackPocketSpot"]                  = CSV2DB_commonSpot( $seatBackPocketSpot );
+		$data["heaterSeatName"]                      = $heaterSeatName;
+		$data["heaterSeatType"]                      = CSV2DB_commonType( $heaterSeatType );
+		$data["heaterSeatSpot"]                      = CSV2DB_commonSpot( $heaterSeatSpot );
+		$data["airConditionerSeatName"]              = $airConditionerSeatName;
+		$data["airConditionerSeatType"]              = CSV2DB_commonType( $airConditionerSeatType );
+		$data["airConditionerSeatSpot"]              = CSV2DB_commonSpot( $airConditionerSeatSpot );
+		$data["floorStorageName"]                    = $floorStorageName;
+		$data["floorStorageType"]                    = CSV2DB_commonType( $floorStorageType );
+		$data["floorStorageSpot"]                    = CSV2DB_commonSpot( $floorStorageSpot );
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

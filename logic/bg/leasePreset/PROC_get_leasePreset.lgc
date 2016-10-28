@@ -1,0 +1,67 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	/* クッキーの存在確認 */
+	if( $_COOKIE["leasePreset"] ){
+		list($tmp_preset["prefecture"], $tmp_preset["voluntaryInsurance"], $tmp_preset["addDate"],  $tmp_preset["option"]) = explode(",", $_COOKIE["leasePreset"] );
+
+		if( !empty($tmp_preset["option"]) ){
+			$tmp_optionList = explode("-", $tmp_preset["option"]);
+
+			unset($tmp_preset["option"]);
+			for( $i = 0, $iMax = count($tmp_optionList); $i < $iMax; $i++ ){
+				$tmp_option = explode("I", $tmp_optionList[$i]);
+				$tmp_preset["option"][] = $tmp_option[0];
+			}
+		}
+
+		// 任意保険料
+		if( empty($tmp_preset["voluntaryInsurance"]) ){
+			$tmp_preset["voluntaryInsurance"] = 0;
+		}
+
+		// クッキー内の使用開始年月が現在より過去の場合、現在年月に変換してクッキーを削除する。
+		$nowAddDate = date("Ym");
+		if(strtotime($nowAddDate) > strtotime($tmp_preset["addDate"])){
+			$tmp_preset["addDate"] = date("Ym");
+			setcookie( "leasePreset", "", time() - 3600, "/", $path["host"]["name"] );
+		}
+	} else {
+		// デフォルトの設定
+		$tmp_preset["prefecture"]         = 0;
+		$tmp_preset["voluntaryInsurance"] = 0;
+		$tmp_preset["addDate"]            = date("Ym");
+	}
+
+	/* 項目の設定 */ 
+	// 使用地域の取得
+	$output["preset"]["prefecture"] = set_checked( $ini["prefecture"], $tmp_preset["prefecture"], "id", "selected" );
+	
+	// ガソリン価格の取得
+	$tmp_gasoline                 = $class["leaseUser_1"]->get_gasolineList();
+	$output["preset"]["gasoline"] = $tmp_gasoline[ $tmp_preset["prefecture"] ];
+	$output["gasolineUpdateInfo"] = get_tableAdminInfo( "gasoline" );
+
+	// 使用開始年月
+	for( $i = 0; $i < 6; $i++ ){
+		$addDate[$i]["id"]   = $i;
+		$target_day          = date("Y-m-1");
+		$addDate[$i]["date"] = date("Ym", strtotime($target_day . "+". $i ." month"));
+		$addDate[$i]["disp"] = date("Y年 m月", strtotime($target_day ."+". $i ." month"));
+	}
+	$output["preset"]["addDate"]    = set_checked( $addDate, $tmp_preset["addDate"], "date", "selected" );
+
+	// 任意保険
+	$output["preset"]["voluntaryInsurance"] = set_checked( $ini["lease"]["voluntaryInsurance"], $tmp_preset["voluntaryInsurance"], "id", "selected" );
+
+	// 事前オプションの取得
+	$output["preset"]["option"] = set_checked( $ini["leasePreset"]["option"], $tmp_preset["option"], "id", "selected" );
+	for($i = 0, $iMax = count( $output["preset"]["option"] ); $i < $iMax; $i++ ){
+		if( $i < 2 ){
+			$output["preset"]["option"][$i]["notBorder"] = 1;
+		}
+	}
+?>

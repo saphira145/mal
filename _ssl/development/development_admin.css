@@ -1,0 +1,11 @@
+@charset "utf-8";
+/*
+	テスト環境判別用に使用。
+	本番にはアップしない事！！
+*/
+
+#header{
+	background-image: url(./development.png);
+	background-repeat: no-repeat;
+	padding: 0 0 0 50px;
+}

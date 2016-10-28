@@ -1,0 +1,37 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// カンマ区切りから配列へ
+	$this->callPROC( "commaToArray" );
+
+	// 入力エラー
+	if( $ini["system"]["errRank"] == 2 ) {
+
+		// 入力へ戻る
+		$viewStatus = "dispNumReinput";
+		$this->callVIEW( "display_dispNumList" );
+
+	}
+	// 登録 → リスト表示
+	else{
+
+		// 表示
+		$this->callVIEW( "display_dispNumList" );
+
+	}
+
+
+
+
+
+
+
+
+?>

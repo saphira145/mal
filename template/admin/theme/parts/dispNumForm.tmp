@@ -1,0 +1,54 @@
+{input jsList/jsName=/_common/js/sort.js}
+
+<table class="tblForm">
+	<tr>
+		<th class="w140">画面の表示順</th>
+		<td>
+<!--{set sortIDs+err}-->
+	<!--{loop sortIDs+err}-->
+			<p class="err_txt">{val sortIDs+err/msg}</p>
+	<!--{/loop}-->
+<!--{/set}-->
+			<table class="tbl_sort">
+				<tr>
+					<td class="w220">
+						<select id="dispboxIDs" name="dispNumList[][sort]" size="{val listAmount}" multiple class="w60">
+							<!--{loop dispNumList}-->
+							<option value="{val dispNumList/themeID}">{val dispNumList/themeName}</option>
+							<!--{/loop}-->
+						</select>
+					</td>
+					<td>
+						<input type="button" value="↑" onClick='moveUpElement("dispboxIDs"); return false;' class="w_40"><br />
+						<input type="button" value="↓" onClick='moveDownElement("dispboxIDs"); return false;' class="w_40">
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<th class="w140">対抗車選定の優先度</th>
+		<td>
+<!--{set sortIDs+err}-->
+	<!--{loop sortIDs+err}-->
+			<p class="err_txt">{val sortIDs+err/msg}</p>
+	<!--{/loop}-->
+<!--{/set}-->
+			<table class="tbl_sort">
+				<tr>
+					<td class="w220">
+						<select id="priorityboxIDs" name="priorityNumList[][sort]" size="{val listAmount}" multiple class="w60">
+							<!--{loop priorityNumList}-->
+							<option value="{val priorityNumList/themeID}">{val priorityNumList/themeName}</option>
+							<!--{/loop}-->
+						</select>
+					</td>
+					<td>
+						<input type="button" value="↑" onClick='moveUpElement("priorityboxIDs"); return false;' class="w_40"><br />
+						<input type="button" value="↓" onClick='moveDownElement("priorityboxIDs"); return false;' class="w_40">
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>

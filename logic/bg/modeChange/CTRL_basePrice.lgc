@@ -1,0 +1,28 @@
+<?php
+	/* -------------------------------------
+		ロジックコントロール
+	------------------------------------- */
+
+	// 入力チェックの実行（常にチェックする場合は、第二パラメータに "everyTime" と入れること）
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	//---- 共通
+	// 入力値変換
+	$this->callPROC( "convert_input" );
+
+	//---- ベース価格用
+	$this->callPROC( "set_modeBase" );
+	
+	// 表示
+	$this->callVIEW( "modeBase" );
+
+	
+	
+	//---- 利益額確認用
+	// 代表車種グレードの取得
+	$this->callPROC( "get_modePrice" );
+
+	// 表示
+	$this->callVIEW( "modePrice" );
+
+?>

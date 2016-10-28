@@ -1,0 +1,100 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_download=1}
+<link rel="stylesheet" type="text/css" media="all" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<style type="text/css">
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year{
+	width:auto;
+}
+.ui-datepicker select.ui-datepicker-month{
+	margin-left:0.5em;
+}
+</style>
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼車種アクセスログのダウンロード</h2>
+	<p class="actionMsg">集計期間、出力タイプを選択し「作成」ボタンを押してください。</p>
+	<form name="form_search" method="post" action="{val UNIT_URL}/">
+	<input type="hidden" name="st" value="" />
+		<table class="tblForm">
+		<tr>
+			<th class="w150">集計期間<span class="must_mark">※</span></th>
+			<td>
+<!--{set downloadInfo.from.date+err}-->
+<!--{loop downloadInfo.from.date+err}-->
+				<p class="err">{val downloadInfo.from.date+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+<!--{set downloadInfo.to.date+err}-->
+<!--{loop downloadInfo.to.date+err}-->
+				<p class="err">{val downloadInfo.to.date+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+<!--{set Hit0+err}-->
+<!--{loop Hit0+err}-->
+				<p class="err">{val Hit0+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input type="text" name="downloadInfo[from][date]" value="{val downloadInfo.from.date|htmlspecialchars}" class="w20" /> ～ <input type="text" name="downloadInfo[to][date]" value="{val downloadInfo.to.date|htmlspecialchars}" class="w20" />&nbsp;&nbsp;&nbsp;&nbsp;例）2013/4/1 ～ 2014/3/31
+			</td>
+		</tr>
+		<tr>
+			<th>出力タイプ<span class="must_mark">※</span></th>
+			<td>
+<!--{set downloadInfo.outputType+err}-->
+<!--{loop downloadInfo.outputType+err}-->
+				<p class="err">{val downloadInfo.outputType+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+<!--{loop outputTypeList}-->
+				<label><input type="radio" name="downloadInfo[outputType]" value="{val outputTypeList/value}"<!--{set outputTypeList/selected}--> checked="checked"<!--{/set}--> />&nbsp;{val outputTypeList/name}</label>
+<!--{/loop}-->
+			</td>
+		</tr>
+		</table>
+	</form>
+	<div class="BB_btnWithText_A txt_center noBorderTop">
+		<input class="btnW01" type="button" value="作成" onClick="actionChangeSubmit(); return false;" />
+	</div>
+</div>
+<div class="contentSection">
+	<h2 class="mrgB_0">▼CSV取り込み用ファイルのダウンロード</h2>
+	<p class="actionMsg">「CSV取り込み」で使用するCSVファイルを作成します。</p>
+	<form name="form_csvImportOnly" method="post" action="{val UNIT_URL}/">
+	<input type="hidden" name="st" value="" />
+		<table class="tblForm">
+		<tr>
+			<th class="w150">出力タイプ<span class="must_mark">※</span></th>
+			<td>
+<!--{set importOnlyDownloadInfo.outputType+err}-->
+<!--{loop importOnlyDownloadInfo.outputType+err}-->
+				<p class="err">{val importOnlyDownloadInfo.outputType+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<table class="tbl_inner">
+<!--{loop csvImportOnlyList}-->
+				<tr>
+					<td class="w240">
+						<label><input type="radio" name="importOnlyDownloadInfo[outputType]" value="{val csvImportOnlyList/st}"<!--{set csvImportOnlyList/selected}--> checked="checked"<!--{/set}--> />&nbsp;{val csvImportOnlyList/name}</label>
+					</td>
+					<td>：&nbsp;{val csvImportOnlyList/disp}</td>
+				</tr>
+<!--{/loop}-->
+				</table>
+			</td>
+		</tr>
+		</table>
+	</form>
+	<div class="BB_btnWithText_A txt_center noBorderTop">
+		<input class="btnW01" type="button" value="作成" onClick="actionChangeCsvSubmit(); return false;" />
+	</div>
+</div>
+
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+{input jsList/jsName=/_common/js/downloadAdmin.js}
+{input jsList/jsName=/_common/js/calendar.js}

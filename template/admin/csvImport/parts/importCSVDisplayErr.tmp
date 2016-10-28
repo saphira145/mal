@@ -1,0 +1,30 @@
+<table class="tblForm">
+<!--{loop errList}-->
+<!--{loop errList/detail}-->
+	<tr <!--{set errList/bgCol}-->class="listBgCol"<!--{/set}-->>
+		<td class="w60" >{val errList/row} 行目</td>
+		<td class="w80">{val errList/detail/field} フィールド目</td>
+		<td>
+<!--{set errList/detail/empty}-->
+			必須入力項目です。
+<!--{/set}-->
+<!--{set errList/detail/exist}-->
+			入力されたデータは登録されていません。<!--{set errList/detail/key}-->( {val errList/detail/key.name} ： {val errList/detail/key.id} )<!--{/set}-->
+<!--{/set}-->
+<!--{set errList/detail/length}-->
+			文字数が制限外です。
+<!--{/set}-->
+<!--{set errList/detail/numeric}-->
+			数値以外が入力されています。
+<!--{/set}-->
+<!--{set errList/detail/iniExist}-->
+			入力されたデータは設定ファイルに存在しません。
+<!--{/set}-->
+<!--{set errList/detail/themeRecommend}-->
+			おすすめ車種に設定されている為、変更できません。
+<!--{/set}-->
+		</td>
+	</tr>
+<!--{/loop}-->
+<!--{/loop}-->
+</table>

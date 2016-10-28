@@ -1,0 +1,142 @@
+
+	<form class="searchForm" method="post" action="{val BASE_DIR}/RANKING/" >
+
+<!--{set searchForm.carPriceList}-->
+		<div class="searchPriceList">
+			<span class="trians"></span>
+			<span class="clearChecked clearBtn"><a href="javascript:void(0)" class="faUndo">クリア</a></span>
+			<h2 class="faCaretDown">
+	<!--{set page.top}-->
+				ご希望の予算は？（下限価格で検索されます）
+	<!--{/set}-->
+	<!--{unset page.top}-->
+				予算
+	<!--{/unset}-->
+			</h2>
+			<ul class="priceBox">
+	<!--{loop searchForm.carPriceList}-->
+				<li class="setCol<!--{set searchForm.carPriceList/selected}--> selected<!--{/set}-->">
+					<label>
+						<span class="priceName">{val searchForm.carPriceList/name|lengthCut:12}<input type="checkbox" name="priceList"  value="P{val searchForm.carPriceList/ID|zeroPadding:3}" <!--{set searchForm.carPriceList/selected}-->checked<!--{/set}--> /></span>
+						<span class="priceItem">
+							<span class="priceCnt">{val searchForm.carPriceList/carCnt}</span>
+						</span>
+					</label>
+					<input type="hidden" class="P{val searchForm.carPriceList/ID|zeroPadding:3}Name" value="{val searchForm.carPriceList/name}">
+				</li>
+			<!--{loop_count_pad searchForm.carPriceList=6}-->
+				<li class="noData">&nbsp;</li>
+			<!--{/loop_count_pad}-->
+	<!--{/loop}-->
+			</ul>
+		</div>
+<!--{/set}-->
+
+<!--{set searchForm.themeList}-->
+		<div class="searchThemeList">
+			<span class="trians"></span>
+			<span class="clearChecked clearBtn"><a href="javascript:void(0)" class="faUndo">クリア</a></span>
+			<h2 class="faCaretDown">
+	<!--{set page.top}-->
+				ご希望のバリューは？（複数選択可）
+	<!--{/set}-->
+	<!--{unset page.top}-->
+				バリュー（複数選択可）
+	<!--{/unset}-->
+				<span class="basisOfSelectionLink faWrench"><a href="javascript:void(0)" onclick="openDetailWindow('basisofselection', '/BASISOFSELECTION/', '746', '550'); return false;">バリュー選定基準について</a></span>
+			</h2>
+			<ul class="themeBox">
+	<!--{loop searchForm.themeList}-->
+				<li class="setCol<!--{set searchForm.themeList/selected}--> selected<!--{/set}-->">
+					<label>
+						<span class="themeImg" style="background-image: url({val BASE_DIR}/_common/img/theme/{val searchForm.themeList/iconPath}.png);"></span>
+						<span class="themeName">{val searchForm.themeList/themeName|lengthCut:12}<input type="checkbox" name="themeList"  value="T{val searchForm.themeList/themeID|zeroPadding:3}" <!--{set searchForm.themeList/selected}-->checked<!--{/set}--> /></span>
+						<span class="themeItem">
+							<span class="themeCnt">{val searchForm.themeList/carCnt}</span>
+						</span>
+					</label>
+					<input type="hidden" class="T{val searchForm.themeList/themeID|zeroPadding:3}Name" value="{val searchForm.themeList/nameAbbreviation}">
+					<input type="hidden" class="T{val searchForm.themeList/themeID|zeroPadding:3}Icon" value="{val searchForm.themeList/iconPath}">
+				</li>
+			<!--{loop_count_pad searchForm.themeList=3}-->
+				<li class="noData">&nbsp;</li>
+			<!--{/loop_count_pad}-->
+	<!--{/loop}-->
+			</ul>
+		</div>
+<!--{/set}-->
+
+<!--{set searchForm.makerList}-->
+		<div class="searchMakerList">
+			<span class="trians"></span>
+			<span class="clearChecked clearBtn"><a href="javascript:void(0)" class="faUndo">クリア</a></span>
+			<h2 class="faCaretDown">
+	<!--{set page.top}-->
+				ご希望のメーカーは？（複数選択可）
+	<!--{/set}-->
+	<!--{unset page.top}-->
+				メーカー（複数選択可）
+	<!--{/unset}-->
+			</h2>
+			<ul class="makerBox">
+	<!--{loop searchForm.makerList}-->
+				<!--{set searchForm.makerList/makerCode}-->
+				<li class="setCol<!--{set searchForm.makerList/selected}--> selected<!--{/set}-->">
+					<label>
+						<span class="makerName">{val searchForm.makerList/makerName}</span>
+						<input type="checkbox" name="makerList" value="M{val searchForm.makerList/makerCode|zeroPadding:3}" <!--{set searchForm.makerList/selected}-->checked<!--{/set}--> />
+						<span class="makerItem">
+							<span class="makerCnt">{val searchForm.makerList/carCnt}</span>
+						</span>
+					</label>
+					<input type="hidden" class="M{val searchForm.makerList/makerCode|zeroPadding:3}Name" value="{val searchForm.makerList/makerName|lengthCut:9}">
+				</li>
+				<!--{/set}-->
+				<!--{unset searchForm.makerList/makerCode}-->
+				<li class="noData">&nbsp;</li>
+				<!--{/unset}-->
+			<!--{loop_count_pad searchForm.makerList=10}-->
+				<li class="noData">&nbsp;</li>
+			<!--{/loop_count_pad}-->
+	<!--{/loop}-->
+			</ul>
+		</div>
+<!--{/set}-->
+	
+<!--{set searchForm.bodyTypeList}-->
+		<div class="searchTypeList">
+			<span class="trians"></span>
+			<span class="clearChecked clearBtn"><a href="javascript:void(0)" class="faUndo">クリア</a></span>
+			<h2 class="faCaretDown">
+	<!--{set page.top}-->
+				ご希望のボディタイプは？（複数選択可）
+	<!--{/set}-->
+	<!--{unset page.top}-->
+				タイプ（複数選択可）
+	<!--{/unset}-->
+			</h2>
+			<ul class="typeBox">
+	<!--{loop searchForm.bodyTypeList}-->
+				<li class="setCol {val searchForm.bodyTypeList/css}<!--{set searchForm.bodyTypeList/selected}--> selected<!--{/set}-->">
+					<label>
+						<span class="bodyTypeName" style="background-image:url({val BASE_DIR}/_common/img/bodyType/{val searchForm.bodyTypeList/icon}.png);"></span>
+						{val searchForm.bodyTypeList/disp}
+						<input type="checkbox" name="bodyTypeList"  value="B{val searchForm.bodyTypeList/ID|zeroPadding:3}" <!--{set searchForm.bodyTypeList/selected}-->checked<!--{/set}--> />
+						<span class="bodyTypeItem">
+							<span class="bodyTypeCnt">{val searchForm.bodyTypeList/carCnt}</span>
+						</span>
+					</label>
+					<input type="hidden" class="B{val searchForm.bodyTypeList/ID|zeroPadding:3}Name" value="{val searchForm.bodyTypeList/disp|lengthCut:6}">
+					<input type="hidden" class="B{val searchForm.bodyTypeList/ID|zeroPadding:3}Icon" value="{val searchForm.bodyTypeList/icon}">
+					<input type="hidden" class="B{val searchForm.bodyTypeList/ID|zeroPadding:3}Css" value="{val searchForm.bodyTypeList/css}">
+				</li>
+			<!--{loop_count_pad searchForm.bodyTypeList=7}-->
+				<li class="noData">&nbsp;</li>
+			<!--{/loop_count_pad}-->
+	<!--{/loop}-->
+			</ul>
+		</div>
+<!--{/set}-->
+	</form>
+
+

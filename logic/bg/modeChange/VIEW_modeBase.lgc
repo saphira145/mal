@@ -1,0 +1,22 @@
+<?php
+
+
+	/* -------------------------------------
+		ビュー
+	------------------------------------- */
+	// 表示項目
+	$output["basePrice"]["baseMode"] = $ini["lease"]["msrpPrice"];
+	$output["basePrice"]["baseMode"] = set_checked( $ini["lease"]["msrpPrice"], $output["baseMode"], "id", "checked" );
+
+	$output["basePrice"]["profit"]   = $output["profit"];
+
+
+	/* -----------------------------------
+	   ベース価格変更チェック
+	----------------------------------- */
+	$cookieName = "lease_" . str_replace(" ", "_", $output["model"]["modelNameEng"]);
+	if( $_COOKIE[ $cookieName ] && ( preg_match( "#/LEASEINFO/#", $path["referer"]["url"] ) || preg_match( "#/LEASEOPTION/#", $path["referer"]["url"] ) )){
+		$output["LEASEMODECHANGE_FLG"] = 1;
+	}
+
+?>

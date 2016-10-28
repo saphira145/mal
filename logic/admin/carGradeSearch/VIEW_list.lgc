@@ -1,0 +1,31 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	$output["maker"] = get_makerName($output["searchMakerCode"]);
+	$output["model"] = get_modelName($output["searchMakerCode"], $output["searchModelCode"]);
+
+	for($i = 0; $i < count($output["carGradeList"]); $i++){
+		// ボディタイプ名
+		$output["carGradeList"][$i]["bodyModelName"] = get_bodyTypeName($output["carGradeList"][$i]["bodyModel"]);
+
+		// メンテナンス区分
+		$output["carGradeList"][$i]["mainteStateName"] = "未登録";
+
+		if( $output["carGradeList"][$i]["mainteID"] ){
+			$output["carGradeList"][$i]["mainteName"] = $output["carGradeList"][$i]["mainteID"];
+
+			$tmp_mainteState = get_maintenanceStateInfo($output["carGradeList"][$i]["mainteState"]);
+			$output["carGradeList"][$i]["mainteStateName"] = $tmp_mainteState["name"];
+		}
+
+	}
+
+
+	if( count( $output["carGradeList"] ) > 0 ) {
+		$output["carGradeListDisp"] = 1;
+	}
+
+?>

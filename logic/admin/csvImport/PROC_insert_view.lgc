@@ -1,0 +1,501 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_view( $insertData );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "view", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "view", "reserve", $reserveDatetime );
+	}
+
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$carGradeID = $val;
+			}
+
+			// キセノンヘッドランプ_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$xenonHeadlampName = $val;
+			}
+
+			// キセノンヘッドランプ_有無（３フィールド目）
+			if( $key == 2 ) {
+				$xenonHeadlampType = $val;
+			}
+
+			// キセノンヘッドランプ_注目（４フィールド目）
+			if( $key == 3 ) {
+				$xenonHeadlampSpot = $val;
+			}
+
+			// プロジェクターヘッドランプ_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$projectorHeadlampName = $val;
+			}
+
+			// プロジェクターヘッドランプ_有無（６フィールド目）
+			if( $key == 5 ) {
+				$projectorHeadlampType = $val;
+			}
+
+			// プロジェクターヘッドランプ_注目（７フィールド目）
+			if( $key == 6 ) {
+				$projectorHeadlampSpot = $val;
+			}
+
+			// フォグランプ(フロント)_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$frontFogLampName = $val;
+			}
+
+			// フォグランプ(フロント)_有無（９フィールド目）
+			if( $key == 8 ) {
+				$frontFogLampType = $val;
+			}
+
+			// フォグランプ(フロント)_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$frontFogLampSpot = $val;
+			}
+
+			// フォグランプ(リヤ)_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$rearFogLampName = $val;
+			}
+
+			// フォグランプ(リヤ)_有無（１２フィールド目）
+			if( $key == 11 ) {
+				$rearFogLampType = $val;
+			}
+
+			// フォグランプ(リヤ)_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$rearFogLampSpot = $val;
+			}
+
+			// バックビューモニター_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$backViewMonitorName = $val;
+			}
+
+			// バックビューモニター_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$backViewMonitorType = $val;
+			}
+
+			// バックビューモニター_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$backViewMonitorSpot = $val;
+			}
+
+			// アクティブＡＦＳ_正式名（１７フィールド目）
+			if( $key == 16 ) {
+				$activeAFSName = $val;
+			}
+
+			// アクティブＡＦＳ_有無（１８フィールド目）
+			if( $key == 17 ) {
+				$activeAFSType = $val;
+			}
+
+			// アクティブＡＦＳ_注目（１９フィールド目）
+			if( $key == 18 ) {
+				$activeAFSSpot = $val;
+			}
+
+			// オートライトシステム_正式名（２０フィールド目）
+			if( $key == 19 ) {
+				$autoLightSystemName = $val;
+			}
+
+			// オートライトシステム_有無（２１フィールド目）
+			if( $key == 20 ) {
+				$autoLightSystemType = $val;
+			}
+
+			// オートライトシステム_注目（２２フィールド目）
+			if( $key == 21 ) {
+				$autoLightSystemSpot = $val;
+			}
+
+			// 電動リモコンドアミラー_正式名（２３フィールド目）
+			if( $key == 22 ) {
+				$remoteDoorMirrorName = $val;
+			}
+
+			// 電動リモコンドアミラー_有無（２４フィールド目）
+			if( $key == 23 ) {
+				$remoteDoorMirrorType = $val;
+			}
+
+			// 電動リモコンドアミラー_注目（２５フィールド目）
+			if( $key == 24 ) {
+				$remoteDoorMirrorSpot = $val;
+			}
+
+			// 電動格納式ドアミラー_正式名（２６フィールド目）
+			if( $key == 25 ) {
+				$storageDoorMirrorName = $val;
+			}
+
+			// 電動格納式ドアミラー_有無（２７フィールド目）
+			if( $key == 26 ) {
+				$storageDoorMirrorType = $val;
+			}
+
+			// 電動格納式ドアミラー_注目（２８フィールド目）
+			if( $key == 27 ) {
+				$storageDoorMirrorSpot = $val;
+			}
+
+			// ヒーターミラー_正式名（２９フィールド目）
+			if( $key == 28 ) {
+				$heaterMirrorName = $val;
+			}
+
+			// ヒーターミラー_有無（３０フィールド目）
+			if( $key == 29 ) {
+				$heaterMirrorType = $val;
+			}
+
+			// ヒーターミラー_注目（３１フィールド目）
+			if( $key == 30 ) {
+				$heaterMirrorSpot = $val;
+			}
+
+			// リバース電動ミラー_正式名（３２フィールド目）
+			if( $key == 31 ) {
+				$reverseMirrorName = $val;
+			}
+
+			// リバース電動ミラー_有無（３３フィールド目）
+			if( $key == 32 ) {
+				$reverseMirrorType = $val;
+			}
+
+			// リバース電動ミラー_注目（３４フィールド目）
+			if( $key == 33 ) {
+				$reverseMirrorSpot = $val;
+			}
+
+			// ＵＶカットガラス(フロント)_正式名（３５フィールド目）
+			if( $key == 34 ) {
+				$frontUVBlockGlassName = $val;
+			}
+
+			// ＵＶカットガラス(フロント)_有無（３６フィールド目）
+			if( $key == 35 ) {
+				$frontUVBlockGlassType = $val;
+			}
+
+			// ＵＶカットガラス(フロント)_注目（３７フィールド目）
+			if( $key == 36 ) {
+				$frontUVBlockGlassSpot = $val;
+			}
+
+			// ＵＶカットガラス(リヤ)_正式名（３８フィールド目）
+			if( $key == 37 ) {
+				$rearUVBlockGlassName = $val;
+			}
+
+			// ＵＶカットガラス(リヤ)_有無（３９フィールド目）
+			if( $key == 38 ) {
+				$rearUVBlockGlassType = $val;
+			}
+
+			// ＵＶカットガラス(リヤ)_注目（４０フィールド目）
+			if( $key == 39 ) {
+				$rearUVBlockGlassSpot = $val;
+			}
+
+			// ＵＶカットガラス(サイド)_正式名（４１フィールド目）
+			if( $key == 40 ) {
+				$sideUVBlockGlassName = $val;
+			}
+
+			// ＵＶカットガラス(サイド)_有無（４２フィールド目）
+			if( $key == 41 ) {
+				$sideUVBlockGlassType = $val;
+			}
+
+			// ＵＶカットガラス(サイド)_注目（４３フィールド目）
+			if( $key == 42 ) {
+				$sideUVBlockGlassSpot = $val;
+			}
+
+			// ＵＶカットガラス(フロントドア)_正式名（４４フィールド目）
+			if( $key == 43 ) {
+				$frontDoorUVBlockGlassName = $val;
+			}
+
+			// ＵＶカットガラス(フロントドア)_有無（４５フィールド目）
+			if( $key == 44 ) {
+				$frontDoorUVBlockGlassType = $val;
+			}
+
+			// ＵＶカットガラス(フロントドア)_注目（４６フィールド目）
+			if( $key == 45 ) {
+				$frontDoorUVBlockGlassSpot = $val;
+			}
+
+			// ＵＶカットガラス(リヤドア)_正式名（４７フィールド目）
+			if( $key == 46 ) {
+				$rearDoorUVBlockGlassName = $val;
+			}
+
+			// ＵＶカットガラス(リヤドア)_有無（４８フィールド目）
+			if( $key == 47 ) {
+				$rearDoorUVBlockGlassType = $val;
+			}
+
+			// ＵＶカットガラス(リヤドア)_注目（４９フィールド目）
+			if( $key == 48 ) {
+				$rearDoorUVBlockGlassSpot = $val;
+			}
+
+			// プライバシーガラス(リヤ)_正式名（５０フィールド目）
+			if( $key == 49 ) {
+				$rearPrivacyGlassName = $val;
+			}
+
+			// プライバシーガラス(リヤ)_有無（５１フィールド目）
+			if( $key == 50 ) {
+				$rearPrivacyGlassType = $val;
+			}
+
+			// プライバシーガラス(リヤ)_注目（５２フィールド目）
+			if( $key == 51 ) {
+				$rearPrivacyGlassSpot = $val;
+			}
+
+			// プライバシーガラス(リヤドア)_正式名（５３フィールド目）
+			if( $key == 52 ) {
+				$rearDoorPrivacyGlassName = $val;
+			}
+
+			// プライバシーガラス(リヤドア)_有無（５４フィールド目）
+			if( $key == 53 ) {
+				$rearDoorPrivacyGlassType = $val;
+			}
+
+			// プライバシーガラス(リヤドア)_注目（５５フィールド目）
+			if( $key == 54 ) {
+				$rearDoorPrivacyGlassSpot = $val;
+			}
+
+			// プライバシーガラス(サイド)_正式名（５６フィールド目）
+			if( $key == 55 ) {
+				$sideDoorPrivacyGlassName = $val;
+			}
+
+			// プライバシーガラス(サイド)_有無（５７フィールド目）
+			if( $key == 56 ) {
+				$sideDoorPrivacyGlassType = $val;
+			}
+
+			// プライバシーガラス(サイド)_注目（５８フィールド目）
+			if( $key == 57 ) {
+				$sideDoorPrivacyGlassSpot = $val;
+			}
+
+			// コーナーリングランプ_正式名（５９フィールド目）
+			if( $key == 58 ) {
+				$cornerRingLampName = $val;
+			}
+
+			// コーナーリングランプ_有無（６０フィールド目）
+			if( $key == 59 ) {
+				$cornerRingLampType = $val;
+			}
+
+			// コーナーリングランプ_注目（６１フィールド目）
+			if( $key == 60 ) {
+				$cornerRingLampSpot = $val;
+			}
+
+			// サイドブラインドモニター_正式名（６２フィールド目）
+			if( $key == 61 ) {
+				$sideBlindMonitorName = $val;
+			}
+
+			// サイドブラインドモニター_有無（６３フィールド目）
+			if( $key == 62 ) {
+				$sideBlindMonitorType = $val;
+			}
+
+			// サイドブラインドモニター_注目（６４フィールド目）
+			if( $key == 63 ) {
+				$sideBlindMonitorSpot = $val;
+			}
+
+			// リヤワイパー_正式名（６５フィールド目）
+			if( $key == 64 ) {
+				$rearWiperName = $val;
+			}
+
+			// リヤワイパー_有無（６６フィールド目）
+			if( $key == 65 ) {
+				$rearWiperType = $val;
+			}
+
+			// リヤワイパー_注目（６７フィールド目）
+			if( $key == 66 ) {
+				$rearWiperSpot = $val;
+			}
+
+
+		}
+
+		// 登録用配列に入れ替える
+		$data["carGradeID"]                   = $carGradeID;
+		$data["xenonHeadlampName"]            = $xenonHeadlampName;
+		$data["xenonHeadlampType"]            = CSV2DB_commonType( $xenonHeadlampType );
+		$data["xenonHeadlampSpot"]            = CSV2DB_commonSpot( $xenonHeadlampSpot );
+		$data["projectorHeadlampName"]        = $projectorHeadlampName;
+		$data["projectorHeadlampType"]        = CSV2DB_commonType( $projectorHeadlampType );
+		$data["projectorHeadlampSpot"]        = CSV2DB_commonSpot( $projectorHeadlampSpot );
+		$data["frontFogLampName"]             = $frontFogLampName;
+		$data["frontFogLampType"]             = CSV2DB_commonType( $frontFogLampType );
+		$data["frontFogLampSpot"]             = CSV2DB_commonSpot( $frontFogLampSpot );
+		$data["rearFogLampName"]              = $rearFogLampName;
+		$data["rearFogLampType"]              = CSV2DB_commonType( $rearFogLampType );
+		$data["rearFogLampSpot"]              = CSV2DB_commonSpot( $rearFogLampSpot );
+		$data["backViewMonitorName"]          = $backViewMonitorName;
+		$data["backViewMonitorType"]          = CSV2DB_commonType( $backViewMonitorType );
+		$data["backViewMonitorSpot"]          = CSV2DB_commonSpot( $backViewMonitorSpot );
+		$data["activeAFSName"]                = $activeAFSName;
+		$data["activeAFSType"]                = CSV2DB_commonType( $activeAFSType );
+		$data["activeAFSSpot"]                = CSV2DB_commonSpot( $activeAFSSpot );
+		$data["autoLightSystemName"]          = $autoLightSystemName;
+		$data["autoLightSystemType"]          = CSV2DB_commonType( $autoLightSystemType );
+		$data["autoLightSystemSpot"]          = CSV2DB_commonSpot( $autoLightSystemSpot );
+		$data["remoteDoorMirrorName"]         = $remoteDoorMirrorName;
+		$data["remoteDoorMirrorType"]         = CSV2DB_commonType( $remoteDoorMirrorType );
+		$data["remoteDoorMirrorSpot"]         = CSV2DB_commonSpot( $remoteDoorMirrorSpot );
+		$data["storageDoorMirrorName"]        = $storageDoorMirrorName;
+		$data["storageDoorMirrorType"]        = CSV2DB_commonType( $storageDoorMirrorType );
+		$data["storageDoorMirrorSpot"]        = CSV2DB_commonSpot( $storageDoorMirrorSpot );
+		$data["heaterMirrorName"]             = $heaterMirrorName;
+		$data["heaterMirrorType"]             = CSV2DB_commonType( $heaterMirrorType );
+		$data["heaterMirrorSpot"]             = CSV2DB_commonSpot( $heaterMirrorSpot );
+		$data["reverseMirrorName"]            = $reverseMirrorName;
+		$data["reverseMirrorType"]            = CSV2DB_commonType( $reverseMirrorType );
+		$data["reverseMirrorSpot"]            = CSV2DB_commonSpot( $reverseMirrorSpot );
+		$data["frontUVBlockGlassName"]        = $frontUVBlockGlassName;
+		$data["frontUVBlockGlassType"]        = CSV2DB_commonType( $frontUVBlockGlassType );
+		$data["frontUVBlockGlassSpot"]        = CSV2DB_commonSpot( $frontUVBlockGlassSpot );
+		$data["rearUVBlockGlassName"]         = $rearUVBlockGlassName;
+		$data["rearUVBlockGlassType"]         = CSV2DB_commonType( $rearUVBlockGlassType );
+		$data["rearUVBlockGlassSpot"]         = CSV2DB_commonSpot( $rearUVBlockGlassSpot );
+		$data["sideUVBlockGlassName"]         = $sideUVBlockGlassName;
+		$data["sideUVBlockGlassType"]         = CSV2DB_commonType( $sideUVBlockGlassType );
+		$data["sideUVBlockGlassSpot"]         = CSV2DB_commonSpot( $sideUVBlockGlassSpot );
+		$data["frontDoorUVBlockGlassName"]    = $frontDoorUVBlockGlassName;
+		$data["frontDoorUVBlockGlassType"]    = CSV2DB_commonType( $frontDoorUVBlockGlassType );
+		$data["frontDoorUVBlockGlassSpot"]    = CSV2DB_commonSpot( $frontDoorUVBlockGlassSpot );
+		$data["rearDoorUVBlockGlassName"]     = $rearDoorUVBlockGlassName;
+		$data["rearDoorUVBlockGlassType"]     = CSV2DB_commonType( $rearDoorUVBlockGlassType );
+		$data["rearDoorUVBlockGlassSpot"]     = CSV2DB_commonSpot( $rearDoorUVBlockGlassSpot );
+		$data["rearPrivacyGlassName"]         = $rearPrivacyGlassName;
+		$data["rearPrivacyGlassType"]         = CSV2DB_commonType( $rearPrivacyGlassType );
+		$data["rearPrivacyGlassSpot"]         = CSV2DB_commonSpot( $rearPrivacyGlassSpot );
+		$data["rearDoorPrivacyGlassName"]     = $rearDoorPrivacyGlassName;
+		$data["rearDoorPrivacyGlassType"]     = CSV2DB_commonType( $rearDoorPrivacyGlassType );
+		$data["rearDoorPrivacyGlassSpot"]     = CSV2DB_commonSpot( $rearDoorPrivacyGlassSpot );
+		$data["sideDoorPrivacyGlassName"]     = $sideDoorPrivacyGlassName;
+		$data["sideDoorPrivacyGlassType"]     = CSV2DB_commonType( $sideDoorPrivacyGlassType );
+		$data["sideDoorPrivacyGlassSpot"]     = CSV2DB_commonSpot( $sideDoorPrivacyGlassSpot );
+		$data["cornerRingLampName"]           = $cornerRingLampName;
+		$data["cornerRingLampType"]           = CSV2DB_commonType( $cornerRingLampType );
+		$data["cornerRingLampSpot"]           = CSV2DB_commonSpot( $cornerRingLampSpot );
+		$data["sideBlindMonitorName"]         = $sideBlindMonitorName;
+		$data["sideBlindMonitorType"]         = CSV2DB_commonType( $sideBlindMonitorType );
+		$data["sideBlindMonitorSpot"]         = CSV2DB_commonSpot( $sideBlindMonitorSpot );
+		$data["rearWiperName"]                = $rearWiperName;
+		$data["rearWiperType"]                = CSV2DB_commonType( $rearWiperType );
+		$data["rearWiperSpot"]                = CSV2DB_commonSpot( $rearWiperSpot );
+
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

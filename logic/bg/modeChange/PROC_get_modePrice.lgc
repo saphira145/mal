@@ -1,0 +1,10 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// グレードリスト
+	$output["model"]["carGradeList"] = $class["modelUser_1"]->get_carGradeIDList( $output["model"]["makerCode"], $output["model"]["modelCode"] );
+
+?>

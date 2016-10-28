@@ -1,0 +1,6 @@
+searchs
+	a, modelName                         = targetModelName
+	a, carAddDate                        = carAddDate
+	a, gasoline                          = gasoline
+	a, voluntaryInsurance                = voluntaryInsurance
+	a, option                            = option({modelName})

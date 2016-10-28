@@ -1,0 +1,45 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// 入力エラー
+	if( $ini["system"]["errRank"] == 2 ) {
+
+
+	}
+	else{
+
+		// テーブルにデータ投入
+		$this->callPROC( "delete_reserveDB" );
+
+		// ＤＢチケットの破棄
+		drop_dbTicket();
+
+	}
+
+	// リリース日時取得（変更フォーム用）
+	$this->callPROC( "get_reserveInfo" );
+
+	// リリース日時取得（削除フォーム用）
+	$this->callPROC( "get_reserveInfoDelete" );
+
+	// ＤＢ管理情報取得
+	$this->callPROC( "get_lockFlg" );
+
+	// 入力へ戻る
+	$this->callVIEW( "form" );
+
+	// テンプレートは固定（list.tmp）
+	$viewStatus = "form";
+
+
+
+
+
+?>

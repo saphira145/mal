@@ -1,0 +1,25 @@
+<?php
+
+	/**
+	 * ビュー
+	 */
+	// リース期間の取得
+	$output["paynumList"]  = $ini["lease"]["paynum"];
+
+	// 走行距離の取得
+	for( $i = 0; $i < count($output["paynumList"]); $i++ ){
+		$output["paynumList"][$i]["mileageList"] = $ini["lease"]["mileage"];
+	}
+
+	// メンテナンス区分名の取得
+	for( $i = 0, $iMax = count($output["maintenanceList"]); $i < $iMax; $i++){
+		$output["maintenanceList"][$i]["name"]     = $ini["maintenanceFee"][$i]["name"];
+		$output["maintenanceList"][$i]["mainteNo"] = $i;
+		for( $j = 0, $jMax = count($output["maintenanceList"][$i]["mainte"]); $j < $jMax; $j++ ){
+			$output["maintenanceList"][$i]["mainte"][$j]["num"] = $j;
+		}
+	}
+	
+	// 更新情報取得
+	$output["maintenanceDatetime"]        = get_tableAdminInfo( "maintenanceFee" );
+?>

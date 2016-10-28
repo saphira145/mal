@@ -1,0 +1,9 @@
+/* -------------------------------------
+	ACTION.lst
+	for NetGRID PHP Framework v2
+------------------------------------- */
+in,   leasePreset
+ps,   presetSet
+gl,   gasolineList
+
+ix, in

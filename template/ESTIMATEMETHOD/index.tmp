@@ -1,0 +1,47 @@
+{frame /_common/outerFrame_popup.tmp}
+
+<div id="estimateMethod">
+	<h2>お見積りのご依頼方法</h2>
+	<div class="speak">
+		<div class="user">
+			<img src="{val BASE_DIR}/_common/img/ico/ico_you.png" alt="お客様" width="90px" height="99px">
+			<span class="text">
+				自動車リースって詳しくないんだよな・・。<br>
+				この車のリース料って幾ら位なんだろう・・。
+			</span>
+		</div>
+		<div class="operator">
+			<img src="{val BASE_DIR}/_common/img/ico/ico_operator.png" alt="お客様" width="90px" height="99px">
+			<span class="text">
+				ご安心ください。<br>
+				先ずは、下記の方法にてお気軽にお問い合わせください。<br>
+				専門の担当者が、親切丁寧にご案内させて頂きます。
+			</span>
+		</div>
+	</div>
+	<div class="web">
+		<h3 class="faDesktop">Webでのお見積り</h3>
+		<dl>
+			<dt>１</dt>
+			<dd>「お見積りボタン」（<img class="mainBtn" src="{val BASE_DIR}/_common/img/btn/btn_s_estimate.png" alt="リースのお見積" width="135px" />ボタン 又は <img class="sabBtn" src="{val BASE_DIR}/_common/img/ico/ico_calculator.png" width="15px" />ボタン）を押してください。</dd>
+			<dt>２</dt>
+			<dd>所定フォームに必要事項をご記入頂き、「送信ボタン」を押してください。</dd>
+			<dt>３</dt>
+			<dd>お見積りを作成し、三菱オートリース営業担当者よりご連絡をさせて頂きます。</dd>
+		</dl>
+		<span class="note">※お見積りの回答には当日～3日間程度お時間を頂きます。ご了承ください。<br>（お見積りする車種により、日数が異なります）</span>
+	</div>
+	<div class="phone">
+		<h3 class="faPhone">お電話でのお見積り</h3>
+		<dl>
+			<dt>１</dt>
+			<dd>「お問い合わせ電話番号：03-5476-0742」にご連絡ください。</dd>
+			<dt>２</dt>
+			<dd>お見積りの作成に必要な情報を、オペレーターよりご質問させて頂きます。</dd>
+			<dt>３</dt>
+			<dd>お見積りを作成し、三菱オートリース営業担当者よりご連絡をさせて頂きます。</dd>
+		</dl>
+		<span class="note">※お見積りの回答には当日～3日間程度お時間を頂きます。ご了承ください。<br>（お見積りする車種により、日数が異なります）</span>
+	</div>
+
+</div>

@@ -1,0 +1,16 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// 権限プルダウン取得
+	$output["statusType"] = get_themeStatusSelect( $output["searchLevel"] );
+
+	// リスト表示設定
+	$output["themeList"] = $class["themeAdmin_1"]->convert_List( $output["themeList"] );
+
+	// ボディタイプ名の取得
+	$output["bodyTypeList"] = $ini["bodyType"];
+	$output["bodyTypeListNum"] = count($ini["bodyType"]);
+?>

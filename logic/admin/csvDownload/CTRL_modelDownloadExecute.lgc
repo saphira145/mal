@@ -1,0 +1,43 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	if( $ini["system"]["errRank"] == 2 ) {
+
+	}
+	else{
+
+		// ＣＳＶ作成
+		$this->callPROC( "create_modelCSV" );
+
+		// ダイアログ表示
+		$this->callVIEW( "display_dialog" );
+
+		// 処理をしない
+		exit;
+
+	}
+
+	// 入力へ戻る
+	$this->callVIEW( "form" );
+
+	// テンプレートは固定（list.tmp）
+	$viewStatus = "list";
+
+
+
+
+
+
+
+
+
+
+
+?>

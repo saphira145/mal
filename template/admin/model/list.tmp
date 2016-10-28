@@ -1,0 +1,83 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input menu_model=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼車種の検索</h2>
+	<p class="actionMsg">検索内容を選択して「検索」ボタンを押してください。</p>
+	
+	<form name="form_search" method="get" action="{val UNIT_URL}/ls/">
+		<input type="hidden" name="pageNum" value="" />
+		<table class="tblForm">
+		<tr>
+			<th class="w150">車種コード</th>
+			<td><input type="text" name="searchModelCode" value="{val searchModelCode|htmlspecialchars}" class="w60" /></td>
+		</tr>
+		<tr>
+			<th class="w150">メーカー名</th>
+			<td>
+				<select name="searchMakerCode" class="w20">
+					<option value=""></option>
+<!--{loop makerList}-->
+					<option value="{val makerList/makerCode}"<!--{set makerList/selected}--> selected="selected"<!--{/set}-->>{val makerList/makerName}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>車種名</th>
+			<td><input type="text" name="searchModelName" value="{val searchModelName|htmlspecialchars}" class="w60" /></td>
+		</tr>
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input class="btnW01" type="button" value="クリア" onclick="clear_form( this.form ); return;" />
+			<input class="btnW01" type="submit" value="検索" />
+		</div>
+	</form>
+</div>
+<div class="contentSection">
+	<h2 class="mrgB_10">▼車種の一覧・編集</h2>
+	<div class="btnArea txt_left">
+		<input type="button" value="新規追加" class="btnW01" onclick="location.href='{val UNIT_URL}/ai/'; return false;" />
+	</div>
+
+	<div class="list">
+<!--{set modelListDisp}-->
+		<!-- ページコントロール -->
+		{file /admin/_common/parts/pageControl.tmp}
+		
+		<table class="tblList">
+			<tr>
+				<th class="w80">車種コード</th>
+				<th class="w170">メーカー名</th>
+				<th class="w310">車種名</th>
+				<th class="w310">車種名（英語）</th>
+				<th class="w40">機能</th>
+			</tr>
+<!--{loop modelList}-->
+			<tr>
+				<td>{val modelList/modelCode|zeroPadding:3}</td>
+				<td>{val modelList/makerName}</td>
+				<td>{val modelList/modelName}</td>
+				<td>{val modelList/modelNameEng}</td>
+				<td class="txt_center"><input class="btnW03" type="button" value="詳細" onclick="location.href='{val UNIT_URL}/dt/{val modelList/makerCode}/{val modelList/modelCode}/'; return false;" /></td>
+			</tr>
+<!--{/loop}-->
+		</table>
+		<!-- ページコントロール -->
+		{file /admin/_common/parts/pageControl.tmp}
+<!--{/set}-->
+<!--{unset modelListDisp}-->
+	<p class="txt_result">登録されているデータはありません。</p>
+<!--{/unset}-->
+	</div>
+</div>
+
+
+<!-- /ページコントロール -->
+
+
+
+

@@ -1,0 +1,29 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+
+	// リリース日時取得（変更フォーム用）
+	$this->callPROC( "get_reserveInfo" );
+
+	// リリース日時取得（削除フォーム用）
+	$this->callPROC( "get_reserveInfoDelete" );
+
+	// ＤＢ管理情報取得
+	$this->callPROC( "get_lockFlg" );
+
+	// 表示
+	$this->callVIEW( "form" );
+
+
+
+
+
+
+?>

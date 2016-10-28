@@ -1,0 +1,58 @@
+/admin/maker
+	TITLE = "メーカー管理（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（一覧）"
+
+/admin/maker/ae
+	TITLE = "メーカー管理（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（一覧）"
+
+/admin/maker/me
+	TITLE = "メーカー管理（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（一覧）"
+
+/admin/maker/dc
+	TITLE = "メーカー管理（削除確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（削除確認）"
+
+/admin/maker/de
+	TITLE = "メーカー管理（削除完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（削除完了）"
+
+/admin/maker/dni
+	TITLE = "メーカー管理（表示順設定）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（表示順設定）"
+
+/admin/maker/dnr
+	TITLE = "メーカー管理（表示順設定再設定）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（表示順設定再設定）"
+
+/admin/maker/dnc
+	TITLE = "メーカー管理（表示順設定確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（表示順設定確認）"
+
+/admin/maker/dne
+	TITLE = "メーカー管理（表示順設定完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メーカー管理（表示順設定完了）"
+
+
+
+
+

@@ -1,0 +1,21 @@
+<div class="selectSelectList">
+	<div class="actionBtn">
+		<a href="javascript:void(0)" data-linkName="compareBtn" class="faSearch" onClick="eventClick_compareBtn()" />チェックした車種を比較</a>
+
+		<small>気になるクルマにチェックを入れ、左のボタンをクリックすると、車種の比較ができます。<br />閲覧回数の多い順にランキングされています。</small>
+		<span class="caretDown"></span>
+	<!--/#actionBtn--></div>
+
+	{file /_common/parts/selectBox.tmp}
+
+	<div class="floating">
+		<span class="faCaretUp"></span>
+		{file /_common/parts/searchForm.tmp}
+		<div class="searchBtn">
+			<a href="javascript:void(0)" data-linkName="no" class="faTimesCircle">キャンセル</a>
+			<span></span>
+			<a href="javascript:void(0)" data-linkName="ok" class="faRepeat" />OK</a>
+		<!--/.searchBtn--></div>
+	</div>
+
+<!--/.selectSelectList--></div>

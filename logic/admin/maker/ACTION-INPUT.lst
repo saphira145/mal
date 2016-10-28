@@ -1,0 +1,16 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	list,              
+	addExecute,        addFields
+	modifyExecute,     targetMakerCode modifyFields
+	deleteConfirm,     ids
+	deleteExecute,     ids
+	dispNumInput,
+	dispNumReinput,    sortIDs
+	dispNumConfirm,    sortIDs
+	dispNumExecute,    sortIDs
+

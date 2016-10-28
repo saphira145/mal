@@ -1,0 +1,8 @@
+searchs
+	a, searchMakerCode                     = searchMakerCode                      // メーカーコード                      name="searchMakerCode"
+	a, searchModelName                     = searchModelName                      // メーカー名                          name="searchModelName"
+	a, searchBodyType                      = searchBodyType                       // ボディタイプ                        name="searchBodyType"
+	a, pageNum                             = pageNum                              // ページ番号                          name="pageNum"
+
+themeID
+	a, themeID                             = themeID                              // テーマID                            name="themeID"

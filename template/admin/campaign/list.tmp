@@ -1,0 +1,112 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/openWindowBtnActionAdmin.js}
+{input menu_campaign=1}
+<style type="text/css">
+.thumbnail{
+	display:inline-block;
+	background-color:#ffffff;
+	background-position:center center;
+	background-repeat:no-repeat;
+	margin:5px;
+	width:260px;
+	height:100px;
+	border:1px solid #cccccc;
+	background-size:contain;
+}
+</style>
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼キャンペーン対象車種の設定</h2>
+	<p class="actionMsg">キャンペーン内容を入力し、「更新」ボタンを押してください。</p>
+	<p class="actionMsg"><span>キャンペーン設定はリアルタイムで更新されます。</span></p>
+
+	<form name="campaign" id="campaign" method="post" action="{val UNIT_URL}/"  enctype="multipart/form-data" >
+		{dbTicket}
+		<input type="hidden" name="st" value="me" />
+		<!--{set modify_sucessFlg}-->
+		<p class="actionMsg"><font color="red">更新が完了しました。</font></p>
+		<!--{/set}-->
+		
+		<table class="tblForm">
+<!--{loop campaignInfo}-->
+			<tr>
+				<th class="w140">
+					キャンペーン{val campaignInfo/campaignNum}
+					<input type="hidden" id="campaignInfo[{val campaignInfo/lgcNum}][campaignNum]" name="campaignInfo[{val campaignInfo/lgcNum}][campaignNum]" value="{val campaignInfo/campaignNum}" />
+				</th>
+				<td>
+					<table class="tbl_campaign tbl_inner">
+					<tr>
+						<th class="w100">キャンペーン名</th>
+						<td>
+<!--{set campaignInfo/campaignName+err}-->
+<!--{loop campaignInfo/campaignName+err}-->
+							<p class="err">{val campaignInfo/campaignName+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+							<input type="text" id="campaignInfo[{val campaignInfo/lgcNum}][campaignName]" name="campaignInfo[{val campaignInfo/lgcNum}][campaignName]" value="{val campaignInfo/campaignName|htmlspecialchars}" class="w50" />
+						</td>
+					</tr>
+					<tr>
+						<th>遷移先URL</th>
+						<td>
+<!--{set campaignInfo/campaignURL+err}-->
+<!--{loop campaignInfo/campaignURL+err}-->
+							<p class="err">{val campaignInfo/campaignURL+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+							<input type="text" id="campaignInfo[{val campaignInfo/lgcNum}][campaignURL]" name="campaignInfo[{val campaignInfo/lgcNum}][campaignURL]" value="{val campaignInfo/campaignURL|htmlspecialchars}" class="w50" />
+						</td>
+					</tr>
+					<tr>
+						<th>キャンペーン画像</th>
+						<td id="campaignPhoto_{val campaignInfo/lgcNum}">
+<!--{set campaignInfo/campaignPhoto+err}-->
+<!--{loop campaignInfo/campaignPhoto+err}-->
+							<p class="err">{val campaignInfo/campaignPhoto+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+<!--{set campaignInfo/input_campaignPhoto+err}-->
+<!--{loop campaignInfo/input_campaignPhoto+err}-->
+							<p class="err">{val campaignInfo/input_campaignPhoto+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+							<input type="file" class="inputFile" id="campaignInfo[{val campaignInfo/lgcNum}][campaignPhoto]" name="campaignInfo[{val campaignInfo/lgcNum}][campaignPhoto]" size="60" />
+							<!--{set campaignInfo/campaignPhotoFlg}-->
+							<div class="setImg" id="campaignInfo[{val campaignInfo/lgcNum}][campaignImg]">
+								<span class="thumbnail" style="background-image:url('{val BASE_DIR}/_common/PHOTO/CAMPAIGN/campaign{val campaignInfo/campaignNum}{val campaignInfo/extension}')"></span>
+								<label><input type="checkbox" name="campaignInfo[{val campaignInfo/lgcNum}][delete_campaignPhoto]" id="campaignInfo[{val campaignInfo/lgcNum}][delete_campaignPhoto]" value="1" <!--{set campaignInfo/delete_campaignPhoto}-->checked="checked"<!--{/set}--> />&nbsp;この画像をキャンセルする</label>
+								<input type="hidden" id="campaignInfo[{val campaignInfo/lgcNum}][input_campaignPhoto]" name="campaignInfo[{val campaignInfo/lgcNum}][input_campaignPhoto]" value="1" />
+							</div>
+							<!--{/set}-->
+							<!--{unset campaignInfo/campaignPhotoFlg}-->
+							<!--{set campaignInfo/delete_campaignPhoto}-->
+								<input type="hidden" id="campaignInfo[{val campaignInfo/lgcNum}][delete_campaignPhoto]" name="campaignInfo[{val campaignInfo/lgcNum}][delete_campaignPhoto]" value="1" />
+							<!--{/set}-->
+							<!--{/unset}-->
+						</td>
+					</tr>
+					<tr>
+						<th>表示順</th>
+						<td>
+<!--{set campaignInfo/dispNum+err}-->
+<!--{loop campaignInfo/dispNum+err}-->
+							<p class="err">{val campaignInfo/dispNum+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+							<input type="text" id="campaignInfo[{val campaignInfo/lgcNum}][dispNum]" name="campaignInfo[{val campaignInfo/lgcNum}][dispNum]" value="{val campaignInfo/dispNum|htmlspecialchars}" class="w10" />
+							<input type="button" id="delBtn_{val campaignInfo/lgcNum}" class="btnW03" onclick="delCampaign({val campaignInfo/lgcNum});" value="解除" <!--{unset campaignInfo/campaignFlg}-->disabled="disabled"<!--{/unset}-->>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+<!--{/loop}-->
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="更新" class="btnW01" onclick="confirmDialog('campaign',''); return false;">
+		</div>
+	</form>
+</div>

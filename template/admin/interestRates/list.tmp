@@ -1,0 +1,63 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/openWindowBtnActionAdmin.js}
+{input menu_interestRates=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection interestRatesList">
+	<h2 class="mrgB_0">▼金利の設定</h2>
+	<p class="actionMsg">
+		金利を設定し、「更新」ボタンを押してください。<br>
+		<span>金利はリアルタイムで更新されます。</span>
+	</p>
+
+	<form name="interestRates" id="interestRates" method="post" action="{val UNIT_URL}/">
+		<input type="hidden" name="st" value="ime" />
+		{dbTicket}
+
+		<!--{set interestRates_sucessFlg}-->
+		<p class="actionMsg"><span>更新が完了しました。</span></p>
+		<!--{/set}-->
+		
+		<!--{set errSetFlag}-->
+		<p class="err">入力値に不備があります。</p>
+		<!--{/set}-->
+		<div><!--{set interestRatesDatetime.updateDatetime.year}-->最終更新日時&nbsp;{val interestRatesDatetime.updateDatetime.year}-{val interestRatesDatetime.updateDatetime.month|zeroPadding:2}-{val interestRatesDatetime.updateDatetime.day|zeroPadding:2} {val interestRatesDatetime.updateDatetime.hour|zeroPadding:2}:{val interestRatesDatetime.updateDatetime.min|zeroPadding:2}<!--{/set}--></div>
+		<table class="tblForm">
+			<tr>
+				<th rowspan="2"></th>
+<!--{loop paynumList}-->
+				<td colspan="2"  class="txt_center">{val paynumList/name}</td>
+<!--{/loop}-->
+			</tr>
+			<tr>
+				<td class="txt_center">OUT</td>
+				<td class="txt_center">IN</td>
+				<td class="txt_center">OUT</td>
+				<td class="txt_center">IN</td>
+				<td class="txt_center">OUT</td>
+				<td class="txt_center">IN</td>
+			</tr>
+		<!--{loop interestRatesList}-->
+			<tr>
+				<th class="w140">
+					{val interestRatesList/name}
+					<input type="hidden" name="interestRatesList[{val interestRatesList/ratesID}][ratesID]" value="{val interestRatesList/ratesID}" />
+					<input type="hidden" name="interestRatesList[{val interestRatesList/ratesID}][rates][0][payNumID]" value="0" />
+					<input type="hidden" name="interestRatesList[{val interestRatesList/ratesID}][rates][1][payNumID]" value="1" />
+					<input type="hidden" name="interestRatesList[{val interestRatesList/ratesID}][rates][2][payNumID]" value="2" />
+				</th>
+				<td class="txt_center <!--{set interestRatesList/rates.0.ratesOut+err}-->errBgCol<!--{/set}-->"><input class="w15" type="text" name="interestRatesList[{val interestRatesList/ratesID}][rates][0][ratesOut]" value="{val interestRatesList/rates.0.ratesOut}" />&nbsp;%</td>
+				<td class="txt_center <!--{set interestRatesList/rates.0.ratesIn+err}-->errBgCol<!--{/set}-->"><input class="w15" type="text" name="interestRatesList[{val interestRatesList/ratesID}][rates][0][ratesIn]"  value="{val interestRatesList/rates.0.ratesIn}" />&nbsp;%</td>
+				<td class="txt_center <!--{set interestRatesList/rates.1.ratesOut+err}-->errBgCol<!--{/set}-->"><input class="w15" type="text" name="interestRatesList[{val interestRatesList/ratesID}][rates][1][ratesOut]" value="{val interestRatesList/rates.1.ratesOut}" />&nbsp;%</td>
+				<td class="txt_center <!--{set interestRatesList/rates.1.ratesIn+err}-->errBgCol<!--{/set}-->"><input class="w15" type="text" name="interestRatesList[{val interestRatesList/ratesID}][rates][1][ratesIn]"  value="{val interestRatesList/rates.1.ratesIn}" />&nbsp;%</td>
+				<td class="txt_center <!--{set interestRatesList/rates.2.ratesOut+err}-->errBgCol<!--{/set}-->"><input class="w15" type="text" name="interestRatesList[{val interestRatesList/ratesID}][rates][2][ratesOut]" value="{val interestRatesList/rates.2.ratesOut}" />&nbsp;%</td>
+				<td class="txt_center <!--{set interestRatesList/rates.2.ratesIn+err}-->errBgCol<!--{/set}-->"><input class="w15" type="text" name="interestRatesList[{val interestRatesList/ratesID}][rates][2][ratesIn]"  value="{val interestRatesList/rates.2.ratesIn}" />&nbsp;%</td>
+			</tr>
+		<!--{/loop}-->
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="更新" class="btnW01" onClick="confirmDialog('interestRates', '金利'); return false;">
+		</div>
+	</form>
+</div>

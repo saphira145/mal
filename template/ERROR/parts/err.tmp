@@ -1,0 +1,7 @@
+<!--{set SEO.ERRER}-->
+{file userErr.tmp}
+<!--{/set}-->
+
+<!--{unset SEO.ERRER}-->
+{file adminErr.tmp}
+<!--{/unset}-->

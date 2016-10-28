@@ -1,0 +1,3 @@
+modifyFields
+	a, noticeText = noticeText  // お知らせ内容
+

@@ -1,0 +1,21 @@
+
+
+<h1>ロックアウト</h1>
+<br />
+
+<form name="loginForm" method="post" action="">
+	<input type="hidden" name="st" value="fr" />
+
+
+
+
+<table>
+	<tr>
+		<td colspan="2" style="color:#DD0000;font-weight:bold;line-height:160%;">ロックアウトしています。<br />
+しばらくしてからもう一度やり直してください。
+		</td>
+	</tr>
+</table>
+
+</form>
+

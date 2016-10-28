@@ -1,0 +1,29 @@
+<div id="compareCarName">
+	<div class="boxShadow">
+		<table>
+		<tr>
+			<th>車種名</th>
+	<!--{loop modelDataList}-->
+			<td <!--{set modelDataList/notData}-->class="{val modelDataList/notData}"<!--{/set}-->><img src="{val BASE_DIR}/_common/PHOTO/{val PHOTO_DIR}/CARBODY/s_{val modelDataList/carBodyPhotoName}.jpg" alt="{val modelDataList/modelName}" /><br/>{val modelDataList/modelName}</td>
+	<!--{/loop}-->
+		</tr>
+		</table>
+		<div class="compareIcon">
+			<ul>
+				<li><span class="fa fa-circle"></span>標準装備</li>
+				<li><span class="fa fa-times"></span>装備なし</li>
+				<li><span class="fa fa-ellipsis-h"></span>カタログ上で記載なし</li>
+				<li><span class="fa fa-tag mop">MOP</span>メーカーオプション</li>
+				<li><span class="fa fa-tag dop">DOP</span>ディーラーオプション</li>
+			</ul>
+			<!--{set SALESPROMOTION_FLG}-->
+			<span class="filter">
+			<a href="javascript:void(0)" class="faFilter" >
+				<!--{unset filter}-->スペックの絞り込み<!--{/unset}-->
+				<!--{set filter}-->絞り込み解除<!--{/set}-->
+			</a>
+			</span>
+			<!--{/set}-->
+		</div>
+	</div>
+</div>

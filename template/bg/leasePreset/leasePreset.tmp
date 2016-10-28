@@ -1,0 +1,69 @@
+<div class="presetBox">
+	<h2>事前設定</h2>
+	<div>
+		各項目を設定して「決定」ボタンを押してください。<br>
+		設定後、画面が自動でリロードされます。
+	</div>
+	<table>
+	<tr>
+		<th>ガソリン価格</th>
+		<td class="gasolineInfo">
+			<select name="preset[prefecture]">
+<!--{loop preset.prefecture}-->
+				<option value="LG{val preset.prefecture/id|zeroPadding:3}"<!--{set preset.prefecture/selected}-->selected="selected"<!--{/set}-->>&nbsp;{val preset.prefecture/name}</option>
+<!--{/loop}-->
+			</select>
+			<dl class="gasoline">
+				<dt>レギュラー</dt>
+				<dd class="regular"><!--{set preset.gasoline.regularGasoline}-->{val preset.gasoline.regularGasoline|number_format:1} 円<!--{/set}--><!--{unset preset.gasoline.regularGasoline}-->データがありません<!--{/unset}--></dd>
+				<dt>ハイオク</dt>
+				<dd class="highOctane"><!--{set preset.gasoline.highOctaneGasoline}-->{val preset.gasoline.highOctaneGasoline|number_format:1} 円<!--{/set}--><!--{unset preset.gasoline.highOctaneGasoline}-->データがありません<!--{/unset}--></dd>
+				<dt>軽油</dt>
+				<dd class="diesel"><!--{set preset.gasoline.dieselGasoline}-->{val preset.gasoline.dieselGasoline|number_format:1} 円<!--{/set}--><!--{unset preset.gasoline.dieselGasoline}-->データがありません<!--{/unset}--></dd>
+			</dl>
+			<ul class="note">
+				<li>{val gasolineUpdateInfo.workDatetime.year}年{val gasolineUpdateInfo.workDatetime.month|zeroPadding:2}月{val gasolineUpdateInfo.workDatetime.day|zeroPadding:2}日 {val gasolineUpdateInfo.workDatetime.hour}時 現在</li>
+				<li>残価、メンテ料<!--{unset voluntaryInsuranceHidFlg}-->、任意保険料<!--{/unset}-->は <b>本土標準エリア</b> の料金となります。</li>
+				<li><span>ガソリン価格データは、株式会社ゴーゴーラボより利用許諾を得て掲載しております。<br>価格データがない場合は、「全国平均」を使用してください。</span></li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th>使用開始年月</th>
+		<td class="addDateInfo">
+			<p class="err addDateErr"></p>
+			<select name="preset[addDate]">
+<!--{loop preset.addDate}-->
+				<option value="{val preset.addDate/date}"<!--{set preset.addDate/selected}-->selected="selected"<!--{/set}-->>&nbsp;{val preset.addDate/disp}</option>
+<!--{/loop}-->
+			</select>
+		</td>
+	</tr>
+
+<!--{unset voluntaryInsuranceHidFlg}-->
+	<tr>
+		<th>任意保険</th>
+		<td class="voluntaryInsurance">
+<!--{loop preset.voluntaryInsurance}-->
+			<label <!--{set preset.voluntaryInsurance/selected}--> class="checkcolor"<!--{/set}-->><input type="checkbox" name="preset[voluntaryInsurance]" value="LA{val preset.voluntaryInsurance/id|zeroPadding:3}"<!--{set preset.voluntaryInsurance/selected}--> checked="checked"<!--{/set}--> />&nbsp;{val preset.voluntaryInsurance/name}</label>
+<!--{/loop}-->
+		</td>
+	</tr>
+<!--{/unset}-->
+
+	<tr>
+		<th>オプション</th>
+		<td>
+			<ul class="optionItem">
+<!--{loop preset.option}-->
+				<li <!--{set preset.option/notBorder}--> class="notBorder"<!--{/set}--> > 
+					<span class="name">{val preset.option/name}</span>
+					<span class="optionCheck"><span class="faCheck optionCheck <!--{set preset.option/selected}-->checkcolor<!--{/set}-->" ><input type="checkbox" name="preset[option]" value="LO{val preset.option/id|zeroPadding:3}I0" <!--{set preset.option/selected}--> checked="checked"<!--{/set}--> /></span></span>
+				</li>
+<!--{/loop}-->
+			</ul>
+		</td>
+	</tr>
+	</table>
+	<div class="btnArea"><a href="javascript:void(0)" class="decisionButton faCheck">決定</a></div>
+</div>

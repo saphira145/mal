@@ -1,0 +1,82 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// 比較車種１
+	list( $output["model1"]["makerCode"], $output["model1"]["modelCode"] ) = explode( "-", $output["modelName1"] );
+	$output["model1"]["carGradeCode"] = $output["carGradeCode1"];
+	if( !empty($output["model1"]["makerCode"]) && !empty($output["model1"]["modelCode"]) && empty($output["model1"]["carGradeCode"]) ){
+		list($output["model1"]["carGradeCode"]) = $class["modelUser_1"]->get_defaultCarGrade( $output["model1"]["makerCode"], $output["model1"]["modelCode"] );
+	}
+	
+	// 比較車種２
+	list( $output["model2"]["makerCode"], $output["model2"]["modelCode"] ) = explode( "-", $output["modelName2"] );
+	$output["model2"]["carGradeCode"] = $output["carGradeCode2"];
+	if( !empty($output["model2"]["makerCode"]) && !empty($output["model2"]["modelCode"]) && empty($output["model2"]["carGradeCode"]) ){
+		list($output["model2"]["carGradeCode"]) = $class["modelUser_1"]->get_defaultCarGrade( $output["model2"]["makerCode"], $output["model2"]["modelCode"] );
+	}
+
+	// 比較車種３
+	list( $output["model3"]["makerCode"], $output["model3"]["modelCode"] ) = explode( "-", $output["modelName3"] );
+	$output["model3"]["carGradeCode"] = $output["carGradeCode3"];
+	if( !empty($output["model3"]["makerCode"]) && !empty($output["model3"]["modelCode"]) && empty($output["model3"]["carGradeCode"]) ){
+		list($output["model3"]["carGradeCode"]) = $class["modelUser_1"]->get_defaultCarGrade( $output["model3"]["makerCode"], $output["model3"]["modelCode"] );
+	}
+
+	// 比較車種４
+	list( $output["model4"]["makerCode"], $output["model4"]["modelCode"] ) = explode( "-", $output["modelName4"] );
+	$output["model4"]["carGradeCode"] = $output["carGradeCode4"];
+	if( !empty($output["model4"]["makerCode"]) && !empty($output["model4"]["modelCode"]) && empty($output["model4"]["carGradeCode"]) ){
+		list($output["model4"]["carGradeCode"]) = $class["modelUser_1"]->get_defaultCarGrade( $output["model4"]["makerCode"], $output["model4"]["modelCode"] );
+	}
+
+
+	// GETパラメータの取得
+	$getKry = array("from", "maker", "type", "theme", "price");
+	foreach( $getKry as $key ){
+		$output["parameter"][$key] = $_GET[$key];
+	}
+
+	// 検索条件の取得(ランキングから遷移した時のみ実施)
+	if( $output["parameter"]["from"] == "ranking" ){
+		// メーカー名の取得
+		if( !empty($output["parameter"]["maker"]) ){
+			$explodeList["maker"] = explode(" ", $output["parameter"]["maker"]);
+
+			foreach( $explodeList["maker"] as $val ){
+				if( is_numeric($val) ){
+					$output["search"]["maker"][]["ID"] = $val;
+				}
+			}
+		}
+
+		// ボディタイプ名の取得
+		if( !empty($output["parameter"]["type"]) ){
+			$explodeList["type"] = explode(" ", $output["parameter"]["type"]);
+
+			foreach( $explodeList["type"] as $val ){
+				if( is_numeric($val) ){
+					$output["search"]["type"][]["ID"] = $val;
+				}
+			}
+		}
+
+		// テーマ名の取得
+		if( !empty($output["parameter"]["theme"]) ){
+			$explodeList["theme"] = explode(" ", $output["parameter"]["theme"]);
+
+			foreach( $explodeList["theme"] as $val ){
+				if( is_numeric($val) ){
+					$output["search"]["theme"][]["ID"] = $val;
+				}
+			}
+		}
+
+		// 価格名の取得
+		if( !empty($output["parameter"]["price"]) && is_numeric($output["parameter"]["price"])){
+			$output["search"]["price"][]["ID"] = $output["parameter"]["price"];
+		}
+	}
+?>

@@ -1,0 +1,31 @@
+<?php
+
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// 表示
+	if ( $ini["system"]["errRank"] == 2 ) {
+		$viewStatus = "modifyReinput";
+		$this->callVIEW( "form" );
+	}
+	else{
+		$this->callVIEW( "display" );
+	}
+
+
+
+
+
+
+
+
+
+
+
+?>

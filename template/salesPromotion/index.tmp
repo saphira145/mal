@@ -1,0 +1,4 @@
+{frame /salesPromotion/_common/outerFrame.tmp}
+{input menu_top=1}
+<h1 class="tit">{val SEO.H1}</h1>
+

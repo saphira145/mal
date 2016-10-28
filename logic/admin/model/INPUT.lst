@@ -1,0 +1,43 @@
+ids
+	a, orgMakerCode                         = orgMakerCode                           // オリジナルメーカーコード
+	a, orgModelCode                         = orgModelCode                           // オリジナル車種コード
+
+
+fields
+	a, modelInfo.modelCode                 = modelCode({orgMakerCode}:{orgModelCode}:{modelInfo.makerCode})         // 車種コード                        name="modelInfo[modelCode]";
+	a, modelInfo.makerCode                 = makerCode                              // メーカーコード                    name="modelInfo[makerCode]"
+	a, modelInfo.modelName                 = modelName                              // 車種名                            name="modelInfo[modelName]"
+	a, modelInfo.modelNameEng              = modelNameEng                           // 車種名（英語）                    name="modelInfo[modelNameEng]"
+	a, modelInfo.price.mini                = mini                                   // 価格                              name="modelInfo[mini]"
+	a, modelInfo.price.max                 = max                                    // 価格                              name="modelInfo[max]"
+	 , modelInfo.price                     = priceCheck                             // 価格                              name="modelInfo[priceCheck]"
+	a, modelInfo.totalLength.mini          = mini                                   // 全長                              name="modelInfo[mini]"
+	a, modelInfo.totalLength.max           = max                                    // 全長                              name="modelInfo[max]"
+	 , modelInfo.totalLength               = price                                  // 全長                              name="modelInfo[price]"
+	a, modelInfo.totalWidth.mini           = mini                                   // 全幅                              name="modelInfo[mini]"
+	a, modelInfo.totalWidth.max            = max                                    // 全幅                              name="modelInfo[max]"
+	 , modelInfo.totalWidth                = price                                  // 全幅                              name="modelInfo[price]"
+	a, modelInfo.totalHeight.mini          = mini                                   // 全高                              name="modelInfo[mini]"
+	a, modelInfo.totalHeight.max           = max                                    // 全高                              name="modelInfo[max]"
+	 , modelInfo.totalHeight               = price                                  // 全高                              name="modelInfo[price]"
+	a, modelInfo.announcementDay.date      = announcementDay                        // 発売日                            name="modelInfo[topDispFlg]"
+	a, modelInfo.carBodyPhoto              = carBodyPhoto
+	a, modelInfo.tempCarBodyPhoto          = tempCarBodyPhoto
+	a, delete_carBodyPhoto                 = delete_carBodyPhoto
+	a, delete_entryCarBodyPhoto            = delete_carBodyPhoto
+	a, theme/themeID                       = theme                                      // テーマ
+	a, modelInfo.campaignScore             = campaignScore                              // キャンペーンスコア
+	a, modelInfo.lowPriceCarGradeID        = carGradeID({orgMakerCode}:{orgModelCode})  // 車種グレード(廉価)
+	a, modelInfo.s2wdCarGradeID            = carGradeIDoverlap({orgMakerCode}:{orgModelCode})  // 車種グレード(標準2WD)
+	a, modelInfo.s4wdCarGradeID            = carGradeIDoverlap({orgMakerCode}:{orgModelCode})  // 車種グレード(標準4WD)
+	a, modelInfo.webCatalogueUrl           = webCatalogueUrl                        // WebカタログURL                  name="modelInfo[webCatalogueUrl]"
+	a, modelInfo.valueUrl                  = valueUrl                               // バリュー誘導先URL                name="modelInfo[valueUrl]"
+	a, modelInfo.photoGalleryUrl           = photoGalleryUrl                        // ギャラリーURL                   name="modelInfo[photoGalleryUrl]"
+
+
+searchs
+	a, searchModelCode                     = searchModelCode                      // 車種コード                          name="searchModelCode"
+	a, searchMakerCode                     = searchMakerCode                      // メーカーコード                      name="searchMakerCode"
+	a, searchModelName                     = searchModelName                      // メーカー名                          name="searchModelName"
+	a, pageNum                             = pageNum                              // ページ番号                          name="pageNum"
+

@@ -1,0 +1,28 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// 優先度
+	for( $i=0; $i<count( $output["priorityNumList"] ); $i++ ) {
+	
+		$priorityNum = $i +1;
+		$class["themeAdmin_1"]->update_dispNumDB( $output["priorityNumList"][$i]["themeID"], "priorityNum", $priorityNum );
+	}
+
+	// 表示順
+	for( $i=0; $i<count( $output["dispNumList"] ); $i++ ) {
+		$dispNum = $i +1;
+		$class["themeAdmin_1"]->update_dispNumDB( $output["dispNumList"][$i]["themeID"], "dispNum", $dispNum );
+	}
+
+
+
+
+
+
+
+
+
+?>

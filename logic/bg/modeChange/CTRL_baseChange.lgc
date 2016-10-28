@@ -1,0 +1,26 @@
+<?php
+	/* -------------------------------------
+		ロジックコントロール
+	------------------------------------- */
+
+	// 入力チェックの実行（常にチェックする場合は、第二パラメータに "everyTime" と入れること）
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	if( $ini["system"]["errRank"] == 2 ){
+		// 入力エラーあり
+		$output["msg"]["err"]       = 1;
+		$output["msg"]["profitMsg"] = $output["profit+err"][0]["msg"];
+	}else{
+
+		// 入力値変換
+		$this->callPROC( "convert_input" );
+
+		// 項目設定
+		$this->callPROC( "set_basePrice" );
+	}
+
+	// 表示
+	$this->callVIEW( "display" );
+
+
+?>

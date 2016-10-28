@@ -1,0 +1,17 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// 金利リスト取得
+	$this->callPROC( "get_interestRatesList" );
+
+	// 入力へ戻る
+	$this->callVIEW( "list" );
+
+?>

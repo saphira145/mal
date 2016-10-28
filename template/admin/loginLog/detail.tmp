@@ -1,0 +1,49 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input menu_login=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+		<p>ログ種別&nbsp;：&nbsp;{val logTypeLabel}</p>
+    <!--{set logAuto}-->
+		<table class="tblList">
+			<tr>
+				<th class="w120">ログイン年月</th>
+				<th class="w100">ログイン回数</th>
+				<th class="w70">社員番号</th>
+			</tr>
+            <!--{loop loginLogList}-->
+                <tr>
+                    <td class="txt_right">{val loginLogList/date.year}年&nbsp;<!--{set loginLogList/date.month}-->{val loginLogList/date.month}月&nbsp;<!--{/set}--><!--{set loginLogList/date.day}-->{val loginLogList/date.day}日<!--{/set}--></td>
+                    <td class="txt_right">{val loginLogList/logCount} 回</td>
+                    <td class="txt_center">{val loginLogList/employeeNumber}</td>
+                </tr>
+            <!--{/loop}-->
+		</table>
+    <!--{/set}-->
+    <!--{set logManual}-->
+    <table class="tblList">
+        <tr>
+            <th class="w120">ログイン年月</th>
+            <th class="w100">ログイン回数</th>
+            <th class="w70">ログインID</th>
+            <th class="w70">名前</th>
+            <th class="w70">会社名</th>
+        </tr>
+        <!--{loop loginLogList}-->
+        <tr>
+            <td class="txt_right">{val loginLogList/date.year}年&nbsp;<!--{set loginLogList/date.month}-->{val loginLogList/date.month}月&nbsp;<!--{/set}--><!--{set loginLogList/date.day}-->{val loginLogList/date.day}日<!--{/set}--></td>
+            <td class="txt_right">{val loginLogList/logCount} 回</td>
+            <td class="txt_center">{val loginLogList/loginID}</td>
+            <td class="txt_center">{val loginLogList/memberName.familyName}&nbsp;{val loginLogList/memberName.givenName}</td>
+            <td class="txt_center">{val loginLogList/companyName}</td>
+        </tr>
+        <!--{/loop}-->
+    </table>
+    <!--{/set}-->
+</div>
+
+<div class="txt_center">
+	<input type="button" value="戻る" class="btnW01" onclick="history.back();">
+</div>

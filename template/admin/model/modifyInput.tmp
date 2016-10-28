@@ -1,0 +1,38 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/carSearchAdmin.js}
+{input jsList/jsName=/_common/js/openWindowBtnActionAdmin.js}
+{input jsList/jsName=/_common/js/calendar.js}
+{input menu_model=1}
+<link rel="stylesheet" type="text/css" media="all" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+<style type="text/css">
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year{
+	width:auto;
+}
+.ui-datepicker select.ui-datepicker-month{
+	margin-left:0.5em;
+}
+</style>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<p class="actionMsg">各項目を入力して「確認する」ボタンを押してください。</p>
+
+	<form name="form_main" method="post" action="{val UNIT_URL}/mc/{val orgMakerCode}/{val orgModelCode}/" enctype="multipart/form-data">
+		{dbTicket}
+
+		{file parts/form.tmp}
+
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="戻る" class="btnW01" onclick="location.href='{val UNIT_URL}/dt/{val orgMakerCode}/{val orgModelCode}/'; return false;" />
+			<input type="submit" value="確認する" class="btnW01" />
+		</div>
+		<div class="btnArea txt_right">
+			<input type="button" value="削除する" class="btnW01" onclick="location.href='{val UNIT_URL}/dc/{val orgMakerCode}/{val orgModelCode}/'; return false;" />
+		</div>
+	</form>
+</div>

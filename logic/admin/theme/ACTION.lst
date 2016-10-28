@@ -1,0 +1,27 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	ls,   list                    // リスト
+	dt,   detail                  // 詳細
+	ai,   addInput                // 新規登録（入力）
+	ac,   addConfirm              // 新規登録（確認）
+	ar,   addReinput              // 新規登録（再入力）
+	ae,   addExecute              // 新規登録（完了）
+	mi,   modifyInput             // 変更（入力）
+	mc,   modifyConfirm           // 変更（確認）
+	mr,   modifyReinput           // 変更（再入力）
+	me,   modifyExecute           // 変更（完了）
+	dc,   deleteConfirm           // 削除（確認）
+	de,   deleteExecute           // 削除（完了）
+	dni,  dispNumInput            // 表示順変更（入力）
+	dnr,  dispNumReinput          // 表示順変更（再入力）
+	dnc,  dispNumConfirm          // 表示順変更（確認）
+	dne,  dispNumExecute          // 表示順変更（完了）
+
+
+	ix,   ls
+
+

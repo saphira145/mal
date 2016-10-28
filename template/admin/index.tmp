@@ -1,0 +1,340 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_top=1}
+<h1 class="tit">{val SEO.H1}</h1>
+
+<!--{unset SALESMEMBER_SYSTEM}-->
+<div id="consistency">
+	<p>対象の処理をメニューからお選びください</p>
+</div>
+<!--{/unset}-->
+
+<!--{set SALESMEMBER_SYSTEM}-->
+<div id="consistency">
+	<h2>▼データチェック</h2>
+	<p>代表車種グレード設定やおすすめ車種など、各種設定とデータの整合性をチェックします。<br />「チェック」ボタンを押してください。</p>
+	<form name="form_search" method="post" action="{val UNIT_URL}/co/">
+		<input class="btnW01" type="button" value="チェック">
+	</form>
+
+	<p id="loading"><img src="{val BASE_DIR}/_common/img/gif/gifLoad.gif"  alt="読み込み中"/></p>
+	<div class="consistencyData">
+	<!--{set consistencyFlg}-->
+		<div>
+			チェックが完了しました。<br />
+			<!--{set finish}-->各種設定とデータに問題はありません。<!--{/set}-->
+		</div>
+
+	<!--{unset finish}-->
+		<!--{set noGradeCheckList}-->
+		<div class="checkBoxArea">
+			<h2>車種グレード</h2>
+			<div class="errMsg">
+				以下の車種は、車種グレード情報が登録されていません。<br />
+				新車の場合、「CSV取り込み」にて該当車種の車種グレード情報を登録してください。<br />
+				終売の場合、「車種管理」にて該当車種を削除してください。
+			</div>
+			<ul>
+			<!--{loop noGradeCheckList}-->
+				<li>
+					{val noGradeCheckList/model.makerName}　{val noGradeCheckList/model.modelName}
+				</li>
+			<!--{/loop}-->
+			</ul>
+		</div>
+		<!--{/set}-->
+
+		<!--{set gradeCheckList}-->
+		<div class="checkBoxArea">
+			<h2>代表車種グレード</h2>
+			<div class="errMsg">
+				以下の車種は、代表車種グレード設定に問題があります。<br />
+				「車種管理」にて該当車種の代表車種グレード設定を見直してください。
+			</div>
+			<ul>
+			<!--{loop gradeCheckList}-->
+				<li <!--{set gradeCheckList/g_unmatch}--> class="msg"<!--{/set}-->>
+					{val gradeCheckList/model.makerName}　{val gradeCheckList/model.modelName}
+					<span>・・・</span>
+				<!--{set gradeCheckList/g_undefined}-->
+					代表車種グレードが1つも選ばれていません。
+				<!--{/set}-->
+				<!--{set gradeCheckList/g_nodata}-->
+					代表車種グレードが1つも選ばれていません。<small>(車種グレード情報なし)</small>
+				<!--{/set}-->
+				<!--{set gradeCheckList/g_unmatch}-->
+					モデルチェンジなどのデータ入替により、代表車種グレードに選ばれている車種グレードが無くなりました。
+					<!--{set gradeCheckList/carGrade}-->
+						(
+						<!--{loop gradeCheckList/carGrade}-->
+							{val gradeCheckList/carGrade/name}<!--{loop_count_between gradeCheckList/carGrade=1}-->、<!--{/loop_count_between}-->
+						<!--{/loop}-->
+						)
+					<!--{/set}-->
+				<!--{/set}-->
+				</li>
+			<!--{/loop}-->
+			</ul>
+		</div>
+		<!--{/set}-->
+
+		<!--{set themeCheckList}-->
+		<div class="checkBoxArea">
+			<h2>バリュー(おすすめ車種)</h2>
+			<div class="errMsg">
+				以下のバリューは、おすすめ車種に問題があります。<br />
+				「バリュー設定」にて該当バリューのおすすめ車種の設定を見直すか、または「車種設定」にて該当車種の設定を見直してください。
+			</div>
+			<ul>
+			<!--{loop themeCheckList}-->
+				<li <!--{set themeCheckList/g_unmatch}-->class="msg"<!--{/set}-->>
+					「{val themeCheckList/theme.themeName}」{val themeCheckList/bodyType.name}
+					<span>・・・</span>
+					{val themeCheckList/model.makerName}　{val themeCheckList/model.modelName} は、
+				<!--{set themeCheckList/g_unmatch}-->
+					モデルチェンジなどのデータ入替により、代表車種グレードに選ばれている車種グレードが無くなりました。
+					<!--{set themeCheckList/carGrade}-->
+						(
+						<!--{loop themeCheckList/carGrade}-->
+							{val themeCheckList/carGrade/name}<!--{loop_count_between themeCheckList/carGrade=1}-->、<!--{/loop_count_between}-->
+						<!--{/loop}-->
+						)
+					<!--{/set}-->
+				<!--{/set}-->
+				<!--{set themeCheckList/g_undefined}-->
+					代表車種グレードが1つも選ばれていません。
+				<!--{/set}-->
+				<!--{set themeCheckList/g_nodata}-->
+					代表車種グレードが1つも選ばれていません。<small>(車種グレード情報なし)</small>
+				<!--{/set}-->
+				<!--{set themeCheckList/m_undefined}-->
+					終売などのため、現在システムに登録されていません。
+				<!--{/set}-->
+				<!--{set themeCheckList/b_unmatch}-->
+					ボディタイプが異なります。
+				<!--{/set}-->
+				<!--{set themeCheckList/t_undefined}-->
+					バリュー自動設定の選定基準から外れたため、該当バリューが設定されてません。
+				<!--{/set}-->
+			<!--{/loop}-->
+			</ul>
+		</div>
+		<!--{/set}-->
+
+		<!--{set newCarCheckList.active}-->
+		<div class="checkBoxArea">
+			<h2 <!--{set newCarCheckList.active}-->class="msg"<!--{/set}-->>新型車チェック (公開中データ)</h2>
+			<div class="errMsg">
+				サイトにて現在公開中の新型車に問題が発生しています。<br />
+				「新型車設定」にて該当車種を削除するか、または「車種管理」にて該当車種の設定を見直した後で「本番設定」にて本番リリースをしてください。
+			</div>
+			<ul>
+			<!--{loop newCarCheckList.active}-->
+				<li <!--{set newCarCheckList.active/g_unmatch}-->class="msg"<!--{/set}-->>
+					新型車{val newCarCheckList.active/newCar.newCarNum}
+					<span>・・・</span>
+					{val newCarCheckList.active/model.makerName}　{val newCarCheckList.active/model.modelName} は、
+				<!--{set newCarCheckList.active/g_unmatch}-->
+					モデルチェンジなどのデータ入替により、代表車種グレードに選ばれている車種グレードが無くなりました。
+					<!--{set newCarCheckList.active/carGrade}-->
+						(
+						<!--{loop newCarCheckList.active/carGrade}-->
+							{val newCarCheckList.active/carGrade/name}<!--{loop_count_between newCarCheckList.active/carGrade=1}-->、<!--{/loop_count_between}-->
+						<!--{/loop}-->
+						)
+					<!--{/set}-->
+				<!--{/set}-->
+				<!--{set newCarCheckList.active/g_undefined}-->
+					代表車種グレードが1つも選ばれていません。
+				<!--{/set}-->
+				<!--{set newCarCheckList.active/g_nodata}-->
+					代表車種グレードが1つも選ばれていません。<small>(車種グレード情報なし)</small>
+				<!--{/set}-->
+				<!--{set newCarCheckList.active/m_undefined}-->
+					終売などのため、現在システムに登録されていません。
+				<!--{/set}-->
+			<!--{/loop}-->
+			</ul>
+		</div>
+		<!--{/set}-->
+
+		<!--{set newCarCheckList.work}-->
+		<div class="checkBoxArea">
+			<h2>新型車チェック (次回公開データ)</h2>
+			<div class="errMsg">
+				サイトに次回公開される新型車に問題が見つかりました。<br />
+				本番リリースされるまでに、「新型車設定」にて該当車種を削除するか、または「車種管理」にて該当車種の設定を見直してください。
+			</div>
+			<ul>
+			<!--{loop newCarCheckList.work}-->
+				<li <!--{set newCarCheckList.work/g_unmatch}-->class="msg"<!--{/set}-->>
+					新型車{val newCarCheckList.work/newCar.newCarNum}
+					<span>・・・</span>
+					{val newCarCheckList.work/model.makerName}　{val newCarCheckList.work/model.modelName} は、
+				<!--{set newCarCheckList.work/g_unmatch}-->
+					モデルチェンジなどのデータ入替により、代表車種グレードに選ばれている車種グレードが無くなりました。
+					<!--{set newCarCheckList.work/carGrade}-->
+						(
+						<!--{loop newCarCheckList.work/carGrade}-->
+							{val newCarCheckList.work/carGrade/name}<!--{loop_count_between newCarCheckList.work/carGrade=1}-->、<!--{/loop_count_between}-->
+						<!--{/loop}-->
+						)
+					<!--{/set}-->
+				<!--{/set}-->
+				<!--{set newCarCheckList.work/g_undefined}-->
+					代表車種グレードが1つも選ばれていません。
+				<!--{/set}-->
+				<!--{set newCarCheckList.work/g_nodata}-->
+					代表車種グレードが1つも選ばれていません。<small>(車種グレード情報なし)</small>
+				<!--{/set}-->
+				<!--{set newCarCheckList.work/m_undefined}-->
+					終売などのため、現在システムに登録されていません。
+				<!--{/set}-->
+			<!--{/loop}-->
+			</ul>
+		</div>
+		<!--{/set}-->
+
+		<!--{set maintenanceCheckList}-->
+		<div class="checkBoxArea">
+			<h2>メンテナンス区分</h2>
+			<div class="errMsg">
+				以下の車種は、メンテナンス情報に問題があります。<br />
+				「CSVダウンロード」にて該当CSVをダウンロードし、設定後「CSV取り込み」を行ってください。<br />
+			</div>
+
+
+			<!--{set maintenanceCheckList.mtum}-->
+				<ul class="mainte">
+					<li>代表車種グレードのメンテナンス区分が登録されていません。<span>・・・</span>CSVファイル『リース料（調達価格・メンテ区分・諸税）.csv』</li>
+					<ul>
+				<!--{loop maintenanceCheckList.mtum}-->
+					<li>
+						{val maintenanceCheckList.mtum/model.makerName}　{val maintenanceCheckList.mtum/model.modelName}
+					</li>
+				<!--{/loop}-->
+					</ul>
+				</ul>
+			<!--{/set}-->
+
+			<!--{set maintenanceCheckList.mtuf}-->
+				<ul class="mainte">
+					<li>代表車種グレードのメンテナンス区分が設定されていません。<span>・・・</span>CSVファイル『リース料（調達価格・メンテ区分・諸税）.csv』</li>
+					<ul>
+				<!--{loop maintenanceCheckList.mtuf}-->
+					<li>
+						{val maintenanceCheckList.mtuf/model.makerName}　{val maintenanceCheckList.mtuf/model.modelName}
+					</li>
+				<!--{/loop}-->
+					</ul>
+				</ul>
+			<!--{/set}-->
+
+			<!--{set maintenanceCheckList.mtut}-->
+				<ul class="mainte">
+					<li>代表車種グレードのメンテナンス区分が確定されていません。<span>・・・</span>CSVファイル『リース料（調達価格・メンテ区分・諸税）.csv』</li>
+					<ul>
+				<!--{loop maintenanceCheckList.mtut}-->
+					<li>
+						{val maintenanceCheckList.mtut/model.makerName}　{val maintenanceCheckList.mtut/model.modelName}
+					</li>
+				<!--{/loop}-->
+					</ul>
+				</ul>
+			<!--{/set}-->
+		</div>
+		<!--{/set}-->
+
+		<!--{set leaseCheckList}-->
+			<div class="checkBoxArea">
+				<h2>リース料</h2>
+				<div class="errMsg">
+					以下の車種は、代表車種グレードに調達価格や登録諸費用などのリース料が登録されていません。<br />
+					「CSVダウンロード」にて該当CSVをダウンロードし、設定後「CSV取り込み」を行ってください。<br />
+				</div>
+
+			<!--{set leaseCheckList.l}-->
+				<ul class="lease">
+					<li>調達価格・諸税(登録法定費用、資金管理料金など)が登録されていません。<span>・・・</span>CSVファイル『リース料（調達価格・メンテ区分・諸税）.csv』</li>
+					<ul>
+				<!--{loop leaseCheckList.l}-->
+					<li>
+						{val leaseCheckList.l/model.makerName}　{val leaseCheckList.l/model.modelName}
+						<!--{set leaseCheckList.l/carGrade}-->
+							(
+							<!--{loop leaseCheckList.l/carGrade}-->
+								{val leaseCheckList.l/carGrade/name}<!--{loop_count_between leaseCheckList.l/carGrade=1}-->、<!--{/loop_count_between}-->
+							<!--{/loop}-->
+							)
+						<!--{/set}-->
+					</li>
+				<!--{/loop}-->
+					</ul>
+				</ul>
+			<!--{/set}-->
+
+			<!--{set leaseCheckList.lv}-->
+				<ul class="lease">
+					<li>残価・任意保険料が登録されていません。<span>・・・</span>CSVファイル『リース料（残価・任意保険料）.csv』</li>
+					<ul>
+				<!--{loop leaseCheckList.lv}-->
+					<li>
+						{val leaseCheckList.lv/model.makerName}　{val leaseCheckList.lv/model.modelName}
+						<!--{set leaseCheckList.lv/carGrade}-->
+							(
+							<!--{loop leaseCheckList.lv/carGrade}-->
+								{val leaseCheckList.lv/carGrade/name}<!--{loop_count_between leaseCheckList.lv/carGrade=1}-->、<!--{/loop_count_between}-->
+							<!--{/loop}-->
+							)
+						<!--{/set}-->
+					</li>
+				<!--{/loop}-->
+					</ul>
+				</ul>
+			<!--{/set}-->
+			</div>
+		<!--{/set}-->
+
+		<!--{set zeroLeaseCheckList}-->
+			<div class="checkBoxArea">
+				<h2>リース料(価格0円)</h2>
+				<div class="errMsg">
+					下記の車種は、リース料(調達価格や登録諸費用など)が「0円」で設定されています。<br />
+				</div>
+				<ul>
+				<!--{loop zeroLeaseCheckList}-->
+					<li>
+						{val zeroLeaseCheckList/model.makerName}　{val zeroLeaseCheckList/model.modelName}
+						<span>・・・</span>
+						<!--{loop zeroLeaseCheckList/lease}-->
+						{val zeroLeaseCheckList/lease/name}<!--{loop_count_between zeroLeaseCheckList/lease=1}-->、<!--{/loop_count_between}-->
+						<!--{/loop}-->
+					</li>
+				<!--{/loop}-->
+				</ul>
+			</div>
+		<!--{/set}-->
+	<!--{/unset}-->
+	<!--{/set}-->
+	</div>
+</div>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#loading").hide();
+
+	$("#consistency input:button").click(function(){
+
+		var message = 'チェックを開始しますか？';
+
+		if( window.confirm( message ) ) {
+			$("#loading").show();
+			$(".consistencyData").html("");
+			document.form_search.submit();
+			return false;
+		}
+		
+	});
+});
+</script>
+<!--{/set}-->

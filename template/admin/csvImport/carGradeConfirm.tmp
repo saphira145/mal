@@ -1,0 +1,35 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_csv=1}
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<!--{unset dataErrFlg}-->
+	<p class="actionMsg">以下の内容で登録します。よろしければ「追加する」ボタンを押してください。</p>
+	<!--{/unset}-->
+	<!--{set dataErrFlg}-->
+	<p class="actionMsg"><span>ＣＳＶデータに不備がありましたエラー内容を確認してください。</span></p>
+	<!--{/set}-->
+
+	<!--{unset dataErrFlg}-->
+	{file parts/importCSVDisplay.tmp}
+	<!--{/unset}-->
+	<!--{set dataErrFlg}-->
+	{file parts/importCSVDisplayErr.tmp}
+	<!--{/set}-->
+
+	<form name="list" action="{val UNIT_URL}/" method="post">
+		{dbTicket}
+	</form>
+
+	<form name="form_addExecute" action="{val UNIT_URL}/carGradeE/" method="post">
+		{dbTicket}
+		{file parts/importCSVHidden.tmp}
+
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="戻る" class="btnW01" onclick="location.href='{val UNIT_URL}'; return false;" />
+		<!--{unset dataErrFlg}-->
+			<input type="submit" value="追加する" class="btnW01" />
+		<!--{/unset}-->
+		</div>
+	</form>
+</div>

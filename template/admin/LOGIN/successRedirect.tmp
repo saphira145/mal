@@ -1,0 +1,11 @@
+<html>
+<head><META HTTP-EQUIV="content-type" CONTENT="text/html; charset={val jpEncoding}">
+<script language="JavaScript">
+<!--
+window.location.replace("{val originalURL}");
+// -->
+</script>
+<meta http-equiv="Refresh" content="0; url={val originalURL}">
+</head>
+</html>
+

@@ -1,0 +1,43 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/carSearchAdmin.js}
+{input jsList/jsName=/_common/js/openWindowBtnActionAdmin.js}
+{input menu_newCar=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼話題の新型車の設定</h2>
+	<p class="actionMsg">車種を設定し、「更新」ボタンを押してください。</p>
+	<p class="actionMsg"><span>新型車設定はリアルタイムで更新されます。</span></p>
+
+	<form name="newCar" id="newCar" method="post" action="{val UNIT_URL}/">
+		{dbTicket}
+		<input type="hidden" name="st" value="me" />
+		<input type="hidden" id="url" name="url" value="{val BASE_DIR}">
+
+		<!--{set modify_sucessFlg}-->
+		<p class="actionMsg"><span>更新が完了しました。</span></p>
+		<!--{/set}-->
+		
+		<table class="tblForm">
+<!--{loop newCar}-->
+			<tr>
+				<th class="w140">新型車{val newCar/carNum}</th>
+				<td>
+					<div id="carModel[{val newCar/lgcNum}][modelName]" class="selModelName"><!--{set newCar/carFlg}-->{val newCar/makerName}　{val newCar/modelName}<!--{/set}--><!--{unset newCar/carFlg}--><span>未設定</span><!--{/unset}--></div>
+					<input type="hidden" id="carModel[{val newCar/lgcNum}][carNum]"    name="newCarInfo[{val newCar/lgcNum}][carNum]"    value="{val newCar/carNum}" />
+					<input type="hidden" id="carModel[{val newCar/lgcNum}][makerCode]" name="newCarInfo[{val newCar/lgcNum}][makerCode]" value="{val newCar/makerCode}" />
+					<input type="hidden" id="carModel[{val newCar/lgcNum}][modelCode]" name="newCarInfo[{val newCar/lgcNum}][modelCode]" value="{val newCar/modelCode}" />
+					<div class="selModelBtnArea">
+						<input type="button" class="btnW01" onclick="openCarSearchWindow('nc', {val newCar/lgcNum}, null );" value="車種検索">
+						<input type="button" id="delBtn_{val newCar/lgcNum}" class="btnW03" onclick="delCarModel({val newCar/lgcNum},'新型車{val newCar/carNum}');" value="解除" <!--{unset newCar/carFlg}-->disabled="disabled"<!--{/unset}-->>
+					</div>
+				</td>
+			</tr>
+<!--{/loop}-->
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="更新" class="btnW01" onClick="confirmDialog('newCar',''); return false;">
+		</div>
+	</form>
+</div>

@@ -1,0 +1,11 @@
+/admin/carGradeSearch
+	TITLE = "車種グレード検索"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種グレード検索"
+
+/admin/carGradeSearch/ls
+	TITLE = "車種グレード検索"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種グレード検索"

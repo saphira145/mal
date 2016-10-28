@@ -1,0 +1,17 @@
+{frame /_common/outerFrame_popup.tmp}
+
+
+<div id="basisOfSelection">
+	<h2>バリュー選定基準</h2>
+	<div>クルマの付加価値『バリュー』は、下記の基準で選定しています。</div>
+	<!--{set themeList}-->
+	<dl class="themeBox ">
+	<!--{loop themeList}-->
+		<dt class="setCol">
+			<span class="themeIcon" style="background: url({val BASE_DIR}/_common/img/theme/{val themeList/themeIconPath}.png) no-repeat 5px;">{val themeList/themeName|lengthCut:12}</span>
+		</dt>
+		<dd>{val themeList/basisOfSelection|dispComment}</dd>
+	<!--{/loop}-->
+	</dl>
+	<!--{/set}-->
+</div>

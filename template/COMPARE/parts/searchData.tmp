@@ -1,0 +1,49 @@
+<div class="compareSearchData">
+	<h1>選択した検索条件</h1>
+	<span class="faCaretDown"></span>
+	<!--{set search.price}-->
+	<div class="priceBox">
+		<h2>予算</h2>
+		<ul>
+		<!--{loop search.price}-->
+			<li class="selCol"><span>{val search.price/name}</span></li>
+		<!--{/loop}-->
+		</ul>
+	</div>
+	<!--{/set}-->
+	<!--{set search.theme}-->
+	<div class="themeBox">
+		<h2>バリュー</h2>
+		<ul>
+		<!--{loop search.theme}-->
+			<li class="selCol"><span>{val search.theme/name|lengthCut:12}</span></li>
+		<!--{/loop}-->
+		</ul>
+	</div>
+	<!--{/set}-->
+	<!--{set search.maker}-->
+	<div class="makerBox">
+		<h2>メーカー</h2>
+		<ul>
+		<!--{loop search.maker}-->
+			<li class="selCol"><span>{val search.maker/name}</span></li>
+		<!--{/loop}-->
+		</ul>
+	</div>
+	<!--{/set}-->
+	<!--{set search.type}-->
+	<div class="typeBox">
+		<h2>タイプ</h2>
+		<ul>
+		<!--{loop search.type}-->
+			<li class="selCol {val search.type/css}"><span>{val search.type/name}</span></li>
+		<!--{/loop}-->
+		</ul>
+	</div>
+	<!--{/set}-->
+	<div class="back ">
+		<a href="{val BASE_DIR}/RANKING/{val search.backURL.maker}/{val search.backURL.type}/{val search.backURL.theme}/{val search.backURL.price}/" class="faChevronLeft"><span>注目度ランキングから選び直す</span></a>
+	</div>
+	
+	<span class="caretRight"></span>
+<!--/#compareSearchData--></div>

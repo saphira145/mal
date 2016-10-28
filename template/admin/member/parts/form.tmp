@@ -1,0 +1,197 @@
+<table class="tblForm">
+<!--{set memberID}-->
+		<tr>
+			<th class="w150">メンバーID</th>
+			<td>{val memberID}</td>
+		</tr>
+<!--{/set}-->
+		<tr>
+			<th <!--{unset memberID}-->class="w150"<!--{/set}-->>所属グループ<!--{set SALESMEMBER_SYSTEM}--><span class="must_mark">※</span><!--{/set}--></th>
+			<td>
+<!--{set SALESMEMBER_SYSTEM}-->
+<!--{set memberInfo.salesGroup+err}-->
+<!--{loop memberInfo.salesGroup+err}-->
+				<p class="err">{val memberInfo.salesGroup+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<select class="wm20" name="memberInfo[salesGroup]"  onChange="setLoginID(16); <!--{set memberID}-->setExpirationDayAction();<!--{/set}--> return false;">
+					<option value=""></option>
+<!--{loop salesGroupList}-->
+					<option value="{val salesGroupList/id}"<!--{set salesGroupList/selected}--> selected<!--{/set}-->>{val salesGroupList/name}</option>
+<!--{/loop}-->
+				</select>
+<!--{/set}-->
+<!--{unset SALESMEMBER_SYSTEM}-->
+				{val salesGroupName}
+				<input type="hidden" name="memberInfo[salesGroup]" value="{val memberInfo.salesGroup}" />
+<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>権限レベル<!--{set SALESMEMBER_SYSTEM}--><span class="must_mark">※</span><!--{/set}--></th>
+			<td>
+<!--{set SALESMEMBER_SYSTEM}-->
+<!--{set memberInfo.authorityLevel+err}-->
+<!--{loop memberInfo.authorityLevel+err}-->
+				<p class="err">{val memberInfo.authorityLevel+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<select class="w20" name="memberInfo[authorityLevel]" onChange="setLoginID(16); return false;">
+					<option value=""></option>
+<!--{loop authorityLevelList}-->
+					<option value="{val authorityLevelList/id}"<!--{set authorityLevelList/selected}--> selected<!--{/set}-->>{val authorityLevelList/name}</option>
+<!--{/loop}-->
+				</select>
+<!--{/set}-->
+<!--{unset SALESMEMBER_SYSTEM}-->
+				{val authorityLevelName}
+				<input type="hidden" name="memberInfo[authorityLevel]" value="{val memberInfo.authorityLevel}" />
+<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>管理ツールのログインＩＤ<!--{unset memberInfo.loginHidden}--><span class="must_mark">※</span><!--{/unset}--><span class="inputRule">（2-20文字）</span></th>
+			<td>
+<!--{unset memberInfo.loginHidden}-->
+<!--{set memberInfo.loginID+err}-->
+<!--{loop memberInfo.loginID+err}-->
+				<p class="err">{val memberInfo.loginID+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w60" type="text" name="memberInfo[loginID]" value="{val memberInfo.loginID|htmlspecialchars}" />
+<!--{/unset}-->
+<!--{set memberInfo.loginHidden}-->
+				－
+				<input type="hidden" name="memberInfo[loginID]" value="{val memberInfo.loginID|htmlspecialchars}" />
+<!--{/set}-->
+			</td>
+		</tr>
+		<tr>
+			<th>メールアドレス<span class="must_mark">※</span></th>
+			<td>
+<!--{set memberInfo.email+err}-->
+<!--{loop memberInfo.email+err}-->
+				<p class="err">{val memberInfo.email+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+<!--{set memberInfo.email.account+err}-->
+<!--{loop memberInfo.email.account+err}-->
+				<p class="err">{val memberInfo.email.account+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+<!--{set memberInfo.email.domain+err}-->
+<!--{loop memberInfo.email.domain+err}-->
+				<p class="err">{val memberInfo.email.domain+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w30" type="text" name="memberInfo[email][account]" value="{val memberInfo.email.account}" /> @ <input class="w30" type="text" name="memberInfo[email][domain]" value="{val memberInfo.email.domain}" />
+				<span class="inputRule">※営業ツールのログインIDになります</span>
+			</td>
+		</tr>
+		<tr>
+			<th>パスワード<!--{unset modifyFlg}--><span class="must_mark">※</span><!--{/unset}--><span class="inputRule">（半角英数字8-20文字）</span></th>
+			<td>
+<!--{set memberInfo.passwordGroup+err}-->
+<!--{loop memberInfo.passwordGroup+err}-->
+				<p class="err">{val memberInfo.passwordGroup+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+<!--{set memberInfo.password+err}-->
+<!--{loop memberInfo.password+err}-->
+				<p class="err">パスワード{val memberInfo.password+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w60" type="password" name="memberInfo[password]" value="<!--{unset passwordNotMust}-->{val memberInfo.password|htmlspecialchars}<!--{/unset}-->" />
+				<input type="button" value="パスワード生成" class="btnW01" onclick="setPassWord(16); return false;"><br>
+				生成パスワード ： <span id="makePassword"></span>
+<!--{set passwordNotMust}-->
+				<span class="inputRule">※パスワードを変更する場合は、新しいパスワードを入力してください。</span>
+<!--{/set}-->
+			</td>
+		</tr>
+		<tr>
+			<th>確認パスワード<!--{unset modifyFlg}--><span class="must_mark">※</span><!--{/unset}--><span class="inputRule">（半角英数字8-20文字）</span></th>
+			<td>
+<!--{set memberInfo.passwordConfirm+err}-->
+<!--{loop memberInfo.passwordConfirm+err}-->
+				<p class="err">確認パスワード{val memberInfo.passwordConfirm+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w60" type="password" name="memberInfo[passwordConfirm]" value="<!--{unset passwordNotMust}-->{val memberInfo.passwordConfirm|htmlspecialchars}<!--{/unset}-->" />
+			</td>
+		</tr>
+		<tr>
+			<th>名前</th>
+			<td>
+<!--{set memberInfo.memberName.familyName+err}-->
+<!--{loop memberInfo.memberName.familyName+err}-->
+				<p class="err">{val memberInfo.memberName.familyName+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+<!--{set memberInfo.memberName.givenName+err}-->
+<!--{loop memberInfo.memberName.givenName+err}-->
+				<p class="err">{val memberInfo.memberName.givenName+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				姓&nbsp;<input class="w20" type="text" name="memberInfo[memberName][familyName]" value="{val memberInfo.memberName.familyName|htmlspecialchars}" />&nbsp;
+				名&nbsp;<input class="w20" type="text" name="memberInfo[memberName][givenName]" value="{val memberInfo.memberName.givenName|htmlspecialchars}" />
+			</td>
+		</tr>
+		<tr>
+			<th>会社名</th>
+			<td>
+<!--{set memberInfo.companyName+err}-->
+<!--{loop memberInfo.companyName+err}-->
+				<p class="err">{val memberInfo.companyName+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w40" type="text" name="memberInfo[companyName]" value="{val memberInfo.companyName|htmlspecialchars}" />
+			</td>
+		</tr>
+		<tr>
+			<th>ステータス<span class="must_mark">※</span></th>
+			<td>
+<!--{set memberInfo.level+err}-->
+<!--{loop memberInfo.level+err}-->
+				<p class="err">{val memberInfo.level+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<select class="w20" name="memberInfo[level]" <!--{set memberID}-->onChange="setExpirationDayAction(); return false;"<!--{/set}--> >
+					<option value=""></option>
+<!--{loop levelList}-->
+					<option value="{val levelList/id}"<!--{set levelList/selected}--> selected<!--{/set}-->>{val levelList/name}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>パスワード有効日数</th>
+			<td>
+<!--{set memberID}-->
+				<select class="w20" name="memberInfo[expirationDay]" id="memberInfo[expirationDay]" onChange="setExpirationDay(); return false;" <!--{set memberInfo.expirationDisablFlg}-->disabled<!--{/set}-->>
+	<!--{loop expirationDay}-->
+					<option value="{val expirationDay/id}"<!--{set expirationDay/selected}--> selected<!--{/set}--> id="{val expirationDay/day}">{val expirationDay/name}</option>
+	<!--{/loop}-->
+				</select>
+				( <span id="expirationDays">
+					<!--{unset memberInfo.expirationDayFlg}-->
+							<!--{unset memberInfo.dayDiffFlg}-->{val memberInfo.expirationDatetime.year|zeroPadding:4}/{val memberInfo.expirationDatetime.month|zeroPadding:2}/{val memberInfo.expirationDatetime.day|zeroPadding:2}&nbsp;まで<!--{/unset}-->
+							<!--{set memberInfo.dayDiffFlg}-->期限切れ<!--{/set}-->
+					<!--{/unset}-->
+					<!--{set memberInfo.expirationDayFlg}-->
+						<!--{set memberInfo.expirationDayFlg.systemLevel}-->期限なし<!--{/set}-->
+						<!--{set memberInfo.expirationDayFlg.expiration}-->期限切れ<!--{/set}-->
+						<!--{set memberInfo.expirationDayFlg.today}-->本日まで<!--{/set}-->
+					<!--{/set}-->
+				</span>
+				)
+				<input type="hidden" name="memberInfo[expirationDay]" value="{val memberInfo.expirationDay}" id="expirationDayHid" />
+				<input type="hidden" name="memberInfo[defaultExpirationDatetime]" value="{val memberInfo.defaultExpirationDatetime.year|zeroPadding:4}-{val memberInfo.defaultExpirationDatetime.month|zeroPadding:2}-{val memberInfo.defaultExpirationDatetime.day|zeroPadding:2}" />
+<!--{/set}-->
+<!--{unset memberID}-->
+				{val memberInfo.expirationDays}日&nbsp;({val memberInfo.expirationDatetime.year|zeroPadding:4}/{val memberInfo.expirationDatetime.month|zeroPadding:2}/{val memberInfo.expirationDatetime.day|zeroPadding:2}&nbsp;まで)
+<!--{/unset}-->
+				<input type="hidden" name="memberInfo[expirationDatetime]" id="memberInfo[expirationDatetime]" value="{val memberInfo.expirationDatetime.year|zeroPadding:4}-{val memberInfo.expirationDatetime.month|zeroPadding:2}-{val memberInfo.expirationDatetime.day|zeroPadding:2}" />
+			</td>
+		</tr>
+	</table>

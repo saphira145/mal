@@ -1,0 +1,96 @@
+#  *** UTF-8 Encoded ***
+#---------------------------------------
+#  三菱オートリース
+#  Car sagacité(カー サガシティ)
+#  http://www.mal-marche.com/mald/sagacite/
+#
+#  (C)2013 株式会社ホーユー
+#---------------------------------------
+
+#	Order Deny,Allow
+#	AuthUserFile /var/www/sagacite/htpasswd.sagacite
+#	AuthGroupFile /dev/null
+#	AuthName "Password Required"
+#	AuthType Basic
+#	Require valid-user
+
+##
+## HTTP ヘッダ
+##
+Header append X-Frame-Options "SAMEORIGIN"
+Header append X-Content-Type-Options "nosniff"
+Header append X-XSS-Protection "1; mode=block"
+Header append Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' code.jquery.com netdna.bootstrapcdn.com fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' code.jquery.com www.google-analytics.com sygrip.info; img-src 'self' code.jquery.com www.google-analytics.com sygrip.info; font-src 'self' netdna.bootstrapcdn.com themes.googleusercontent.com"
+Header append X-Permitted-Cross-Domain-Policies "master-only"
+#Header append Strict-Transport-Security "max-age=31536000; includeSubDomains"
+#Header append Access-Control-Allow-Origin "http://www.example.com"
+Header append Access-Control-Allow-Methods "POST, GET, OPTIONS"
+#Header append Access-Control-Allow-Headers "X-TRICORDER"
+#Header append Access-Control-Max-Age "1728000"
+#Header append X-Download-Options "noopen"
+#Header append Set-Cookie "name=value; secure; HttpOnly"
+
+
+##
+## キャッシュ有効期限
+##
+FileETag Size
+ExpiresActive On
+ExpiresByType text/css "access plus 3 days"
+ExpiresByType application/x-javascript "access plus 3 days"
+ExpiresByType image/gif "access plus 3 days"
+ExpiresByType image/png "access plus 3 days"
+ExpiresByType image/jpeg "access plus 3 days"
+
+
+##
+## gzip 圧縮転送
+##
+<IfModule mod_filter.c>
+	<IfModule mod_deflate.c>
+		DeflateCompressionLevel 9
+		FilterDeclare Compression CONTENT_SET
+		FilterProvider Compression DEFLATE Content-Type $text
+		FilterProvider Compression DEFLATE Content-Type $application/xhtml
+		FilterProvider Compression DEFLATE Content-Type $application/xml
+		FilterProvider Compression DEFLATE Content-Type $application/xhtml+xml
+		FilterProvider Compression DEFLATE Content-Type $application/rss+xml
+		FilterProvider Compression DEFLATE Content-Type $application/atom+xml
+		FilterProvider Compression DEFLATE Content-Type $application/x-javascript
+		FilterChain Compression
+		SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+		SetEnvIfNoCase Request_URI \.(?:exe|t?gz|zip|bz2|sit|rar|lzh)$ no-gzip dont-vary
+		SetEnvIfNoCase Request_URI \.pdf$ no-gzip dont-vary
+		BrowserMatch ^Mozilla/4 gzip-only-text/html
+		BrowserMatch ^Mozilla/4\.0[678] no-gzip
+		BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+	</IfModule>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /mald/sagacite/
+
+	RewriteCond %{THE_REQUEST} "!^GET /.*"
+	RewriteCond %{THE_REQUEST} "!^HEAD /.*"
+	RewriteCond %{THE_REQUEST} "!^POST /.*"
+	RewriteCond %{THE_REQUEST} "!^OPTIONS .*"
+	RewriteRule ^.*$ - [F]
+
+	RewriteCond %{REQUEST_URI} COMPARE/-/-/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)-/-/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)-/-/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)-/-/?
+	RewriteRule COMPARE/(.*)-/-/(.*)$ COMPARE/$1$2 [R,L]
+
+	RewriteCond %{REQUEST_URI} COMPARE/--/--/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)--/--/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)--/--/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)--/--/?
+	RewriteRule COMPARE/(.*)--/--/(.*)$ COMPARE/$1$2 [R,L]
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !health.html
+	RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>

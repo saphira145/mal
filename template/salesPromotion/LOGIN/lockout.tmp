@@ -1,0 +1,12 @@
+{frame /_common/outerFrame_err.tmp}
+{input SALESPROMOTION_FLG=1}
+{input SEO.TITLE="ロックアウト"}
+
+<div id="userErr">
+	<div class="notCarData">
+		<p>
+		ロックアウトしています。<br />
+		しばらくしてからもう一度やり直してください。
+		</p>
+	</div>
+</div>

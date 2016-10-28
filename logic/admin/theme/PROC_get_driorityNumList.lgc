@@ -1,0 +1,11 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	list( $output["priorityNumList"], $output["dispNumList"]) = $class["themeAdmin_1"]->get_driorityNumList();
+
+
+?>

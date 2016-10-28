@@ -1,0 +1,40 @@
+
+
+// 期間（ＦＲＯＭ）
+dateFrom
+	convert,   0,  1byte,
+	convert,   0,  trim
+	convert,   0,  parseDate,
+	check,   100,  must,                 開始日を選択してください
+	check,   200,  dateFormat,           開始日の年月日の形式が正しくありません
+	check,   300,  validDate,            開始日に不正な年月日が入力されました
+
+
+
+// 期間（ＴＯ）
+dateTo
+	convert,   0,  1byte,
+	convert,   0,  trim
+	convert,   0,  parseDate,
+	check,   100,  must,                 終了日を選択してください
+	check,   200,  dateFormat,           終了日の年月日の形式が正しくありません
+	check,   300,  validDate,            終了日に不正な年月日が入力されました
+
+
+
+// 出力タイプ
+outputType
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	check,  200,  must,               必須選択項目です
+
+
+
+// 検索結果はあるか？
+Hit0
+	check,  200,  searchCount({1}:{2}:{3}),         選択した期間はアクセスがないため、集計データを作成できません
+
+
+
+
+

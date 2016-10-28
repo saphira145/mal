@@ -1,0 +1,48 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// オリジナル画像切替フラグ
+	$output["disp_orginalCarBodyPhoto"] = $output["delete_carBodyPhoto"];
+
+	// 一時商品画像を保存
+	if( $output["modelInfo"]["carBodyPhoto"]["tmp_name"] != "" ) {
+
+		// 拡張子を取り出す
+		$result1 = explode( ".", $output["modelInfo"]["carBodyPhoto"]["name"] );
+		$extension = array_pop( $result1 );
+
+		$resutl2 = explode( "/", $output["modelInfo"]["carBodyPhoto"]["tmp_name"] );
+
+		$tmpFileName = array_pop( $resutl2 ) . ".$extension";
+
+		// 一時ファイルコピー実行
+		$class["modelAdmin_1"]->save_tempCarBodyPhoto( $output["modelInfo"]["carBodyPhoto"]["tmp_name"], $tmpFileName );
+
+		// 表示用ファイル名
+		$output["modelInfo"]["tempCarBodyPhoto"] = $tmpFileName;
+
+		// 削除フラグクリア
+		$output["delete_carBodyPhoto"] = 0;
+
+		// オリジナル画像表示フラグクリア
+		$output["disp_orginalCarBodyPhoto"] = 0;
+
+	}
+
+
+	// 一時商品画像が無ければ登録されている画像を出す（登録されていなければ空）
+	if( $output["modelInfo"]["tempCarBodyPhoto"] == "" || $output["disp_orginalCarBodyPhoto"] == 1 ) {
+		$output["disp_orginalCarBodyPhoto"] = 1;
+		// noImageを表示
+		if( $output["delete_entryCarBodyPhoto"] == 1 ) {
+			$output["noImageDispCarBody"] = 1;
+		}
+	}
+
+
+
+?>

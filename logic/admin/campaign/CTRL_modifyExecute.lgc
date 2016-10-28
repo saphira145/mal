@@ -1,0 +1,42 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// 入力エラー
+	if( $ini["system"]["errRank"] == 2 ) {
+
+	}
+	// 登録 → リスト表示
+	else{
+
+		// 車種ボディ画像一時アップ
+		$this->callPROC( "upload_campaignPhoto" );
+
+		// 車種ボディ画像一時アップ
+		$this->callPROC( "move_campaignPhoto" );
+
+		// テーブルにデータ投入
+		$this->callPROC( "update_DB" );
+
+		// ＤＢチケットの破棄
+		drop_dbTicket();
+
+		// リスト取得
+		$this->callPROC( "get_list" );
+
+	}
+
+	// 入力へ戻る
+	$this->callVIEW( "list" );
+
+	// テンプレートは固定
+	$viewStatus = "list";
+
+
+?>

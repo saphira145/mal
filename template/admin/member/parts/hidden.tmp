@@ -1,0 +1,14 @@
+	<input type="hidden" name="memberInfo[memberName][familyName]" value="{val memberInfo.memberName.familyName|htmlspecialchars}" />
+	<input type="hidden" name="memberInfo[memberName][givenName]" value="{val memberInfo.memberName.givenName|htmlspecialchars}" />
+	<input type="hidden" name="memberInfo[email][account]" value="{val memberInfo.email.account}" />
+	<input type="hidden" name="memberInfo[email][domain]" value="{val memberInfo.email.domain}" />
+	<input type="hidden" name="memberInfo[companyName]" value="{val memberInfo.companyName|htmlspecialchars}" />
+	<input type="hidden" name="memberInfo[level]" value="{val memberInfo.level}" />
+	<input type="hidden" name="memberInfo[loginID]" value="{val memberInfo.loginID|htmlspecialchars}" />
+	<input type="hidden" name="memberInfo[password]" value="{val memberInfo.password|htmlspecialchars}" />
+	<input type="hidden" name="memberInfo[passwordConfirm]" value="{val memberInfo.passwordConfirm|htmlspecialchars}" />
+	<input type="hidden" name="memberInfo[salesGroup]" value="{val memberInfo.salesGroup|htmlspecialchars}" />
+	<input type="hidden" name="memberInfo[authorityLevel]" value="{val memberInfo.authorityLevel|htmlspecialchars}" />
+	<input type="hidden" name="memberInfo[expirationDatetime]" value="{val memberInfo.expirationDatetime.year|zeroPadding:4}-{val memberInfo.expirationDatetime.month|zeroPadding:2}-{val memberInfo.expirationDatetime.day|zeroPadding:2}" />
+	<input type="hidden" name="memberInfo[expirationDay]" value="{val memberInfo.expirationDay}" />
+	<input type="hidden" name="memberInfo[defaultExpirationDatetime]" value="{val memberInfo.defaultExpirationDatetime}" />

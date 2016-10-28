@@ -1,0 +1,45 @@
+<div id="subMenu">
+	<ul class="listNavi">
+		<li class="top<!--{set menu_top}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/">トップ</a>
+		</li>
+	<!--{set SALESMEMBER_SYSTEM}-->
+		<li class="naviN<!--{set menu_maker}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/maker/">メーカー管理</a>
+		</li>
+		<li class="naviN<!--{set menu_model}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/model/">車種管理</a>
+		</li>
+		<li class="naviN<!--{set menu_csv}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/csvImport/">CSV取り込み</a>
+		</li>
+		<li class="naviN<!--{set menu_theme}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/theme/">バリュー設定</a>
+		</li>
+		<li class="naviN<!--{set menu_campaign}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/campaign/">キャンペーン設定</a>
+		</li>
+		<li class="naviN<!--{set menu_newCar}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/newCar/">新型車設定</a>
+		</li>
+		<li class="naviN<!--{set menu_notice}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/notice/">お知らせ設定</a>
+		</li>
+		<li class="naviN<!--{set menu_interestRates}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/interestRates/">金利設定</a>
+		</li>
+		<li class="naviN<!--{set menu_maintenance}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/maintenance/">メンテナンス設定</a>
+		</li>
+		<li class="naviN<!--{set menu_release}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/release/">本番設定</a>
+		</li>
+		<li class="naviN<!--{set menu_download}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/csvDownload/">CSVダウンロード</a>
+		</li>
+	<!--{/set}-->
+		<li class="naviN<!--{set menu_member}--> stay<!--{/set}-->">
+			<a href="{val BASE_DIR}/admin/member/">メンバー管理</a>
+		</li>
+	</ul>
+</div>

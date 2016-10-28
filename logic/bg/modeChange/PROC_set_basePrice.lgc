@@ -1,0 +1,22 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$cookieFlg = get_msrpPriceInfo($output["baseMode"]);
+
+	$cookieName = "lease_" . str_replace(" ", "_", $output["model"]["modelNameEng"]);
+	if( !empty($cookieFlg["cookie"]) ){
+		// 入力値をカンマ(,)区切りで保持
+		$tmpArray[] = $output["baseMode"];
+		$tmpArray[] = $output["profit"];
+
+		$setText = @implode(",", $tmpArray);
+		$sql_escape["setText"] = sql_escapeString($setText);
+		setcookie( $cookieName  , $sql_escape["setText"] , 0, "/", $path["host"]["name"] );
+	} else {
+		setcookie( $cookieName  , "" , time() - 3600, "/", $path["host"]["name"] );
+	}
+?>

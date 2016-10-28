@@ -1,0 +1,131 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input menu_member=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_10">▼メンバーの検索</h2>
+	<p class="actionMsg">検索内容を選択して「検索」ボタンを押してください。</p>
+	<form name="form_search" method="get" action="{val UNIT_URL}/ls/">
+		<input type="hidden" name="pageNum" value="" />
+		<table class="tblForm">
+		<tr>
+			<th class="w150">ID</th>
+			<td><input type="text" name="searchMemberID" value="{val searchMemberID|htmlspecialchars}" class="w60" /></td>
+		</tr>
+		<tr>
+			<th>名前</th>
+			<td><input type="text" name="searchMemberName" value="{val searchMemberName|htmlspecialchars}" class="w60" /></td>
+		</tr>
+		<tr>
+			<th>メールアドレス</th>
+			<td><input type="text" name="searchEmail" value="{val searchEmail|htmlspecialchars}" class="w40" /></td>
+		</tr>
+		<tr>
+			<th>会社名</th>
+			<td><input type="text" name="searchCompanyName" value="{val searchCompanyName|htmlspecialchars}" class="w40" /></td>
+		</tr>
+		<tr>
+			<th>所属グループ</th>
+			<td>
+				<!--{set SALESMEMBER_SYSTEM}-->
+				<select name="searchSalesGroup" class="wm20">
+					<option value=""></option>
+					<!--{loop salesGroupList}-->
+					<option value="{val salesGroupList/id}"<!--{set salesGroupList/selected}--> selected="selected"<!--{/set}-->>{val salesGroupList/name}</option>
+					<!--{/loop}-->
+				</select>
+				<!--{/set}-->
+				<!--{unset SALESMEMBER_SYSTEM}-->{val searchSalesGroupName}<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>権限レベル</th>
+			<td>
+				<select name="searchAuthorityLevel" class="w20">
+					<option value=""></option>
+					<!--{loop authorityLevelList}-->
+					<option value="{val authorityLevelList/id}"<!--{set authorityLevelList/selected}--> selected="selected"<!--{/set}-->>{val authorityLevelList/name}</option>
+					<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>ステータス</th>
+			<td>
+				<select name="searchLevel" class="w20">
+					<option value=""></option>
+<!--{loop levelList}-->
+					<option value="{val levelList/id}"<!--{set levelList/selected}--> selected="selected"<!--{/set}-->>{val levelList/name}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input class="btnW01" type="button" value="クリア" onclick="clear_form( this.form ); return;" />
+			<input class="btnW01" type="submit" value="検索" />
+		</div>
+	</form>
+</div>
+<div class="contentSection">
+	<h2 class="mrgB_10">▼メンバーの一覧・編集</h2>
+	<div class="btnArea txt_left">
+		<input type="button" value="新規追加" class="btnW01" onclick="location.href='{val UNIT_URL}/ai/'; return false;" />
+	</div>
+
+	<div class="list">
+<!--{set memberListDisp}-->
+	{file /admin/_common/parts/pageControl.tmp}
+
+	<table class="tblList">
+		<tr>
+			<th class="w20">ID</th>
+			<th class="w100">ログインID</th>
+			<th class="w120">名前</th>
+			<th>メールアドレス</th>
+			<th class="w220">会社名</th>
+			<th class="w200">所属グループ</th>
+			<th class="w65">権限レベル</th>
+			<th class="w60">有効期限<br>残り日数</th>
+			<th class="w60">ステータス</th>
+			<th class="w70">登録日</th>
+			<th class="w20">機能</th>
+		</tr>
+	<!--{loop memberList}-->
+		<tr <!--{set memberList/expirationDayFlg.expiration}-->class="bgColDeleteData"<!--{/set}-->>
+			<td>{val memberList/memberID}&nbsp;</td>
+			<td>
+			<!--{set memberList/loginHidden}-->－<!--{/set}-->
+			<!--{unset memberList/loginHidden}-->{val memberList/loginID|addWbr:5}<!--{/unset}-->
+			</td>
+			<td>{val memberList/memberName.familyName}&nbsp;{val memberList/memberName.givenName}</td>
+			<td><!--{set memberList/email.account}-->{val memberList/email.account|addWbr:5}@{val memberList/email.domain|addWbr:5}<!--{/set}--></td>
+			<td>{val memberList/companyName}</td>
+			<td>{val memberList/salesGroupName}</td>
+			<td class="txt_center" >{val memberList/authorityLevelName}</td>
+			<td class="txt_center <!--{set memberList/dayDiffFlg}-->textRed<!--{/set}-->">
+				<!--{unset memberList/expirationDayFlg}-->
+					<!--{unset memberList/dayDiffFlg}-->{val memberList/dayDiff}<!--{/unset}-->
+					<!--{set memberList/dayDiffFlg}-->期限切れ<!--{/set}-->
+				<!--{/unset}-->
+				<!--{set memberList/expirationDayFlg}-->
+					<!--{set memberList/expirationDayFlg.systemLevel}-->制限なし<!--{/set}-->
+					<!--{set memberList/expirationDayFlg.expiration}-->－<!--{/set}-->
+					<!--{set memberList/expirationDayFlg.today}-->本日まで<!--{/set}-->
+				<!--{/set}-->
+			</td>
+			<td>{val memberList/levelName}&nbsp;</td>
+			<td>{val memberList/addDatetime.year}-{val memberList/addDatetime.month|zeroPadding:2}-{val memberList/addDatetime.day|zeroPadding:2}&nbsp;</td>
+			<td class="txt_center"><input class="btnW03" type="button" value="詳細" onclick="location.href='{val UNIT_URL}/dt/{val memberList/memberID}'; return false;" /></td>
+		</tr>
+	<!--{/loop}-->
+	</table>
+	{file /admin/_common/parts/pageControl.tmp}
+<!--{/set}-->
+<!--{unset memberListDisp}-->
+		登録されているデータはありません。
+<!--{/unset}-->
+	</div>
+</div>

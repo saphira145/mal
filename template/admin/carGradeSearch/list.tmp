@@ -1,0 +1,83 @@
+{frame /admin/_common/outerFrame_popup.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input jsList/jsName=/_common/js/carSearchAdmin.js}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<h2>▼{val maker} {val model}</h2>
+
+<div class="contentSection">
+	<!--{set carGradeListDisp}-->
+	<!-- ページコントロール -->
+	{file /admin/_common/parts/pageControl.tmp}
+	<!-- /ページコントロール -->
+
+	<table class="tblList">
+		<tr>
+			<th class="w90">車種グレードID</th>
+			<th class="">グレード</th>
+			<th class="w90">タイプ</th>
+			<th class="w50">駆動</th>
+			<th class="w50">ミッション</th>
+			<th class="w90">ルーフ形状</th>
+			<th class="w90">燃料</th>
+			<th class="w60">排気量</th>
+			<th class="w60">乗車人数</th>
+			<th class="w60">ドア枚数</th>
+			<th class="w70">金額</th>
+			<th class="w60">メンテ区分</th>
+			<th class="w30">機能</th>
+		</tr>
+	<!--{loop carGradeList}-->
+		<tr>
+			<td>{val carGradeList/carGradeID|zeroPadding:7}</td>
+			<td>{val carGradeList/grade}</td>
+			<td>{val carGradeList/bodyModelName}</td>
+			<td>{val carGradeList/driveSystem}</td>
+			<td>{val carGradeList/transmissionType}</td>
+			<td>{val carGradeList/roofModel}</td>
+			<td>{val carGradeList/useFuel}</td>
+			<td class="txt_right">{val carGradeList/totalEmission|number_format:0}cc</td>
+			<td class="txt_right">{val carGradeList/capacity}人</td>
+			<td class="txt_right">{val carGradeList/door}枚</td>
+			<td class="txt_right">{val carGradeList/price|add_dot:1}万円</td>
+			<td>{val carGradeList/mainteName}<br>( {val carGradeList/mainteStateName} )</td>
+			<td class="txt_center">
+				<input type="hidden" id="makerName[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/makerName}">
+				<input type="hidden" id="modelName[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/modelName}">
+				<input type="hidden" id="grade[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/grade}">
+				<input type="hidden" id="totalEmission[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/totalEmission|number_format:0}cc">
+				<input type="hidden" id="driveSystem[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/driveSystem}">
+				<input type="hidden" id="bodyModel[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/bodyModelName}">
+				<input type="hidden" id="capacity[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/capacity}人">
+				<input type="hidden" id="price[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/price|add_dot:1}万円">
+
+				<input type="hidden" id="transmissionType[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/transmissionType}">
+				<input type="hidden" id="roofModel[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/roofModel}">
+				<input type="hidden" id="useFuel[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/useFuel}">
+				<input type="hidden" id="door[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/door}枚">
+
+				<input type="hidden" id="mainte[{val carGradeList/carGradeID|zeroPadding:7}]" value="{val carGradeList/mainteName} ( {val carGradeList/mainteStateName} )">
+
+				<input type="button" class="btnW03" value="選択" onclick="javascript:setCarGrade('{val carGradeList/carGradeID|zeroPadding:7}');" />
+			</td>
+		</tr>
+	<!--{/loop}-->
+	</table>
+
+	<!-- ページコントロール -->
+	{file /admin/_common/parts/pageControl.tmp}
+	<!-- /ページコントロール -->
+	<form name="form_search" method="get" action="{val UNIT_URL}/ls/">
+		<input type="hidden" name="pageNum" value="" />
+		<input type="hidden" name="searchModelCode" value="{val searchModelCode}"/>
+		<input type="hidden" name="searchMakerCode" value="{val searchMakerCode}"/>
+	</form>
+	<!--{/set}-->
+
+
+	<!--{unset carGradeListDisp}-->
+	<p class="txt_result">登録されているデータはありません。</p>
+	<!--{/unset}-->
+
+</div>

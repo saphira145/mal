@@ -1,0 +1,80 @@
+
+// メーカーコード
+makerCode
+	convert,  0,  paramNumeric,
+	filter,   0,  numeric,
+	check,  100,  must,               必須入力項目です
+	filter, 200,  makerCodeExist,     メーカーコードは存在しません
+
+// メーカーコード（登録用）
+addMakerCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  100,  must,               必須入力項目です
+	check,  200,  is_numeric,         半角数字で入力してください
+	check,  300,  dupMakerCode,       すでに登録されています
+
+// メーカー名
+makerName
+	convert,  0,  trim
+	filter,   0,  length_cut(200),
+	check,  100,  must,              必須入力項目です
+	check,  200,  length(1-100),     文字数が制限値外です
+
+// 車種名（英語）
+makerNameEng
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	filter,   0,  length_cut(200),
+	check,  100,  must,              必須入力項目です
+	check,  200,  length(1-100),     文字数が制限値外です
+	check,  300,  URI_unreservedChars_and_space, 使用できるのは次の半角の文字種です: 英数字、スペース、ハイフン(-)、ドット(.)、アンダースコア(_)、チルダ(~)
+
+// 生産国
+countryID
+	convert,  0,  paramNumeric,
+	convert,  0,  trim,
+	check,  100,  must,              必須入力項目です
+
+// メーカー名（変更用）
+modifyMakerName
+	convert,  0,  trim
+	filter,   0,  length_cut(200),
+	check,  100,  argEqualMust({1}:{2}),     必須入力項目です
+	check,  200,  length(-100),              文字数が制限値外です
+
+// メーカー名 英字（変更用）
+modifyMakerNameEng
+	convert,  0,  trim
+	filter,   0,  length_cut(200),
+	check,  100,  argEqualMust({1}:{2}),     必須入力項目です
+	check,  200,  length(-100),              文字数が制限値外です
+	check,  300,  argEqualMustURI_unreservedChars_and_space({1}:{2}), 使用できるのは次の半角の文字種です: 英数字、スペース、ハイフン(-)、ドット(.)、アンダースコア(_)、チルダ(~)
+
+// 生産国（変更用）
+modifyCountryID
+	convert,  0,  trim
+	check,  100,  argEqualMust({1}:{2}),     必須入力項目です
+
+// 表示順
+dispNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  100,  must,             必須入力項目です
+	check,  200,  is_numeric,       半角数字で入力してください
+
+// インデックス
+index
+	convert,  0,  1byte,
+	convert,  0,  trim
+
+
+// ソートＩＤ（表示順変更用）
+sortIDs
+	convert,  0,  sortNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  100,  must,             必須入力項目です
+

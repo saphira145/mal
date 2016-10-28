@@ -1,0 +1,89 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$carGradeList = $class["carGradeUser_1"]->get_changeTargetCar($output);
+
+	$output["carGradeList"] = array();
+	$tmpList["byMaker"] = array();
+	$tmpList2["byBody"] = array();
+	$makerCount = 0;
+	$modelCount = 0;
+
+	// ヘッダー部のメーカータブ
+	$output["makerList"] = array();
+
+	for( $i=0; $i<count($carGradeList); $i++ ){
+		// メーカー、ボディタイプ別に分類する
+		if( $i==0 ){
+			$tmpList2["byBody"][] = $carGradeList[$i];
+			$makerCount++;
+			$modelCount++;
+		}else{
+			if( ($carGradeList[$i]["makerCode"] == $carGradeList[($i-1)]["makerCode"]) && ($carGradeList[$i]["modelCode"] == $carGradeList[($i-1)]["modelCode"]) ){
+				// メーカーも車種も変わらない場合
+				
+			}else if( ($carGradeList[$i]["makerCode"] == $carGradeList[($i-1)]["makerCode"]) && ($carGradeList[$i]["modelCode"] != $carGradeList[($i-1)]["modelCode"]) ){
+				// メーカー同じ、車種のみ変わる場合
+				
+				if( $carGradeList[$i]["bodyModel"] == $carGradeList[($i-1)]["bodyModel"] ){
+					// ボディタイプが変わらない場合
+					$tmpList2["byBody"][] = $carGradeList[$i];
+					$makerCount++;
+					$modelCount++;
+					
+				}else{
+					// ボディタイプが変わる場合
+				 	$tmpList["byMaker"][] = $tmpList2;
+				 	$tmpList2["byBody"] = array();
+					$tmpList2["byBody"][] = $carGradeList[$i];
+					$makerCount++;
+					$modelCount++;
+					
+				}
+				
+				
+			}else if( $carGradeList[$i]["makerCode"] != $carGradeList[($i-1)]["makerCode"] ){
+				// メーカーが変わる場合
+				$tmpList["byMaker"][] = $tmpList2;
+				
+				$output["makerList"][] = array( 
+					  "makerCode" => $carGradeList[($i-1)]["makerCode"]
+					, "makerName" => $carGradeList[($i-1)]["makerName"]
+					, "carCnt"    => $makerCount );
+				$makerCount = 0;
+				
+				$output["carGradeList"][] = $tmpList;
+				$tmpList["byMaker"] = array();
+				$tmpList2["byBody"] = array();
+
+				$tmpList2["byBody"][] = $carGradeList[$i];
+				$makerCount++;
+			 	$modelCount++;
+				
+			}
+		}
+	}
+	if( count($tmpList["byMaker"]) > 0 || count($tmpList2["byBody"]) > 0 ){
+		$tmpList["byMaker"][] = $tmpList2;
+
+		$output["makerList"][] = array( 
+			  "makerCode" => $carGradeList[($i-1)]["makerCode"]
+			, "makerName" => $carGradeList[($i-1)]["makerName"]
+			, "carCnt"    => $makerCount );
+
+		$output["carGradeList"][] = $tmpList;
+	}
+
+	// データ無し
+	if( count($carGradeList) == 0 ){
+		unset( $output["carGradeList"] );
+	}
+
+	$output["carGradeNum"] = $modelCount;
+
+	$output["search"]["price"] = $ini["carPrice"][$output["price"]];
+?>

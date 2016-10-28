@@ -1,0 +1,43 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// メーカ名・車種名取得
+	for( $i = 0, $iMax = $ini["pageLimit"]["campaignAdmin"]; $i < $iMax; $i++){
+		$output["campaignInfo"][$i]["campaignNum"] = $i +1;
+		$output["campaignInfo"][$i]["lgcNum"]      = $i;
+
+		// キャンペーン画像チェック
+		for( $j = 0, $jMax = count($path["campaignPhoto"]["extension"]); $j < $jMax; $j++){
+			if( is_campaignPhoto( $i+1, $path["campaignPhoto"]["extension"][$j] ) ) {
+				$output["campaignInfo"][$i]["campaignPhotoFlg"] = 1;
+				$output["campaignInfo"][$i]["extension"]     = $path["campaignPhoto"]["extension"][$j];
+				break;
+			}
+		}
+
+
+		// キャンペーン、URL、表示順が全て入力されている
+		if( !empty($output["campaignInfo"][$i]["campaignName"]) && !empty( $output["campaignInfo"][$i]["campaignURL"]) && !empty( $output["campaignInfo"][$i]["dispNum"]) ){
+			$output["campaignInfo"][$i]["campaignFlg"] = 1;
+
+		} else {
+			if( !empty($output["campaignInfo"][$i]["delete_campaignPhoto"]) ){
+				$output["campaignInfo"][$i]["campaignPhotoFlg"] = 0;
+
+			} else if( $output["campaignInfo"][$i]["input_campaignPhoto"] ){
+				$output["campaignInfo"][$i]["campaignFlg"] = 1;
+
+			}
+
+			if( !empty($output["getListFlg"]) ) {
+				// 表示順を空白にする
+				$output["campaignInfo"][$i]["dispNum"] = null;
+			}
+		}
+
+	}
+
+?>

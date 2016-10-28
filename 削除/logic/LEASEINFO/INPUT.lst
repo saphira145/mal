@@ -1,0 +1,8 @@
+searchs
+	a, modelName                         = targetModelName
+	a, carGradeCode                      = carGradeCode({modelName})
+	a, carAddDate                        = carAddDate
+	a, mileage                           = mileage
+	a, gasoline                          = gasoline
+	a, voluntaryInsurance                = voluntaryInsurance
+	a, option                            = option

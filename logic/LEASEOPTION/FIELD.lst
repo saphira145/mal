@@ -1,0 +1,34 @@
+
+// 比較車種１
+targetModelName
+	convert,  0,  trim
+	convert,  0,  modelNameToMakerCodeModelCode,
+	filter,  10,  makerCodeModelCodeExist,         メーカーコードまたは車種コードは存在しません
+	check,   20,  must,                            必須入力項目です
+
+// 使用開始日
+carAddDate
+	convert,   0,  carAddDateConvert
+	convert,   0,  trim
+	check,   100,  must,                 必須入力項目です
+	check,   200,  dateFormat,           年月の形式が正しくありません
+	check,   300,  validDate,            不正な年月が入力されました
+
+// ガソリン価格(使用地域)
+gasoline
+	check,   100,  leaseParamFormat(LG),
+	check,   200,  leaseParamDrop,
+	check,   300,  leaseGasolineIDExist,   データが存在しません
+
+// 任意保険
+voluntaryInsurance
+	check,   100,  leaseParamFormat(LA),
+	check,   200,  leaseParamDrop,
+	check,   300,  leaseAnyInsuranceIDExist,   データが存在しません
+
+// オプション
+option
+	check,   100,  leaseParamOptionFormat(LO),
+	check,   200,  leaseParamOptionDrop,
+	check,   300,  leaseOptionIDExist,   データが存在しません
+

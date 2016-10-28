@@ -1,0 +1,40 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// グレードの取得
+	$output["modelInfo"]                 = $class["modelUser_1"]->get_info( $output["model"]["makerCode"], $output["model"]["modelCode"] );
+	$output["modelInfo"]["carGradeList"] = $class["modelUser_1"]->get_carGradeIDList( $output["model"]["makerCode"], $output["model"]["modelCode"] );
+	$output["modelInfo"]["theme"]        = $class["themeUser_1"]->get_themeList( $output["model"]["makerCode"], $output["model"]["modelCode"] );
+
+	// グレード毎にリース期間を取得
+	for( $i = 0, $iMax = count($output["modelInfo"]["carGradeList"]); $i < $iMax; $i++ ){
+		unset($getLeaseInfo);
+		// リース期間の取得
+		$leaseInfo = $class["leaseUser_1"]->get_payNumInfo($output["model"]["makerCode"], $output["model"]["modelCode"], $output["modelInfo"]["carGradeList"][$i]["ID"]);
+
+		for( $j = 0, $jMax = count($leaseInfo["period"]); $j < $jMax; $j++ ){
+			$getLeaseInfo[]  = $leaseInfo["period"][$j]["id"];
+		}
+		$output["modelInfo"]["carGradeList"][$i]["leaseList"] = $getLeaseInfo;
+	}
+
+	// オプションリストの取得
+	$output["optionList"] = $class["leaseUser_1"]->get_optionList($output["model"]["makerCode"], $output["model"]["modelCode"]);
+
+	// 選択済みオプションの合計金額取得
+	$tmp_msrp             = get_msrpPriceInfo( $output["msrp"] );
+	$tml_totalPrice       = $class["leaseUser_1"]->get_leaseOptionPrice($output["model"]["makerCode"], $output["model"]["modelCode"], $output["option"]);
+	$output["totalPrice"] = $tml_totalPrice[ $tmp_msrp["disp"] ];
+
+	// 表示するオプション金額の設定
+	for( $i = 0, $iMax = count($output["optionList"]); $i < $iMax; $i++ ){
+		if( isset($output["optionList"][$i]["option"]) ){
+			for( $j = 0, $jMax = count($output["optionList"][$i]["option"]); $j < $jMax; $j++ ){
+				$output["optionList"][$i]["option"][$j]["price"] = $output["optionList"][$i]["option"][$j][ $tmp_msrp["disp"] ];
+			}
+		}
+	}
+?>

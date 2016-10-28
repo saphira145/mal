@@ -1,0 +1,41 @@
+<?php
+
+
+	/* -------------------------------------
+		ビュー
+	------------------------------------- */
+	// 金額のフォーマット
+	for($i =0, $iMax = count($output["gasolineList"]); $i < $iMax; $i++){
+		$id = $output["gasolineList"][$i]["regionID"];
+		$tmp_output["gasolineList"][$id]["regionID"] = $output["gasolineList"][$i]["regionID"];
+	}
+
+	$gasolineList = array( "dieselGasoline"=>"diesel", "highOctaneGasoline"=>"highOctane", "regularGasoline"=>"regular" );
+	for($i =0, $iMax = count($output["gasolineList"]); $i < $iMax; $i++){
+		foreach( $gasolineList as $key => $val ){
+			if( !empty($output["gasolineList"][$i][$key]) ){
+				$tmp_output["gasolineList"][$i][$val]     = number_format($output["gasolineList"][$i][$key],1) . " 円";
+			} else {
+				$tmp_output["gasolineList"][$i][$val]     = "データがありません";
+			}
+		}
+	}
+
+	// メッセージ
+	if( count($output["msg"]) > 0 ){
+		foreach( $output["msg"] as $key => $val ){
+			if( !empty($val) ){
+				$tmp_output[$key] = $val;
+			}
+		}
+	}
+
+	$retJSON = $tmp_output;
+
+	// ----------------------------------------------------------------
+	// JSONの出力
+	header("content-type: application/x-javascript; charset=utf-8");
+	die(json_encode($retJSON));
+	exit;
+
+?>

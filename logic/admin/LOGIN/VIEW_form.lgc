@@ -1,0 +1,18 @@
+<?php
+
+
+	// ログインメッセージ
+	if ( $class["session"]->st["sessionLive"] == 4 ) {
+		if ( $class["session"]->level == $ini["session"]["temporaryMember"]["level"] ) {
+			if ( $class["session"]->tbl["sessionLive"] == "" ) {
+				$class["session"]->st["sessionLive"] = 2;
+			}
+		}
+	}
+	$output["session"]["errmsg"] = $ini["session"]["errmsg"][$class["session"]->st["sessionLive"]];
+
+	$output["ngdFW034"]["autoLogin"] = 1;
+
+
+
+?>

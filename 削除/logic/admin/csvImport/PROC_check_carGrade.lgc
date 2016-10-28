@@ -1,0 +1,758 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+		// アップロードファイルを一時ディレクトリへ
+		list( $filePath, $output["tmpFaqCSVName"] ) = $class["csvImport_1"]->copy_tempDir( $output["importCSVFile"]["tmp_name"] );
+
+		// コピーできない場合は終了
+		if( !file_exists( $filePath ) ) {
+			return;
+		}
+
+
+		// CSVファイル読み込み
+		$i   = 0;
+		$row = 1;
+		$handle = fopen ( $filePath, "r" );
+
+		while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+			// 文字コード変換（SJIS-winからUTF-8に変換）
+			$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+			// 入力チェック
+			unset( $errData );
+			$errData = check_CSVData( $CSVData );
+
+			// エラーメッセージ格納
+			if( count( $errData ) > 0 ) {
+				$output["errList"][$i]["row"]    = $row;
+				$output["errList"][$i]["detail"] = $errData;
+				$i++;
+				// エラーが100行ある場合はチェックをストップする
+				if( $i > 100 ) {
+					break;
+				}
+			}
+
+			// 読み込み行のカウントアップ
+			$row++;
+		}
+
+		fclose($handle);
+
+		// 登録予定件数エラーがない場合表示
+		if( count( $output["errList"] ) == 0 ) {
+			$output["entryCount"] = $row - 1;
+		}
+
+
+
+	/*--------------------------------------------------
+	  入力チェック
+	---------------------------------------------------*/
+	function check_CSVData ( $CSVData ) {
+
+		unset( $makerCode );
+
+		// メーカーコード取得
+		$makerCode = $CSVData[3];
+
+		// 車種コード取得
+		$modelCode = $CSVData[5];
+
+		foreach( $CSVData as $key => $val ) {
+
+			unset( $err );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$err = check_carGradeID( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車種ＩＤ（２フィールド目）
+			if( $key == 1 ) {
+				$err = check_modelID( $val, $key, $makerCode, $modelCode );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// グレードＩＤ（３フィールド目）
+			if( $key == 2 ) {
+				$err = check_gradeID( $val, $key, $makerCode, $modelCode );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// メーカーＣＤ（４フィールド目）
+			if( $key == 3 ) {
+				$err = check_makerCode( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// メーカー名称（５フィールド目）
+			if( $key == 4 ) {
+				$err = check_makerName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車種ＣＤ（６フィールド目）
+			if( $key == 5 ) {
+				$err = check_modelCode( $val, $key, $makerCode );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車種名（７フィールド目）
+			if( $key == 6 ) {
+				$err = check_modelName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 価格（８フィールド目）
+			if( $key == 7 ) {
+				$err = check_price( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車型（９フィールド目）
+			if( $key == 8 ) {
+				$err = check_bodyModel( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 駆動方式（１０フィールド目）
+			if( $key == 9 ) {
+				$err = check_driveSystem( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 駆動方式名称（１１フィールド目）
+			if( $key == 10 ) {
+				$err = check_driveSystemName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// グレードＣＤ（１２フィールド目）
+			if( $key == 11 ) {
+				$err = check_gradeCode( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// グレード（１３フィールド目）
+			if( $key == 12 ) {
+				$err = check_grade( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車名型式（１４フィールド目）
+			if( $key == 13 ) {
+				$err = check_carNameModel( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ルーフ形状（１５フィールド目）
+			if( $key == 14 ) {
+				$err = check_roofModel( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ドア数（１６フィールド目）
+			if( $key == 15 ) {
+				$err = check_door( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// トランスミッション区分（１７フィールド目）
+			if( $key == 16 ) {
+				$err = check_transmission( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// トランスミッション（１８フィールド目）
+			if( $key == 17 ) {
+				$err = check_transmissionType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 全長（１９フィールド目）
+			if( $key == 18 ) {
+				$err = check_totalLength( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 全幅（２０フィールド目）
+			if( $key == 19 ) {
+				$err = check_totalWidth( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 全高（２１フィールド目）
+			if( $key == 20 ) {
+				$err = check_totalHeight( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 室内寸法 長（２２フィールド目）
+			if( $key == 21 ) {
+				$err = check_roomLength( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 室内寸法 幅（２３フィールド目）
+			if( $key == 22 ) {
+				$err = check_roomWidth( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 室内寸法 高（２４フィールド目）
+			if( $key == 23 ) {
+				$err = check_roomHeight( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ホイールベース（２５フィールド目）
+			if( $key == 24 ) {
+				$err = check_wheelbase( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// トレッド 前（２６フィールド目）
+			if( $key == 25 ) {
+				$err = check_frontTread( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// トレッド 後（２７フィールド目）
+			if( $key == 26 ) {
+				$err = check_rearTread( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 最低地上高（２８フィールド目）
+			if( $key == 27 ) {
+				$err = check_minHeight( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 種別（２９フィールド目）
+			if( $key == 28 ) {
+				$err = check_type( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 荷室長（３０フィールド目）
+			if( $key == 29 ) {
+				$err = check_loadRoomLength( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 荷室幅（３１フィールド目）
+			if( $key == 30 ) {
+				$err = check_loadRoomWidth( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 荷室高（３２フィールド目）
+			if( $key == 31 ) {
+				$err = check_loadRoomHeight( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車両重量（３３フィールド目）
+			if( $key == 32 ) {
+				$err = check_vehicleWeight( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車両総重量（３４フィールド目）
+			if( $key == 33 ) {
+				$err = check_vehicleTotalWeight( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 乗車定員（３５フィールド目）
+			if( $key == 34 ) {
+				$err = check_capacity( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 最大積載量（３６フィールド目）
+			if( $key == 35 ) {
+				$err = check_maxCapacity( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 最小回転半径（３７フィールド目）
+			if( $key == 36 ) {
+				$err = check_turningCircle( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 燃料消費率 JC08モード（３８フィールド目）
+			if( $key == 37 ) {
+				$err = check_fuelConsumptionRateJC08mode( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 燃料消費率 10・15モード（３９フィールド目）
+			if( $key == 38 ) {
+				$err = check_fuelConsumptionRate10_15mode( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 燃料消費率　60km/ｈ定地（４０フィールド目）
+			if( $key == 49 ) {
+				$err = check_fuelConsumptionRate60km_h( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 適合規制・認定レベル（４１フィールド目）
+			if( $key == 40 ) {
+				$err = check_recognitionLevel( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ハンドル位置（４２フィールド目）
+			if( $key == 41 ) {
+				$err = check_handlePosition( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// サスペンション 前（４３フィールド目）
+			if( $key == 42 ) {
+				$err = check_frontSuspension( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// サスペンション 後（４４フィールド目）
+			if( $key == 43 ) {
+				$err = check_rearSuspension( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 主ブレーキ 前（４５フィールド目）
+			if( $key == 44 ) {
+				$err = check_frontMainBrake( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 主ブレーキ 後（４６フィールド目）
+			if( $key == 45 ) {
+				$err = check_rearMainBrake( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// タイヤ　前（４７フィールド目）
+			if( $key == 46 ) {
+				$err = check_frontTire( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// タイヤ　後（４８フィールド目）
+			if( $key == 47 ) {
+				$err = check_rearTire( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ステアリングギヤ形式（４９フィールド目）
+			if( $key == 48 ) {
+				$err = check_steeringGearModel( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// エンジン型式（５０フィールド目）
+			if( $key == 49 ) {
+				$err = check_engineModel( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 種類・シリンダー数（５１フィールド目）
+			if( $key == 50 ) {
+				$err = check_cylinderType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// エンジン種類（５２フィールド目）
+			if( $key == 51 ) {
+				$err = check_engineKind( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 気筒配列（５３フィールド目）
+			if( $key == 52 ) {
+				$err = check_cylinderArr( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 気筒数（５４フィールド目）
+			if( $key == 53 ) {
+				$err = check_cylinderAmount( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// バルブ数（５５フィールド目）
+			if( $key == 54 ) {
+				$err = check_valveAmount( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// シリンダー内径（５６フィールド目）
+			if( $key == 55 ) {
+				$err = check_cylinderBore( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// シリンダー行程（５７フィールド目）
+			if( $key == 56 ) {
+				$err = check_cylinderStroke( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 総排気量（５８フィールド目）
+			if( $key == 57 ) {
+				$err = check_totalEmission( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 圧縮比（５９フィールド目）
+			if( $key == 58 ) {
+				$err = check_compressionRatio( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 最高出力（６０フィールド目）
+			if( $key == 59 ) {
+				$err = check_maxPower( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 最大トルク（６１フィールド目）
+			if( $key == 60 ) {
+				$err = check_maxTorque( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 燃料供給装置（６２フィールド目）
+			if( $key == 61 ) {
+				$err = check_fuelSupplySystem( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 使用燃料（６３フィールド目）
+			if( $key == 62 ) {
+				$err = check_useFuel( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 給油口位置（６４フィールド目）
+			if( $key == 63 ) {
+				$err = check_fillOpeningPosition( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// タンク容量（６５フィールド目）
+			if( $key == 64 ) {
+				$err = check_tankVolume( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 優遇税制区分（６６フィールド目）
+			if( $key == 65 ) {
+				$err = check_preferentialTaxType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車両本体価格（６７フィールド目）
+			if( $key == 66 ) {
+				$err = check_taxIncludedPrice( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自動車重量税（６８フィールド目）
+			if( $key == 67 ) {
+				$err = check_tonnageTax( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自動車重量税_減税後（６９フィールド目）
+			if( $key == 68 ) {
+				$err = check_tonnageTax_ART( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自動車取得税（７０フィールド目）
+			if( $key == 69 ) {
+				$err = check_acquisitionTax( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自動車取得税_減税後（７１フィールド目）
+			if( $key == 70 ) {
+				$err = check_acquisitionTax_ART( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 補助金_13年未満（７２フィールド目）
+			if( $key == 71 ) {
+				$err = check_subsidyLessThan13Years( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 補助金_13年超（７３フィールド目）
+			if( $key == 72 ) {
+				$err = check_subsidyOver13Years( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自動車税（翌年）（７４フィールド目）
+			if( $key == 73 ) {
+				$err = check_automobileTaxNextYear( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自動車税_減税後（翌年）（７５フィールド目）
+			if( $key == 74 ) {
+				$err = check_automobileTaxNextYear_ART( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// モーター型式（７６フィールド目）
+			if( $key == 75 ) {
+				$err = check_motorModel( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// モーター種類（７７フィールド目）
+			if( $key == 76 ) {
+				$err = check_motorKind( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// モーター種類_最大トルク数（７８フィールド目）
+			if( $key == 77 ) {
+				$err = check_motorKindMaxTorque( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// モーター種類_最高出力（７９フィールド目）
+			if( $key == 78 ) {
+				$err = check_motorKindMaxPower( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 動力用主電池_種類（８０フィールド目）
+			if( $key == 79 ) {
+				$err = check_mainBatteryKind( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 動力用主電池_個数（８１フィールド目）
+			if( $key == 80 ) {
+				$err = check_mainBatteryAmount( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 動力用主電池_接続方式（８２フィールド目）
+			if( $key == 81 ) {
+				$err = check_mainBatteryConnect( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 動力用主電池_容量Ａｈ（８３フィールド目）
+			if( $key == 82 ) {
+				$err = check_mainBatteryAh( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 定格電圧（８４フィールド目）
+			if( $key == 83 ) {
+				$err = check_voltageRating( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+
+		}
+
+		return $ret;
+	}
+
+
+
+
+
+
+
+
+
+?>

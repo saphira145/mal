@@ -1,0 +1,11 @@
+<?php
+
+	
+
+	// ログインログ追加
+	$class["loginLog_1"]->insert_loginLog( $class["session"]->memberID );
+
+	// ＤＢチケットの破棄
+	drop_dbTicket();
+
+?>

@@ -1,0 +1,12 @@
+<div class="modeChangeLoginBox">
+	<div class="salesLoginBox">
+        <div class="actionMsg mrgB_10"><h2 class="mrgB_0 txt_center faLock">ログイン</h2></div>
+		<div class="form">
+			<p class="err passwordErr"></p>
+			<input type="password" name="modeChenge[password]" value=""/>
+			<input type="hidden" name="modeChenge[account]" value="{val MEMBER.EMAIL.ACCOUNT}" />
+			<input type="hidden" name="modeChenge[domain]" value="{val MEMBER.EMAIL.DOMAIN}" />
+		</div>
+		<div class="btnArea"><a href="javascript:void(0)" class="faSignIn loginBtn">ログイン</a></div>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$class["modelAdmin_1"]->delete_DB( $output );
+
+	// 車種テーマの削除
+	$class["themeAdmin_1"]->delete_carTheme( array("makerCode" => $output["orgMakerCode"], "modelCode" => $output["orgModelCode"]) );
+
+
+
+
+
+
+
+?>

@@ -1,0 +1,40 @@
+{input jsList_s/jsName=/_common/js/salesPromotion.js}
+
+<div id="salespromotionPanel" <!--{set LEASEBASE_FLG}-->class="secret"<!--{/set}-->>
+	<div id="panelMenu">
+		<div id="login">
+			<span class="msgBox">　</span>
+			<div class="float-r">
+                <ul>
+                    <!--{set MEMBER.EMAIL.ACCOUNT}-->
+                    <li class="user">{val MEMBER.EMAIL.ACCOUNT} さん <!--{set MEMBER.DAYCNTFlg}-->(残り {val MEMBER.DAYCNT} 日)<!--{/set}--></li>
+                    <!--{/set}-->
+                    <li class="notice"><span class="faComments <!--{set NOTICEUNREAD_FLG}-->setPreset<!--{/set}-->"></span><a href="javascript:void(0)">お知らせ</a></li>
+                    <!--{unset CARLEASEINFO}-->
+                    <li class="preset"><span class="faCheckSquareo <!--{set LEASEPRESET_FLG}-->setPreset<!--{/set}-->"></span><a href="javascript:void(0)">事前設定</a></li>
+                    <!--{set MEMBER.EMAIL.ACCOUNT}-->
+                    <li class="password"><a href="javascript:void(0)" class="faLock">パスワード変更</a></li>
+                    <!--{/set}-->
+                    <li class="logout"><a href="{val BASE_DIR}/?logout" class="faSignOut">ログアウト</a></li>
+                    <!--{/unset}-->
+                    <!--{set TEST_MODE_FLG}-->
+											<!--{set CARLEASEINFO}-->
+											<li class="modeChange"><a href="javascript:void(0)" class="faRefresh">試算設定</a><input type="hidden" name="compare[string_en]" value="{val compare.string_en}" /></li>
+											<!--{/set}-->
+                    <!--{/set}-->
+                </ul>
+			</div>
+		</div>
+	</div>
+	<div id="panelContent">
+		<div class="contentArea notice" ></div>
+		<!--{unset CARLEASEINFO}-->
+		<div class="contentArea preset" ></div>
+		<div class="contentArea password" ></div>
+		<!--{/unset}-->
+		<!--{set CARLEASEINFO}-->
+		<div class="contentArea modeChange" >{file /salesPromotion/parts/modeChangeLogin.tmp}</div>
+		<!--{/set}-->
+	</div>
+	<div id="panelButton" class="fa-bars"></div>
+</div>

@@ -1,0 +1,42 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// ＤＢ名取得
+	$output["PHOTO_DIR"] = get_activeDirName ();
+
+	/* --------------------------------------------
+	   新車情報の取得
+	-------------------------------------------- */
+	if( count($output["newCarList"]) > 0 ){
+		for( $i=0; $i<count($output["newCarList"]); $i++ ){
+			//車種画像
+			$output["newCarList"][$i]["carBodyPhotoName"] = get_carBodyPhotoName($output["newCarList"][$i]["makerCode"], $output["newCarList"][$i]["modelCode"], 1);
+
+			//メーカー名取得
+			$output["newCarList"][$i]["makerName"] = get_makerName( $output["newCarList"][$i]["makerCode"], "active" );
+		}
+	} else {
+		unset($output["newCarList"]);
+	}
+
+	// キャンペーン画像の取得
+	if( count($output["campaignList"]) > 0 ){
+		for( $i=0; $i<count($output["campaignList"]); $i++ ){
+			$output["campaignList"][$i]["campaignimg"] = $class["campaignUser_1"]->get_photo( $output["campaignList"][$i]["campaignNum"] );
+		}
+	} else {
+		unset($output["campaignList"]);
+	}
+
+	/* --------------------------------------------
+	   総件数取得
+	-------------------------------------------- */
+	$totalNum = get_totalNum();
+	$output["totalMaker"] = number_format( $totalNum["totalMaker"] );
+	$output["totalModel"] = number_format( $totalNum["totalModel"] );
+
+
+?>

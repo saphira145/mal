@@ -1,0 +1,11 @@
+<div id="header">
+	<div class="logo">
+		<a href="{val BASE_DIR}/admin/">
+			三菱オートリース 車種比較アプリ <span class="sitename">Car <strong>sagacité</strong></span> 管理ツール
+		</a>
+	</div>
+	<div class="user"><!--{set SALESMEMBER_SYSTEM}-->ユーザー: {val MEMBER.NAME.FULL}さん<!--{/set}--><!--{unset SALESMEMBER_SYSTEM}-->ユーザー: {val MEMBER.EMAIL.ACCOUNT} さん<!--{/unset}--><!--{set SALESMEMBER_SYSTEM}--><a href="{val BASE_DIR}/manuel/manuel.html" target="_blank">操作マニュアル</a><!--{/set}--><a href="{val UNIT_URL}/?logout">ログアウト</a></div>
+</div>
+
+
+

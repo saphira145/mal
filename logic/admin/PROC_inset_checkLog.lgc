@@ -1,0 +1,20 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	
+	// 検索ログ日時
+	$logDatetime = date( "Y-m-d H:i:s" );
+
+	// 実行者
+	$memberID = $class["session"]->memberID;
+
+	// ログデータの作成
+	$output["log"] = $class["consistencyAdmin_1"]->convert_logData( $output );
+
+	// 検索ログ追加
+	$class["consistencyAdmin_1"]->output_logData( $output["log"], $logDatetime, $memberID );
+
+?>

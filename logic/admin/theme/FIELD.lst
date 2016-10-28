@@ -1,0 +1,103 @@
+// テーマID（検索）
+searchThemeID
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// テーマ名（検索）
+searchThemeName
+	convert,  0,  trim,
+ 
+// ステータス（検索）
+searchLevel
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// ページ番号
+pageNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+
+// ソートＩＤ（表示順変更用）
+sortIDs
+	convert,  0,  sortNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  100,  must,             必須入力項目です
+
+
+// テーマID
+themeID
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	check,  100,  themeIDExist,     テーマIDは存在しません
+
+//優先順位
+priorityNum
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+//表示順
+dispNum
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+// メーカーコード
+makerCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  100,  themeMakerCodeExist,     メーカーコードは存在しません
+
+// 車種コード
+modelCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  100,  themeModelCodeExist({2}),    車種コードは存在しません
+	check,  200,  themeBodyTypeExist({1}:{2}), ボディタイプが一致しません
+
+
+// ボディタイプ
+bodyTypeID
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// テーマ名
+themeName
+	convert,  0,  trim,
+	filter,   0,  length_cut(100),
+	check,  100,  must,              必須入力項目です
+	check,  200,  length(1-12),     文字数が制限値外です
+
+// テーマ名(略称)
+nameAbbreviation
+	convert,  0,  trim,
+	filter,   0,  length_cut(10),
+	check,  100,  must,              必須入力項目です
+	check,  200,  length(1-6),     文字数が制限値外です
+
+// テーマアイコン
+iconNo
+	convert,  0,  paramNumeric,
+	convert,  0,  numeric,
+	check,  100,  must,           選択してください
+
+// ステータス
+statusType
+	convert,  0,  paramNumeric,
+	convert,  0,  numeric,
+	check,  100,  must,           選択してください
+	check,  200,  statusType,     想定外のデータが入力されました
+
+// 選定基準
+basisOfSelection
+	convert,  0,  trim
+	check,  200,  length(-100000),                  文字数が制限外です

@@ -1,0 +1,10 @@
+/* -------------------------------------
+	ACTION.lst
+	for NetGRID PHP Framework v2
+------------------------------------- */
+in,  passwordCheck
+bp,  basePrice
+ll,  leaseList
+bc,  baseChange
+
+ix, in

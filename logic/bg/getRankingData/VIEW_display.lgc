@@ -1,0 +1,74 @@
+<?php
+
+
+	/* -------------------------------------
+		ビュー
+	------------------------------------- */
+	// 件数の調整
+	if( count($output["rankingList"]) == 0 ){
+		unset($output["rankingList"]);
+	}
+
+	// ＤＢ名取得
+	$output["PHOTO_DIR"] = get_activeDirName ();
+
+
+	// ページ情報の取得
+	$strCnt =  ( ( $output["pageNum"] - 1 ) * $ini["page"]["ranking"] ) + 1;
+
+	for( $i = 0, $iMax = count($output["rankingList"]); $i < $iMax; $i++ ){
+		
+		$output["rankingList"][$i]["rankingNo"] = $strCnt;
+		$output["rankingList"][$i]["modelInfo"]   = $class["modelUser_1"]->get_info( $output["rankingList"][$i]["makerCode"], $output["rankingList"][$i]["modelCode"] , "active");
+		$output["rankingList"][$i]["modelInfo"]   = $class["modelUser_1"]->convert_info( $output["rankingList"][$i]["modelInfo"] );
+		$strCnt++;
+
+		// テーマ名の取得
+		unset($tmp_theme, $sCnt, $vCnt);
+		$tmp_theme["search"] = array();
+		$tmp_theme["val"]    = array();
+		$sCnt = 0;
+		$vCnt = 0;
+		for( $j = 0, $jMax = count($output["rankingList"][$i]["theme"]); $j < $jMax; $j++ ){
+			$get_themeName = get_themeName( $output["rankingList"][$i]["theme"][$j]["themeID"] , "active");
+
+			if( !empty($output["theme"]) && in_array( $output["rankingList"][$i]["theme"][$j]["themeID"], $output["theme"] ) ){
+				$tmp_theme["search"][$sCnt]["ID"]   = $output["rankingList"][$i]["theme"][$j]["themeID"];
+				$tmp_theme["search"][$sCnt]["name"] = $get_themeName["themeName"];
+				$tmp_theme["search"][$sCnt]["search"] = 1;
+				$sCnt++;
+			} else {
+				$tmp_theme["val"][$vCnt]["ID"]   = $output["rankingList"][$i]["theme"][$j]["themeID"];
+				$tmp_theme["val"][$vCnt]["name"] = $get_themeName["themeName"];
+				$vCnt++;
+			}
+		}
+		$output["rankingList"][$i]["theme"] = array_merge($tmp_theme["search"],$tmp_theme["val"]);
+	}
+
+	// ページ情報の取得
+	$output["search"]["count"] = $class["carGradeUser_1"]->get_carGradeNum($output);
+
+	$output["pageInfo"] = adjust_pageState( $output["search"]["count"], $ini["page"]["ranking"] , $output["pageNum"] );
+
+	// HTMLテンプレートの読み込み
+	include_once($path["logicRoot"]["dirAP"]."/2000_baseDir.fnc");
+
+	$filePath = $path["templateRoot"]["dirAP"] . "/RANKING/parts/dataList.tmp";
+	$outHTML  = $class["template"]->attach_template( $filePath, $output );
+
+	$retJSON["html"]    = $outHTML;
+	$retJSON["pageNum"] = $output["pageInfo"]["nextPage"];
+	$retJSON["cnt"] = $output["pageInfo"]["nextCount"];
+	
+	if( empty($output["pageInfo"]["nextCount"]) ){
+		$retJSON["del"] = 1;
+	}
+
+	// ----------------------------------------------------------------
+	// JSONの出力
+	header("content-type: application/x-javascript; charset=utf-8");
+	die(json_encode($retJSON));
+	exit;
+
+?>

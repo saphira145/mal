@@ -1,0 +1,195 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_footSurroundings( $insertData );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "footSurroundings", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "footSurroundings", "reserve", $reserveDatetime );
+	}
+
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$carGradeID = $val;
+			}
+
+			// ４ＷＡＳ_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$fourWASName = $val;
+			}
+
+			// ４ＷＡＳ_有無（３フィールド目）
+			if( $key == 2 ) {
+				$fourWASType = $val;
+			}
+
+			// ４ＷＡＳ_注目（４フィールド目）
+			if( $key == 3 ) {
+				$fourWASSpot = $val;
+			}
+
+			// 強化ブレーキ_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$powerfulBrakeName = $val;
+			}
+
+			// 強化ブレーキ_有無（６フィールド目）
+			if( $key == 5 ) {
+				$powerfulBrakeType = $val;
+			}
+
+			// 強化ブレーキ_注目（７フィールド目）
+			if( $key == 6 ) {
+				$powerfulBrakeSpot = $val;
+			}
+
+			// 強化サスペンション_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$powerfulSuspensionName = $val;
+			}
+
+			// 強化サスペンション_有無（９フィールド目）
+			if( $key == 8 ) {
+				$powerfulSuspensionType = $val;
+			}
+
+			// 強化サスペンション_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$powerfulSuspensionSpot = $val;
+			}
+
+			// アルミロードホイール_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$aluminumWheelName = $val;
+			}
+
+			// アルミロードホイール_有無（１２フィールド目）
+			if( $key == 11 ) {
+				$aluminumWheelType = $val;
+			}
+
+			// アルミロードホイール_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$aluminumWheelSpot = $val;
+			}
+
+			// スペアタイヤ_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$spareTireName = $val;
+			}
+
+			// スペアタイヤ_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$spareTireType = $val;
+			}
+
+			// スペアタイヤ_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$spareTireSpot = $val;
+			}
+
+
+
+		}
+
+		// 登録用配列に入れ替える
+		$data["carGradeID"]               = $carGradeID;
+		$data["4WASName"]                 = $fourWASName;
+		$data["4WASType"]                 = CSV2DB_commonType( $fourWASType );
+		$data["4WASSpot"]                 = CSV2DB_commonSpot( $fourWASSpot );
+		$data["powerfulBrakeName"]        = $powerfulBrakeName;
+		$data["powerfulBrakeType"]        = CSV2DB_commonType( $powerfulBrakeType );
+		$data["powerfulBrakeSpot"]        = CSV2DB_commonSpot( $powerfulBrakeSpot );
+		$data["powerfulSuspensionName"]   = $powerfulSuspensionName;
+		$data["powerfulSuspensionType"]   = CSV2DB_commonType( $powerfulSuspensionType );
+		$data["powerfulSuspensionSpot"]   = CSV2DB_commonSpot( $powerfulSuspensionSpot );
+		$data["aluminumWheelName"]        = $aluminumWheelName;
+		$data["aluminumWheelType"]        = CSV2DB_commonType( $aluminumWheelType );
+		$data["aluminumWheelSpot"]        = CSV2DB_commonSpot( $aluminumWheelSpot );
+		$data["spareTireName"]            = $spareTireName;
+		$data["spareTireType"]            = CSV2DB_commonType( $spareTireType );
+		$data["spareTireSpot"]            = CSV2DB_commonSpot( $spareTireSpot );
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

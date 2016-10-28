@@ -1,0 +1,95 @@
+{frame /_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/compare.js}
+
+{input cssList/cssName=/_common/css/thickbox.css}
+{input jsList/jsName=/_common/js/thickbox.js}
+{input jsList/jsName=/_common/js/changeTargetCar.js}
+{input page.compare=1}
+
+<!--{set SALESPROMOTION_FLG}-->
+<div id="salesPromotionDisp">
+	<dl>
+		<dt>リース形態</dt>
+		<dd>{val leaseConditions.contract.name}</dd>
+		<dt>月間走行距離</dt>
+		<dd>{val leaseConditions.mileage.distance|number_format} km</dd>
+		<dt>ガソリン価格</dt>
+		<dd>{val leaseConditions.gasoline.name}</dd>
+		<dt>使用開始年月</dt>
+		<dd>{val leaseConditions.carAddDate.year}年 {val leaseConditions.carAddDate.month}月</dd>
+<!--{unset voluntaryInsuranceHidFlg}-->
+		<dt>任意保険</dt>
+		<dd>{val leaseConditions.voluntaryInsurance.name}</dd>
+<!--{/unset}-->
+<!--{set leaseConditions.option}-->
+		<dt class="option">オプション</dt>
+		<dd>
+	<!--{loop leaseConditions.option}-->
+			{val leaseConditions.option/name}<!--{loop_count_between leaseConditions.option=1}--> / <!--{/loop_count_between}-->
+	<!--{/loop}-->
+		</dd>
+<!--{/set}-->
+
+	</dl>
+	<span>で算出しています。</span>
+</div>
+<!--{/set}-->
+<div id="compare">
+	<div id="compareData">
+		
+		{file parts/searchData.tmp}
+		{file parts/carData.tmp}
+	<!--/#compareData--></div>
+
+	<div id="compareDetail">
+		<!--{unset filter}-->{file parts/detail.tmp}<!--{/unset}-->
+		<!--{set filter}-->{file parts/filterDetail.tmp}<!--{/set}-->
+	<!--/#compareDetail--></div>
+
+<!--/#compare--></div>
+
+	{file parts/floatingCarName.tmp}
+
+
+<a id="thickboxjs" href="" class="thickbox"></a>
+<div id="thickboxjsContent" style="display:none;padding:0;">
+	<div id="selectMakerTab"></div>
+	<div id="selectModelTab"></div>
+	<input type="hidden" id="changeNum" value="">
+	<input type="hidden" id="modelNameEng1" value="<!--{set model1Info.modelNameEng}-->{val model1Info.modelNameEng}<!--{/set}--><!--{unset model1Info.modelNameEng}-->-<!--{/unset}-->">
+	<input type="hidden" id="modelNameEng2" value="<!--{set model2Info.modelNameEng}-->{val model2Info.modelNameEng}<!--{/set}--><!--{unset model2Info.modelNameEng}-->-<!--{/unset}-->">
+	<input type="hidden" id="modelNameEng3" value="<!--{set model3Info.modelNameEng}-->{val model3Info.modelNameEng}<!--{/set}--><!--{unset model3Info.modelNameEng}-->-<!--{/unset}-->">
+	<input type="hidden" id="modelNameEng4" value="<!--{set model4Info.modelNameEng}-->{val model4Info.modelNameEng}<!--{/set}--><!--{unset model4Info.modelNameEng}-->-<!--{/unset}-->">
+	<input type="hidden" id="modelCode1" value="<!--{set model1.carGradeCode}-->{val model1.carGradeCode}<!--{/set}--><!--{unset model1.carGradeCode}-->-<!--{/unset}-->">
+	<input type="hidden" id="modelCode2" value="<!--{set model2.carGradeCode}-->{val model2.carGradeCode}<!--{/set}--><!--{unset model2.carGradeCode}-->-<!--{/unset}-->">
+	<input type="hidden" id="modelCode3" value="<!--{set model3.carGradeCode}-->{val model3.carGradeCode}<!--{/set}--><!--{unset model3.carGradeCode}-->-<!--{/unset}-->">
+	<input type="hidden" id="modelCode4" value="<!--{set model4.carGradeCode}-->{val model4.carGradeCode}<!--{/set}--><!--{unset model4.carGradeCode}-->-<!--{/unset}-->">
+</div>
+
+<form name="form_estimate" method="post" action="https://reg34.smp.ne.jp/regist/is?SMPFORM=mclc-pjsds-4049d75bf39665ab43b781a54ab5c7ce" target="_blank">
+	<input type="hidden" name="Inquiry_13_new" value="{val estimate.c1n}">
+	<input type="hidden" name="Inquiry_15" value="{val estimate.c1d}">
+	<input type="hidden" name="Inquiry_16" value="{val estimate.c1e}">
+	<input type="hidden" name="Inquiry_24_new" value="{val estimate.c2n}">
+	<input type="hidden" name="Inquiry_26" value="{val estimate.c2d}">
+	<input type="hidden" name="Inquiry_27" value="{val estimate.c2e}">
+	<input type="hidden" name="Inquiry_35_new" value="{val estimate.c3n}">
+	<input type="hidden" name="Inquiry_37" value="{val estimate.c3d}">
+	<input type="hidden" name="Inquiry_38" value="{val estimate.c3e}">
+	<input type="hidden" name="Inquiry_48" value="{val estimate.c4n}">
+	<input type="hidden" name="Inquiry_50" value="{val estimate.c4d}">
+	<input type="hidden" name="Inquiry_51" value="{val estimate.c4e}">
+</form>
+
+<!--{set SALESPROMOTION_FLG}-->
+<div id="thickboxjsContent2" style="display:none;padding:0;">
+	<div id="checkAlert">
+		<div class="checkAlertCntent">
+			<h2 class="faExclamationTriangle"></h2>
+			<span class="checkNone">絞り込み項目がチェックされていません。<br>絞り込みたい項目にチェックを入れてください。<br>(最大10項目)</span>
+			<span class="checkOrver">絞り込み項目が10項目以上チェックされています。<br>チェックは10項目までにしてください。</span>
+			<div class="closeBtn"><a href="javascript:void(0)" class="faTimesCircle">閉じる</a></div>
+		</div>
+	</div>
+</div>
+<!--{/set}-->

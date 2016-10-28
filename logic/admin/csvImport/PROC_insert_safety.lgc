@@ -1,0 +1,481 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_safety( $insertData );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "safety", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "safety", "reserve", $reserveDatetime );
+	}
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$carGradeID = $val;
+			}
+
+			// 運転席SRSエアバックシステム_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$driverSeatSRSAirBackSystemName = $val;
+			}
+
+			// 運転席SRSエアバックシステム_有無（３フィールド目）
+			if( $key == 2 ) {
+				$driverSeatSRSAirBackSystemType = $val;
+			}
+
+			// 運転席SRSエアバックシステム_注目（４フィールド目）
+			if( $key == 3 ) {
+				$driverSeatSRSAirBackSystemSpot = $val;
+			}
+
+			// 助手席SRSエアバックシステム_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$passengerSeatSRSAirBackSystemName = $val;
+			}
+
+			// 助手席SRSエアバックシステム_有無（６フィールド目）
+			if( $key == 5 ) {
+				$passengerSeatSRSAirBackSystemType = $val;
+			}
+
+			// 助手席SRSエアバックシステム_注目（７フィールド目）
+			if( $key == 6 ) {
+				$passengerSeatSRSAirBackSystemSpot = $val;
+			}
+
+			// 前席SRSサイドエアバックシステム(SRSカーテンエアバックシステム)_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$frontSRSSideAirBackSystemName = $val;
+			}
+
+			// 前席SRSサイドエアバックシステム(SRSカーテンエアバックシステム)_有無（９フィールド目）
+			if( $key == 8 ) {
+				$frontSRSSideAirBackSystemType = $val;
+			}
+
+			// 前席SRSサイドエアバックシステム(SRSカーテンエアバックシステム)_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$frontSRSSideAirBackSystemSpot = $val;
+			}
+
+			// 後席SRSサイドエアバックシステム(SRSカーテンエアバックシステム)_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$rearSRSSideAirBackSystemName = $val;
+			}
+
+			// 後席SRSサイドエアバックシステム(SRSカーテンエアバックシステム)_有無（１２フィールド目）
+			if( $key == 11 ) {
+				$rearSRSSideAirBackSystemType = $val;
+			}
+
+			// 後席SRSサイドエアバックシステム(SRSカーテンエアバックシステム)_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$rearSRSSideAirBackSystemSpot = $val;
+			}
+
+			// ABS(アンチロックブレーキシステム)_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$ABSName = $val;
+			}
+
+			// ABS(アンチロックブレーキシステム)_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$ABSType = $val;
+			}
+
+			// ABS(アンチロックブレーキシステム)_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$ABSSpot = $val;
+			}
+
+			// ブレーキアシスト_正式名（１７フィールド目）
+			if( $key == 16 ) {
+				$brakeAssistName = $val;
+			}
+
+			// ブレーキアシスト_有無（１８フィールド目）
+			if( $key == 17 ) {
+				$brakeAssistType = $val;
+			}
+
+			// ブレーキアシスト_注目（１９フィールド目）
+			if( $key == 18 ) {
+				$brakeAssistSpot = $val;
+			}
+
+			// TCS（トラクションコントロールシステム）_正式名（２０フィールド目）
+			if( $key == 19 ) {
+				$TCSName = $val;
+			}
+
+			// TCS（トラクションコントロールシステム）_有無（２１フィールド目）
+			if( $key == 20 ) {
+				$TCSType = $val;
+			}
+
+			// TCS（トラクションコントロールシステム）_注目（２２フィールド目）
+			if( $key == 21 ) {
+				$TCSSpot = $val;
+			}
+
+			// VDC（ビークルダイナミクスコントロール）_正式名（２３フィールド目）
+			if( $key == 22 ) {
+				$VDCName = $val;
+			}
+
+			// VDC（ビークルダイナミクスコントロール）_有無（２４フィールド目）
+			if( $key == 23 ) {
+				$VDCType = $val;
+			}
+
+			// VDC（ビークルダイナミクスコントロール）_注目（２５フィールド目）
+			if( $key == 24 ) {
+				$VDCSpot = $val;
+			}
+
+			// プリテンショナーシートベルト_正式名（２６フィールド目）
+			if( $key == 25 ) {
+				$pretensionerSeatBeltName = $val;
+			}
+
+			// プリテンショナーシートベルト_有無（２７フィールド目）
+			if( $key == 26 ) {
+				$pretensionerSeatBeltType = $val;
+			}
+
+			// プリテンショナーシートベルト_注目（２８フィールド目）
+			if( $key == 27 ) {
+				$pretensionerSeatBeltSpot = $val;
+			}
+
+			// フォースリミッターシートベルト_正式名（２９フィールド目）
+			if( $key == 28 ) {
+				$forceLimiterSeatBeltName = $val;
+			}
+
+			// フォースリミッターシートベルト_有無（３０フィールド目）
+			if( $key == 29 ) {
+				$forceLimiterSeatBeltType = $val;
+			}
+
+			// フォースリミッターシートベルト_注目（３１フィールド目）
+			if( $key == 30 ) {
+				$forceLimiterSeatBeltSpot = $val;
+			}
+
+			// チャイルドシート用アンカー_正式名（３２フィールド目）
+			if( $key == 31 ) {
+				$childSeatAnchorName = $val;
+			}
+
+			// チャイルドシート用アンカー_有無（３３フィールド目）
+			if( $key == 32 ) {
+				$childSeatAnchorType = $val;
+			}
+
+			// チャイルドシート用アンカー_注目（３４フィールド目）
+			if( $key == 33 ) {
+				$childSeatAnchorSpot = $val;
+			}
+
+			// ハイマウントストップランプ_正式名（３５フィールド目）
+			if( $key == 34 ) {
+				$highMountStoplampName = $val;
+			}
+
+			// ハイマウントストップランプ_有無（３６フィールド目）
+			if( $key == 35 ) {
+				$highMountStoplampType = $val;
+			}
+
+			// ハイマウントストップランプ_注目（３７フィールド目）
+			if( $key == 36 ) {
+				$highMountStoplampSpot = $val;
+			}
+
+			// 後席ELR付3点式シートベルト_正式名（３８フィールド目）
+			if( $key == 37 ) {
+				$rearELRSeatBeltName = $val;
+			}
+
+			// 後席ELR付3点式シートベルト_有無（３９フィールド目）
+			if( $key == 38 ) {
+				$rearELRSeatBeltType = $val;
+			}
+
+			// 後席ELR付3点式シートベルト_注目（４０フィールド目）
+			if( $key == 39 ) {
+				$rearELRSeatBeltSpot = $val;
+			}
+
+			// 挟み込み防止機能付パワーウインドウ_正式名（４１フィールド目）
+			if( $key == 40 ) {
+				$scissorsPowerWindowName = $val;
+			}
+
+			// 挟み込み防止機能付パワーウインドウ_有無（４２フィールド目）
+			if( $key == 41 ) {
+				$scissorsPowerWindowType = $val;
+			}
+
+			// 挟み込み防止機能付パワーウインドウ_注目（４３フィールド目）
+			if( $key == 42 ) {
+				$scissorsPowerWindowSpot = $val;
+			}
+
+			// 衝突安全ボディ_正式名（４４フィールド目）
+			if( $key == 43 ) {
+				$safetyStructureBodyName = $val;
+			}
+
+			// 衝突安全ボディ_有無（４５フィールド目）
+			if( $key == 44 ) {
+				$safetyStructureBodyType = $val;
+			}
+
+			// 衝突安全ボディ_注目（４６フィールド目）
+			if( $key == 45 ) {
+				$safetyStructureBodySpot = $val;
+			}
+
+			// プリクラッシュシートベルト_正式名（４７フィールド目）
+			if( $key == 46 ) {
+				$priCrashSeatBeltName = $val;
+			}
+
+			// プリクラッシュシートベルト_有無（４８フィールド目）
+			if( $key == 47 ) {
+				$priCrashSeatBeltType = $val;
+			}
+
+			// プリクラッシュシートベルト_注目（４９フィールド目）
+			if( $key == 48 ) {
+				$priCrashSeatBeltSpot = $val;
+			}
+
+			// プリクラッシュブレーキアシスト_正式名（５０フィールド目）
+			if( $key == 49 ) {
+				$priCrashBrakeAssistName = $val;
+			}
+
+			// プリクラッシュブレーキアシスト_有無（５１フィールド目）
+			if( $key == 50 ) {
+				$priCrashBrakeAssistType = $val;
+			}
+
+			// プリクラッシュブレーキアシスト_注目（５２フィールド目）
+			if( $key == 51 ) {
+				$priCrashBrakeAssistSpot = $val;
+			}
+
+			// 盗難防止アラーム_正式名（５３フィールド目）
+			if( $key == 52 ) {
+				$antiTheftAlarmName = $val;
+			}
+
+			// 盗難防止アラーム_有無（５４フィールド目）
+			if( $key == 53 ) {
+				$antiTheftAlarmType = $val;
+			}
+
+			// 盗難防止アラーム_注目（５５フィールド目）
+			if( $key == 54 ) {
+				$antiTheftAlarmSpot = $val;
+			}
+
+			// アクティブヘッドレスト_正式名（５６フィールド目）
+			if( $key == 55 ) {
+				$activeHeadrestName = $val;
+			}
+
+			// アクティブヘッドレスト_有無（５７フィールド目）
+			if( $key == 56 ) {
+				$activeHeadrestType = $val;
+			}
+
+			// アクティブヘッドレスト_注目（５８フィールド目）
+			if( $key == 57 ) {
+				$activeHeadrestSpot = $val;
+			}
+
+			// フロントスタビライザー_正式名（５９フィールド目）
+			if( $key == 58 ) {
+				$frontStabilizerName = $val;
+			}
+
+			// フロントスタビライザー_有無（６０フィールド目）
+			if( $key == 59 ) {
+				$frontStabilizerType = $val;
+			}
+
+			// フロントスタビライザー_注目（６１フィールド目）
+			if( $key == 60 ) {
+				$frontStabilizerSpot = $val;
+			}
+
+			// リヤスタビライザー_正式名（６２フィールド目）
+			if( $key == 61 ) {
+				$rearStabilizerName = $val;
+			}
+
+			// リヤスタビライザー_有無（６３フィールド目）
+			if( $key == 62 ) {
+				$rearStabilizerType = $val;
+			}
+
+			// リヤスタビライザー_注目（６４フィールド目）
+			if( $key == 63 ) {
+				$rearStabilizerSpot = $val;
+			}
+
+
+		}
+
+		// 登録用配列に入れ替える
+		$data["carGradeID"]                                 = $carGradeID;
+		$data["driverSeatSRSAirBackSystemName"]             = $driverSeatSRSAirBackSystemName;
+		$data["driverSeatSRSAirBackSystemType"]             = CSV2DB_commonType( $driverSeatSRSAirBackSystemType );
+		$data["driverSeatSRSAirBackSystemSpot"]             = CSV2DB_commonSpot( $driverSeatSRSAirBackSystemSpot );
+		$data["passengerSeatSRSAirBackSystemName"]          = $passengerSeatSRSAirBackSystemName;
+		$data["passengerSeatSRSAirBackSystemType"]          = CSV2DB_commonType( $passengerSeatSRSAirBackSystemType );
+		$data["passengerSeatSRSAirBackSystemSpot"]          = CSV2DB_commonSpot( $passengerSeatSRSAirBackSystemSpot );
+		$data["frontSRSSideAirBackSystemName"]              = $frontSRSSideAirBackSystemName;
+		$data["frontSRSSideAirBackSystemType"]              = CSV2DB_commonType( $frontSRSSideAirBackSystemType );
+		$data["frontSRSSideAirBackSystemSpot"]              = CSV2DB_commonSpot( $frontSRSSideAirBackSystemSpot );
+		$data["rearSRSSideAirBackSystemName"]               = $rearSRSSideAirBackSystemName;
+		$data["rearSRSSideAirBackSystemType"]               = CSV2DB_commonType( $rearSRSSideAirBackSystemType );
+		$data["rearSRSSideAirBackSystemSpot"]               = CSV2DB_commonSpot( $rearSRSSideAirBackSystemSpot );
+		$data["ABSName"]                                    = $ABSName;
+		$data["ABSType"]                                    = CSV2DB_commonType( $ABSType );
+		$data["ABSSpot"]                                    = CSV2DB_commonSpot( $ABSSpot );
+		$data["brakeAssistName"]                            = $brakeAssistName;
+		$data["brakeAssistType"]                            = CSV2DB_commonType( $brakeAssistType );
+		$data["brakeAssistSpot"]                            = CSV2DB_commonSpot( $brakeAssistSpot );
+		$data["TCSName"]                                    = $TCSName;
+		$data["TCSType"]                                    = CSV2DB_commonType( $TCSType );
+		$data["TCSSpot"]                                    = CSV2DB_commonSpot( $TCSSpot );
+		$data["VDCName"]                                    = $VDCName;
+		$data["VDCType"]                                    = CSV2DB_commonType( $VDCType );
+		$data["VDCSpot"]                                    = CSV2DB_commonSpot( $VDCSpot );
+		$data["pretensionerSeatBeltName"]                   = $pretensionerSeatBeltName;
+		$data["pretensionerSeatBeltType"]                   = CSV2DB_commonType( $pretensionerSeatBeltType );
+		$data["pretensionerSeatBeltSpot"]                   = CSV2DB_commonSpot( $pretensionerSeatBeltSpot );
+		$data["forceLimiterSeatBeltName"]                   = $forceLimiterSeatBeltName;
+		$data["forceLimiterSeatBeltType"]                   = CSV2DB_commonType( $forceLimiterSeatBeltType );
+		$data["forceLimiterSeatBeltSpot"]                   = CSV2DB_commonSpot( $forceLimiterSeatBeltSpot );
+		$data["childSeatAnchorName"]                        = $childSeatAnchorName;
+		$data["childSeatAnchorType"]                        = CSV2DB_commonType( $childSeatAnchorType );
+		$data["childSeatAnchorSpot"]                        = CSV2DB_commonSpot( $childSeatAnchorSpot );
+		$data["highMountStoplampName"]                      = $highMountStoplampName;
+		$data["highMountStoplampType"]                      = CSV2DB_commonType( $highMountStoplampType );
+		$data["highMountStoplampSpot"]                      = CSV2DB_commonSpot( $highMountStoplampSpot );
+		$data["rearELRSeatBeltName"]                        = $rearELRSeatBeltName;
+		$data["rearELRSeatBeltType"]                        = CSV2DB_commonType( $rearELRSeatBeltType );
+		$data["rearELRSeatBeltSpot"]                        = CSV2DB_commonSpot( $rearELRSeatBeltSpot );
+		$data["scissorsPowerWindowName"]                    = $scissorsPowerWindowName;
+		$data["scissorsPowerWindowType"]                    = CSV2DB_commonType( $scissorsPowerWindowType );
+		$data["scissorsPowerWindowSpot"]                    = CSV2DB_commonSpot( $scissorsPowerWindowSpot );
+		$data["safetyStructureBodyName"]                    = $safetyStructureBodyName;
+		$data["safetyStructureBodyType"]                    = CSV2DB_commonType( $safetyStructureBodyType );
+		$data["safetyStructureBodySpot"]                    = CSV2DB_commonSpot( $safetyStructureBodySpot );
+		$data["priCrashSeatBeltName"]                       = $priCrashSeatBeltName;
+		$data["priCrashSeatBeltType"]                       = CSV2DB_commonType( $priCrashSeatBeltType );
+		$data["priCrashSeatBeltSpot"]                       = CSV2DB_commonSpot( $priCrashSeatBeltSpot );
+		$data["priCrashBrakeAssistName"]                    = $priCrashBrakeAssistName;
+		$data["priCrashBrakeAssistType"]                    = CSV2DB_commonType( $priCrashBrakeAssistType );
+		$data["priCrashBrakeAssistSpot"]                    = CSV2DB_commonSpot( $priCrashBrakeAssistSpot );
+		$data["antiTheftAlarmName"]                         = $antiTheftAlarmName;
+		$data["antiTheftAlarmType"]                         = CSV2DB_commonType( $antiTheftAlarmType );
+		$data["antiTheftAlarmSpot"]                         = CSV2DB_commonSpot( $antiTheftAlarmSpot );
+		$data["activeHeadrestName"]                         = $activeHeadrestName;
+		$data["activeHeadrestType"]                         = CSV2DB_commonType( $activeHeadrestType );
+		$data["activeHeadrestSpot"]                         = CSV2DB_commonSpot( $activeHeadrestSpot );
+		$data["frontStabilizerName"]                        = $frontStabilizerName;
+		$data["frontStabilizerType"]                        = CSV2DB_commonType( $frontStabilizerType );
+		$data["frontStabilizerSpot"]                        = CSV2DB_commonSpot( $frontStabilizerSpot );
+		$data["rearStabilizerName"]                         = $rearStabilizerName;
+		$data["rearStabilizerType"]                         = CSV2DB_commonType( $rearStabilizerType );
+		$data["rearStabilizerSpot"]                         = CSV2DB_commonSpot( $rearStabilizerSpot );
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

@@ -1,0 +1,44 @@
+<!--{loop rankingList}-->
+<li class="animation rank_{val rankingList/rankingNo}">
+	<label><span  class="faCheck"><input type="checkbox" name="selCar" value="{val rankingList/modelInfo.modelNameEng}/{val rankingList/carGradeID}/" /></span></label>
+	<div>
+		<dl>
+			<dt class="ranking rank_{val rankingList/rankingNo}">
+				<span>{val rankingList/rankingNo}</span>
+				<img src="{val BASE_DIR}/_common/PHOTO/{val PHOTO_DIR}/CARBODY/s_{val rankingList/modelInfo.carBodyPhotoName}.jpg" alt="{val rankingList/modelInfo.makerName}　{val rankingList/modelInfo.modelName}" />
+			</dt>
+			<dd>
+				<dl>
+					<dt>{val rankingList/modelInfo.makerName}　{val rankingList/modelInfo.modelName}</dt>
+					<dd class="price">
+						<div>
+							車両本体価格<br /><span class="note">メーカー希望小売価格（消費税込）</span>
+						</div> ： &yen; {val rankingList/miniPrice|number_format} <!--{set rankingList/maxPrice}-->～ &yen; {val rankingList/maxPrice|number_format} <!--{/set}-->&ndash;
+					</dd>
+<!--{set rankingList/leaseInfo}-->
+					<dd class="lease">
+						リース期間 ： 
+						<ul>
+							<!--{set rankingList/leaseInfo.y3}--><li class="y3">{val rankingList/leaseInfo.y3.name}</li><!--{/set}-->
+							<!--{set rankingList/leaseInfo.y4}--><li class="y4">{val rankingList/leaseInfo.y4.name}</li><!--{/set}-->
+							<!--{set rankingList/leaseInfo.y5}--><li class="y5">{val rankingList/leaseInfo.y5.name}</li><!--{/set}-->
+						</ul>
+					</dd>
+<!--{/set}-->
+					<dd class="themeBox">
+					<!--{set rankingList/theme}-->
+						<ul>
+						<!--{loop rankingList/theme}-->
+							<li class="<!--{set rankingList/theme/search}-->setCol<!--{/set}--><!--{unset rankingList/theme/search}-->chkCol<!--{/unset}--> faChevronRight" onClick="changeRnkingData('T{val rankingList/theme/ID|zeroPadding:3}')" >
+								<span><a href="javascript:void(0)">{val rankingList/theme/name|lengthCut:12}</a></span>
+							</li>
+						<!--{/loop}-->
+						</ul>
+					<!--{/set}-->
+					</dd>
+				</dl>
+			</dd>
+		</dl>
+	</div>
+</li>
+<!--{/loop}-->

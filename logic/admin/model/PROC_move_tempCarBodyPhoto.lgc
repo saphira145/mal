@@ -1,0 +1,24 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 登録画像を削除
+	if( $output["delete_entryCarBodyPhoto"] == 1 ) {
+		$class["modelAdmin_1"]->delete_carBodyPhoto( $output["modelInfo"]["makerCode"], $output["modelInfo"]["modelCode"] );
+	}
+
+	// 仮画像を本番へ以降
+	if( $output["modelInfo"]["tempCarBodyPhoto"] != "" && $output["delete_carBodyPhoto"] == 0 ) {
+		$class["modelAdmin_1"]->move_carBodyPhoto( $output["modelInfo"]["tempCarBodyPhoto"], $output["modelInfo"]["makerCode"], $output["modelInfo"]["modelCode"] );
+	}
+
+
+	// 一時商品画像ファイルの削除
+	$class["modelAdmin_1"]->delete_tmpPhotoFile();
+
+
+
+?>

@@ -1,0 +1,23 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$affected_row = $class["makerAdmin_1"]->insert_DB( $output );
+
+	// 登録成功
+	if( $affected_row > 0 ) {
+		$output["insert_sucessFlg"] = 1;
+		unset( $output["makerInfo"] );
+	}
+
+
+
+
+
+
+
+
+?>

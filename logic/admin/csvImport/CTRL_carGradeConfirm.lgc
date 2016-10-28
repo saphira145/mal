@@ -1,0 +1,32 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	if( $ini["system"]["errRank"] == 2 ) {
+
+		// 入力へ戻る
+		$viewStatus = "list";
+		$this->callVIEW( "list" );
+
+	}
+	else{
+
+		// ＣＳＶファイル内のデータをチェック
+		$this->callPROC( "check_carGrade" );
+
+		// ビュー
+		$this->callVIEW( "display" );
+
+	}
+
+
+
+
+
+?>

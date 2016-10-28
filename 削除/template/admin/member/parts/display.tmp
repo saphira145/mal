@@ -1,0 +1,69 @@
+<table class="tblForm">
+<!--{set memberID}-->
+	<tr>
+		<th class="w150">メンバーＩＤ</th>
+		<td>{val memberID}</td>
+	</tr>
+<!--{/set}-->
+	<tr>
+		<th>所属グループ</th>
+		<td>{val memberInfo.salesGroupName}</td>
+	</tr>
+	<tr>
+		<th>権限レベル</th>
+		<td>{val memberInfo.authorityLevelName}</td>
+	</tr>
+	<tr>
+		<th class="w150">管理ツールのログインＩＤ</th>
+		<td>
+			<!--{set memberInfo.loginHidden}-->－<!--{/set}-->
+			<!--{unset memberInfo.loginHidden}-->{val memberInfo.loginID}<!--{/unset}-->
+		</td>
+	</tr>
+	<tr>
+		<th>メールアドレス</th>
+		<td><!--{set memberInfo.email.account}-->{val memberInfo.email.account|addWbr:5}@{val memberInfo.email.domain|addWbr:5}<!--{/set}--></td>
+	</tr>
+	<tr>
+		<th>パスワード</th>
+		<td>
+<!--{set ST.detail}-->
+<!--{unset sp}-->
+			<a href="javascript:void(0);" onclick="location.href='{val UNIT_URL}/dt/{val memberID}/1'; return false;">********</a>
+<!--{/unset}-->
+<!--{set sp}-->
+			<a href="javascript:void(0);" onclick="location.href='{val UNIT_URL}/dt/{val memberID}'; return false;">{val memberInfo.password}</a>
+<!--{/set}-->
+<!--{/set}-->
+<!--{unset ST.detail}-->
+			********
+<!--{/unset}-->
+		</td>
+	</tr>
+	<tr>
+		<th>名前</th>
+		<td>{val memberInfo.memberName.familyName} {val memberInfo.memberName.givenName}</td>
+	</tr>
+	<tr>
+		<th>会社名</th>
+		<td>{val memberInfo.companyName}</td>
+	</tr>
+	<tr>
+		<th>ステータス</th>
+		<td>{val memberInfo.levelName}</td>
+	</tr>
+	<tr>
+		<th>パスワード有効日数</th>
+		<td>
+			<!--{unset memberInfo.expirationDayFlg}-->
+				<!--{unset memberInfo.dayDiffFlg}-->{val memberInfo.expirationDatetime.year|zeroPadding:4}/{val memberInfo.expirationDatetime.month|zeroPadding:2}/{val memberInfo.expirationDatetime.day|zeroPadding:2}&nbsp;まで<!--{/unset}-->
+				<!--{set memberInfo.dayDiffFlg}-->期限切れ<!--{/set}-->
+			<!--{/unset}-->
+			<!--{set memberInfo.expirationDayFlg}-->
+				<!--{set memberInfo.expirationDayFlg.systemLevel}-->期限なし<!--{/set}-->
+				<!--{set memberInfo.expirationDayFlg.expiration}-->－<!--{/set}-->
+				<!--{set memberInfo.expirationDayFlg.today}-->本日まで<!--{/set}-->
+			<!--{/set}-->
+		</td>
+	</tr>
+</table>

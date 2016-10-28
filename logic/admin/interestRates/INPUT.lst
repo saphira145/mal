@@ -1,0 +1,5 @@
+interestRatesFields
+	a, interestRatesList/ratesID        = ratesID    // 金利区分
+	a, interestRatesList/rates/payNumID = payNumID   // リース期間
+	a, interestRatesList/rates/ratesIn  = rates(3)   // 金利(IN)
+	a, interestRatesList/rates/ratesOut = rates(3)   // 金利(OUT)

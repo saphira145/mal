@@ -1,0 +1,21 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	for( $i=0; $i<count( $output["priorityNumList"] ); $i++ ) {
+		$themeInfo = $class["themeAdmin_1"]->get_info( $output["priorityNumList"][$i]["themeID"] );
+		$output["priorityNumList"][$i]["themeName"] = $themeInfo["themeName"];
+		$output["priorityNumList"][$i]["no"]        = $i + 1;
+	}
+
+
+	for( $i=0; $i<count( $output["dispNumList"] ); $i++ ) {
+		$themeInfo = $class["themeAdmin_1"]->get_info( $output["dispNumList"][$i]["themeID"] );
+		$output["dispNumList"][$i]["themeName"] = $themeInfo["themeName"];
+		$output["dispNumList"][$i]["no"]        = $i + 1;
+	}
+
+
+?>

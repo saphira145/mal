@@ -1,0 +1,24 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_maker=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+<div class="contentSection">
+	<p class="actionMsg">以下の内容を変更します。よろしければ「更新する」ボタンを押してください。</p>
+
+	{file parts/dispNumDisplay.tmp}
+
+	<form name="form_modifyReinput" method="post" action="{val UNIT_URL}/dnr/">
+		{dbTicket}
+		{file parts/dispNumHidden.tmp}
+	</form>
+
+	<form name="form_modifyExecute" method="post" action="{val UNIT_URL}/dne/">
+		{dbTicket}
+		{file parts/dispNumHidden.tmp}
+
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="戻る" class="btnW01" onclick="document.form_modifyReinput.submit(); return false;" />
+			<input type="submit" value="更新する" class="btnW01" />
+		</div>
+	</form>
+</div>

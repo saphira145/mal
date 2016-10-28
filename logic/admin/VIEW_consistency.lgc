@@ -1,0 +1,97 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+	
+	$output["consistencyFlg"] = 1;
+	$finishCnt = 0;
+	
+	$list = array($output["gradeCheckList"] 
+				, $output["noGradeCheckList"] 
+				, $output["themeCheckList"] 
+				, $output["newCarCheckList"]["active"] 
+				, $output["newCarCheckList"]["work"] 
+				, $output["leaseCheckList"]["l"] 
+				, $output["leaseCheckList"]["lv"] 
+				, $output["zeroLeaseCheckList"] 
+				, $output["maintenanceCheckList"]["mtum"] 
+				, $output["maintenanceCheckList"]["mtuf"] 
+				, $output["maintenanceCheckList"]["mtut"] 
+				);
+
+	foreach( $list as $checkList ){
+		if( count($checkList) == 0 ){
+			$checkListNew[] = $checkList;
+			$finishCnt++;
+			continue;
+		}
+
+		for( $i=0 , $iMax = count($checkList); $i < $iMax; $i++ ){
+			unset($tmp_carGrade, $tmp_lease);
+        
+			/*-- エラー区分の設定 --*/
+			$checkList[$i][ $checkList[$i]["check"] ] = 1;
+        
+ 			/*-- 代表グレード項目名称の取得 --*/
+			if( count($checkList[$i]["carGrade"]) > 0 ){
+				foreach( $checkList[$i]["carGrade"] as $key => $val){
+					$KeyNo = $val["KeyNo"];
+					$checkList[$i]["carGrade"][$key]["name"] = $ini["carGrade"][$KeyNo]["name"];
+        
+					$tmp_carGrade[] = $checkList[$i]["carGrade"][$key];
+					
+				}
+				unset($checkList[$i]["carGrade"]);
+				$checkList[$i]["carGrade"] = $tmp_carGrade;
+			} else {
+				unset($checkList[$i]["carGrade"]);
+			}
+        
+			/*-- リース名称の取得 --*/
+			if( count($checkList[$i]["carGrade"]) > 0 ){
+				foreach( $checkList[$i]["carGrade"] as $key => $val){
+					if( !empty($val["keyNameNo"]) ){
+						foreach( $val["keyNameNo"] as $keyNameNo){
+							$tmp_lease[]["name"] =  $ini["consistency"]["lease"][$keyNameNo]["name"];
+						}
+					}
+				}
+				if( count($tmp_lease) > 0 ){
+					$checkList[$i]["lease"] = $tmp_lease;
+				}
+			}
+		}
+
+
+		$checkListNew[] = $checkList;
+	}
+
+	// チェック内容を設定
+	list( $output["gradeCheckList"] 
+		, $output["noGradeCheckList"] 
+		, $output["themeCheckList"] 
+		, $output["newCarCheckList"]["active"] 
+		, $output["newCarCheckList"]["work"] 
+		, $output["leaseCheckList"]["l"] 
+		, $output["leaseCheckList"]["lv"] 
+		, $output["zeroLeaseCheckList"] 
+		, $output["maintenanceCheckList"]["mtum"] 
+		, $output["maintenanceCheckList"]["mtuf"] 
+		, $output["maintenanceCheckList"]["mtut"] 
+	) = $checkListNew;
+
+	if( empty($output["leaseCheckList"]["l"]) && empty($output["leaseCheckList"]["lv"]) ){
+		unset($output["leaseCheckList"]);
+	}
+
+	if( empty($output["maintenanceCheckList"]["mtuf"]) && empty($output["maintenanceCheckList"]["mtut"]) && empty($output["maintenanceCheckList"]["mtum"]) ){
+		unset($output["maintenanceCheckList"]);
+	}
+
+	/*-- 処理結果 --*/
+	if( $finishCnt == count($list) ){
+		$output["finish"] = 1;
+	}
+
+?>

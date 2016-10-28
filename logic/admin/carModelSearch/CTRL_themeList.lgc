@@ -1,0 +1,24 @@
+<?php
+
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// リスト検索
+	$output["DB"] = "work";
+	$this->callPROC( "get_list" );
+
+	// リスト表示
+	$this->callVIEW( "list" );
+
+
+
+
+
+
+?>

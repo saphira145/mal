@@ -1,0 +1,152 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// ＤＢ名取得
+	$output["PHOTO_DIR"] = get_activeDirName ();
+
+	/* -----------------------------------
+	   検索条件、タイトル
+	----------------------------------- */
+	// メーカー名の取得
+	for( $i = 0, $iMax = count($output["maker"]); $i < $iMax; $i++ ){
+		if( !empty($output["maker"][$i]) ){
+			$output["search"]["maker"][$i]["ID"]   = $output["maker"][$i];
+			$output["search"]["maker"][$i]["name"] = get_makerName( $output["maker"][$i] , "active");
+		}
+	}
+
+	// ボディタイプ名の取得
+	for( $i = 0, $iMax = count($output["type"]); $i < $iMax; $i++ ){
+		if( !empty($output["type"][$i]) ){
+			$output["search"]["type"][$i] = get_bodyTypeInfo($output["type"][$i]);
+		}
+	}
+
+	// テーマ名の取得
+	for( $i = 0, $iMax = count($output["theme"]); $i < $iMax; $i++ ){
+		if( !empty($output["theme"][$i]) ){
+			$get_themeName = get_themeName( $output["theme"][$i] , "active");
+
+			$output["search"]["theme"][$i]["ID"]               = $output["theme"][$i];
+			$output["search"]["theme"][$i]["name"]             = $get_themeName["themeName"];
+			$output["search"]["theme"][$i]["nameAbbreviation"] = $get_themeName["nameAbbreviation"];
+		}
+	}
+
+	// テーマアイコンの取得
+	for( $i = 0, $iMax = count($output["theme"]); $i < $iMax; $i++ ){
+		foreach( $output["searchForm"]["themeList"] as $key => $value ){
+			if( $value["themeID"] == $output["theme"][$i] ){
+				$output["search"]["theme"][$i]["iconPath"] = $value["iconPath"];
+			}
+		}
+	}
+
+
+	// 価格名の取得
+	if( !empty($output["price"]) ){
+		$output["search"]["price"] = get_priceInfo($output["price"]);
+	}
+
+
+
+	// 「ランキングの続きをもっと見る」を表示するか？
+	if($output["carGradeNum"] > $ini["page"]["ranking"] ){
+		$output["rankingBtnFlg"] = 1;
+	}
+
+	/* -----------------------------------
+	   ランキング
+	----------------------------------- */
+	for( $i = 0, $iMax = count($output["rankingList"]); $i < $iMax; $i++ ){
+		$output["rankingList"][$i]["rankingNo"] = $i + 1;
+		$output["rankingList"][$i]["modelInfo"]   = $class["modelUser_1"]->get_info( $output["rankingList"][$i]["makerCode"], $output["rankingList"][$i]["modelCode"] , "active");
+		$output["rankingList"][$i]["modelInfo"]   = $class["modelUser_1"]->convert_info( $output["rankingList"][$i]["modelInfo"] );
+
+		// テーマ名の取得
+		unset($tmp_theme, $sCnt, $vCnt);
+		$tmp_theme["search"] = array();
+		$tmp_theme["val"]    = array();
+		$sCnt = 0;
+		$vCnt = 0;
+		for( $j = 0, $jMax = count($output["rankingList"][$i]["theme"]); $j < $jMax; $j++ ){
+			$get_themeName = get_themeName( $output["rankingList"][$i]["theme"][$j]["themeID"] , "active");
+
+			if( !empty($output["theme"]) && in_array( $output["rankingList"][$i]["theme"][$j]["themeID"], $output["theme"] ) ){
+				$tmp_theme["search"][$sCnt]["ID"]   = $output["rankingList"][$i]["theme"][$j]["themeID"];
+				$tmp_theme["search"][$sCnt]["name"] = $get_themeName["themeName"];
+				$tmp_theme["search"][$sCnt]["search"] = 1;
+				$sCnt++;
+			} else {
+				$tmp_theme["val"][$vCnt]["ID"]   = $output["rankingList"][$i]["theme"][$j]["themeID"];
+				$tmp_theme["val"][$vCnt]["name"] = $get_themeName["themeName"];
+				$vCnt++;
+			}
+		}
+		$output["rankingList"][$i]["theme"] = array_merge($tmp_theme["search"],$tmp_theme["val"]);
+
+	}
+
+
+	/* --------------------------------------------
+	   ランキングの検索フォーム 選択状態を設定
+	-------------------------------------------- */
+	// メーカーリスト
+	$output["searchForm"]["makerList"]    = set_checked( $output["searchForm"]["makerList"], $output["maker"], "makerCode", "selected" );
+
+	// ボディタイプリスト
+	$output["searchForm"]["bodyTypeList"] = set_checked( $output["searchForm"]["bodyTypeList"], $output["bodyModel"], "ID", "selected" );
+
+	// テーマリスト
+	$output["searchForm"]["themeList"] = set_checked( $output["searchForm"]["themeList"], $output["theme"], "themeID", "selected" );
+
+	// 価格リスト
+	$output["searchForm"]["carPriceList"] = set_checked( $output["searchForm"]["carPriceList"], $output["price"], "ID", "selected" );
+
+
+	/* --------------------------------------------
+	   HTMLタイトルの作成
+	-------------------------------------------- */
+	// メーカー名の取得
+	for( $i = 0, $iMax = count($output["search"]["maker"]); $i < $iMax; $i++ ){
+		$tmp_searchList["maker"][]  = $output["search"]["maker"][$i]["name"];
+	}
+
+	// ボディタイプ名の取得
+	for( $i = 0, $iMax = count($output["search"]["type"]); $i < $iMax; $i++ ){
+		$tmp_searchList["type"][]  = $output["search"]["type"][$i]["disp"];
+	}
+
+	// テーマ名の取得
+	for( $i = 0, $iMax = count($output["search"]["theme"]); $i < $iMax; $i++ ){
+		$tmp_searchList["theme"][]  = $output["search"]["theme"][$i]["name"] ;
+	}
+
+	// HTMLタイトルの作成
+	if ( count( $tmp_searchList ) > 0 ) {
+		foreach( $tmp_searchList as $list ){
+			$searchList[] =  @implode( " ", $list );
+		}
+		$output["title"]["searchList"] = @implode( ", ", $searchList );
+	}
+
+
+	/* --------------------------------------------
+	   総件数取得
+	-------------------------------------------- */
+	$totalNum = get_totalNum();
+	$output["totalMaker"] = number_format( $totalNum["totalMaker"] );
+	$output["totalModel"] = number_format( $totalNum["totalModel"] );
+
+
+	/* -----------------------------------
+	   不要な項目削除
+	----------------------------------- */
+	unset($output["maker"], $output["theme"], $output["bodyModel"]);
+
+
+
+?>

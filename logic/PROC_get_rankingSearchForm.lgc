@@ -1,0 +1,17 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 検索条件の取得
+	$output["searchForm"] = $class["topModel_1"]->get_rankingSearchFormData();
+	
+	// 初期件数の取得
+	$output["searchForm"]["carGradeNum"] = $class["carGradeUser_1"]->get_carGradeNum($output);
+
+
+
+
+?>

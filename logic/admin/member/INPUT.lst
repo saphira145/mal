@@ -1,0 +1,41 @@
+ids
+	a, memberID                             = memberID                               // 会員ID                            name="memberID"
+
+
+dispPassword
+	a, sp                                   = dispPasswordFlg                        // パスワード表示フラグ              name="dispPasswordFlg"
+
+
+fields
+	a, memberInfo.memberName.familyName     = familyNameSales                        // 姓                                name="memberInfo[memberName][familyName]"
+	a, memberInfo.memberName.givenName      = givenNameSales                         // 名                                name="memberInfo[memberName][givenName]"
+	a, memberInfo.email.account             = emailAccount                           // メールアカウント                  name="memberInfo[email][account]"
+	a, memberInfo.email.domain              = emailDomain                            // メールドメイン                    name="memberInfo[email][domain]"
+	 , memberInfo.email                     = emailAddress({memberID})
+	a, memberInfo.companyName               = companyName                            // 会社名                            name="memberInfo[compnayName]"
+	a, memberInfo.level                     = level                                  // 権限                              name="memberInfo[level]"
+	a, memberInfo.loginID                   = loginID({memberID})                    // ログインID                        name="memberInfo[loginID]"
+	a, memberInfo.salesGroup                = salesGroup                             // 所属グループ                      name="memberInfo[salesGroup]"
+	a, memberInfo.authorityLevel            = authorityLevel({.salesGroup})          // ログイン権限レベル                name="memberInfo[authorityLevel]"
+	a, memberInfo.expirationDay             = expirationDay                          // パスワード有効日数フラグ          name="memberInfo[expirationDay]"
+	a, memberInfo.expirationDatetime        = expirationDatetime                     // パスワード有効期限                name="memberInfo[expirationDatetime]"
+	a, memberInfo.defaultExpirationDatetime = expirationDatetime                     // パスワード有効期限                name="memberInfo[defaultExpirationDatetime]"
+
+password
+	a, memberInfo.password                  = password                               // パスワード                        name="memberInfo[password]"
+	a, memberInfo.passwordConfirm           = passwordConfirm({.password})           // 確認用パスワード                  name="memberInfo[passwordConfirm]"
+
+passwordCheck
+	a, memberInfo.password                  = passwordCheck                          // パスワード                        name="memberInfo[password]"
+	a, memberInfo.passwordConfirm           = passwordCheckConfirm({.password})      // 確認用パスワード                  name="memberInfo[passwordConfirm]"
+
+searchs
+	a, searchMemberID                       = memberID_not_must                      // 会員ID                            name="searchMemberID"
+	a, searchMemberName                     = memberNameFull_not_must                // 会員名                            name="searchMemberName"
+	a, searchEmail                          = emailAddressFull_not_must              // メールアドレス                    name="searchEmail"
+	a, searchCompanyName                    = companyName_not_must                   // 会社名                            name="compnayName_not_must"
+	a, searchLevel                          = levelMulti_not_must                    // 権限                              name="searchLevel"
+	a, pageNum                              = pageNum                                // ページ番号                        name="pageNum"
+	a, searchSalesGroup                     = salesGroup_not_must                    // 所属グループ                      name="searchSalesGroup"
+	a, searchAuthorityLevel                 = authorityLevel_not_must                // ログイン権限レベル                name="searchAuthorityLevel"
+

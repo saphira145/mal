@@ -1,0 +1,45 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// 検索タイプ取得
+	if( !isset($output["searchType"]) ){
+		$output["searchType"] = 1;
+	}
+	if( !isset($output["searchLogType"]) ){
+		$output["searchLogType"] = "2";
+	}
+	$output["loginTypeList"] = set_checked ( $ini["loginType"], $output["searchType"], "id", "selected" );
+	$output["logTypeList"] = set_checked ( $ini["logType"], $output["searchLogType"], "id", "selected" );
+
+	// 月のプルダウン
+	$output["monthList"] = get_monthSelect( $output["searchMonth"] );
+
+	if( count( $output["loginLogList"]["list"] ) > 0 ) {
+		$output["loginLogListDisp"] = 1;
+	}
+
+    $output["csvDownload"] = 0;
+    if(count($output["loginLogList"]["list"])) {
+        foreach ($output["loginLogList"]["list"] as $item) {
+            if ($item["loginLog"]) {
+                $output["csvDownload"] = 1;
+                break;
+            }
+        }
+    }
+	
+	if( $output["searchLogType"] == 1 ) {
+		$output["logTypeAll"] = 1;
+	} else {
+		$output["logTypeAll"] = 0;
+	}
+	
+	$startDate = strtotime ('-3 month', strtotime('first day of this month'));
+	$endDate = strtotime ( "now" );
+	$output["startDate"] = date("Y", $startDate) . '年' . date("m", $startDate) . '月' . date("d", $startDate) . '日';
+	$output["endDate"] = date("Y", $endDate) . '年' . date("m", $endDate) . '月' . date("d", $endDate) . '日';
+
+?>

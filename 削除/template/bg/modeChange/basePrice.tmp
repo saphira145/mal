@@ -1,0 +1,128 @@
+<div class="modeChangeBox">
+	<h2>試算設定</h2>
+	<ul class="itemList">
+		<li><a href="javascript:void(0)" data-modeChange="modeBase" class="selItem" >車両価格変更</a></li>
+		<li><a href="javascript:void(0)" data-modeChange="modePrice" >試算条件変更</a></li>
+		<li><a href="javascript:void(0)" data-modeChange="modeCondition" >試算条件について</a></li>
+	</ul>
+	<div id="modeBase" class="itemBox selBox">
+		<p class="actionMsg">
+			各項目を設定して「決定」ボタンを押してください。<br>
+			車両価格を「MAL仕入れ値価格」にした場合、表示される金額は<span>【社外秘】</span>となります。
+		</p>
+		<table class="tblForm">
+		<tr>
+			<th>車両価格</th>
+			<td>
+				<!--{loop basePrice.baseMode}-->
+				<label <!--{set basePrice.baseMode/checked}-->class="checkcolor"<!--{/set}-->>
+					<input type="checkbox" name="basePrice[baseMode]" <!--{set basePrice.baseMode/checked}-->checked="checked"<!--{/set}--> value="{val basePrice.baseMode/id}" />{val basePrice.baseMode/name}
+				</label>
+				<!--{/loop}-->
+			</td>
+		</tr>
+
+<!--{unset basePriceFlg}-->
+		<tr>
+			<th>試算利益額</th>
+			<td>
+				<p class="err profitMsgErr"></p>
+				<input type="text" name="basePrice[profit]" value="{val basePrice.profit}" />&nbsp;円
+			</td>
+		</tr>
+<!--{/unset}-->
+
+		</table>
+		<div class="btnArea">
+<!--{unset basePriceFlg}-->
+			<!--{set LEASEMODECHANGE_FLG}-->
+			<a href="javascript:void(0)" class="returnButton faExchange" onclick="endLeaseMode()">通常モードに戻す</a>
+			<!--{/set}-->
+<!--{/unset}-->
+			<a href="javascript:void(0)" class="decisionButton faCheck">決定</a>
+		</div>
+	</div>
+
+	<div id="modePrice" class="itemBox">
+		<table class="tblForm">
+			<tr>
+				<th>ベース</th>
+				<td>
+					<!--{loop modeChange.baseMode}-->
+					<label <!--{set modeChange.baseMode/checked}-->class="checkcolor"<!--{/set}-->>
+						<input type="checkbox" name="modeChange[baseMode]" <!--{set modeChange.baseMode/checked}-->checked="checked"<!--{/set}--> value="{val modeChange.baseMode/id}" />{val modeChange.baseMode/name}
+					</label>
+					<!--{/loop}-->
+				</td>
+			</tr>
+			<tr>
+				<th>利益額 OR リース料</th>
+				<td>
+					<p class="err profitMsgErr"></p>
+					<input type="text" name="modeChange[profit]" value="{val modeChange.profit}" />&nbsp;円
+				</td>
+			</tr>
+			<tr>
+				<th>対象グレード</th>
+				<td>
+					<select name="modeChange[carGrade]">
+						<!--{loop model.carGradeList}-->
+						<option value="{val model.carGradeList/carGradeCode}">【{val model.carGradeList/name}】{val model.carGradeList/gradeName}</option>
+						<!--{/loop}-->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>オプション</th>
+				<td>
+					<!--{loop modeChange.optionSet}-->
+					<label <!--{set modeChange.optionSet/checked}-->class="checkcolor"<!--{/set}-->>
+						<input type="checkbox" name="modeChange[optionSet]" <!--{set modeChange.optionSet/checked}-->checked="checked"<!--{/set}--> value="{val modeChange.optionSet/id}" />{val modeChange.optionSet/name}
+					</label>
+					<!--{/loop}-->
+				</td>
+			</tr>
+		</table>
+		<div class="btnArea"><a href="javascript:void(0)" class="decisionButton faRefresh">算出</a></div>
+		<span id="loading"><img src="{val BASE_DIR}/_common/img/gif/gifLoad.gif"  alt="読み込み中"/></span>
+		<dl>
+			<dt>車両価格</dt>
+			<dd>{val leaseConditions.msrp.name}</dd>
+			<dt>月間走行距離</dt>
+			<dd>{val leaseConditions.mileage.distance|number_format} km</dd>
+			<dt>ガソリン価格</dt>
+			<dd>{val leaseConditions.gasoline.name}</dd>
+			<dt>使用開始年月</dt>
+			<dd>{val leaseConditions.carAddDate.year}年 {val leaseConditions.carAddDate.month}月</dd>
+<!--{unset voluntaryInsuranceHidFlg}-->
+			<dt>任意保険</dt>
+			<dd>{val leaseConditions.voluntaryInsurance.name}</dd>
+<!--{/unset}-->
+		<!--{set leaseConditions.option.count}-->
+			<dt class="option">オプション合計点数</dt>
+			<dd>{val leaseConditions.option.count|number_format}点<!--{set leaseConditions.option.count}--> [ &yen; {val leaseConditions.option.totalOptionPrice|number_format} &ndash; ] <!--{/set}--></dd>
+		<!--{/set}-->
+		</dl>
+		<div class="leaseTbl"></div>
+	</div>
+
+	<div id="modeCondition" class="itemBox">
+		リース料は下記の条件で試算しています。
+		<ul>
+			<li>車両代・オプション代は、「サイト２」に設定しています。</li>
+			<li>諸費用は、全車種共通で下記の金額が設定されています。
+				<ul>
+					<li>登録法定費用：4,000円</li>
+					<li>登録代行費用：20,000円</li>
+					<li>資金管理料金：352円(税抜)</li>
+				</ul>
+			</li>
+			<li class="actionMsg">
+				「Car sagacité +」で試算しているリース料は、あくまで<span>簡易リース料</span>です。<br>
+				実際のリース料と0～300円程度の誤差があります。
+			</li>
+			<li>残価、メンテ料は本土標準エリアの料金となります。</li>
+			<li>ガソリン価格データは、株式会社ゴーゴーラボより利用許諾を得て掲載しております。</li>
+		</ul>
+	</div>
+</div>

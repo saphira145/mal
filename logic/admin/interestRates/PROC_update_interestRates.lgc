@@ -1,0 +1,13 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$class["leaseAdmin_1"]->update_interestRates( $output["interestRatesList"] );
+	
+	// 更新成功
+	$output["interestRates_sucessFlg"] = 1;
+
+?>

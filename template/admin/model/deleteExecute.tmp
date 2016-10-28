@@ -1,0 +1,11 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_model=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+<div class="contentSection">
+	<p class="actionMsg">車種情報の削除が完了しました。</p>
+
+	<div class="btnArea txt_left">
+		<input type="button" value="車種TOPに戻る" class="btnW01" onclick="location.href='{val UNIT_URL}'; return false;" />
+	</div>
+</div>

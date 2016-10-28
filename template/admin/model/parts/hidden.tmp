@@ -1,0 +1,31 @@
+	<input type="hidden" name="modelInfo[makerCode]" value="{val modelInfo.makerCode|htmlspecialchars}" />
+	<input type="hidden" name="modelInfo[modelCode]" value="{val modelInfo.modelCode|htmlspecialchars}" />
+	<input type="hidden" name="modelInfo[modelName]" value="{val modelInfo.modelName|htmlspecialchars}" />
+	<input type="hidden" name="modelInfo[modelNameEng]" value="{val modelInfo.modelNameEng|htmlspecialchars}" />
+	<input type="hidden" name="modelInfo[modelNameEng]" value="{val modelInfo.modelNameEng|htmlspecialchars}" />
+	<input type="hidden" name="modelInfo[price][mini]" value="{val modelInfo.price.mini}" />
+	<input type="hidden" name="modelInfo[price][max]" value="{val modelInfo.price.max}" />
+	<input type="hidden" name="modelInfo[totalLength][mini]" value="{val modelInfo.totalLength.mini}" />
+	<input type="hidden" name="modelInfo[totalLength][max]" value="{val modelInfo.totalLength.max}" />
+	<input type="hidden" name="modelInfo[totalWidth][mini]" value="{val modelInfo.totalWidth.mini}" />
+	<input type="hidden" name="modelInfo[totalWidth][max]" value="{val modelInfo.totalWidth.max}" />
+	<input type="hidden" name="modelInfo[totalHeight][mini]" value="{val modelInfo.totalHeight.mini}" />
+	<input type="hidden" name="modelInfo[totalHeight][max]" value="{val modelInfo.totalHeight.max}" />
+	<input type="hidden" name="modelInfo[announcementDay][date]" value="{val modelInfo.announcementDay.date|htmlspecialchars}" />
+	<input type="hidden" name="modelInfo[tempCarBodyPhoto]" value="{val modelInfo.tempCarBodyPhoto}" />
+	<input type="hidden" name="delete_carBodyPhoto" value="{val delete_carBodyPhoto}" />
+	<input type="hidden" name="delete_entryCarBodyPhoto" value="{val delete_entryCarBodyPhoto}" />
+
+<!--{set themeList}-->
+<!--{loop themeList}-->
+	<input type="hidden" name="theme[][themeID]" value="{val themeList/themeID}" />
+<!--{/loop}-->
+<!--{/set}-->
+
+	<input type="hidden" name="modelInfo[campaignScore]" value="{val modelInfo.campaignScore}" />
+	<input type="hidden" name="modelInfo[lowPriceCarGradeID]" value="{val modelInfo.lowPriceCarGradeID}" />
+	<input type="hidden" name="modelInfo[s2wdCarGradeID]" value="{val modelInfo.s2wdCarGradeID}" />
+	<input type="hidden" name="modelInfo[s4wdCarGradeID]" value="{val modelInfo.s4wdCarGradeID}" />
+    <input type="hidden" name="modelInfo[valueUrl]" value="{val modelInfo.valueUrl|htmlspecialchars}" />
+	<input type="hidden" name="modelInfo[webCatalogueUrl]" value="{val modelInfo.webCatalogueUrl|htmlspecialchars}" />
+	<input type="hidden" name="modelInfo[photoGalleryUrl]" value="{val modelInfo.photoGalleryUrl|htmlspecialchars}" />

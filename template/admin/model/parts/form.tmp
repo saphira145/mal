@@ -1,0 +1,308 @@
+<!--{set fix_displayFlg}-->
+<input type="hidden" name="modelInfo[makerCode]" value="{val modelInfo.makerCode}" />
+<input type="hidden" name="modelInfo[modelCode]" value="{val modelInfo.modelCode}" />
+<!--{/set}-->
+<table class="tblForm">
+<!--{set fix_displayFlg}-->
+		<tr>
+			<th class="w160">メーカー名</th>
+			<td>{val makerName} ({val modelInfo.makerCode|zeroPadding:3})</td>
+		</tr>
+		<tr>
+			<th>車種コード</th>
+			<td>{val modelCode|zeroPadding:3}</td>
+		</tr>
+<!--{/set}-->
+<!--{unset fix_displayFlg}-->
+		<tr>
+			<th class="w160">メーカー名<span class="must_mark">※</span></th>
+			<td>
+<!--{set modelInfo.makerCode+err}-->
+<!--{loop modelInfo.makerCode+err}-->
+				<p class="err">{val modelInfo.makerCode+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<select class="w20" name="modelInfo[makerCode]">
+					<option value=""></option>
+<!--{loop makerList}-->
+					<option value="{val makerList/makerCode}"<!--{set makerList/selected}--> selected<!--{/set}-->>{val makerList/makerName}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>車種コード<span class="must_mark">※</span></th>
+			<td>
+<!--{set modelInfo.modelCode+err}-->
+<!--{loop modelInfo.modelCode+err}-->
+				<p class="err">{val modelInfo.modelCode+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w60" type="text" name="modelInfo[modelCode]" value="{val modelInfo.modelCode|htmlspecialchars|zeroPadding:3}" />
+			</td>
+		</tr>
+<!--{/unset}-->
+		<tr>
+			<th>車種名<span class="must_mark">※</span></th>
+			<td>
+<!--{set modelInfo.modelName+err}-->
+<!--{loop modelInfo.modelName+err}-->
+				<p class="err">{val modelInfo.modelName+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w60" type="text" name="modelInfo[modelName]" value="{val modelInfo.modelName|htmlspecialchars}" />
+			</td>
+		</tr>
+		<tr>
+			<th>車種名（英字）<span class="must_mark">※</span></th>
+			<td>
+<!--{set modelInfo.modelNameEng+err}-->
+<!--{loop modelInfo.modelNameEng+err}-->
+				<p class="err">{val modelInfo.modelNameEng+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w60" type="text" name="modelInfo[modelNameEng]" value="{val modelInfo.modelNameEng|htmlspecialchars}" />
+				<p class="instructions"><span>URLとリンクしているため、空白は入れないでください。</span></p>
+			</td>
+		</tr>
+		<tr>
+			<th>価格</th>
+			<td>
+<!--{set modelInfo.price+err}-->
+<!--{loop modelInfo.price+err}-->
+				<p class="err">{val modelInfo.price+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w10" type="text" name="modelInfo[price][mini]" value="{val modelInfo.price.mini|htmlspecialchars}" /> ～ <input class="w10" type="text" name="modelInfo[price][max]" value="{val modelInfo.price.max|htmlspecialchars}" /> 万円 （小数点は第1位まで）
+			</td>
+		</tr>
+		<tr>
+			<th>全長<span class="must_mark">※</span></th>
+			<td>
+<!--{set modelInfo.totalLength+err}-->
+<!--{loop modelInfo.totalLength+err}-->
+				<p class="err">{val modelInfo.totalLength+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w10" type="text" name="modelInfo[totalLength][mini]" value="{val modelInfo.totalLength.mini|htmlspecialchars}" /> ～ <input class="w10" type="text" name="modelInfo[totalLength][max]" value="{val modelInfo.totalLength.max|htmlspecialchars}" /> mm
+			</td>
+		</tr>
+		<tr>
+			<th>全幅<span class="must_mark">※</span></th>
+			<td>
+<!--{set modelInfo.totalWidth+err}-->
+<!--{loop modelInfo.totalWidth+err}-->
+				<p class="err">{val modelInfo.totalWidth+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w10" type="text" name="modelInfo[totalWidth][mini]" value="{val modelInfo.totalWidth.mini|htmlspecialchars}" /> ～ <input class="w10" type="text" name="modelInfo[totalWidth][max]" value="{val modelInfo.totalWidth.max|htmlspecialchars}" /> mm
+			</td>
+		</tr>
+		<tr>
+			<th>全高<span class="must_mark">※</span></th>
+			<td>
+<!--{set modelInfo.totalHeight+err}-->
+<!--{loop modelInfo.totalHeight+err}-->
+				<p class="err">{val modelInfo.totalHeight+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w10" type="text" name="modelInfo[totalHeight][mini]" value="{val modelInfo.totalHeight.mini|htmlspecialchars}" /> ～ <input class="w10" type="text" name="modelInfo[totalHeight][max]" value="{val modelInfo.totalHeight.max|htmlspecialchars}" /> mm
+			</td>
+		</tr>
+		<tr>
+			<th>発売日<span class="must_mark">※</span></th>
+			<td>
+<!--{set modelInfo.announcementDay.date+err}-->
+<!--{loop modelInfo.announcementDay.date+err}-->
+				<p class="err">{val modelInfo.announcementDay.date+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w20" type="text" name="modelInfo[announcementDay][date]" value="<!--{set modelInfo.announcementDay.date}-->{val modelInfo.announcementDay.date|htmlspecialchars}<!--{/set}-->" /> 例）2013/9/20
+			</td>
+		</tr>
+		<tr>
+			<th>車体画像</th>
+			<td>
+<!--{set modelInfo.carBodyPhoto+err}-->
+<!--{loop modelInfo.carBodyPhoto+err}-->
+				<p class="err">{val modelInfo.carBodyPhoto+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input type="file" class="inputFile" name="modelInfo[carBodyPhoto]" size="60" /><br />
+				<p class="instructions"><span>アップロードできる画像形式は「JPG」形式のみです。</span><br />
+				<span>画像の縦横サイズは「156px×260px（縦×横）」で、<br />サイズ容量は「1MB」以下にしてください。</span></p>
+<!--{set modelInfo.tempCarBodyPhoto}-->
+				<img src="{val BASE_DIR}/_common/archive/temp/temp_s_{val modelInfo.tempCarBodyPhoto}" />
+				<input type="hidden" name="modelInfo[tempCarBodyPhoto]" value="{val modelInfo.tempCarBodyPhoto}" />
+				<input type="checkbox" name="delete_carBodyPhoto" value="1"<!--{set delete_carBodyPhoto}--> checked="checked"<!--{/set}--> />&nbsp;← この画像をキャンセルする
+<!--{/set}-->
+			</td>
+		</tr>
+<!--{set dispEntryPhoto}-->
+<!--{set carBodyPhotoID}-->
+		<tr>
+			<th>車体画像（登録済み）</th>
+			<td>
+			<img src="{val BASE_DIR}/_common/PHOTO/WORK/CARBODY/{val carBodyPhotoID}.jpg" /><!--{unset noImageDispCarBody}--><input type="checkbox" name="delete_entryCarBodyPhoto" value="1"<!--{set delete_entryCarBodyPhoto}--> checked="checked"<!--{/set}--> />&nbsp;← この画像をキャンセルする<!--{/unset}-->
+			</td>
+		</tr>
+<!--{/set}-->
+<!--{/set}-->
+		<tr>
+			<th>バリュー</th>
+			<td>
+<!--{set themeList}-->
+				<table class="tbl_inner">
+	<!--{loop themeList}-->
+	<!--{loop_count_head themeList=3}-->
+				<tr>
+	<!--{/loop_count_head}-->
+					<td class="w220">
+						<label><input type="checkbox" name="theme[][themeID]" value="{val themeList/themeID}"<!--{set themeList/checked}--> checked<!--{/set}--><!--{set themeList/disabled}--> disabled="disabled"<!--{/set}--> />&nbsp;{val themeList/themeName}<!--{set themeList/autoTheme}--><span>(自動設定)</span><!--{/set}--><!--{set themeList/recommend}--><span class="red">(おすすめ車種)</span><!--{/set}--></label>
+						<!--{set themeList/disabled}--><!--{set themeList/checked}-->
+						<input type="hidden" name="theme[][themeID]" value="{val themeList/themeID}" />
+						<!--{/set}--><!--{/set}-->
+					</td>
+	<!--{loop_count_tail themeList=3}-->
+				</tr>
+	<!--{/loop_count_tail}-->
+	<!--{/loop}-->
+				</table>
+<!--{/set}-->
+			</td>
+		</tr>
+        <tr>
+            <th>バリュー誘導先URL</th>
+            <td>
+                <!--{set modelInfo.valueUrl+err}-->
+                <!--{loop modelInfo.valueUrl+err}-->
+                <p class="err">{val modelInfo.valueUrl+err/msg}</p>
+                <!--{/loop}-->
+                <!--{/set}-->
+                <input class="w40" type="text" name="modelInfo[valueUrl]" value="{val modelInfo.valueUrl|htmlspecialchars}" />
+            </td>
+        </tr>
+		<tr>
+			<th>WebカタログURL</th>
+			<td>
+<!--{set modelInfo.webCatalogueUrl+err}-->
+<!--{loop modelInfo.webCatalogueUrl+err}-->
+				<p class="err">{val modelInfo.webCatalogueUrl+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w40" type="text" name="modelInfo[webCatalogueUrl]" value="{val modelInfo.webCatalogueUrl|htmlspecialchars}" />
+			</td>
+		</tr>
+		<tr>
+			<th>写真ギャラリーURL</th>
+			<td>
+<!--{set modelInfo.photoGalleryUrl+err}-->
+<!--{loop modelInfo.photoGalleryUrl+err}-->
+				<p class="err">{val modelInfo.photoGalleryUrl+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w40" type="text" name="modelInfo[photoGalleryUrl]" value="{val modelInfo.photoGalleryUrl|htmlspecialchars}" />
+			</td>
+		</tr>
+		<tr>
+			<th>お値打ちスコア</th>
+			<td>
+				<select class="w25" name="modelInfo[campaignScore]">
+<!--{loop campaignScoreList}-->
+					<option value="{val campaignScoreList/id}"<!--{set campaignScoreList/selected}--> selected<!--{/set}-->>{val campaignScoreList/value}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>代表車種グレード</th>
+			<td>
+				<table class="tbl_inner">
+				<tr>
+					<th class="w90">標準2WD</th>
+					<td>
+						<div id="modelInfo[s2wdCarGradeName]" class="selModelName">
+<!--{set modelInfo.s2wdCarGradeID+err}-->
+<!--{loop modelInfo.s2wdCarGradeID+err}-->
+							<p class="err">{val modelInfo.s2wdCarGradeID+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+						<!--{set modelInfo.s2wdCarGradeID}-->
+							車種グレードＩＤ ：{val modelInfo.s2wdCarGradeID|zeroPadding:7}&nbsp;、
+							メンテナンス区分：{val modelInfo.s2wdCarGrade.mainteName} ( {val modelInfo.s2wdCarGrade.mainteStateName} )<br>
+							{val modelInfo.s2wdCarGrade.makerName}&nbsp;
+							{val modelInfo.s2wdCarGrade.modelName}&nbsp;
+							{val modelInfo.s2wdCarGrade.grade}&nbsp;<br>
+							[&nbsp;{val modelInfo.s2wdCarGrade.bodyModelName}、{val modelInfo.s2wdCarGrade.driveSystem}、{val modelInfo.s2wdCarGrade.transmissionType}、{val modelInfo.s2wdCarGrade.roofModel}、{val modelInfo.s2wdCarGrade.useFuel}、{val modelInfo.s2wdCarGrade.totalEmission|number_format}cc、{val modelInfo.s2wdCarGrade.capacity}人、{val modelInfo.s2wdCarGrade.door}枚、{val modelInfo.s2wdCarGrade.price|add_dot:1}万円&nbsp;]
+						<!--{/set}-->
+						<!--{unset modelInfo.s2wdCarGradeID}--><span>未設定</span><!--{/unset}-->
+						</div>
+						<input type="hidden" id="modelInfo[s2wdCarGradeID]" name="modelInfo[s2wdCarGradeID]" value="{val modelInfo.s2wdCarGradeID}" />
+<!--{set fix_displayFlg}-->
+						<div class="selModelBtnArea">
+							<input type="button" class="btnW01" onclick="openCarGradeSearchWindow('s2wd','{val modelInfo.makerCode}','{val modelInfo.modelCode|zeroPadding:3}','{val BASE_DIR}');" value="車種グレード検索">
+							<input type="button" id="delBtn_s2wd" class="btnW03" onclick="delCarGradeModel('s2wd', '標準2WD');" value="解除" <!--{unset modelInfo.s2wdCarGradeID}-->disabled="disabled"<!--{/unset}-->>
+						</div>
+<!--{/set}-->
+					</td>
+				</tr>
+				<tr>
+					<th class="w90">標準4WD</th>
+					<td>
+						<div id="modelInfo[s4wdCarGradeName]" class="selModelName">
+<!--{set modelInfo.s4wdCarGradeID+err}-->
+<!--{loop modelInfo.s4wdCarGradeID+err}-->
+							<p class="err">{val modelInfo.s4wdCarGradeID+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+						<!--{set modelInfo.s4wdCarGradeID}-->
+							車種グレードＩＤ ：{val modelInfo.s4wdCarGradeID|zeroPadding:7}&nbsp;、
+							メンテナンス区分：{val modelInfo.s4wdCarGrade.mainteName} ( {val modelInfo.s4wdCarGrade.mainteStateName} )<br>
+							{val modelInfo.s4wdCarGrade.makerName}&nbsp;
+							{val modelInfo.s4wdCarGrade.modelName}&nbsp;
+							{val modelInfo.s4wdCarGrade.grade}&nbsp;<br>
+							[&nbsp;{val modelInfo.s4wdCarGrade.bodyModelName}、{val modelInfo.s4wdCarGrade.driveSystem}、{val modelInfo.s4wdCarGrade.transmissionType}、{val modelInfo.s4wdCarGrade.roofModel}、{val modelInfo.s4wdCarGrade.useFuel}、{val modelInfo.s4wdCarGrade.totalEmission|number_format}cc、{val modelInfo.s4wdCarGrade.capacity}人、{val modelInfo.s4wdCarGrade.door}枚、{val modelInfo.s4wdCarGrade.price|add_dot:1}万円&nbsp;]
+						<!--{/set}-->
+						<!--{unset modelInfo.s4wdCarGradeID}--><span>未設定</span><!--{/unset}-->
+						</div>
+						<input type="hidden" id="modelInfo[s4wdCarGradeID]" name="modelInfo[s4wdCarGradeID]" value="{val modelInfo.s4wdCarGradeID}" />
+<!--{set fix_displayFlg}-->
+						<div class="selModelBtnArea">
+							<input type="button" class="btnW01" onclick="openCarGradeSearchWindow('s4wd','{val modelInfo.makerCode}','{val modelInfo.modelCode|zeroPadding:3}','{val BASE_DIR}');" value="車種グレード検索">
+							<input type="button" id="delBtn_s4wd" class="btnW03" onclick="delCarGradeModel('s4wd', '標準4WD');" value="解除" <!--{unset modelInfo.s4wdCarGradeID}-->disabled="disabled"<!--{/unset}-->>
+						</div>
+<!--{/set}-->
+					</td>
+				</tr>
+				<tr>
+					<th class="w90">最廉価</th>
+					<td>
+						<div id="modelInfo[lowPriceCarGradeName]" class="selModelName">
+<!--{set modelInfo.lowPriceCarGradeID+err}-->
+<!--{loop modelInfo.lowPriceCarGradeID+err}-->
+							<p class="err">{val modelInfo.lowPriceCarGradeID+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+						<!--{set modelInfo.lowPriceCarGradeID}-->
+							車種グレードＩＤ ：{val modelInfo.lowPriceCarGradeID|zeroPadding:7}&nbsp;、
+							メンテナンス区分：{val modelInfo.lowPriceCarGrade.mainteName} ( {val modelInfo.lowPriceCarGrade.mainteStateName} )<br>
+							{val modelInfo.lowPriceCarGrade.makerName}&nbsp;
+							{val modelInfo.lowPriceCarGrade.modelName}&nbsp;
+							{val modelInfo.lowPriceCarGrade.grade}&nbsp;<br>
+							[&nbsp;{val modelInfo.lowPriceCarGrade.bodyModelName}、{val modelInfo.lowPriceCarGrade.driveSystem}、{val modelInfo.lowPriceCarGrade.transmissionType}、{val modelInfo.lowPriceCarGrade.roofModel}、{val modelInfo.lowPriceCarGrade.useFuel}、{val modelInfo.lowPriceCarGrade.totalEmission|number_format}cc、{val modelInfo.lowPriceCarGrade.capacity}人、{val modelInfo.lowPriceCarGrade.door}枚、{val modelInfo.lowPriceCarGrade.price|add_dot:1}万円&nbsp;]
+						<!--{/set}-->
+						<!--{unset modelInfo.lowPriceCarGradeID}--><span>未設定</span><!--{/unset}-->
+						</div>
+						<input type="hidden" id="modelInfo[lowPriceCarGradeID]" name="modelInfo[lowPriceCarGradeID]" value="{val modelInfo.lowPriceCarGradeID}" />
+<!--{set fix_displayFlg}-->
+						<div class="selModelBtnArea">
+							<input type="button" class="btnW01" onclick="openCarGradeSearchWindow('lowPrice','{val modelInfo.makerCode}','{val modelInfo.modelCode|zeroPadding:3}','{val BASE_DIR}');" value="車種グレード検索">
+							<input type="button" id="delBtn_lowPrice" class="btnW03" onclick="delCarGradeModel('lowPrice', '廉価');" value="解除" <!--{unset modelInfo.lowPriceCarGradeID}-->disabled="disabled"<!--{/unset}-->>
+						</div>
+<!--{/set}-->
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+	</table>

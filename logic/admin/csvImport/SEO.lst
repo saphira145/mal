@@ -1,0 +1,199 @@
+/admin/csvImport
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/carGradeC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/carGradeE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/viewC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/viewE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/seatCircumferenceC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/seatCircumferenceE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/airConditioningC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/airConditioningE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/audioC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/audioE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/seatInteriorC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/seatInteriorE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/exteriorC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/exteriorE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/footSurroundingsC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/footSurroundingsE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/safetyC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/safetyE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/carThemeC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/carThemeE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/leaseC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+/admin/csvImport/leaseE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/leaseValueC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/leaseValueE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/gasolineC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+/admin/csvImport/gasolineE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+
+/admin/csvImport/leaseOptionC
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+
+/admin/csvImport/leaseOptionE
+	TITLE = "ＣＳＶ取り込み"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ＣＳＶ取り込み"
+

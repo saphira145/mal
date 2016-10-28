@@ -1,0 +1,160 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	ini_set("memory_limit", "256M");
+	ini_set("post_max_size", "32M");
+	ini_set("upload_max_filesize", "32M");
+	ini_set("max_execution_time", "120");
+	ini_set("max_input_time", "120");
+
+	// アップロードファイルを一時ディレクトリへ
+	list( $filePath, $output["tmpFaqCSVName"] ) = $class["csvImport_1"]->copy_tempDir( $output["importCSVFile"]["tmp_name"] );
+
+	// コピーできない場合は終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// チェック用のリスト取得
+	$checkList = $class["csvImport_1"]->get_checkDataList();
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		if( $row == 1){
+			$row++;
+			continue;
+		}
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		// 入力チェック
+		unset( $errData );
+		$errData = check_CSVData( $CSVData , $checkList);
+
+		// エラーメッセージ格納
+		if( count( $errData ) > 0 ) {
+			$output["errList"][$i]["row"]    = $row;
+			$output["errList"][$i]["detail"] = $errData;
+			$i++;
+			// エラーが100行ある場合はチェックをストップする
+			if( $i > 100 ) {
+				break;
+			}
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+
+	// 登録予定件数エラーがない場合表示
+	if( count( $output["errList"] ) == 0 ) {
+		$output["entryCount"] = $row - 2;
+	}
+
+
+
+
+
+	/*--------------------------------------------------
+	  入力チェック
+	---------------------------------------------------*/
+	function check_CSVData ( $CSVData ,$checkList ) {
+
+		unset( $modelID );
+
+		foreach( $CSVData as $key => $val ) {
+
+			unset( $err );
+
+			// メーカーコード取得
+			$makerCode = $CSVData[0];
+
+			// メーカーＣＤ（１フィールド目）
+			if( $key == 0 ) {
+				$err = check_makerCodeList( $val, $key ,$checkList["maker"]);
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+
+			// 車種ＣＤ（３フィールド目）
+			if( $key == 2 ) {
+				$err = check_modelCodeList( $val, $key, $makerCode, $checkList["model"] );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車種グレードＩＤ（５フィールド目）
+			if( $key == 4 ) {
+				$err = check_ommonCarGradeIDList( $val, $key, $makerCode, $checkList["carGrade"] );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// リース形態（１８フィールド目）
+			if( $key == 17 ) {
+				$err = check_contractFlg( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// リース期間（１９フィールド目）
+			if( $key == 18 ) {
+				$err = check_payNumFlg( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 走行距離（２０フィールド目）
+			if( $key == 19 ) {
+				$err = check_mileageFlg( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 残価（２１フィールド目）
+			if( $key == 20 ) {
+				$err = check_leaseValue( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 任意保険料（２２フィールド目）
+			if( $key == 21 ) {
+				$err = check_leaseValue( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+		}
+		return $ret;
+	}
+
+
+
+
+
+
+
+
+
+?>

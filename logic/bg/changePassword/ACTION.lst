@@ -1,0 +1,7 @@
+/* -------------------------------------
+	ACTION.lst
+	for NetGRID PHP Framework v2
+------------------------------------- */
+in, changePassword
+pu, passWordUpdate
+ix, in

@@ -1,0 +1,98 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input menu_theme=1}
+
+<h1 class="tit"><span>{val SEO.H1}</span></h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_10">▼バリューの検索</h2>
+	<p class="actionMsg">検索内容を選択して「検索」ボタンを押してください。</p>
+	<form name="form_search" method="get" action="{val UNIT_URL}/ls/">
+		<input type="hidden" name="pageNum" value="" />
+		<table class="tblForm">
+		<tr>
+			<th class="w150">バリューID</th>
+			<td><input type="text" name="searchThemeID" value="{val searchThemeID|htmlspecialchars}" class="w60" /></td>
+		</tr>
+		<tr>
+			<th>バリュー名</th>
+			<td><input type="text" name="searchThemeName" value="{val searchThemeName|htmlspecialchars}" class="w60" /></td>
+		</tr>
+		<tr>
+			<th>ステータス</th>
+			<td>
+				<select name="searchLevel" class="w60">
+					<option value=""></option>
+<!--{loop statusType}-->
+					<option value="{val statusType/id}"<!--{set statusType/selected}--> selected="selected"<!--{/set}-->>{val statusType/name}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input class="btnW01" type="button" value="クリア" onclick="clear_form( this.form ); return;" />
+			<input class="btnW01" type="submit" value="検索" />
+		</div>
+	</form>
+</div>
+<div class="contentSection">
+	<h2 class="mrgB_10">▼バリューの一覧・編集</h2>
+	<div class="btnArea txt_left">
+		<input type="button" value="新規追加" class="btnW01" onclick="location.href='{val UNIT_URL}/ai/'; return false;" />
+	<!--{set themeList}-->
+		<input type="button" value="表示順／優先度設定" class="btnW02" onclick="location.href='{val UNIT_URL}/dni/'; return false;" />
+	<!--{/set}-->
+	</div>
+
+	<div class="list">
+	<!--{set themeList}-->
+	{file /admin/_common/parts/pageControl.tmp}
+
+	<table class="tblList">
+		<tr>
+			<th class="w40" rowspan="2">バリューID</th>
+			<th class="w45" rowspan="2">画面の表示順</th>
+			<th class="w160" rowspan="2">バリュー名<br />(バリュー名略称)</th>
+			<th class="w60" rowspan="2">対抗車選定の優先度</th>
+			<th class="w45" rowspan="2">アイコン</th>
+			<th class="" colspan="{val bodyTypeListNum}">おすすめ車種</th>
+			<th class="w40" rowspan="2">ステータス</th>
+			<th class="w40" rowspan="2">機能</th>
+		</tr>
+		<tr>
+<!--{loop bodyTypeList}-->
+			<th class="w45 bodyTypeList">{val bodyTypeList/disp}</th>
+<!--{/loop}-->
+		</tr>
+
+	<!--{loop themeList}-->
+		<tr <!--{set themeList/statusTypeFlg}-->class="bgColDeleteData"<!--{/set}-->>
+			<td class="txt_right">{val themeList/themeID}</td>
+			<td class="txt_right"><!--{set themeList/dispNum}-->{val themeList/dispNum}<!--{/set}--><!--{unset themeList/dispNum}-->&ndash;<!--{/unset}--></td>
+			<td>{val themeList/themeName|lengthCut:12}<br />({val themeList/nameAbbreviation})</td>
+			<td class="txt_right"><!--{set themeList/priorityNum}-->{val themeList/priorityNum}<!--{/set}--><!--{unset themeList/priorityNum}-->&ndash;<!--{/unset}--></td>
+			<td class="txt_center">
+				<!--{set themeList/themeIconPath}-->
+				<img src="{val BASE_DIR}/_common/img/theme/{val themeList/themeIconPath}.png" alt="{val themeList/themeIconName}" class="icon" />
+				<!--{/set}-->
+				<!--{unset themeList/themeIconPath}-->&ndash;<!--{/unset}-->
+			</td>
+			
+			<!--{loop themeList/recommend}-->
+			<!--{set themeList/recommend/isBodyModel}--><td class="txt_center" title="{val themeList/recommend/makerName} {val themeList/recommend/modelName}">○</td><!--{/set}-->
+			<!--{unset themeList/recommend/isBodyModel}--><td class="txt_center"><span>未設定</span></td><!--{/unset}-->
+			<!--{/loop}-->
+			
+			<td class="txt_center">{val themeList/statusTypeName}</td>
+			<td class="txt_center"><input class="btnW03" type="button" value="詳細" onclick="location.href='{val UNIT_URL}/dt/{val themeList/themeID}'; return false;" /></td>
+		</tr>
+	<!--{/loop}-->
+	</table>
+	{file /admin/_common/parts/pageControl.tmp}
+	<!--{/set}-->
+	<!--{unset themeList}-->
+		登録されているデータはありません。
+	<!--{/unset}-->
+	</div>
+</div>

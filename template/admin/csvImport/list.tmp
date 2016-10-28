@@ -1,0 +1,275 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_csv=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<p class="actionMsg">ＣＳＶファイルを選択して「確認する」ボタンを押してください。</p>
+<div class="contentSection">
+	<h2>▼本番リリース更新</h2>
+	<p class="actionMsg">取り込んだデータは「本番リリース」で更新されます。</p>
+
+		<table class="tblForm ">
+			<tr>
+				<th class="w220">車種グレード</th>
+				<td>
+	<!--{set ST.carGradeConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/carGradeC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set carGradeUpdateInfo.workDatetime.year}-->最終更新日時 {val carGradeUpdateInfo.workDatetime.year}-{val carGradeUpdateInfo.workDatetime.month|zeroPadding:2}-{val carGradeUpdateInfo.workDatetime.day|zeroPadding:2} {val carGradeUpdateInfo.workDatetime.hour|zeroPadding:2}:{val carGradeUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>視界</th>
+				<td>
+	<!--{set ST.viewConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/viewC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set viewUpdateInfo.workDatetime.year}-->最終更新日時 {val viewUpdateInfo.workDatetime.year}-{val viewUpdateInfo.workDatetime.month|zeroPadding:2}-{val viewUpdateInfo.workDatetime.day|zeroPadding:2} {val viewUpdateInfo.workDatetime.hour|zeroPadding:2}:{val viewUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>運転席まわり</th>
+				<td>
+	<!--{set ST.seatCircumferenceConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/seatCircumferenceC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set seatCircumferenceUpdateInfo.workDatetime.year}-->最終更新日時 {val seatCircumferenceUpdateInfo.workDatetime.year}-{val seatCircumferenceUpdateInfo.workDatetime.month|zeroPadding:2}-{val seatCircumferenceUpdateInfo.workDatetime.day|zeroPadding:2} {val seatCircumferenceUpdateInfo.workDatetime.hour|zeroPadding:2}:{val seatCircumferenceUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>空調</th>
+				<td>
+	<!--{set ST.airConditioningConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/airConditioningC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set airConditioningUpdateInfo.workDatetime.year}-->最終更新日時 {val airConditioningUpdateInfo.workDatetime.year}-{val airConditioningUpdateInfo.workDatetime.month|zeroPadding:2}-{val airConditioningUpdateInfo.workDatetime.day|zeroPadding:2} {val airConditioningUpdateInfo.workDatetime.hour|zeroPadding:2}:{val airConditioningUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>オーディオ</th>
+				<td>
+	<!--{set ST.audioConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/audioC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set audioUpdateInfo.workDatetime.year}-->最終更新日時 {val audioUpdateInfo.workDatetime.year}-{val audioUpdateInfo.workDatetime.month|zeroPadding:2}-{val audioUpdateInfo.workDatetime.day|zeroPadding:2} {val audioUpdateInfo.workDatetime.hour|zeroPadding:2}:{val audioUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>シート・内装関係</th>
+				<td>
+	<!--{set ST.seatInteriorConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/seatInteriorC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set seatInteriorUpdateInfo.workDatetime.year}-->最終更新日時 {val seatInteriorUpdateInfo.workDatetime.year}-{val seatInteriorUpdateInfo.workDatetime.month|zeroPadding:2}-{val seatInteriorUpdateInfo.workDatetime.day|zeroPadding:2} {val seatInteriorUpdateInfo.workDatetime.hour|zeroPadding:2}:{val seatInteriorUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>外装</th>
+				<td>
+	<!--{set ST.exteriorConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/exteriorC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set exteriorUpdateInfo.workDatetime.year}-->最終更新日時 {val exteriorUpdateInfo.workDatetime.year}-{val exteriorUpdateInfo.workDatetime.month|zeroPadding:2}-{val exteriorUpdateInfo.workDatetime.day|zeroPadding:2} {val exteriorUpdateInfo.workDatetime.hour|zeroPadding:2}:{val exteriorUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>足回り</th>
+				<td>
+	<!--{set ST.footSurroundingsConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/footSurroundingsC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set footSurroundingsUpdateInfo.workDatetime.year}-->最終更新日時 {val footSurroundingsUpdateInfo.workDatetime.year}-{val footSurroundingsUpdateInfo.workDatetime.month|zeroPadding:2}-{val footSurroundingsUpdateInfo.workDatetime.day|zeroPadding:2} {val footSurroundingsUpdateInfo.workDatetime.hour|zeroPadding:2}:{val footSurroundingsUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>安全</th>
+				<td>
+	<!--{set ST.safetyConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/safetyC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set safetyUpdateInfo.workDatetime.year}-->最終更新日時 {val safetyUpdateInfo.workDatetime.year}-{val safetyUpdateInfo.workDatetime.month|zeroPadding:2}-{val safetyUpdateInfo.workDatetime.day|zeroPadding:2} {val safetyUpdateInfo.workDatetime.hour|zeroPadding:2}:{val safetyUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>車種バリュー</th>
+				<td>
+	<!--{set ST.carThemeConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/carThemeC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set carThemeUpdateInfo.workDatetime.year}-->最終更新日時 {val carThemeUpdateInfo.workDatetime.year}-{val carThemeUpdateInfo.workDatetime.month|zeroPadding:2}-{val carThemeUpdateInfo.workDatetime.day|zeroPadding:2} {val carThemeUpdateInfo.workDatetime.hour|zeroPadding:2}:{val carThemeUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>リース料（調達価格・メンテ区分・諸税）</th>
+				<td>
+	<!--{set ST.leaseConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/leaseC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set leaseUpdateInfo.workDatetime.year}-->最終更新日時 {val leaseUpdateInfo.workDatetime.year}-{val leaseUpdateInfo.workDatetime.month|zeroPadding:2}-{val leaseUpdateInfo.workDatetime.day|zeroPadding:2} {val leaseUpdateInfo.workDatetime.hour|zeroPadding:2}:{val leaseUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th>リース料（残価・任意保険料）</th>
+				<td>
+	<!--{set ST.leaseValueConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/leaseValueC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set leaseValueUpdateInfo.workDatetime.year}-->最終更新日時 {val leaseValueUpdateInfo.workDatetime.year}-{val leaseValueUpdateInfo.workDatetime.month|zeroPadding:2}-{val leaseValueUpdateInfo.workDatetime.day|zeroPadding:2} {val leaseValueUpdateInfo.workDatetime.hour|zeroPadding:2}:{val leaseValueUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+
+		</table>
+</div>
+
+
+<div class="contentSection">
+	<h2>▼リアルタイム更新</h2>
+	<p class="actionMsg">取り込んだデータは「<span>リアルタイム</span>」で更新されます。</p>
+	
+		<table class="tblForm ">
+			<tr>
+				<th class="w220">ガソリン価格</th>
+				<td>
+	<!--{set ST.gasolineConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/gasolineC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set gasolineUpdateInfo.workDatetime.year}-->最終更新日時 {val gasolineUpdateInfo.workDatetime.year}-{val gasolineUpdateInfo.workDatetime.month|zeroPadding:2}-{val gasolineUpdateInfo.workDatetime.day|zeroPadding:2} {val gasolineUpdateInfo.workDatetime.hour|zeroPadding:2}:{val gasolineUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<th class="w150">オプション</th>
+				<td>
+	<!--{set ST.leaseOptionConfirm}-->
+	<!--{set importCSVFile+err}-->
+	<!--{loop importCSVFile+err}-->
+					<p class="err">{val importCSVFile+err/msg}</p>
+	<!--{/loop}-->
+	<!--{/set}-->
+	<!--{/set}-->
+					<form name="form_list" method="post" action="{val UNIT_URL}/leaseOptionC/" enctype="multipart/form-data">
+						{dbTicket}
+						<input type="file" name="importCSVFile" size="60" class="inputFile" />
+						<span class="mgnSide"><input type="submit" value="取り込む" /></span>
+						<!--{set leaseOptionUpdateInfo.workDatetime.year}-->最終更新日時 {val leaseOptionUpdateInfo.workDatetime.year}-{val leaseOptionUpdateInfo.workDatetime.month|zeroPadding:2}-{val leaseOptionUpdateInfo.workDatetime.day|zeroPadding:2} {val leaseOptionUpdateInfo.workDatetime.hour|zeroPadding:2}:{val leaseOptionUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->
+					</form>
+				</td>
+			</tr>
+		</table>
+</div>

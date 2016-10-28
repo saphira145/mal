@@ -1,0 +1,18 @@
+<table class="tblForm">
+	<tr>
+		<th class="w140">メーカーコード</th>
+		<td>{val makerInfo.makerCode}</td>
+	</tr>
+	<tr>
+		<th>メーカー名</th>
+		<td>{val makerInfo.makerName}</td>
+	</tr>
+	<tr>
+		<th>メーカー名（英字）</th>
+		<td>{val makerInfo.makerNameEng}</td>
+	</tr>
+	<tr>
+		<th>生産国</th>
+		<td>{val makerInfo.countryName}</td>
+	</tr>
+</table>

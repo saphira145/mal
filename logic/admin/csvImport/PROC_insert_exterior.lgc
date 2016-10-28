@@ -1,0 +1,266 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_exterior( $insertData );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "exterior", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "exterior", "reserve", $reserveDatetime );
+	}
+
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$carGradeID = $val;
+			}
+
+			// チルトアップルーフ_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$tiltuproofName = $val;
+			}
+
+			// チルトアップルーフ_有無（３フィールド目）
+			if( $key == 2 ) {
+				$tiltuproofType = $val;
+			}
+
+			// チルトアップルーフ_注目（４フィールド目）
+			if( $key == 3 ) {
+				$tiltuproofSpot = $val;
+			}
+
+			// ガラスサンルーフ_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$glassSunroofName = $val;
+			}
+
+			// ガラスサンルーフ_有無（６フィールド目）
+			if( $key == 5 ) {
+				$glassSunroofType = $val;
+			}
+
+			// ガラスサンルーフ_注目（７フィールド目）
+			if( $key == 6 ) {
+				$glassSunroofSpot = $val;
+			}
+
+			// ツインサンルーフ_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$twinSunroofName = $val;
+			}
+
+			// ツインサンルーフ_有無（９フィールド目）
+			if( $key == 8 ) {
+				$twinSunroofType = $val;
+			}
+
+			// ツインサンルーフ_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$twinSunroofSpot = $val;
+			}
+
+			// ルーフレール_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$roofRailName = $val;
+			}
+
+			// ルーフレール_有無（１２フィールド目）
+			if( $key == 11 ) {
+				$roofRailType = $val;
+			}
+
+			// ルーフレール_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$roofRailSpot = $val;
+			}
+
+			// オートスライドドア_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$autoSlideDoorName = $val;
+			}
+
+			// オートスライドドア_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$autoSlideDoorType = $val;
+			}
+
+			// オートスライドドア_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$autoSlideDoorSpot = $val;
+			}
+
+			// フロントプロテクター_正式名（１７フィールド目）
+			if( $key == 16 ) {
+				$frontProtectorName = $val;
+			}
+
+			// フロントプロテクター_有無（１８フィールド目）
+			if( $key == 17 ) {
+				$frontProtectorType = $val;
+			}
+
+			// フロントプロテクター_注目（１９フィールド目）
+			if( $key == 18 ) {
+				$frontProtectorSpot = $val;
+			}
+
+			// リヤプロテクター_正式名（２０フィールド目）
+			if( $key == 19 ) {
+				$rearProtectorName = $val;
+			}
+
+			// リヤプロテクター_有無（２１フィールド目）
+			if( $key == 20 ) {
+				$rearProtectorType = $val;
+			}
+
+			// リヤプロテクター_注目（２２フィールド目）
+			if( $key == 21 ) {
+				$rearProtectorSpot = $val;
+			}
+
+			// サイドシルプロテクター_正式名（２３フィールド目）
+			if( $key == 22 ) {
+				$sideProtectorName = $val;
+			}
+
+			// サイドシルプロテクター_有無（２４フィールド目）
+			if( $key == 23 ) {
+				$sideProtectorType = $val;
+			}
+
+			// サイドシルプロテクター_注目（２５フィールド目）
+			if( $key == 24 ) {
+				$sideProtectorSpot = $val;
+			}
+
+			// リヤガラス開閉機構(＝ガラスハッチ)_正式名（２６フィールド目）
+			if( $key == 25 ) {
+				$rearGlassHatchName = $val;
+			}
+
+			// リヤガラス開閉機構(＝ガラスハッチ)_有無（２７フィールド目）
+			if( $key == 26 ) {
+				$rearGlassHatchType = $val;
+			}
+
+			// リヤガラス開閉機構(＝ガラスハッチ)_注目（２８フィールド目）
+			if( $key == 27 ) {
+				$rearGlassHatchSpot = $val;
+			}
+
+
+		}
+
+		// 登録用配列に入れ替える
+		$data["carGradeID"]               = $carGradeID;
+		$data["tiltuproofName"]           = $tiltuproofName;
+		$data["tiltuproofType"]           = CSV2DB_commonType( $tiltuproofType );
+		$data["tiltuproofSpot"]           = CSV2DB_commonSpot( $tiltuproofSpot );
+		$data["glassSunroofName"]         = $glassSunroofName;
+		$data["glassSunroofType"]         = CSV2DB_commonType( $glassSunroofType );
+		$data["glassSunroofSpot"]         = CSV2DB_commonSpot( $glassSunroofSpot );
+		$data["twinSunroofName"]          = $twinSunroofName;
+		$data["twinSunroofType"]          = CSV2DB_commonType( $twinSunroofType );
+		$data["twinSunroofSpot"]          = CSV2DB_commonSpot( $twinSunroofSpot );
+		$data["roofRailName"]             = $roofRailName;
+		$data["roofRailType"]             = CSV2DB_commonType( $roofRailType );
+		$data["roofRailSpot"]             = CSV2DB_commonSpot( $roofRailSpot );
+		$data["autoSlideDoorName"]        = $autoSlideDoorName;
+		$data["autoSlideDoorType"]        = CSV2DB_commonType( $autoSlideDoorType );
+		$data["autoSlideDoorSpot"]        = CSV2DB_commonSpot( $autoSlideDoorSpot );
+		$data["frontProtectorName"]       = $frontProtectorName;
+		$data["frontProtectorType"]       = CSV2DB_commonType( $frontProtectorType );
+		$data["frontProtectorSpot"]       = CSV2DB_commonSpot( $frontProtectorSpot );
+		$data["rearProtectorName"]        = $rearProtectorName;
+		$data["rearProtectorType"]        = CSV2DB_commonType( $rearProtectorType );
+		$data["rearProtectorSpot"]        = CSV2DB_commonSpot( $rearProtectorSpot );
+		$data["sideProtectorName"]        = $sideProtectorName;
+		$data["sideProtectorType"]        = CSV2DB_commonType( $sideProtectorType );
+		$data["sideProtectorSpot"]        = CSV2DB_commonSpot( $sideProtectorSpot );
+		$data["rearGlassHatchName"]       = $rearGlassHatchName;
+		$data["rearGlassHatchType"]       = CSV2DB_commonType( $rearGlassHatchType );
+		$data["rearGlassHatchSpot"]       = CSV2DB_commonSpot( $rearGlassHatchSpot );
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

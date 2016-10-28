@@ -1,0 +1,25 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_model=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+<div class="contentSection">
+	<p class="actionMsg">以下の内容で登録します。よろしければ「追加する」ボタンを押してください。</p>
+	{file parts/display.tmp}
+
+	<form name="form_addReinput" action="{val UNIT_URL}/ar/" method="post">
+		{dbTicket}
+		{file parts/hidden.tmp}
+	</form>
+
+	<form name="form_addExecute" action="{val UNIT_URL}/ae/" method="post">
+		{dbTicket}
+		{file parts/hidden.tmp}
+
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="戻る" class="btnW01" onclick="document.form_addReinput.submit(); return false;" />
+			<input type="submit" value="追加する" class="btnW01" />
+		</div>
+	</form>
+</div>
+
+

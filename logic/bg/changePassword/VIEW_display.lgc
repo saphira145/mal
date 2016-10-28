@@ -1,0 +1,22 @@
+<?php
+
+
+	/* -------------------------------------
+		ビュー
+	------------------------------------- */
+	if( count($output["msg"]) > 0 ){
+		foreach( $output["msg"] as $key => $val ){
+			if( !empty($val) ){
+				$tmp_output[$key] = $val;
+			}
+		}
+	}
+	$retJSON = $tmp_output;
+
+	// ----------------------------------------------------------------
+	// JSONの出力
+	header("content-type: application/x-javascript; charset=utf-8");
+	die(json_encode($retJSON));
+	exit;
+
+?>

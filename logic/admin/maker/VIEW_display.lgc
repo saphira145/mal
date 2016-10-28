@@ -1,0 +1,11 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// 生産国名取得
+	$output["makerInfo"]["countryName"] = get_nameFromMaster ( $ini["country"], $output["makerInfo"]["countryID"], "value", "name" );
+
+
+?>

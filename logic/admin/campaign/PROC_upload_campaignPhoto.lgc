@@ -1,0 +1,29 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// キャンペーン画像を保存
+	for( $i = 0, $iMax = $ini["pageLimit"]["campaignAdmin"]; $i < $iMax; $i++){
+		if( $output["campaignInfo"][$i]["campaignPhoto"]["tmp_name"] != "" ) {
+
+			// 拡張子を取り出す
+			$result1 = explode( ".", $output["campaignInfo"][$i]["campaignPhoto"]["name"] );
+			$extension = array_pop( $result1 );
+
+			$resutl2 = explode( "/", $output["campaignInfo"][$i]["campaignPhoto"]["tmp_name"] );
+
+			$tmpFileName = array_pop( $resutl2 ) . ".$extension";
+
+			// 一時ファイルコピー実行
+			$class["campaignAdmin_1"]->save_tempCampaignyPhoto( $output["campaignInfo"][$i]["campaignPhoto"]["tmp_name"], $tmpFileName );
+
+			// 表示用ファイル名
+			$output["campaignInfo"][$i]["tempCampaignPhoto"] = $tmpFileName;
+
+		}
+	}
+
+?>

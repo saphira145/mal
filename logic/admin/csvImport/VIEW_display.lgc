@@ -1,0 +1,26 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// CSVデータに不備があった場合
+	if( count( $output["errList"] ) > 0 ) {
+		$output["dataErrFlg"] = 1;
+
+		// 行数毎に背景色を変化させる
+		$checkRow;
+		$checkColor = 1;
+		for( $i = 0; $i < count($output["errList"]); $i++ ){
+			if( $checkRow != $output["errList"][$i]["row"] ){
+				$checkRow = $output["errList"][$i]["row"];
+
+				if( $checkColor % 2 == 0){
+					$output["errList"][$i]["bgCol"] = 1;
+				}
+				$checkColor++;
+			}
+		}
+	}
+
+?>

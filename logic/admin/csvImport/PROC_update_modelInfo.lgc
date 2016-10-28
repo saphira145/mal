@@ -1,0 +1,25 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 価格情報更新
+	$class["csvImport_1"]->update_modelPrice();
+
+	// 全長情報更新
+	$class["csvImport_1"]->update_modelLength();
+
+	// 全幅情報更新
+	$class["csvImport_1"]->update_modelWidth();
+
+	// 全高情報更新
+	$class["csvImport_1"]->update_modelHeight();
+
+
+
+
+
+
+?>

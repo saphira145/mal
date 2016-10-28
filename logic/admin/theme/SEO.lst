@@ -1,0 +1,105 @@
+/admin/theme
+	TITLE = "バリュー設定（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（一覧）"
+
+/admin/theme/ls
+	TITLE = "バリュー設定（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（一覧）"
+
+/admin/theme/dt
+	TITLE = "バリュー設定（詳細）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（詳細）"
+
+/admin/theme/ai
+	TITLE = "バリュー設定（新規入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（新規入力）"
+
+/admin/theme/ac
+	TITLE = "バリュー設定（新規確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（新規確認）"
+
+/admin/theme/ar
+	TITLE = "バリュー設定（新規再入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（新規再入力）"
+
+/admin/theme/ae
+	TITLE = "バリュー設定（新規完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（新規完了）"
+
+/admin/theme/mi
+	TITLE = "バリュー設定（更新入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（更新入力）"
+
+/admin/theme/mc
+	TITLE = "バリュー設定（更新確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（更新確認）"
+
+/admin/theme/mr
+	TITLE = "バリュー設定（更新再入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（更新再入力）"
+
+/admin/theme/me
+	TITLE = "バリュー設定（更新完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（更新完了）"
+
+/admin/theme/dc
+	TITLE = "バリュー設定（削除確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（削除確認）"
+
+/admin/theme/de
+	TITLE = "バリュー設定（削除完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（削除完了）"
+
+/admin/theme/dni
+	TITLE = "バリュー設定（表示順／優先度設定）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（表示順／優先度設定）"
+
+/admin/theme/dnr
+	TITLE = "バリュー設定（表示順／優先度設定再設定）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（表示順／優先度設定再設定）"
+
+/admin/theme/dnc
+	TITLE = "バリュー設定（表示順／優先度設定確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（表示順／優先度設定確認）"
+
+/admin/theme/dne
+	TITLE = "バリュー設定（表示順／優先度設定完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="バリュー設定（表示順／優先度設定完了）"
+
+
+
+

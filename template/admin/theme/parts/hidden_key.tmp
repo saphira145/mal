@@ -1,0 +1,3 @@
+	<input type="hidden" id="themeID" name="themeID" value="{val themeID}" />
+	<input type="hidden" name="themeInfo[priorityNum]" value="{val themeInfo.priorityNum}" />
+	<input type="hidden" name="themeInfo[dispNum]" value="{val themeInfo.dispNum}" />

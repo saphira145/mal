@@ -1,0 +1,19 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	list,             searchs
+	detail,           ids searchs
+	addInput,         searchs
+	addConfirm,       fields password
+	addReinput,       fields password
+	addExecute,       fields password
+	modifyInput,      ids 
+	modifyConfirm,    ids fields passwordCheck
+	modifyReinput,    ids fields passwordCheck
+	modifyExecute,    ids fields passwordCheck
+	deleteConfirm,    ids
+	deleteExecute,    ids
+

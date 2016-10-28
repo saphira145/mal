@@ -1,0 +1,20 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	$memberInfo                      = $class["memberAdmin_1"]->check_emailbyMemberInfo( $output["email"] );
+	$input["memberID"]               = $memberInfo["memberID"];
+	$input["memberInfo"]["password"] = $output["passwordNew"];
+
+	// パスワードの更新
+	$class["memberAdmin_1"]->update_DB_password( $input );
+
+	// 完了メッセージフラグ
+	$output["msg"]["update"] = 1;
+
+	// ＤＢチケットの破棄
+	drop_dbTicket();
+
+?>

@@ -1,0 +1,45 @@
+<?php
+
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	if( $ini["system"]["errRank"] == 2 ) {
+
+		// 入力へ戻る
+		$viewStatus = "list";
+		$this->callVIEW( "list" );
+
+	}
+	else{
+
+		// WORK DB ロック
+		$this->callPROC( "lock_workDB" );
+
+		// テーブルのデータ削除
+		$this->callPROC( "delete_leaseOption" );
+
+		// テーブルにデータ投入
+		$this->callPROC( "insert_leaseOption" );
+
+		// WORK DB ロック解除
+		$this->callPROC( "release_workDB" );
+
+	}
+
+	// ＤＢチケットの破棄
+	drop_dbTicket();
+
+
+
+
+
+
+
+
+?>

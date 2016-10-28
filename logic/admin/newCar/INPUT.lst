@@ -1,0 +1,5 @@
+modifyFields
+	a, newCarInfo/carNum     = carNum                  // 新型車No
+	a, newCarInfo/makerCode  = makerCode               // メーカーコード
+	a, newCarInfo/modelCode  = modelCode({.makerCode})  // 車種コード
+

@@ -1,0 +1,330 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+		// アップロードファイルを一時ディレクトリへ
+		list( $filePath, $output["tmpFaqCSVName"] ) = $class["csvImport_1"]->copy_tempDir( $output["importCSVFile"]["tmp_name"] );
+
+		// コピーできない場合は終了
+		if( !file_exists( $filePath ) ) {
+			return;
+		}
+
+
+		// CSVファイル読み込み
+		$i   = 0;
+		$row = 1;
+		$handle = fopen ( $filePath, "r" );
+
+		while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+			// 文字コード変換（SJIS-winからUTF-8に変換）
+			$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+			// 入力チェック
+			unset( $errData );
+			$errData = check_CSVData( $CSVData );
+
+			// エラーメッセージ格納
+			if( count( $errData ) > 0 ) {
+				$output["errList"][$i]["row"]    = $row;
+				$output["errList"][$i]["detail"] = $errData;
+				$i++;
+				// エラーが100行ある場合はチェックをストップする
+				if( $i > 100 ) {
+					break;
+				}
+			}
+
+			// 読み込み行のカウントアップ
+			$row++;
+		}
+
+		fclose($handle);
+
+
+		// 登録予定件数エラーがない場合表示
+		if( count( $output["errList"] ) == 0 ) {
+			$output["entryCount"] = $row - 1;
+		}
+
+
+
+
+
+	/*--------------------------------------------------
+	  入力チェック
+	---------------------------------------------------*/
+	function check_CSVData ( $CSVData ) {
+
+		unset( $modelID );
+
+		foreach( $CSVData as $key => $val ) {
+
+			unset( $err );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$err = check_ommonCarGradeID( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// クーラー_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// クーラー_有無（３フィールド目）
+			if( $key == 2 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// クーラー_注目（４フィールド目）
+			if( $key == 3 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// エアコン_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// エアコン_有無（６フィールド目）
+			if( $key == 5 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// エアコン_注目（７フィールド目）
+			if( $key == 6 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// フルオートエアコン_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// フルオートエアコン_有無（９フィールド目）
+			if( $key == 8 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// フルオートエアコン_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// デュアルエアコン_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// デュアルエアコン_有無（１２フィールド目）
+			if( $key == 11 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// デュアルエアコン_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// クリーンフィルター_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// クリーンフィルター_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// クリーンフィルター_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ピュアトロン_正式名（１７フィールド目）
+			if( $key == 16 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ピュアトロン_有無（１８フィールド目）
+			if( $key == 17 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ピュアトロン_注目（１９フィールド目）
+			if( $key == 18 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 花粉フィルター_正式名（２０フィールド目）
+			if( $key == 19 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 花粉フィルター_有無（２１フィールド目）
+			if( $key == 20 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 花粉フィルター_注目（２２フィールド目）
+			if( $key == 21 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 新脱臭機能付クリーンフィルター_正式名（２３フィールド目）
+			if( $key == 22 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 新脱臭機能付クリーンフィルター_有無（２４フィールド目）
+			if( $key == 23 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 新脱臭機能付クリーンフィルター_注目（２５フィールド目）
+			if( $key == 24 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// リヤヒーターダクト_正式名（２６フィールド目）
+			if( $key == 25 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// リヤヒーターダクト_有無（２７フィールド目）
+			if( $key == 26 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// リヤヒーターダクト_注目（２８フィールド目）
+			if( $key == 27 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// マイルドフローシステム_正式名（２９フィールド目）
+			if( $key == 28 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// マイルドフローシステム_有無（３０フィールド目）
+			if( $key == 29 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// マイルドフローシステム_注目（３１フィールド目）
+			if( $key == 30 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+		}
+
+		return $ret;
+	}
+
+
+
+
+
+
+
+
+
+?>

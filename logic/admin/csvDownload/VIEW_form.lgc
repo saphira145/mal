@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * 出力タイプ選択値
+ */
+$CSVType = ( $output["downloadInfo"]["outputType"] )
+	? $output["downloadInfo"]["outputType"]
+	: $ini["outputTypeDefault"];
+
+/**
+ * 出力タイプ一覧
+ */
+$output["outputTypeList"]       = get_outputTypeSelect( $CSVType );
+
+
+
+/*********************************************
+ * CSV取り込み用
+ *********************************************/
+$CSVTypeCsv = ( $output["importOnlyDownloadInfo"]["outputType"] )
+	? $output["importOnlyDownloadInfo"]["outputType"]
+	: $ini["csvImportOnlyDefault"];
+	
+$output["csvImportOnlyList"]    = get_outputTypeCsvSelect( $CSVTypeCsv );
+
+?>

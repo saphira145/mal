@@ -1,0 +1,25 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	if( count( $output["carModelList"] ) > 0 ) {
+		$output["carModelListDisp"] = 1;
+	}
+
+	// メーカーリスト
+	$output["makerList"]       = get_makerSelect( $output["searchMakerCode"] );
+
+	// ボディタイプリスト取得
+	$output["bodyTypeList"] = set_checked ( $ini["bodyType"], $output["searchBodyType"], "ID", "selected" );
+
+	// ボディタイプ名称の調整(コンパクト/ＳＵＶ → SUV 等)
+	for($i = 0, $iMax = count($output["carModelList"]); $i < $iMax; $i++){
+		for( $j = 0, $jMax = count($output["carModelList"][$i]["bodyModel"]); $j < $jMax; $j++){
+			$output["carModelList"][$i]["bodyModel"][$j]["name"] = get_bodyTypeName($output["carModelList"][$i]["bodyModel"][$j]["ID"]);
+		}
+	}
+	
+
+?>

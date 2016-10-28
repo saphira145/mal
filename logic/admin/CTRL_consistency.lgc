@@ -1,0 +1,27 @@
+<?php
+
+
+	/* -----------------------------------------------------
+	    ロジックコントロール-
+	----------------------------------------------------- */
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// 入力チェック
+	$this->callPROC( "check_consistency" );
+
+	// 出力用編集
+	$this->callPROC( "convert_consistency" );
+
+	// ログ出力
+	$this->callPROC( "inset_checkLog" );
+
+	// 画面出力
+	$this->callVIEW( "consistency" );
+
+	// テンプレートは固定（index.tmp）
+	$viewStatus = "index";
+
+
+?>

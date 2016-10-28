@@ -1,0 +1,24 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$class["leaseAdmin_1"]->update_maintenanceFee( $output["maintenanceList"] );
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "maintenanceFee", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "maintenanceFee", "reserve", $reserveDatetime );
+	}
+
+	// 更新成功
+	$output["maintenance_sucessFlg"] = 1;
+
+?>

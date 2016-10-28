@@ -1,0 +1,21 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// メーカーリスト
+	$output["makerList"]       = get_makerSelect( $output["searchMakerCode"] );
+
+	// 表示用に変換
+	for( $i=0; $i<count( $output["modelList"] ); $i++ ) {
+		$output["modelList"][$i] = $class["modelAdmin_1"]->convert_Info( $output["modelList"][$i] );
+	}
+
+	if( count( $output["modelList"] ) > 0 ) {
+		$output["modelListDisp"] = 1;
+	}
+
+
+
+?>

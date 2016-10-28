@@ -1,0 +1,72 @@
+<table class="tblForm">
+		<tr>
+			<th class="w150">バリューID</th>
+			<td>
+				<!--{set themeID}-->{val themeID}<!--{set themeInfo.autoTheme}--> (自動設定)<!--{/set}--><!--{/set}-->
+				<!--{unset themeID}-->自動取番されます<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>画面の表示順</th>
+			<td>
+				<!--{set themeID}-->
+					<!--{set themeInfo.dispNum}-->{val themeInfo.dispNum}<!--{/set}-->
+					<!--{unset themeInfo.dispNum}-->&ndash;<!--{/unset}-->
+				<!--{/set}-->
+				<!--{unset themeID}-->最下位が設定されます<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>対抗車選定の優先度</th>
+			<td>
+				<!--{set themeID}-->
+					<!--{set themeInfo.priorityNum}-->{val themeInfo.priorityNum}<!--{/set}-->
+					<!--{unset themeInfo.priorityNum}-->&ndash;<!--{/unset}-->
+				<!--{/set}-->
+				<!--{unset themeID}-->最下位が設定されます<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>バリュー名</th>
+			<td>{val themeInfo.themeName|htmlspecialchars}</td>
+		</tr>
+		<tr>
+			<th>バリュー名(略称)</th>
+			<td>{val themeInfo.nameAbbreviation|htmlspecialchars}</td>
+		</tr>
+		<tr>
+			<th>バリューアイコン</th>
+			<td>
+				<!--{set themeInfo.themeIconName}--><img src="{val BASE_DIR}/_common/img/theme/{val themeInfo.themeIconPath}.png" class="icon" alt="{val themeInfo.themeIconName}" /><!--{/set}-->
+			</td>
+		</tr>
+		<tr>
+			<th>ステータス</th>
+			<td>{val themeInfo.statusTypeName}</td>
+		</tr>
+		<tr>
+			<th>おすすめ車種</th>
+			<td>
+
+<!--{set themeInfo.bodyType}-->
+				<table class="tbl_inner">
+<!--{loop themeInfo.bodyType}-->
+				<tr>
+					<th class="w120">{val themeInfo.bodyType/disp}</th>
+					<td>
+						<div class="selModelName">
+							<!--{set themeInfo.bodyType/isBodyModel}-->{val themeInfo.bodyType/makerName}　{val themeInfo.bodyType/modelName}<!--{/set}-->
+							<!--{unset themeInfo.bodyType/isBodyModel}--><span>未設定</span><!--{/unset}-->
+						</div>
+					</td>
+				</tr>
+<!--{/loop}-->
+				</table>
+<!--{/set}-->
+			</td>
+		</tr>
+		<tr>
+			<th>選定基準</th>
+			<td>{val themeInfo.basisOfSelection|dispComment}</td>
+		</tr>
+	</table>

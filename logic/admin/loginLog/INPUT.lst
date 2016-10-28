@@ -1,0 +1,10 @@
+searchs
+	a, searchType     = searchType  		// ログタイプ
+	a, searchYear     = year        		// 年
+	a, searchMonth    = month       		// 月
+	a, pageNum        = pageNum     		// ページ番号
+	a, searchLogType  = searchLogType  	    // ログ種別
+
+dasdas
+	a, logType        = logType  		    // ログタイプ
+	a, date           = date  		        // ログタイプ

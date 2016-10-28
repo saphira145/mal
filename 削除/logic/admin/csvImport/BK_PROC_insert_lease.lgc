@@ -1,0 +1,237 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	ini_set("memory_limit", "256M");
+	ini_set("post_max_size", "32M");
+	ini_set("upload_max_filesize", "32M");
+	ini_set("max_execution_time", "120");
+	ini_set("max_input_time", "120");
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		if( $row == 1){
+			$row++;
+			continue;
+		}
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_lease( $insertData["lease"] );
+			$class["csvImport_1"]->insert_maintenance( $insertData["mainte"] );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "lease", "work" );
+	update_datetimeBySelectTableIDFiledName( "maintenance", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "lease", "reserve", $reserveDatetime );
+		update_datetimeBySelectTableIDFiledName( "maintenance", "reserve", $reserveDatetime );
+	}
+
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// メーカーＣＤ（１フィールド目）
+			if( $key == 0 ) {
+				$makerCode = $val;
+			}
+
+			// メーカー名（２フィールド目）
+			if( $key == 1 ) {
+				$makerName = $val;
+			}
+
+			// 車種ＣＤ（３フィールド目）
+			if( $key == 2 ) {
+				$modelCode = $val;
+			}
+
+			// 車種名（４フィールド目）
+			if( $key == 3 ) {
+				$modelName = $val;
+			}
+
+			// 車種グレードＩＤ（５フィールド目）
+			if( $key == 4 ) {
+				$carGradeID = $val;
+			}
+
+			// 車種グレード名（６フィールド目）
+			if( $key == 5 ) {
+				$carGradeName = $val;
+			}
+
+			// 駆動方式（７フィールド目）
+			if( $key == 6 ) {
+				$driveSystem = $val;
+			}
+
+			// 車両本体価格（８フィールド目）
+			if( $key == 7 ) {
+				$taxIncludedPrice = $val;
+			}
+
+			// 認定型式[車名型式]（９フィールド目）
+			if( $key == 8 ) {
+				$carNameModel = $val;
+			}
+
+			// トランスミッション区分（１０フィールド目）
+			if( $key == 9 ) {
+				$transmission = $val;
+			}
+
+			// 最大積載量（１１フィールド目）
+			if( $key == 10 ) {
+				$maxCapacity = $val;
+			}
+
+			// 乗車定員（１２フィールド目）
+			if( $key == 11 ) {
+				$capacity = $val;
+			}
+
+			// 使用燃料（１３フィールド目）
+			if( $key == 12 ) {
+				$useFuel = $val;
+			}
+
+			// 総排気量（１４フィールド目）
+			if( $key == 13 ) {
+				$totalEmission = $val;
+			}
+
+			// 車検サイクル[初回]（１５フィールド目）
+			if( $key == 14 ) {
+				$carInspection_years = $val;
+			}
+
+			// 車検サイクル[初回]（１６フィールド目）
+			if( $key == 15 ) {
+				$carInspection_nextYear = $val;
+			}
+
+			// 代表車種グレード（１７フィールド目）
+			if( $key == 16 ) {
+				$carGradeFlg = $val;
+			}
+
+			// 調達価格（１８フィールド目）
+			if( $key == 17 ) {
+				$procurementCost = $val;
+			}
+
+			// 登録法定費用（１９フィールド目）
+			if( $key == 18 ) {
+				$costLegal = $val;
+			}
+
+			// 登録代行費用（２０フィールド目）
+			if( $key == 19 ) {
+				$costActing = $val;
+			}
+
+			// 資金管理料金（２１フィールド目）
+			if( $key == 20 ) {
+				$costManagement = $val;
+			}
+
+			// メンテナンス区分（２２フィールド目）
+			if( $key == 21 ) {
+				$mainteID = $val;
+			}
+
+			// 区分状態（２３フィールド目）
+			if( $key == 22 ) {
+				$mainteState = $val;
+			}
+		}
+
+		// 登録用配列に入れ替える
+		$data["lease"]["makerCode"]       = $makerCode;
+		$data["lease"]["modelCode"]       = $modelCode;
+		$data["lease"]["carGradeID"]      = $carGradeID;
+		$data["lease"]["procurementCost"] = $procurementCost;
+		$data["lease"]["costLegal"]       = $costLegal;
+		$data["lease"]["costActing"]      = $costActing;
+		$data["lease"]["costManagement"]  = $costManagement;
+
+		$data["mainte"]["makerCode"]      = $makerCode;
+		$data["mainte"]["modelCode"]      = $modelCode;
+		$data["mainte"]["carGradeID"]     = $carGradeID;
+		$data["mainte"]["mainteID"]       = $mainteID;
+		$data["mainte"]["mainteState"]    = $mainteState;
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

@@ -1,0 +1,26 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// 優先度
+	if( $output["prioritySortIDs"] != "" ) {
+		$list = explode( ",", $output["prioritySortIDs"] );
+	}
+
+	for( $i=0; $i<count( $list ); $i++ ) {
+		$output["priorityNumList"][$i]["themeID"] = $list[$i];
+	}
+
+	// 表示順
+	unset($list);
+	if( $output["dispSortIDs"] != "" ) {
+		$list = explode( ",", $output["dispSortIDs"] );
+	}
+
+	for( $i=0; $i<count( $list ); $i++ ) {
+		$output["dispNumList"][$i]["themeID"] = $list[$i];
+	}
+
+?>

@@ -1,0 +1,33 @@
+<?php
+
+	global $ini;
+
+	// メーカーリスト
+	$output["makerList"]       = get_makerSelect( $output["modelInfo"]["makerCode"] );
+
+	// 既に登録されている車種画像はあるか？
+	if( !is_carBodyPhoto( $output["modelInfo"]["makerCode"], $output["modelInfo"]["modelCode"] ) ) {
+		$output["noImageDispCarBody"] = 1;
+	}
+
+	// 画像ＩＤ用に変換
+	$output["carBodyPhotoID"] = get_carBodyPhotoName( $output["modelInfo"]["makerCode"], $output["modelInfo"]["modelCode"] );
+
+	// テーマリスト取得
+	$output["themeList"] = get_themeChecked($output["theme"], $output["modelInfo"]["makerCode"], $output["modelInfo"]["modelCode"] );
+
+	// キャンペーンスコア
+	$output["campaignScoreList"]    = get_campaignScoreSelect( $output["modelInfo"]["campaignScore"] );
+
+	// 車種グレード情報
+	$output["modelInfo"]["s2wdCarGrade"]      = $class["modelAdmin_1"]->get_infoWorkDBorActiveDB($output["modelInfo"]["s2wdCarGradeID"]);
+	$output["modelInfo"]["s4wdCarGrade"]      = $class["modelAdmin_1"]->get_infoWorkDBorActiveDB($output["modelInfo"]["s4wdCarGradeID"]);
+	$output["modelInfo"]["lowPriceCarGrade"]  = $class["modelAdmin_1"]->get_infoWorkDBorActiveDB($output["modelInfo"]["lowPriceCarGradeID"]);
+
+	// 価格(最小・最大共に0の場合、空欄にする)
+	if( empty($output["modelInfo"]["price"]["mini"]) && empty($output["modelInfo"]["price"]["max"]) ){
+		$output["modelInfo"]["price"]["mini"] = null;
+		$output["modelInfo"]["price"]["max"]  = null;
+	}
+
+?>

@@ -1,0 +1,188 @@
+#  *** UTF-8 Encoded ***
+#---------------------------------------
+#  日産自動車 他メーカー比較
+#  http://comparison.nissan.co.jp/
+#  サイトリニューアル用
+#
+#  (C)2009-2010 NetGRID Co., Ltd.
+#
+#  ※終売対応時には「旧 URL トップ」
+#    ブロックのすぐ上に追加する。
+#    旧 URL ブロック、リダイレクト先
+#    再設定 (2009-04-22) ブロックに
+#    対象車種があってもそのまま残す。
+#---------------------------------------
+
+# 2013-10-17 iy
+#AuthUserFile /home/httpd/comparison.d.hoyusys.co.jp_80/.htpasswd
+AuthUserFile /etc/apache2/htpasswd/mal.d.hoyusys.co.jp
+AuthGroupFile /dev/null
+AuthName "Password Required"
+AuthType Basic
+Require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+        deny from all
+</Files>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+
+	#---- 旧 URL↓
+	#---- (アドレス例)
+	#---- http://nissan-compare.jazz.netgrid.jp/nissancompare/nscomp.php?p_ctrl=join&car_value=wingroad
+	RewriteCond %{QUERY_STRING} car_value=wingroad
+	RewriteRule ^.*/nscomp.php /RESULT/WINGROAD/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=xtrail
+	RewriteRule ^.*/nscomp.php /RESULT/X-TRAIL/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=elgrand
+	RewriteRule ^.*/nscomp.php /RESULT/ELGRAND/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=otti
+	RewriteRule ^.*/nscomp.php /RESULT/OTTI/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=kix
+	RewriteRule ^.*/nscomp.php /RESULT/KIX/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=cube
+	RewriteRule ^.*/nscomp.php /RESULT/CUBE/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=rio
+	RewriteRule ^.*/nscomp.php /RESULT/CLIPPER/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=cima
+	RewriteRule ^.*/nscomp.php /RESULT/CIMA/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=sylphy
+	RewriteRule ^.*/nscomp.php /RESULT/SYLPHY/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=skylinecoupe
+	RewriteRule ^.*/nscomp.php /RESULT/SKYLINECOUPE/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=skylinecrossover
+	RewriteRule ^.*/nscomp.php /RESULT/SKYLINECROSSOVER/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=skyline
+	RewriteRule ^.*/nscomp.php /RESULT/SKYLINE/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=serena
+	RewriteRule ^.*/nscomp.php /RESULT/SERENA/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=teana
+	RewriteRule ^.*/nscomp.php /RESULT/TEANA/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=tiida
+	RewriteRule ^.*/nscomp.php /RESULT/TIIDA/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=dualis
+	RewriteRule ^.*/nscomp.php /RESULT/DUALIS/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=note
+	RewriteRule ^.*/nscomp.php /RESULT/NOTE/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=pino
+	RewriteRule ^.*/nscomp.php /RESULT/PINO/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=fuga
+	RewriteRule ^.*/nscomp.php /RESULT/FUGA/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=z
+	RewriteRule ^.*/nscomp.php /RESULT/Z/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=presage
+	RewriteRule ^.*/nscomp.php /RESULT/PRESAGE/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=micra
+	RewriteRule ^.*/nscomp.php /RESULT/MICRA/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=march
+	RewriteRule ^.*/nscomp.php /RESULT/MARCH/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=murano
+	RewriteRule ^.*/nscomp.php /RESULT/MURANO/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=moco
+	RewriteRule ^.*/nscomp.php /RESULT/MOCO/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=latio
+	RewriteRule ^.*/nscomp.php /RESULT/LATIO/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=lafesta
+	RewriteRule ^.*/nscomp.php /RESULT/LAFESTA/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=NISSANGT-R
+	RewriteRule ^.*/nscomp.php /RESULT/GT-R/? [L,R=301]
+
+	RewriteCond %{QUERY_STRING} car_value=vanette
+	RewriteRule ^.*/nscomp.php /RESULT/NV200VANETTE/? [L,R=301]
+	#---- 旧 URL トップ↑
+
+
+	#---- 2009-04-22
+	#---- 車種英語名に半角スペースを含まないように変更
+	#---- リダイレクト先再設定↓
+	RewriteCond %{REQUEST_URI} ^/RESULT/CLIPPER\ RIO/
+	RewriteRule ^RESULT/CLIPPER\ RIO/(.*) /RESULT/CLIPPER/$1 [L,R=301]
+
+	RewriteCond %{REQUEST_URI} ^/RESULT/BLUEBIRD\ SYLPHY/
+	RewriteRule ^RESULT/BLUEBIRD\ SYLPHY/(.*) /RESULT/SYLPHY/$1 [L,R=301]
+
+	RewriteCond %{REQUEST_URI} ^/RESULT/SKYLINE\ coupe/
+	RewriteRule ^RESULT/SKYLINE\ coupe/(.*) /RESULT/SKYLINECOUPE/$1 [L,R=301]
+
+	RewriteCond %{REQUEST_URI} ^/RESULT/SKYLINE\ sedan/
+	RewriteRule ^RESULT/SKYLINE\ sedan/(.*) /RESULT/SKYLINE/$1 [L,R=301]
+
+	RewriteCond %{REQUEST_URI} ^/RESULT/FAIRLADY\ Z/
+	RewriteRule ^RESULT/FAIRLADY\ Z/(.*) /RESULT/Z/$1 [L,R=301]
+
+	RewriteCond %{REQUEST_URI} ^/RESULT/MICRA\ CC/ [NC]
+	RewriteRule ^RESULT/MICRA\ CC/(.*) /RESULT/MICRA/$1 [L,R=301]
+	#---- リダイレクト先再設定↑
+
+
+	#---- 2010-07-12
+	#---- ピノ、プレサージュ、シーマ終売対応↓
+	RewriteCond %{REQUEST_URI} ^/RESULT/PINO/ [NC]
+	RewriteRule ^RESULT/PINO.* / [L,R=301]
+
+	RewriteCond %{REQUEST_URI} ^/RESULT/PRESAGE/ [NC]
+	RewriteRule ^RESULT/PRESAGE.* / [L,R=301]
+
+	#---- 2012-04-24
+	#---- シーマ復活↓
+	#RewriteCond %{REQUEST_URI} ^/RESULT/CIMA/ [NC]
+	#RewriteRule ^RESULT/CIMA.* / [L,R=301]
+	#---- ピノ、プレサージュ、シーマ終売対応↑
+
+
+	#---- 2010-08-20
+	#---- マイクラC+C終売対応↓
+	RewriteCond %{REQUEST_URI} ^/RESULT/MICRA/ [NC]
+	RewriteRule ^RESULT/MICRA.* / [L,R=301]
+	#---- マイクラC+C終売対応↑
+
+
+	#---- 旧 URL トップ↓
+	RewriteCond %{REQUEST_URI} ^/nissancompare/
+	RewriteRule ^(.*) /? [L,R=301]
+	#---- 旧 URL トップ↑
+
+
+	#---- PHP フレームワーク フロントコントローラ設定↓
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php/$1 [L]
+	#---- PHP フレームワーク フロントコントローラ設定↑
+
+
+</IfModule>
+
+  php_value default_charset               UTF-8
+  php_value mbstring.language             Japanese
+  php_value mbstring.http_input           auto
+  php_value mbstring.http_output          UTF-8
+  php_value mbstring.internal_encoding    UTF-8

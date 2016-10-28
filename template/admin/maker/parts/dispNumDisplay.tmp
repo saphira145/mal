@@ -1,0 +1,10 @@
+<table class="tblForm">
+	<tr>
+		<th class="w140">表示順</th>
+		<td>
+<!--{loop makerList}-->
+				{val makerList/no}. {val makerList/makerName}<!--{loop_count_between makerList=1}--><br /><!--{/loop_count_between}-->
+<!--{/loop}-->
+		</td>
+	</tr>
+</table>

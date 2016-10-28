@@ -1,0 +1,12 @@
+/admin/maintenance
+	TITLE = "メンテナンス設定"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンテナンス設定"
+
+/admin/maintenance/ime
+	TITLE = "メンテナンス設定"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンテナンス設定"
+

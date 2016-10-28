@@ -1,0 +1,34 @@
+#  *** UTF-8 Encoded ***
+#---------------------------------------
+#  三菱オートリース
+#  Car sagacité(カー サガシティ)
+#  http://www.mal-marche.com/mald/sagacite/
+#
+#  (C)2013 株式会社ホーユー
+#---------------------------------------
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	RewriteCond %{THE_REQUEST} "!^GET /.*"
+	RewriteCond %{THE_REQUEST} "!^HEAD /.*"
+	RewriteCond %{THE_REQUEST} "!^POST /.*"
+	RewriteCond %{THE_REQUEST} "!^OPTIONS .*"
+	RewriteRule ^.*$ - [F]
+
+	RewriteCond %{REQUEST_URI} COMPARE/-/-/ [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-]*/[0-9-]*/)-/-/ [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-]*/[0-9-]*/)([0-9a-zA-Z-]*/[0-9-]*/)-/-/ [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-]*/[0-9-]*/)([0-9a-zA-Z-]*/[0-9-]*/)([0-9a-zA-Z-]*/[0-9-]*/)-/-/
+	RewriteRule COMPARE/(.*)-/-/(.*)$ COMPARE/$1$2 [R,L]
+
+	RewriteCond %{REQUEST_URI} COMPARE/--/--/ [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-]*/[0-9-]*/)--/--/ [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-]*/[0-9-]*/)([0-9a-zA-Z-]*/[0-9-]*/)--/--/ [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-]*/[0-9-]*/)([0-9a-zA-Z-]*/[0-9-]*/)([0-9a-zA-Z-]*/[0-9-]*/)--/--/
+	RewriteRule COMPARE/(.*)--/--/(.*)$ COMPARE/$1$2 [R,L]
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !health.html
+	RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta name="keywords" content="{val SEO.KEYWORD}" />
+	<meta name="description" content="{val SEO.DESCRIPTION}" />
+	<meta name="viewport" content="width=1024">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="{val BASE_DIR}/_common/css/layout.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="{val BASE_DIR}/_common/css/base.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="{val BASE_DIR}/_common/css/icon.css" rel="stylesheet" type="text/css" media="all" />
+<!--{set SALESPROMOTION_FLG}-->
+	<link href="{val BASE_DIR}/_common/img/ico/apple-touch-icon.png" rel="apple-touch-icon" />
+	<link href="{val BASE_DIR}/_common/css/salesPromotion_layout.css" rel="stylesheet" type="text/css" media="all" />
+    <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="{val BASE_DIR}/_common/js/employeeForm.js" type="text/javascript"></script>
+<!--{loop cssList_s}-->
+<!--{set cssList_s/cssName}-->
+	<link href="{val BASE_DIR}{val cssList_s/cssName}" rel="stylesheet" type="text/css" media="<!--{set cssList_s/cssMedia}-->{val cssList_s/cssMedia}<!--{/set}--><!--{unset cssList_s/cssMedia}-->all<!--{/unset}-->" />
+<!--{/set}-->
+<!--{/loop}-->
+<!--{/set}-->
+	<title>{val SEO.TITLE}</title>
+</head>
+<body>
+<div class="container">
+	<div id="header">
+		<h1><a href="{val BASE_DIR}/"><img src="{val BASE_DIR}/_common/img/hl/s_carsagacite<!--{set SALESPROMOTION_FLG}-->Plus<!--{/set}-->.png" alt="{val SEO.H1}" /></a></h1>
+<!--/#header--></div>
+	<div id="content">
+	{attach}
+<!--/#content--></div>
+</body>
+</html>

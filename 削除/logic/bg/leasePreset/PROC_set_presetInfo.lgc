@@ -1,0 +1,26 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 入力値をカンマ(,)区切りで保持
+	$tmpArray[] = $output["mileage"];
+	$tmpArray[] = $output["gasoline"];
+	$tmpArray[] = $output["voluntaryInsurance"];
+	list($year , $month ) = explode("/", $output["carAddDate"]);
+	$tmpArray[] = $year . $month;
+
+	if( count($output["option"]) > 1 ){
+		$tmpArray[] = @implode("-", $output["option"]);
+	} else if( count($output["option"]) == 1) {
+		$tmpArray[] = $output["option"][0];
+	}
+
+	$setText = @implode(",", $tmpArray);
+	$sql_escape["setText"] = sql_escapeString($setText);
+	setcookie( "leasePreset", $sql_escape["setText"] , 0, "/", $path["host"]["name"] );
+
+
+?>

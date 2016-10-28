@@ -1,0 +1,166 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+	$output["PHOTO_DIR"] = get_activeDirName ();
+
+
+	/* -----------------------------------
+	   車種情報
+	----------------------------------- */
+	// 車種情報の取得
+	$output["modelInfo"] = $class["modelUser_1"]->convert_info( $output["modelInfo"] );
+
+	// テーマ名の取得
+	for( $i = 0, $iMax = count($output["modelInfo"]["theme"]); $i < $iMax; $i++ ){
+		$themeName = get_themeName( $output["modelInfo"]["theme"][$i]["themeID"] , "active");
+		$output["modelInfo"]["theme"][$i]["name"] = $themeName["themeName"];
+	}
+
+	/* -----------------------------------
+	   リース情報の取得
+	----------------------------------- */
+	// 開始年月の取得
+	if( !empty($output["carAddDate"]) ){
+		$year  = substr($output["carAddDate"], 0, 4);
+		$month = substr($output["carAddDate"], 4, 2);
+		
+		$output["leaseInfo"]["carAddDate"] = array( "carAddDate" => $output["carAddDate"], "year" => $year, "month" => $month );
+	}
+
+	// 走行距離の取得
+	if( isset($output["mileage"]) ){
+		$output["leaseInfo"]["mileage"] = get_mileageInfo( $output["mileage"] );
+	}
+
+	// 使用地域(ガソリン価格)の取得
+	if( isset($output["gasoline"]) ){
+		$output["leaseInfo"]["gasoline"] = get_prefectureInfo($output["gasoline"]);
+	}
+
+	// 任意保険の取得
+	if( isset($output["voluntaryInsurance"]) ){
+		$output["leaseInfo"]["voluntaryInsurance"]   = get_voluntaryInsuranceInfo($output["voluntaryInsurance"]);
+	}
+
+
+	/* -----------------------------------
+	   オプション情報の取得
+	----------------------------------- */
+	$tmp_msrp             = get_msrpPriceInfo( $output["msrp"] );
+	if( !empty($output["option"]) ){
+		for( $i = 0 , $iMax = count($output["option"]); $i < $iMax; $i++ ){
+			$optionID   = $output["option"][$i]["optionID"];
+			$optionItem = $output["option"][$i]["optionItem"];
+			$optionInfo = $class["leaseUser_1"]->get_leaseOptionInfo( $optionID, $optionItem, $output["model"]["makerCode"], $output["model"]["modelCode"] );
+
+			if( !empty($optionInfo) ){
+				$output["leaseOption"][$i]["id"]         = $optionID;
+				$output["leaseOption"][$i]["optionItem"] = $optionItem;
+				$output["leaseOption"][$i]["name"]       = $optionInfo["optionName"];
+				$output["leaseOption"][$i]["price"]      = $optionInfo["{$tmp_msrp["disp"]}"];
+				$tmp_optionList[]                        = sprintf( "LO%03d", $optionID ) . sprintf( "I%01d", $optionItem );
+			}
+		}
+	}
+
+	if( isset($output["leaseOption"]) ){
+		$output["leaseOption"][0]["start"] = 1;
+	}
+	
+	// 選択済みオプションの合計金額取得
+	$tml_totalPrice       = $class["leaseUser_1"]->get_leaseOptionPrice($output["model"]["makerCode"], $output["model"]["modelCode"], $output["option"]);
+	$output["totalPrice"] = $tml_totalPrice[ $tmp_msrp["disp"] ];
+
+
+	/* -----------------------------------
+	   グレード別リース情報の取得
+	----------------------------------- */
+	// 車種グレード名の取得
+	$carGradeSelectList = get_carGradeSelect();
+	unset($tmp_carGradeSelectList);
+	$tmp_carGradeCodeList = array();
+	foreach( $carGradeSelectList as $listKey => $listVal){
+		foreach( $output["modelInfo"]["carGradeList"] as $key => $val){
+
+			if( $val["name"] == $listVal["ID"] ){
+				// 廉価対応（2WD,4WDと廉価に同じ代表車種グレードを設定した場合）
+				if( ($idx = array_search($val["ID"], $tmp_carGradeCodeList)) !== false ){
+					$tmp_gradeName = $class["carGradeUser_1"]->get_carGradeInfo( $val["ID"] );
+					$tmp_carGradeSelectList[$idx]["name"] .= "/" . $listVal["name"];
+					
+				}else{
+					$tmp_carGradeCodeList[] = $val["ID"];	// carGradeCodeを保持
+
+					$tmp_carGradeSelectList[$key] = $carGradeSelectList[$listKey];
+					$tmp_carGradeSelectList[$key]["carGradeCode"] = $val["ID"];
+
+					// グレード名称設定
+					unset($tmp_gradeName);
+					$tmp_gradeName = $class["carGradeUser_1"]->get_carGradeInfo( $tmp_carGradeSelectList[$key]["carGradeCode"] );
+					$tmp_carGradeSelectList[$key]["gradeName"]        = $tmp_gradeName["grade"];
+					$tmp_carGradeSelectList[$key]["transmissionType"] = $tmp_gradeName["transmissionType"];
+					$tmp_carGradeSelectList[$key]["taxIncludedPrice"] = $tmp_gradeName["taxIncludedPrice"];
+					$tmp_carGradeSelectList[$key]["useFuel"]          = $tmp_gradeName["useFuel"];
+					$tmp_carGradeSelectList[$key]["totalEmission"]    = $tmp_gradeName["totalEmission"];
+
+					$tmp_carGradeSelectList[$key]["leaseList"] = $output["modelInfo"]["carGradeList"][$key]["leaseList"];
+				}
+			}
+		}
+	}
+	$output["modelInfo"]["carGradeList"] = $tmp_carGradeSelectList;
+
+
+	// リース情報の取得
+	for( $i = 0, $iMax = count($output["modelInfo"]["carGradeList"]); $i < $iMax; $i++ ){
+
+		if( !$output["modelInfo"]["carGradeList"][$i]["leaseList"] ){
+			continue;
+		}
+
+		foreach( $output["modelInfo"]["carGradeList"][$i]["leaseList"] as $key => $val){
+			// リース期間
+			$tmp_paynum   = get_paynumInfo($val["paynum"]);
+			$tmp_contract = get_contractInfo($val["contract"]);
+			$tmp_mainte   = get_maintenanceInfo($val["mainteID"]);
+
+			$output["modelInfo"]["carGradeList"][$i]["leaseList"][$key]["paynum"]   = $tmp_paynum;
+			$output["modelInfo"]["carGradeList"][$i]["leaseList"][$key]["contract"] = $tmp_contract;
+			$output["modelInfo"]["carGradeList"][$i]["leaseList"][$key]["mainteID"] = $tmp_mainte;
+
+			$output["modelInfo"]["lease"][$tmp_paynum["class"]] = $tmp_paynum;
+
+		}
+	}
+
+	// HTMLタイトルの作成
+	$output["title"]["model"] = $output["modelInfo"]["makerName"] . " " . $output["modelInfo"]["modelName"];
+
+	// オプションへのURL作成
+	$tmp_leaseURL[] = $output["leaseInfo"]["carAddDate"]["year"] . sprintf( "%02d", $output["leaseInfo"]["carAddDate"]["month"] );
+	$tmp_leaseURL[] = sprintf( "LM%03d", $output["leaseInfo"]["mileage"]["id"] );
+	$tmp_leaseURL[] = sprintf( "LG%03d", $output["leaseInfo"]["gasoline"]["id"] );
+/*
+任意保険リリース前の為、コメントアウト
+	$tmp_leaseURL[] = sprintf( "LA%03d", $output["leaseInfo"]["voluntaryInsurance"]["id"] );
+*/
+
+	$output["leaseURL"] = @implode( "/", $tmp_leaseURL ) . "/";
+
+	/* -----------------------------------
+	   ベース価格変更チェック
+	----------------------------------- */
+	$cookieName = "lease_" . str_replace(" ", "_", $output["modelInfo"]["modelNameEng"]);
+	if( $_COOKIE[ $cookieName ] && ( preg_match( "#/LEASEINFO/#", $path["referer"]["url"] ) || preg_match( "#/LEASEOPTION/#", $path["referer"]["url"] ) )){
+		$output["LEASEMODECHANGE_FLG"] = 1;
+		$output["cookieName"]    = $cookieName;
+
+		list($cookieValue["msrp"], $cookieValue["profit"]) = explode(",", $_COOKIE[ $cookieName ] );
+		if( $cookieValue["msrp"] != $ini["lease"]["defaultValue"]["msrp"] ){
+			$output["LEASEBASE_FLG"] = 1;
+		}
+	}
+
+?>

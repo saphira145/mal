@@ -1,0 +1,14 @@
+	<input type="hidden" name="themeInfo[themeName]" value="{val themeInfo.themeName|htmlspecialchars}" />
+	<input type="hidden" name="themeInfo[nameAbbreviation]" value="{val themeInfo.nameAbbreviation|htmlspecialchars}" />
+	<input type="hidden" name="themeInfo[iconNo]" value="{val themeInfo.iconNo}" />
+	<input type="hidden" name="themeInfo[statusType]" value="{val themeInfo.statusType}" />
+	<input type="hidden" name="themeInfo[priorityNum]" value="{val themeInfo.priorityNum}" />
+	<input type="hidden" name="themeInfo[dispNum]" value="{val themeInfo.dispNum}" />
+	<input type="hidden" name="themeInfo[basisOfSelection]" value="{val themeInfo.basisOfSelection|htmlspecialchars}" />
+<!--{set themeInfo.bodyType}-->
+<!--{loop themeInfo.bodyType}-->
+	<input type="hidden" name="themeInfo[bodyType][{val themeInfo.bodyType/lgcNum}][bodyTypeID]" value="{val themeInfo.bodyType/bodyTypeID}" />
+	<input type="hidden" name="themeInfo[bodyType][{val themeInfo.bodyType/lgcNum}][makerCode]"  value="{val themeInfo.bodyType/makerCode}" />
+	<input type="hidden" name="themeInfo[bodyType][{val themeInfo.bodyType/lgcNum}][modelCode]"  value="{val themeInfo.bodyType/modelCode}" />
+<!--{/loop}-->
+<!--{/set}-->

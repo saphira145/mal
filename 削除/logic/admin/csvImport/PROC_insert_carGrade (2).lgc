@@ -1,0 +1,648 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$output["entryCount"] = 0;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_carGrade( $insertData );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "carGrade", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "carGrade", "reserve", $reserveDatetime );
+	}
+
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class, $ini;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$carGradeID = $val;
+			}
+
+			// 車種ＩＤ（２フィールド目）
+			if( $key == 1 ) {
+				$modelID = $val;
+			}
+
+			// グレードＩＤ（３フィールド目）
+			if( $key == 2 ) {
+				$gradeID = $val;
+			}
+
+			// メーカーＣＤ（４フィールド目）
+			if( $key == 3 ) {
+				$makerCode = $val;
+			}
+
+			// メーカー名称（５フィールド目）
+			if( $key == 4 ) {
+				$makerName = $val;
+			}
+
+			// 車種名ＣＤ（６フィールド目）
+			if( $key == 5 ) {
+				$modelCode = $val;
+			}
+
+			// 車種名（７フィールド目）
+			if( $key == 6 ) {
+				$modelName = $val;
+			}
+
+			// 価格（８フィールド目）
+			if( $key == 7 ) {
+				$price = $val;
+			}
+
+			// 車型（９フィールド目）
+			if( $key == 8 ) {
+				$bodyModelName = $val;
+				
+				// 車型からbodyTypeIDを取得
+				for( $i=0; $i<count($ini["priorityBodyType"]); $i++){
+					if( $bodyModelName == $ini["priorityBodyType"][$i]["name"] ){
+						$bodyModel = $ini["priorityBodyType"][$i]["setBodyTypeID"];
+						break;
+					}
+				}
+				for( $i=0; $i<count( $ini["bodyType"] ); $i++ ) {
+					if( $bodyModelName == mb_convert_kana( $ini["bodyType"][$i]["disp"], "R" ) ){
+						$bodyModel = $ini["bodyType"][$i]["ID"];
+						break;
+					}
+				}
+			}
+
+			// 駆動方式（１０フィールド目）
+			if( $key == 9 ) {
+				$driveSystem = $val;
+			}
+
+			// 駆動方式名称（１１フィールド目）
+			if( $key == 10 ) {
+				$driveSystemName = $val;
+			}
+
+			// グレードＣＤ（１２フィールド目）
+			if( $key == 11 ) {
+				$gradeCode = $val;
+			}
+
+			// グレード（１３フィールド目）
+			if( $key == 12 ) {
+				$grade = $val;
+			}
+
+			// 車名型式（１４フィールド目）
+			if( $key == 13 ) {
+				$carNameModel = $val;
+			}
+
+			// ルーフ形状（１５フィールド目）
+			if( $key == 14 ) {
+				$roofModel = $val;
+			}
+
+			// ドア数（１６フィールド目）
+			if( $key == 15 ) {
+				$door = $val;
+			}
+
+			// トランスミッション区分（１７フィールド目）
+			if( $key == 16 ) {
+				$transmissionType = $val;
+			}
+
+			// トランスミッション（１８フィールド目）
+			if( $key == 17 ) {
+				$transmission = $val;
+			}
+
+			// 全長（１９フィールド目）
+			if( $key == 18 ) {
+				$totalLength = $val;
+			}
+
+			// 全幅（２０フィールド目）
+			if( $key == 19 ) {
+				$totalWidth = $val;
+			}
+
+			// 全高（２１フィールド目）
+			if( $key == 20 ) {
+				$totalHeight = $val;
+			}
+
+			// 室内寸法 長（２２フィールド目）
+			if( $key == 21 ) {
+				$roomLength = $val;
+			}
+
+			// 室内寸法 幅（２３フィールド目）
+			if( $key == 22 ) {
+				$roomWidth = $val;
+			}
+
+			// 室内寸法 高（２４フィールド目）
+			if( $key == 23 ) {
+				$roomHeight = $val;
+			}
+
+			// ホイールベース（２５フィールド目）
+			if( $key == 24 ) {
+				$wheelbase = $val;
+			}
+
+			// トレッド 前（２６フィールド目）
+			if( $key == 25 ) {
+				$frontTread = $val;
+			}
+
+			// トレッド 後（２７フィールド目）
+			if( $key == 26 ) {
+				$rearTread = $val;
+			}
+
+			// 最低地上高（２８フィールド目）
+			if( $key == 27 ) {
+				$minHeight = $val;
+			}
+
+			// 種別（２９フィールド目）
+			if( $key == 28 ) {
+				$type = $val;
+			}
+
+			// 荷室長（３０フィールド目）
+			if( $key == 29 ) {
+				$loadRoomLength = $val;
+			}
+
+			// 荷室幅（３１フィールド目）
+			if( $key == 30 ) {
+				$loadRoomWidth = $val;
+			}
+
+			// 荷室高（３２フィールド目）
+			if( $key == 31 ) {
+				$loadRoomHeight = $val;
+			}
+
+			// 車両重量（３３フィールド目）
+			if( $key == 32 ) {
+				$vehicleWeight = $val;
+			}
+
+			// 車両総重量（３４フィールド目）
+			if( $key == 33 ) {
+				$vehicleTotalWeight = $val;
+			}
+
+			// 乗車定員（３５フィールド目）
+			if( $key == 34 ) {
+				$capacity = $val;
+			}
+
+			// 最大積載量（３６フィールド目）
+			if( $key == 35 ) {
+				$maxCapacity = $val;
+			}
+
+			// 最小回転半径（３７フィールド目）
+			if( $key == 36 ) {
+				$turningCircle = $val;
+			}
+
+			// 燃料消費率 JC08モード（３８フィールド目）
+			if( $key == 37 ) {
+				$fuelConsumptionRateJC08mode = $val;
+			}
+
+			// 燃料消費率 10・15モード（３９フィールド目）
+			if( $key == 38 ) {
+				$fuelConsumptionRate10_15mode = $val;
+			}
+
+			// 燃料消費率　60km/ｈ定地（４０フィールド目）
+			if( $key == 39 ) {
+				$fuelConsumptionRate60km_h = $val;
+			}
+
+			// 適合規制・認定レベル（４１フィールド目）
+			if( $key == 40 ) {
+				$recognitionLevel = $val;
+			}
+
+			// ハンドル位置（４２フィールド目）
+			if( $key == 41 ) {
+				$handlePosition = $val;
+			}
+
+			// サスペンション 前（４３フィールド目）
+			if( $key == 42 ) {
+				$frontSuspension = $val;
+			}
+
+			// サスペンション 後（４４フィールド目）
+			if( $key == 43 ) {
+				$rearSuspension = $val;
+			}
+
+			// 主ブレーキ 前（４５フィールド目）
+			if( $key == 44 ) {
+				$frontMainBrake = $val;
+			}
+
+			// 主ブレーキ 後（４６フィールド目）
+			if( $key == 45 ) {
+				$rearMainBrake = $val;
+			}
+
+			// タイヤ　前（４７フィールド目）
+			if( $key == 46 ) {
+				$frontTire = $val;
+			}
+
+			// タイヤ　後（４８フィールド目）
+			if( $key == 47 ) {
+				$rearTire = $val;
+			}
+
+			// ステアリングギヤ形式（４９フィールド目）
+			if( $key == 48 ) {
+				$steeringGearModel = $val;
+			}
+
+			// エンジン型式（５０フィールド目）
+			if( $key == 49 ) {
+				$engineModel = $val;
+			}
+
+			// 種類・シリンダー数（５１フィールド目）
+			if( $key == 50 ) {
+				$cylinderType = $val;
+			}
+
+			// エンジン種類（５２フィールド目）
+			if( $key == 51 ) {
+				$engineKind = $val;
+			}
+
+			// 気筒配列（５３フィールド目）
+			if( $key == 52 ) {
+				$cylinderArr = $val;
+			}
+
+			// 気筒数（５４フィールド目）
+			if( $key == 53 ) {
+				$cylinderAmount = $val;
+			}
+
+			// バルブ数（５５フィールド目）
+			if( $key == 54 ) {
+				$valveAmount = $val;
+			}
+
+			// シリンダー内径（５６フィールド目）
+			if( $key == 55 ) {
+				$cylinderBore = $val;
+			}
+
+			// シリンダー行程（５７フィールド目）
+			if( $key == 56 ) {
+				$cylinderStroke = $val;
+			}
+
+			// 総排気量（５８フィールド目）
+			if( $key == 57 ) {
+				$totalEmission = $val;
+			}
+
+			// 圧縮比（５９フィールド目）
+			if( $key == 58 ) {
+				$compressionRatio = $val;
+			}
+
+			// 最高出力（６０フィールド目）
+			if( $key == 59 ) {
+				$maxPower = $val;
+			}
+
+			// 最大トルク（６１フィールド目）
+			if( $key == 60 ) {
+				$maxTorque = $val;
+			}
+
+			// 燃料供給装置（６２フィールド目）
+			if( $key == 61 ) {
+				$fuelSupplySystem = $val;
+			}
+
+			// 使用燃料（６３フィールド目）
+			if( $key == 62 ) {
+				$useFuel   = $val;
+				$useFuelID = $ini["gasolineOtherID"];
+
+				for( $i=0; $i<count( $ini["gasoline"] ); $i++ ) {
+					if( $useFuel == mb_convert_kana( $ini["gasoline"][$i]["disp"], "R" ) ){
+						$useFuelID = $ini["gasoline"][$i]["ID"];
+						break;
+					}
+				}
+			}
+
+			// 給油口位置（６４フィールド目）
+			if( $key == 63 ) {
+				$fillOpeningPosition = $val;
+			}
+
+			// タンク容量（６５フィールド目）
+			if( $key == 64 ) {
+				$tankVolume = $val;
+			}
+
+			// 優遇税制区分（６６フィールド目）
+			if( $key == 65 ) {
+				$preferentialTaxType = $val;
+
+				unset($bodyModelInfo);
+				$bodyModelInfo = get_bodyTypeInfo( $bodyModel );
+
+				$checkType =  $ini["preferentialTaxTypeID"][ $bodyModelInfo["lease"] ]["value"];
+				if(in_array($preferentialTaxType, $checkType)){
+					$preferentialTaxTypeFlg = 1;
+				}
+			}
+
+			// 車両本体価格（６７フィールド目）
+			if( $key == 66 ) {
+				$taxIncludedPrice = $val;
+			}
+
+			// 自動車重量税（６８フィールド目）
+			if( $key == 67 ) {
+				$tonnageTax = $val;
+			}
+
+			// 自動車重量税_減税後（６９フィールド目）
+			if( $key == 68 ) {
+				$tonnageTax_ART = $val;
+			}
+
+			// 自動車取得税（７０フィールド目）
+			if( $key == 69 ) {
+				$acquisitionTax = $val;
+			}
+
+			// 自動車取得税_減税後（７１フィールド目）
+			if( $key == 70 ) {
+				$acquisitionTax_ART = $val;
+			}
+
+			// 補助金_13年未満（７２フィールド目）
+			if( $key == 71 ) {
+				$subsidyLessThan13Years = $val;
+			}
+
+			// 補助金_13年超（７３フィールド目）
+			if( $key == 72 ) {
+				$subsidyOver13Years = $val;
+			}
+
+			// 自動車税（翌年）（７４フィールド目）
+			if( $key == 73 ) {
+				$automobileTaxNextYear = $val;
+			}
+
+			// 自動車税_減税後（翌年）（７５フィールド目）
+			if( $key == 74 ) {
+				$automobileTaxNextYear_ART = $val;
+			}
+
+			// モーター型式（７６フィールド目）
+			if( $key == 75 ) {
+				$motorModel = $val;
+			}
+
+			// モーター種類（７７フィールド目）
+			if( $key == 76 ) {
+				$motorKind = $val;
+			}
+
+			// モーター種類_最大トルク数（７８フィールド目）
+			if( $key == 77 ) {
+				$motorKindMaxTorque = $val;
+			}
+
+			// モーター種類_最高出力（７９フィールド目）
+			if( $key == 78 ) {
+				$motorKindMaxPower = $val;
+			}
+
+			// 動力用主電池_種類（８０フィールド目）
+			if( $key == 79 ) {
+				$mainBatteryKind = $val;
+			}
+
+			// 動力用主電池_個数（８１フィールド目）
+			if( $key == 80 ) {
+				$mainBatteryAmount = $val;
+			}
+
+			// 動力用主電池_接続方式（８２フィールド目）
+			if( $key == 81 ) {
+				$mainBatteryConnect = $val;
+			}
+
+			// 動力用主電池_容量Ａｈ（８３フィールド目）
+			if( $key == 82 ) {
+				$mainBatteryAh = $val;
+			}
+
+			// 定格電圧（８４フィールド目）
+			if( $key == 83 ) {
+				$voltageRating = $val;
+			}
+
+
+
+
+		}
+
+		// 登録用配列に入れ替える
+		$data["carGradeID"]                         = $carGradeID;
+		$data["modelID"]                            = $modelID;
+		$data["gradeID"]                            = $gradeID;
+		$data["makerCode"]                          = $makerCode;
+		$data["makerName"]                          = $makerName;
+		$data["modelCode"]                          = $modelCode;
+		$data["modelName"]                          = $modelName;
+		$data["price"]                              = $price;
+		$data["bodyModel"]                          = $bodyModel;
+		$data["bodyModelName"]                      = $bodyModelName;
+		$data["driveSystem"]                        = $driveSystem;
+		$data["driveSystemName"]                    = $driveSystemName;
+		$data["gradeCode"]                          = $gradeCode;
+		$data["grade"]                              = $grade;
+		$data["carNameModel"]                       = $carNameModel;
+		$data["roofModel"]                          = $roofModel;
+		$data["door"]                               = convert_hyphen2NULL( $door );
+		$data["transmissionType"]                   = $transmissionType;
+		$data["transmission"]                       = $transmission;
+		$data["totalLength"]                        = convert_hyphen2NULL( $totalLength );
+		$data["totalWidth"]                         = convert_hyphen2NULL( $totalWidth );
+		$data["totalHeight"]                        = convert_hyphen2NULL( $totalHeight );
+		$data["roomLength"]                         = convert_hyphen2NULL( $roomLength );
+		$data["roomWidth"]                          = convert_hyphen2NULL( $roomWidth );
+		$data["roomHeight"]                         = convert_hyphen2NULL( $roomHeight );
+		$data["wheelbase"]                          = convert_hyphen2NULL( $wheelbase );
+		$data["frontTread"]                         = convert_hyphen2NULL( $frontTread );
+		$data["rearTread"]                          = convert_hyphen2NULL( $rearTread );
+		$data["minHeight"]                          = convert_hyphen2NULL( $minHeight );
+		$data["type"]                               = $type;
+		$data["loadRoomLength"]                     = $loadRoomLength;
+		$data["loadRoomWidth"]                      = $loadRoomWidth;
+		$data["loadRoomHeight"]                     = $loadRoomHeight;
+		$data["vehicleWeight"]                      = convert_hyphen2NULL( $vehicleWeight );
+		$data["vehicleTotalWeight"]                 = convert_hyphen2NULL( $vehicleTotalWeight );
+		$data["capacity"]                           = convert_hyphen2NULL( $capacity );
+		$data["maxCapacity"]                        = $maxCapacity;
+		$data["turningCircle"]                      = convert_hyphen2NULL( $turningCircle );
+		$data["fuelConsumptionRateJC08mode"]        = convert_hyphen2NULL( $fuelConsumptionRateJC08mode );
+		$data["fuelConsumptionRate10_15mode"]       = convert_hyphen2NULL( $fuelConsumptionRate10_15mode );
+		$data["fuelConsumptionRate60km_h"]          = convert_hyphen2NULL( $fuelConsumptionRate60km_h );
+		$data["recognitionLevel"]                   = $recognitionLevel;
+		$data["handlePosition"]                     = $handlePosition;
+		$data["frontSuspension"]                    = $frontSuspension;
+		$data["rearSuspension"]                     = $rearSuspension;
+		$data["frontMainBrake"]                     = $frontMainBrake;
+		$data["rearMainBrake"]                      = $rearMainBrake;
+		$data["frontTire"]                          = $frontTire;
+		$data["rearTire"]                           = $rearTire;
+		$data["steeringGearModel"]                  = $steeringGearModel;
+		$data["engineModel"]                        = $engineModel;
+		$data["cylinderType"]                       = $cylinderType;
+		$data["engineKind"]                         = $engineKind;
+		$data["cylinderArr"]                        = $cylinderArr;
+		$data["cylinderAmount"]                     = $cylinderAmount;
+		$data["valveAmount"]                        = $valveAmount;
+		$data["cylinderBore"]                       = convert_hyphen2NULL( $cylinderBore );
+		$data["cylinderStroke"]                     = convert_hyphen2NULL( $cylinderStroke );
+		$data["totalEmission"]                      = convert_hyphen2NULL( $totalEmission );
+		$data["compressionRatio"]                   = $compressionRatio;
+		$data["maxPower"]                           = $maxPower;
+		$data["maxTorque"]                          = $maxTorque;
+		$data["fuelSupplySystem"]                   = $fuelSupplySystem;
+		$data["useFuel"]                            = $useFuel;
+		$data["useFuelID"]                          = $useFuelID;
+		$data["fillOpeningPosition"]                = $fillOpeningPosition;
+		$data["tankVolume"]                         = convert_hyphen2NULL( $tankVolume );
+		$data["preferentialTaxType"]                = $preferentialTaxType;
+		$data["preferentialTaxTypeFlg"]             = $preferentialTaxTypeFlg;
+		$data["taxIncludedPrice"]                   = $taxIncludedPrice;
+		$data["tonnageTax"]                         = $tonnageTax;
+		$data["tonnageTax_ART"]                     = $tonnageTax_ART;
+		$data["acquisitionTax"]                     = $acquisitionTax;
+		$data["acquisitionTax_ART"]                 = $acquisitionTax_ART;
+		$data["subsidyLessThan13Years"]             = $subsidyLessThan13Years;
+		$data["subsidyOver13Years"]                 = $subsidyOver13Years;
+		$data["automobileTaxNextYear"]              = $automobileTaxNextYear;
+		$data["automobileTaxNextYear_ART"]          = $automobileTaxNextYear_ART;
+		$data["motorModel"]                         = convert_hyphen2NULL( $motorModel );
+		$data["motorKind"]                          = convert_hyphen2NULL( $motorKind );
+		$data["motorKindMaxTorque"]                 = convert_hyphen2NULL( $motorKindMaxTorque );
+		$data["motorKindMaxPower"]                  = convert_hyphen2NULL( $motorKindMaxPower );
+		$data["mainBatteryKind"]                    = convert_hyphen2NULL( $mainBatteryKind );
+		$data["mainBatteryAmount"]                  = convert_hyphen2NULL( $mainBatteryAmount );
+		$data["mainBatteryConnect"]                 = convert_hyphen2NULL( $mainBatteryConnect );
+		$data["mainBatteryAh"]                      = convert_hyphen2NULL( $mainBatteryAh );
+		$data["voltageRating"]                      = convert_hyphen2NULL( $voltageRating );
+
+		return $data;
+	}
+
+
+
+	/*--------------------------------------------------
+	  ハイフンは空に変換
+	---------------------------------------------------*/
+	function convert_hyphen2NULL ( $value ) {
+
+		if( $value == "－" || $value == "-" ) {
+			return NULL;
+		}
+
+		return $value;
+	}
+
+
+
+?>

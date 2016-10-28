@@ -1,0 +1,14 @@
+<?php
+
+	/* -------------------------------------
+		ロジックコントロール
+	------------------------------------- */
+	// 入力チェックの実行（常にチェックする場合は、第二パラメータに "everyTime" と入れること）
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// バリューの取得
+	$this->callPROC( "get_list" );
+
+	// 表示
+	$this->callVIEW( "index" );
+?>

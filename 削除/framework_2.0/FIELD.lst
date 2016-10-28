@@ -1,0 +1,113 @@
+
+// メンバーＩＤ
+memberID
+	filter,   0,  numeric,          不正なログインＩＤによるリクエスト
+	check,  100,  must,             必須入力項目です
+	filter, 200,  memberIdExist,    メンバーＩＤは存在しません
+
+// 所属組織名
+companyName
+	convert,  0,  trim,
+	filter,   0,  length_cut(300),   
+	check,  200,  length(-200),     文字数が制限値外です
+
+// ログインＩＤ
+loginID
+	convert,  0,  trim,
+	convert,  0,  1byte,
+	filter,   0,  length_cut(30),   
+	check,  100,  must,             ログインＩＤを入力してください
+	check,  200,  alpha_num_att,    ログインＩＤに入力できるのは半角英数字のみです
+	check,  300,  length(2-20),     ログインＩＤは２～２０文字で入力してください
+	check,  400,  dup_loginID({1}), すでに登録されているログインＩＤです
+
+// パスワード
+password
+	convert,  0,  trim,
+	convert,  0,  1byte,
+	filter,   0,  length_cut(30),   
+	check,  100,  must,             を入力してください
+	check,  200,  length(8-20),     は８～２０文字で入力してください
+	check,  300,  alpha_num,        に入力できるのは半角英数字のみです
+
+// グループ・パスワードコンファーム
+passwordConfirm
+	convert,  0,  trim,
+	check,  100,  must,              を入力してください
+	check,  400,  inputEqual({1}),   パスワードと確認用パスワードが一致しません
+
+// グループ・メールアドレス
+emailAddress
+	check,  200,  emailType,         メールアドレスとして正しくありません
+	check,  300,  dup_mail({1}),     すでに登録されているメールアドレスです
+
+// メールアドレス：アカウント
+emailAccount
+	convert,  0,  1byte,
+	check,  100,  must,             メールアカウントを入力してください
+	check,  200,  length(-100),     メールアカウントが文字数制限外です
+
+// メールアドレス：ドメイン
+emailDomain
+	convert,  0,  1byte,
+	check,  100,  must,             メールドメインを入力してください
+	check,  200,  length(-100),     メールドメインが文字数制限外です
+
+// レベル
+level
+	convert,  0,  numeric,
+	check,  100,  must,           選択してください
+	check,  200,  levelExist,     想定外のデータが入力されました
+
+// パスワード表示フラグ
+dispPasswordFlg
+	convert,  0,  1byte,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ★★★★★★★★★★★ 以下、not must
+
+
+
+// メンバーＩＤ
+memberID_not_must
+	convert,  0,  1byte,
+	filter,   0,  numeric,         不正なログインＩＤによるリクエスト
+
+// 名前
+memberNameFull_not_must
+	filter,   0,  length_cut(100),
+	check,  200,  length(-60),     文字数が制限値外です
+
+// グループ・メールアドレス
+emailAddressFull_not_must
+	filter,   0,  length_cut(400),
+	check,  200,  length(-200),     文字数が制限値外です
+
+// レベル
+levelMulti_not_must
+	convert,  0,  numeric,
+	check,  200,  levelExist,     想定外のデータが入力されました
+
+// ページ番号
+pageNum
+	convert,  0,  numeric,
+	filter,   0,  length_cut(4),
+	check,  200,  length(-3),     文字数が制限値外です
+
+
+
+
+

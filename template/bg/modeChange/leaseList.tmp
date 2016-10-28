@@ -1,0 +1,87 @@
+<table>
+<tr>
+	<th rowspan="2" colspan="2"></th>
+	<th colspan="3">リース料(月額)</th>
+	<th rowspan="2" class="w90">リース料<br>総額</th>
+	<th rowspan="2" class="w90">利益額</th>
+	<th rowspan="2" class="w60">利益率</th>
+	<th rowspan="2" class="w60">利回り</th>
+	<th rowspan="2" class="w60">利ざや</th>
+</tr>
+<tr>
+	<th class="w90">総額</th>
+	<th class="w90">ファイナンス料</th>
+	<th class="w90">メンテ料</th>
+</tr>
+
+<tr>
+	<th rowspan="2">3年</th>
+	<th>ML</th>
+	<td <!--{set leaseList.MLy3.lease.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy3.lease.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy3.financial.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy3.financial.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy3.maintenance.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy3.maintenance.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy3.lease_total.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy3.lease_total.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy3.profit.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy3.profit.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy3.rate.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy3.rate.value} %</td>
+	<td <!--{set leaseList.MLy3.irr.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy3.irr.value} %</td>
+	<td <!--{set leaseList.MLy3.margins.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy3.margins.value} %</td>
+</tr>
+<tr>
+	<th>FL</th>
+	<td <!--{set leaseList.FLy3.lease.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy3.lease.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy3.financial.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy3.financial.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy3.maintenance.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy3.maintenance.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy3.lease_total.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy3.lease_total.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy3.profit.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy3.profit.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy3.rate.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy3.rate.value} %</td>
+	<td <!--{set leaseList.FLy3.irr.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy3.irr.value} %</td>
+	<td <!--{set leaseList.FLy3.margins.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy3.margins.value} %</td>
+</tr>
+<tr>
+	<th rowspan="2">4年</th>
+	<th>ML</th>
+	<td <!--{set leaseList.MLy4.lease.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy4.lease.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy4.financial.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy4.financial.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy4.maintenance.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy4.maintenance.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy4.lease_total.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy4.lease_total.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy4.profit.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy4.profit.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy4.rate.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy4.rate.value} %</td>
+	<td <!--{set leaseList.MLy4.irr.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy4.irr.value} %</td>
+	<td <!--{set leaseList.MLy4.margins.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy4.margins.value} %</td>
+</tr>
+<tr>
+	<th>FL</th>
+	<td <!--{set leaseList.FLy4.lease.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy4.lease.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy4.financial.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy4.financial.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy4.maintenance.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy4.maintenance.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy4.lease_total.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy4.lease_total.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy4.profit.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy4.profit.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy4.rate.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy4.rate.value} %</td>
+	<td <!--{set leaseList.FLy4.irr.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy4.irr.value} %</td>
+	<td <!--{set leaseList.FLy4.margins.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy4.margins.value} %</td>
+</tr>
+
+<tr>
+	<th rowspan="2">5年</th>
+	<th>ML</th>
+	<td <!--{set leaseList.MLy5.lease.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy5.lease.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy5.financial.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy5.financial.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy5.maintenance.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy5.maintenance.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy5.lease_total.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy5.lease_total.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy5.profit.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy5.profit.value|number_format} 円</td>
+	<td <!--{set leaseList.MLy5.rate.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy5.rate.value} %</td>
+	<td <!--{set leaseList.MLy5.irr.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy5.irr.value} %</td>
+	<td <!--{set leaseList.MLy5.margins.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.MLy5.margins.value} %</td>
+</tr>
+<tr>
+	<th>FL</th>
+	<td <!--{set leaseList.FLy5.lease.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy5.lease.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy5.financial.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy5.financial.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy5.maintenance.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy5.maintenance.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy5.lease_total.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy5.lease_total.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy5.profit.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy5.profit.value|number_format} 円</td>
+	<td <!--{set leaseList.FLy5.rate.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy5.rate.value} %</td>
+	<td <!--{set leaseList.FLy5.irr.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy5.irr.value} %</td>
+	<td <!--{set leaseList.FLy5.margins.minFlg}-->class="minText"<!--{/set}-->>{val leaseList.FLy5.margins.value} %</td>
+</tr>
+</table>

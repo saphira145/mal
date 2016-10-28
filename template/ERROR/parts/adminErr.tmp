@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<title>{val SEO.TITLE}</title>
+<meta name="keywords" content="{val SEO.KEYWORD}" />
+<meta name="description" content="{val SEO.DESCRIPTION}" />
+<style type="text/css">
+<!--
+body {margin: 0px; background-color: #FFFFFF;color: #666666; font-family: "MS P Gothic", osaka, Arial, Helvetica; min-width:980px;}
+#head{min-width:980px; border-bottom:1px solid #999999; margin-bottom:80px; font-size: 16px; padding: 1em 10px; font-weight: bold; color: #10640C; background-color: #E8E8E8;}
+#rogo{margin-top:7px;}
+#foot{min-width:980px; height:30px; border-top:1px solid #999999;margin-top:80px; text-align:right; font-size:10px; padding:5px;}
+.content{font-size:12px; background-color:#F3F3F3; width:664px; text-align: center; margin: 0 auto; border-radius: 15px; padding: 10px 0;}
+.errMsg{font-size:16px; margin: 10px 0 30px; line-height: 1.5em;}
+
+a{text-decoration: none;color: #C71444;}
+a:hover {text-decoration: none;color: #C71444;}
+a:visited {text-decoration: none;color: #C71444;}
+-->
+</style>
+</head>
+
+<body>
+	<div id="head">
+		三菱オートリース　車種比較アプリケーション
+	</div>
+	<div class="content">
+		<div class="errMsg">大変申し訳ございませんが、<br />お客様のアクセスしたページが見つかりません。</div>
+		<p>このページは5秒後に自動的にジャンプします。</p>
+		<p><strong>※ 自動的にジャンプしない場合は、<a href="http://www.mal-marche.com/jp">こちら</a>をクリックして下さい。</strong></p>
+	</div>
+	<div id="foot">©2013 Mitsubishi Auto Leasing Corporation All Right Reserved. </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/carSearchAdmin.js}
+{input jsList/jsName=/_common/js/openWindowBtnActionAdmin.js}
+{input menu_theme=1}
+
+{file modifyInputCommon.tmp}
+

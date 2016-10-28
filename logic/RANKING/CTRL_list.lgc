@@ -1,0 +1,23 @@
+<?php
+	/* -------------------------------------
+		ロジックコントロール
+	------------------------------------- */
+
+	// 入力チェックの実行（常にチェックする場合は、第二パラメータに "everyTime" と入れること）
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	if( $ini["system"]["errRank"] == 1 || $ini["system"]["errRank"] == 2 ) {
+		$ini["system"]["errRank"] = 1;
+		return 404;
+	}
+
+	// ランキングデータの取得
+	$this->callPROC( "get_list" );
+
+	// ランキングデータの取得
+	$this->callVIEW( "list" );
+
+	// リース料の取得(営業のみ)
+	$this->callPROC( "get_leaseInfo" );
+
+?>

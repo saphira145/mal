@@ -1,0 +1,23 @@
+<?php
+
+
+	/* -------------------------------------
+		ロジックコントロール
+	------------------------------------- */
+	// 入力チェックの実行（常にチェックする場合は、第二パラメータに "everyTime" と入れること）
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+
+	// リリース ステップ２（アクティブ検索DB切り替え）
+	$this->callPROC( "change_activeSW" );
+
+	// リリース ステップ１（コピー実行）
+	$this->callPROC( "copy" );
+
+
+
+
+
+	exit;
+
+?>

@@ -1,0 +1,139 @@
+@charset "utf-8";
+
+/* オンマウス(領域を透過) */
+.hoverOpacity{
+	filter: progid:DXImageTransform.Microsoft.alpha(opacity=75);
+}
+
+/*--------------------------------------
+	探したいクルマの条件
+	(各画面共通)
+---------------------------------------*/
+/* 件数 */
+.searchForm .priceBox .priceCnt,
+.searchForm .themeBox .themeCnt,
+.searchForm .makerBox .makerCnt,
+.searchForm .typeBox .bodyTypeCnt{
+	background-color: transparent;
+	background: url(../img/bg/bg_circle_on.png) no-repeat;
+	width: 33px;
+	height: 30px;
+}
+
+/*--------------------------------------
+	検索項目(背景色)
+---------------------------------------*/
+/* 選択済み(件数) */
+.selected .themeCnt, .selected .makerCnt, .selected .bodyTypeCnt, .selected .priceCnt,
+.makerBox .disabledMaker .makerCnt{
+	background-color: transparent;
+	background: url(../img/bg/bg_circle_off.png) no-repeat !important;
+}
+
+/* 選択済み(画像) */
+.selected .themeImg, .selected .bodyTypeName{
+	filter: alpha(opacity=40);
+}
+
+/*--------------------------------------
+	フローティング(共通)
+---------------------------------------*/
+.floating{
+	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#cf000000,endColorstr=#cf000000)";
+}
+
+/*------ トップ用 ------*/
+#topPage .actionBox,
+#rankingPage .actionBox,
+#selectMakerTab .actionBox,
+#selectModelTab .actionBox{
+	background-color: #4a4a4a;
+}
+
+#topPage .selectBox .trians{
+	right: 54px!important;
+}
+
+#topPage .floating{
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=90)";
+}
+
+
+/*------ 比較用 ------*/
+#compareCarName .boxShadow{
+	width: 1000px;
+	filter: progid:DXImageTransform.Microsoft.Shadow(color=#555555, direction=0, strength=10, enabled=true), 
+			progid:DXImageTransform.Microsoft.Shadow(color=#555555, direction=90, strength=10, enabled=true), 
+			progid:DXImageTransform.Microsoft.Shadow(color=#555555, direction=180, strength=10, enabled=true), 
+			progid:DXImageTransform.Microsoft.Shadow(color=#555555, direction=270, strength=10, enabled=true);
+}
+
+#compareCarName table,
+.compareIcon{
+	width: 980px;
+}
+
+/*--------------------------------------
+	選択した検索条件
+	(各画面共通)
+---------------------------------------*/
+/* メーカーの領域に罫線を追加 */
+.selectBox .makerBox{
+	border-left: 1px solid #AAAAAA;
+	border-right: 1px solid #AAAAAA;
+}
+
+/*--------------------------------------
+	ランキング画面
+---------------------------------------*/
+/*------ ランキング(内部) ------*/
+/* ４位～の順位 */
+#rankingForm .ranking span{
+	background-color: transparent;
+	background: url(../img/bg/bg_circle_ranking.png) no-repeat;
+}
+
+/*------ 「もっと見る」ボタン ------*/
+#rankingForm .nextListButton{
+	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#7fCCCCCC,endColorstr=#7fCCCCCC)";
+}
+
+/* ランキング画面：「もっと見る」ボタンクリック時 */
+#rankingPage .nextListButton.hoverOpacity{
+	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#7fDDDDDD,endColorstr=#7fDDDDDD)";
+}
+
+#rankingForm li label.hoverOpacity,
+#rankingForm li label.checked.hoverOpacity{
+	filter: progid:DXImageTransform.Microsoft.alpha(opacity=100,Style=0) !important;
+}
+
+/*--------------------------------------
+	使い方ガイド
+---------------------------------------*/
+.introjs-helperLayer.addIntrojs-boderIE8{
+	background: transparent !important;
+	border: 5px solid #FFFFFF !important;
+}
+
+.campaignimg.introjs-showElement{
+	background: transparent !important;
+}
+
+.floating.introjs-showElement{
+	background: transparent !important;
+	border: 5px solid #FFFFFF !important;
+}
+
+.introjs-helperLayer.addIntrojs-fixed{
+	background: url(../img/bg/bg_darkGray.png);
+}
+
+.introjs-helperLayer.addIntrojs-boder{
+	border: 5px solid #FFFFFF !important;
+	background: transparent !important;
+}
+
+.introjs-overlay.addIntrojs-overlayIE8{
+	z-index: 1 !important;
+}

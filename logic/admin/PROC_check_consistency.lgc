@@ -1,0 +1,217 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	
+
+	/*----------------------------------------------------
+	    代表車種グレード、車種グレードチェック
+	----------------------------------------------------*/
+	//パラメータ初期化
+	unset($returnData);
+	$gradeCheckList = $class["consistencyAdmin_1"]->get_modelList();
+
+	for( $i=0; $i<count($gradeCheckList); $i++ ){
+		unset($chkInfo);
+
+		// グレードのチェック
+		if( empty( $chkInfo["check"] ) ){
+			list($chkInfo["check"], $chkInfo["carGrade"]) = $class["consistencyAdmin_1"]->check_carGrade( $gradeCheckList[$i] );
+		}
+
+		//エラーの場合、情報を保持
+		if( $chkInfo["check"] ){
+			$chkInfo["model"]      = $gradeCheckList[$i];
+			$returnData["grade"][] = $chkInfo;
+
+			// グレードチェック
+			if( $chkInfo["check"] == "g_nodata" ){
+				$chkInfo["check"]         = "g_nograde";
+				$chkInfo["model"]         = $gradeCheckList[$i];
+				$returnData["notGrade"][] = $chkInfo;
+			}
+		}
+	}
+	$output["gradeCheckList"]   = $returnData["grade"];
+	$output["noGradeCheckList"] = $returnData["notGrade"];
+
+
+	/*----------------------------------------------------
+	    テーマチェック
+	----------------------------------------------------*/
+	//パラメータ初期化
+	unset($returnData);
+	$themeCheckList = $class["consistencyAdmin_1"]->get_themeList();
+	$tmp_modelList  = $class["consistencyAdmin_1"]->get_modelList();
+
+	for( $i = 0, $iMax = count($tmp_modelList); $i < $iMax; $i++ ){
+		$key = $tmp_modelList[$i]["makerCode"] . "_" . $tmp_modelList[$i]["modelCode"];
+		$modelList[$key] = $tmp_modelList[$i];
+	}
+
+	for( $i=0; $i<count($themeCheckList); $i++ ){
+		unset($chkInfo, $tmp);
+		$tmp["themeID"]      = $themeCheckList[$i]["themeID"];
+		$tmp["makerCode"]    = $themeCheckList[$i]["makerCode"];
+		$tmp["modelCode"]    = $themeCheckList[$i]["modelCode"];
+		$tmp["bodyModelNum"] = $themeCheckList[$i]["bodyModel"];
+
+		if( !empty($tmp["makerCode"]) && !empty($tmp["modelCode"]) ){
+
+			// データチェック(車種存在)
+			if( empty( $chkInfo["check"] ) ){
+				$tmp["key"] = $tmp["makerCode"] . "_" . $tmp["modelCode"];
+				list($chkInfo["check"], $chkInfo["model"]) = $class["consistencyAdmin_1"]->check_model( $modelList[$tmp["key"]] );
+			}
+
+			// データチェック(代表グレード)
+			if( empty( $chkInfo["check"] ) ){
+				list($chkInfo["check"], $chkInfo["carGrade"]) = $class["consistencyAdmin_1"]->check_carGrade( $modelList[$tmp["key"]] );
+			}
+
+			// データチェック(ボディタイプ)
+			if( empty( $chkInfo["check"] ) ){
+				$chkInfo["check"] = $class["consistencyAdmin_1"]->check_themeBodyType($tmp["makerCode"], $tmp["modelCode"], $tmp["bodyModelNum"]);
+			}
+
+			// データチェック(テーマ設定有無)
+			if( empty( $chkInfo["check"] ) ){
+				$chkInfo["check"] = $class["consistencyAdmin_1"]->check_themeSet($tmp["themeID"], $tmp["makerCode"], $tmp["modelCode"]);
+			}
+
+			//エラーの場合、情報を保持
+			if( $chkInfo["check"] ){
+				$chkInfo["theme"]    = $themeCheckList[$i];
+				$chkInfo["bodyType"] = array( "num" => $tmp["bodyModelNum"], "name" => get_bodyTypeName( $tmp["bodyModelNum"] ));
+				$returnData[]        = $chkInfo;
+			}
+		}
+	}
+
+	$output["themeCheckList"] = $returnData;
+
+
+
+
+	/*----------------------------------------------------
+	    新型車チェック
+	----------------------------------------------------*/
+	foreach( array("active", "work") as $DBName){
+		//パラメータ初期化
+		$newCarCheckList = $class["consistencyAdmin_1"]->get_newCarList( $ini["pageLimit"]["newCarAdmin"] , $DBName);
+
+		unset($returnData);
+
+		for( $i=0; $i<count($newCarCheckList); $i++ ){
+			unset($chkInfo, $tmp);
+
+			// データチェック(車種存在)
+			if( empty( $chkInfo["check"] ) ){
+				list($chkInfo["check"], $chkInfo["model"]) = $class["consistencyAdmin_1"]->check_model( $newCarCheckList[$i] );
+			}
+
+			// データチェック(代表グレード)
+			if( empty( $chkInfo["check"] ) ){
+				list($chkInfo["check"], $chkInfo["carGrade"]) = $class["consistencyAdmin_1"]->check_carGrade( $newCarCheckList[$i] ,$DBName );
+			}
+
+			//エラーの場合、情報を保持
+			if( $chkInfo["check"] ){
+				$chkInfo["newCar"] = $newCarCheckList[$i];
+				$returnData[]      = $chkInfo;
+			}
+		}
+
+		$output["newCarCheckList"][$DBName] = $returnData;
+	}
+
+	/*----------------------------------------------------
+	    メンテナンスチェック
+	----------------------------------------------------*/
+	//パラメータ初期化
+	unset($returnData);
+	$maintenanceCheckList = $class["consistencyAdmin_1"]->get_modelList();
+
+
+	for( $i=0; $i<count($maintenanceCheckList); $i++ ){
+		unset($chkInfo);
+		// データチェック(メンテナンス)
+		if( empty( $chkInfo["check"] ) ){
+			list($chkInfo["check"], $chkInfo["carGrade"]) = $class["consistencyAdmin_1"]->check_maintenance( $maintenanceCheckList[$i] );
+		}
+
+		//エラーの場合、情報を保持
+		if( $chkInfo["check"] ){
+			$chkInfo["model"] = $maintenanceCheckList[$i];
+			// 区分によって配列を分ける
+			if( !empty($chkInfo["check"]["mt_unmatch"]) ){
+				$chkInfo["check"] = "mt_unmatch";
+				$returnData["mtum"][] = $chkInfo;
+			} else {
+				if( !empty($chkInfo["check"]["mt_undefined"]) ){
+					$chkInfo["check"] = "mt_undefined";
+					$returnData["mtuf"][] = $chkInfo;
+				} else if( !empty($chkInfo["check"]["mt_undetermined"]) ){
+					$chkInfo["check"] = "mt_undetermined";
+					$returnData["mtut"][] = $chkInfo;
+				}
+			}
+		}
+	}
+
+	$output["maintenanceCheckList"] = $returnData;
+
+	/*----------------------------------------------------
+	    リース料チェック
+	----------------------------------------------------*/
+	//パラメータ初期化
+	unset($returnData);
+	$leaseCheckList = $class["consistencyAdmin_1"]->get_modelList();
+
+	for( $i=0; $i<count($leaseCheckList); $i++ ){
+		unset($chkInfo);
+
+		// データチェック(リース設定)
+		if( empty( $chkInfo["check"] ) ){
+			list($chkInfo["check"], $chkInfo["carGrade"], $chkInfo["lease"]) = $class["consistencyAdmin_1"]->check_lease( $leaseCheckList[$i] );
+		}
+		//エラーの場合、情報を保持
+		if( $chkInfo["check"] ){
+			$chkInfo["model"]      = $leaseCheckList[$i];
+
+			// 区分によって配列を分ける
+			if( !empty($chkInfo["lease"]["l_undefined"]) ){
+				$chkInfo["check"] = "l_undefined";
+				$returnData["lease"]["l"][] = $chkInfo;
+			}
+
+			if( !empty($chkInfo["lease"]["lv_undefined"]) ){
+				$chkInfo["check"] = "lv_undefined";
+				$returnData["lease"]["lv"][] = $chkInfo;
+			}
+		}
+
+		// データチェック(設定した値)
+		unset($chkInfo);
+		if( empty( $chkInfo["check"] ) ){
+			list($chkInfo["check"], $chkInfo["carGrade"]) = $class["consistencyAdmin_1"]->check_leaseZero( $leaseCheckList[$i] );
+		}
+        
+		//エラーの場合、情報を保持
+		if( $chkInfo["check"] ){
+			$tmp_chkInfo["check"] = $chkInfo["check"];
+			$tmp_chkInfo["model"] = $leaseCheckList[$i];
+
+			$tmp_chkInfo["carGrade"][] = $chkInfo["carGrade"];
+			$returnData["zeroLease"][] = $tmp_chkInfo;
+			unset($tmp_chkInfo["carGrade"]);
+		}
+	}
+
+	$output["leaseCheckList"]     = $returnData["lease"];
+	$output["zeroLeaseCheckList"] = $returnData["zeroLease"];
+
+
+?>

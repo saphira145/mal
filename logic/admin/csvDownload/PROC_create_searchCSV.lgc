@@ -1,0 +1,110 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 検索条件リスト取得
+	$list = $class["csvDownload_1"]->get_searchList( $output );
+
+
+	// ファイル名取得
+	$output["fileName"] = $class["csvDownload_1"]->get_fileName( $output );
+
+
+	if( count( $list ) == 0 ) {
+		exit;
+	}
+
+	// ディレクトリパスの設定
+	$dirPath  = $path["csv"]["tmpDir"];
+
+	// ファイルパスの設定
+	$output["filePath"] = "$dirPath/{$output["fileName"]}";
+
+	// すでにあれば削除
+	if( file_exists ( $output["filePath"] ) ) {
+		@unlink( $output["filePath"] );
+	}
+
+	// ファイルの作成
+	if( count( $list ) == 0 ) {
+		return NULL;
+	}
+
+	// CSV データ作成
+	for( $i=0; $i<count( $list ); $i++ ) {
+
+		$fp = fopen( $output["filePath"], "a" );
+
+		unset( $txt );
+
+		// メーカー名の取得
+		if( !empty($list[$i]["searchMakerName"]) ){
+			unset($makerArr);
+			$makerArr = explode("','", $list[$i]["searchMakerName"]);
+			
+			for( $j =0, $jMax = count($makerArr); $j < $jMax; $j++ ){
+				$txt[] = str_replace("'", "", $makerArr[$j] );
+			}
+		}
+
+		// ボディタイプ名の取得
+		if( !empty($list[$i]["searchBodyTypeName"]) ){
+			unset($bodyTypeArr);
+			$bodyTypeArr = explode("','", $list[$i]["searchBodyTypeName"]);
+			
+			for( $j =0, $jMax = count($bodyTypeArr); $j < $jMax; $j++ ){
+				$txt[] = str_replace("'", "", $bodyTypeArr[$j] );
+			}
+
+		}
+
+		// テーマ名の取得
+		if( !empty($list[$i]["searchThemeName"]) ){
+			unset($themeArr);
+			$themeArr = explode("','", $list[$i]["searchThemeName"]);
+			
+			for( $j =0, $jMax = count($themeArr); $j < $jMax; $j++ ){
+				$txt[] = str_replace("'", "", $themeArr[$j] );
+			}
+		}
+
+		// 定価区分名の取得
+		if( !empty($list[$i]["searchPriceName"]) ){
+			unset($priceArr);
+			$priceArr = explode("','", $list[$i]["searchPriceName"]);
+			
+			for( $j =0, $jMax = count($priceArr); $j < $jMax; $j++ ){
+				$txt[] = str_replace("'", "", $priceArr[$j] );
+			}
+		}
+
+		// 全て空白の場合、文言「(選択なし)」
+		if( empty($txt) ){
+			$txt[] = "(選択なし)";
+		}
+
+		//先頭データの調整
+		$txt[0] = "\"" . $txt[0];
+
+		$txts = join( $txt, "\",\"");
+		$txts = $txts . "\"\n";
+
+		// 配列対応（SJIS-winに変換）
+		$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+		fputs( $fp, $txts );
+		fclose( $fp );
+
+	}
+
+	// 古いＣＳＶは削除
+	$class["csvDownload_1"]->delete_tmpCSVFile();
+
+	// 配列対応（SJIS-winに変換）
+	$output["fileName"] = $class["csvDownload_1"]->mbConvertEncodingDeep( $output["fileName"], "UTF-8", "SJIS-win" );
+
+
+?>

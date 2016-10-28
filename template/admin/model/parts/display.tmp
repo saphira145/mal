@@ -1,0 +1,142 @@
+<table class="tblForm">
+	<tr>
+		<th class="w160">メーカー名</th>
+		<td>{val modelInfo.makerName} ({val modelInfo.makerCode|zeroPadding:3})</td>
+	</tr>
+	<tr>
+		<th>車種コード</th>
+		<td>{val modelInfo.modelCode|zeroPadding:3}</td>
+	</tr>
+	<tr>
+		<th>車種名</th>
+		<td>{val modelInfo.modelName}</td>
+	</tr>
+	<tr>
+		<th>車種名（英字）</th>
+		<td>{val modelInfo.modelNameEng}</td>
+	</tr>
+	<tr>
+		<th>価格</th>
+		<td><!--{unset modelInfo.price.noneFlg}-->{val modelInfo.price.mini|number_format:1} ～ {val modelInfo.price.max|number_format:1} 万円<!--{/unset}--></td>
+	</tr>
+	<tr>
+		<th>全長</th>
+		<td>{val modelInfo.totalLength.mini|number_format} ～ {val modelInfo.totalLength.max|number_format} mm</td>
+	</tr>
+	<tr>
+		<th>全幅</th>
+		<td>{val modelInfo.totalWidth.mini|number_format} ～ {val modelInfo.totalWidth.max|number_format} mm</td>
+	</tr>
+	<tr>
+		<th>全高</th>
+		<td>{val modelInfo.totalHeight.mini|number_format} ～ {val modelInfo.totalHeight.max|number_format} mm</td>
+	</tr>
+	<tr>
+		<th>発売日</th>
+		<td><!--{set modelInfo.announcementDay.date}-->{val modelInfo.announcementDay.date}<!--{/set}--></td>
+	</tr>
+<!--{unset ST.detail}-->
+	<tr>
+		<th>車体画像</th>
+		<td class="carImg">
+<!--{unset disp_orginalCarBodyPhoto}-->
+<!--{set modelInfo.tempCarBodyPhoto}-->
+			<img src="{val BASE_DIR}/_common/archive/temp/temp_s_{val modelInfo.tempCarBodyPhoto}" />
+<!--{/set}-->
+<!--{/unset}-->
+<!--{set disp_orginalCarBodyPhoto}-->
+<!--{set carBodyPhotoID}-->
+			<img src="{val BASE_DIR}/_common/PHOTO/WORK/CARBODY/{val carBodyPhotoID}.jpg" />
+<!--{/set}-->
+<!--{/set}-->
+		</td>
+	</tr>
+<!--{/unset}-->
+<!--{set dispEntryPhoto}-->
+	<tr>
+		<th>車体画像（登録済み）</th>
+		<td><img src="{val BASE_DIR}/_common/PHOTO/WORK/CARBODY/{val carBodyPhotoID}.jpg" /></td>
+	</tr>
+<!--{/set}-->
+	<tr>
+		<th>バリュー</th>
+		<td>
+<!--{set themeList}-->
+<!--{loop themeList}-->
+			{val themeList/themeName}<!--{loop_count_between themeList=1}--> / <!--{/loop_count_between}-->
+<!--{/loop}-->
+<!--{/set}-->
+		</td>
+	</tr>
+    <tr>
+        <th>バリュー誘導先URL</th>
+        <td>{val modelInfo.valueUrl}</td>
+    </tr>
+	<tr>
+		<th>WebカタログURL</th>
+		<td>{val modelInfo.webCatalogueUrl}</td>
+	</tr>
+	<tr>
+		<th>写真ギャラリーURL</th>
+		<td>{val modelInfo.photoGalleryUrl}</td>
+	</tr>
+	<tr>
+		<th>お値打ちスコア</th>
+		<td>{val modelInfo.campaignScoreName.value}</td>
+	</tr>
+	<tr>
+		<th>代表車種グレード</th>
+		<td>
+			<table class="tbl_inner">
+			<tr>
+				<th class="w90">標準2WD</th>
+				<td>
+					<div class="selModelName">
+					<!--{set modelInfo.s2wdCarGradeID}-->
+						車種グレードＩＤ ：{val modelInfo.s2wdCarGradeID|zeroPadding:7}&nbsp;、
+						メンテナンス区分：{val modelInfo.s2wdCarGrade.mainteName} ( {val modelInfo.s2wdCarGrade.mainteStateName} )<br>
+						{val modelInfo.s2wdCarGrade.makerName}&nbsp;
+						{val modelInfo.s2wdCarGrade.modelName}&nbsp;
+						{val modelInfo.s2wdCarGrade.grade}&nbsp;<br>
+						[&nbsp;{val modelInfo.s2wdCarGrade.bodyModelName}、{val modelInfo.s2wdCarGrade.driveSystem}、{val modelInfo.s2wdCarGrade.transmissionType}、{val modelInfo.s2wdCarGrade.roofModel}、{val modelInfo.s2wdCarGrade.useFuel}、{val modelInfo.s2wdCarGrade.totalEmission|number_format}cc&nbsp;{val modelInfo.s2wdCarGrade.capacity}人、{val modelInfo.s2wdCarGrade.door}枚、{val modelInfo.s2wdCarGrade.price|add_dot:1}万円&nbsp;]
+					<!--{/set}-->
+					<!--{unset modelInfo.s2wdCarGradeID}--><span>未設定</span><!--{/unset}-->
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th class="w90">標準4WD</th>
+				<td>
+					<div class="selModelName">
+					<!--{set modelInfo.s4wdCarGradeID}-->
+						車種グレードＩＤ ：{val modelInfo.s4wdCarGradeID|zeroPadding:7}&nbsp;、
+						メンテナンス区分：{val modelInfo.s4wdCarGrade.mainteName} ( {val modelInfo.s4wdCarGrade.mainteStateName} )<br>
+						{val modelInfo.s4wdCarGrade.makerName}&nbsp;
+						{val modelInfo.s4wdCarGrade.modelName}&nbsp;
+						{val modelInfo.s4wdCarGrade.grade}&nbsp;<br>
+						[&nbsp;{val modelInfo.s4wdCarGrade.bodyModelName}、{val modelInfo.s4wdCarGrade.driveSystem}、{val modelInfo.s4wdCarGrade.transmissionType}、{val modelInfo.s4wdCarGrade.roofModel}、{val modelInfo.s4wdCarGrade.useFuel}、{val modelInfo.s4wdCarGrade.totalEmission|number_format}cc、{val modelInfo.s4wdCarGrade.capacity}人、{val modelInfo.s4wdCarGrade.door}枚、{val modelInfo.s4wdCarGrade.price|add_dot:1}万円&nbsp;]
+					<!--{/set}-->
+					<!--{unset modelInfo.s4wdCarGradeID}--><span>未設定</span><!--{/unset}-->
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th class="w90">最廉価</th>
+				<td>
+					<div class="selModelName">
+					<!--{set modelInfo.lowPriceCarGradeID}-->
+						車種グレードＩＤ ：{val modelInfo.lowPriceCarGradeID|zeroPadding:7}&nbsp;、
+						メンテナンス区分：{val modelInfo.lowPriceCarGrade.mainteName} ( {val modelInfo.lowPriceCarGrade.mainteStateName} )<br>
+						{val modelInfo.lowPriceCarGrade.makerName}&nbsp;
+						{val modelInfo.lowPriceCarGrade.modelName}&nbsp;
+						{val modelInfo.lowPriceCarGrade.grade}&nbsp;<br>
+						[&nbsp;{val modelInfo.lowPriceCarGrade.bodyModelName}、{val modelInfo.lowPriceCarGrade.driveSystem}、{val modelInfo.lowPriceCarGrade.transmissionType}、{val modelInfo.lowPriceCarGrade.roofModel}、{val modelInfo.lowPriceCarGrade.useFuel}、{val modelInfo.lowPriceCarGrade.totalEmission|number_format}cc、{val modelInfo.lowPriceCarGrade.capacity}人、{val modelInfo.lowPriceCarGrade.door}枚、{val modelInfo.lowPriceCarGrade.price|add_dot:1}万円&nbsp;]
+					<!--{/set}-->
+					<!--{unset modelInfo.lowPriceCarGradeID}--><span>未設定</span><!--{/unset}-->
+					</div>
+				</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+</table>

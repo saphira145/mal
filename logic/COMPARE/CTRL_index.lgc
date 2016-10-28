@@ -1,0 +1,41 @@
+<?php
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	if( $ini["system"]["errRank"] == 1 ) {
+		return 404;
+	}
+
+
+
+	// 入力値変換
+	$this->callPROC( "convert_input" );
+
+	// おすすめ車種＆システム設定車種の取得(引数が存在する場合のみ実行)
+	$this->callPROC( "get_defaultCarInfo" );
+
+	// 比較車種情報の取得
+	$this->callPROC( "get_compareInfo" );
+
+    // Check Password
+    $this->callPROC( "checkPassword" );
+
+	// 検索条件情報を表示用へ
+	$this->callVIEW( "index" );
+
+	// 検索ログ追加
+	$this->callPROC( "insert_searchLog" );
+
+	// リース料の取得(営業のみ)
+	$this->callPROC( "get_leaseInfo" );
+
+	// リース料の取得(営業のみ)
+	$this->callPROC( "get_filterDetail" );
+
+?>

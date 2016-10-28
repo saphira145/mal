@@ -1,0 +1,22 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	for( $i=0; $i<count( $output["makerList"] ); $i++ ) {
+		$output["makerList"][$i]["dispNum"] = $i +1;
+		$class["makerAdmin_1"]->update_dispNumDB( $output["makerList"][$i] );
+	}
+
+
+
+
+
+
+
+
+
+
+?>

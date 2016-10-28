@@ -1,0 +1,83 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 車種別の比較回数リスト取得
+	$list = $class["csvDownload_1"]->get_carThemeList( $output );
+
+	// ファイル名取得
+	$output["fileName"] = $ini["csvDownload"]["fileName"]["carTheme"];
+
+
+	if( count( $list ) == 0 ) {
+		exit;
+	}
+
+	// ディレクトリパスの設定
+	$dirPath  = $path["csv"]["tmpDir"];
+
+	// ファイルパスの設定
+	$output["filePath"] = "$dirPath/{$output["fileName"]}";
+
+	// すでにあれば削除
+	if( file_exists ( $output["filePath"] ) ) {
+		@unlink( $output["filePath"] );
+	}
+
+	// ファイルの作成
+	$fp = fopen( $output["filePath"], "w" );
+
+	$txts  = "\"メーカーコード\",\"メーカー名\",\"車種コード\",\"車種名\",\"バリューID\",\"バリュー名\",\"＊ON(=1)/OFF(=0)＊\"";
+
+	// 配列対応（SJIS-winに変換）
+	$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+	fputs( $fp, $txts . "\n" );
+	fclose( $fp );
+
+	if( count( $list ) == 0 ) {
+		return NULL;
+	}
+
+	// CSV データ作成
+	for( $i=0; $i<count( $list ); $i++ ) {
+		for( $j = 0; $j<count( $list[$i]["theme"] ); $j++ ) {
+
+			$fp = fopen( $output["filePath"], "a" );
+
+			unset( $txt, $systemName );
+			// システム設定対象か確認
+			if( get_autoThemeFlg($list[$i]["theme"][$j]["themeID"]) ){
+				$systemName = "(自動設定)";
+			}
+
+			$txt[] = "\"" . $list[$i]["makerCode"];
+			$txt[] =        $list[$i]["makerName"];
+			$txt[] =        $list[$i]["modelCode"];
+			$txt[] =        $list[$i]["modelName"];
+			$txt[] =        $list[$i]["theme"][$j]["themeID"];
+			$txt[] =        $list[$i]["theme"][$j]["themeName"] . $systemName;
+			$txt[] =        $list[$i]["theme"][$j]["flgOnOff"];
+			$txts = join( $txt, "\",\"");
+			$txts = $txts . "\"\n";
+
+			// 配列対応（SJIS-winに変換）
+			$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+			fputs( $fp, $txts );
+			fclose( $fp );
+		}
+	}
+
+
+	// 古いＣＳＶは削除
+	$class["csvDownload_1"]->delete_tmpCSVFile();
+
+	// 配列対応（SJIS-winに変換）
+	$output["fileName"] = $class["csvDownload_1"]->mbConvertEncodingDeep( $output["fileName"], "UTF-8", "SJIS-win" );
+
+
+?>

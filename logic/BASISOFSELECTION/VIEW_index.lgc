@@ -1,0 +1,16 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+	
+	for($i = 0, $iMax = count($output["themeList"]); $i < $iMax; $i++){
+		// アイコン名取得
+		$tmp_theme = get_themeIconName( $output["themeList"][$i]["iconNo"]  );
+		$output["themeList"][$i]["themeIconName"] = $tmp_theme["name"];
+		$output["themeList"][$i]["themeIconPath"] = $tmp_theme["path"];
+
+	}
+	
+	
+?>

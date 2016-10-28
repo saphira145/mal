@@ -1,0 +1,24 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// カンマ区切りから配列へ
+	$this->callPROC( "commaToArray" );
+
+	// 表示用に変換
+	$this->callVIEW( "display_dispNumList" );
+
+	// 入力へ戻る
+	$this->callVIEW( "form_dispNumList" );
+
+
+
+
+
+?>

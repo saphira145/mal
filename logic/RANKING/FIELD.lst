@@ -1,0 +1,29 @@
+
+// メーカー
+maker
+	convert,   0,  paramExplode,
+	check,   100,  paramFormat(M),
+	check,   200,  paramDrop,
+	check,   300,  searchMakerCodeExist,    データが存在しません
+
+// ボディタイプ
+bodytype
+	convert,   0,  paramExplode(),
+	check,   100,  paramFormat(B),
+	check,   200,  paramDrop,
+	check,   300,  searchBodyTypeExist,    データが存在しません
+
+// テーマ
+theme
+	convert,   0,  paramExplode,
+	check,   100,  paramFormat(T),
+	check,   200,  paramDrop,
+	check,   300,  searchThemeIDExist,    データが存在しません
+
+// 定価価格
+price
+	convert,   0,  paramExplode,
+	convert,   0,  paramDefaultPrice(P),
+	check,   100,  paramFormat(P),
+	check,   200,  paramDrop,
+	check,   300,  searchPriceExist,    データが存在しません

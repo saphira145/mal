@@ -1,0 +1,23 @@
+
+// 比較車種１
+targetModelName
+	convert,  0,  trim
+	convert,  0,  modelNameToMakerCodeModelCode,
+	filter,  10,  makerCodeModelCodeExist,         メーカーコードまたは車種コードは存在しません
+	check,   20,  must,                            必須入力項目です
+
+
+// 車種名
+modelName
+	convert,  0,  trim
+	convert,  0,  modelNameToMakerCodeModelCode,
+	filter,  10,  makerCodeModelCodeExist,         メーカーコードまたは車種コードは存在しません
+
+
+// グレードコード
+carGradeCode
+	convert,  0,  1byte,
+	convert,  0,  trim
+	convert,  0,  carGradeToCarGradeID({1}),            車種グレードが設定されていません
+	filter,  10,  carGradeIDActiveDBExist({1}),         車種グレードＩＤは存在しません
+

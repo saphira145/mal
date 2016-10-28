@@ -1,0 +1,5 @@
+fields
+	a, maker     = maker
+	a, bodyModel = bodytype
+	a, price     = price
+

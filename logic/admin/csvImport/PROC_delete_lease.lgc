@@ -1,0 +1,25 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// 調達価格・メンテ区分削除
+	$class["csvImport_1"]->delete_lease();
+	$class["csvImport_1"]->delete_maintenance();
+
+
+
+
+
+
+?>

@@ -1,0 +1,12 @@
+/admin/campaign
+	TITLE = "キャンペーン設定"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="キャンペーン設定"
+
+/admin/campaign/me
+	TITLE = "キャンペーン設定"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="キャンペーン設定"
+

@@ -1,0 +1,22 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$class["releaseAdmin_1"]->delete_reserveDB( $output );
+
+	// 削除成功
+	$output["delete_sucessFlg"] = 1;
+
+	// テスト表示モードをクリア
+	$class["releaseAdmin_1"]->set_defaultMode();
+	$output["modeFlg"] = 9;
+
+
+
+
+
+
+?>

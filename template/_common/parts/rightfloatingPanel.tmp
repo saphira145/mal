@@ -1,0 +1,14 @@
+<div id="rightfloatingPanel">
+	<div id="rightfloatingPanelInner">
+		<div id="rightfloatingPanelClose" >
+			<a href="javascript:void(0)" class="faChevronRight"></a>
+		</div>
+		<div class="linkBlock">
+			<a href="javascript:void(0)" class="faFileTexto" title="お見積ご依頼方法" onclick="openDetailWindow('estimatemethod', '/ESTIMATEMETHOD/', '746', '550'); return false;"></a>
+			<a href="http://www.mal-marche.com/jp/estimate/" target="_blank"  class="estimate" title="リースのお見積"><img src="{val BASE_DIR}/_common/img/ico/ico_calculator.png" alt="リースのお見積" /></a>
+			<a href="http://www.mal-marche.com/jp/contact" target="_blank" class="faEnvelope" title="ご相談"></a>
+			<a href="javascript:void(0)" class="faQuestionCircle" title="使い方ガイド"></a>
+			<a href="javascript:void(0)" class="gotoPageTop faArrowUp" title="ページのトップへ"></a>
+		</div>
+	</div>
+</div>

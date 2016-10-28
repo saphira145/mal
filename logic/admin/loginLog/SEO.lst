@@ -1,0 +1,17 @@
+/admin/loginLog
+	TITLE = "ログインログ参照（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ログインログ参照（一覧）"
+
+/admin/loginLog/ls
+	TITLE = "ログインログ参照（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ログインログ参照（一覧）"
+/admin/loginLog/dtl
+	TITLE = "ログインログ参照（詳細）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="ログインログ参照（詳細）"
+

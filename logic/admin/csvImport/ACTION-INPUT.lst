@@ -1,0 +1,39 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	list,                          
+	carGradeConfirm,               confirmFields
+	carGradeExecute,               executeFields
+	viewConfirm,                   confirmFields
+	viewExecute,                   executeFields
+	seatCircumferenceConfirm,      confirmFields
+	seatCircumferenceExecute,      executeFields
+	airConditioningConfirm,        confirmFields
+	airConditioningExecute,        executeFields
+	audioConfirm,                  confirmFields
+	audioExecute,                  executeFields
+	seatInteriorConfirm,           confirmFields
+	seatInteriorExecute,           executeFields
+	exteriorConfirm,               confirmFields
+	exteriorExecute,               executeFields
+	footSurroundingsConfirm,       confirmFields
+	footSurroundingsExecute,       executeFields
+	safetyConfirm,                 confirmFields
+	safetyExecute,                 executeFields
+	carThemeConfirm,               confirmFields
+	carThemeExecute,               executeFields
+	leaseConfirm,                  confirmFields
+	leaseExecute,                  executeFields
+	leaseValueConfirm,             confirmFields
+	leaseValueExecute,             executeFields
+	gasolineConfirm,               confirmFields
+	gasolineExecute,               executeFields
+	leaseOptionConfirm,            confirmFields
+	leaseOptionExecute,            executeFields
+
+
+
+

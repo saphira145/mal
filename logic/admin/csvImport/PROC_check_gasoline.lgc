@@ -1,0 +1,126 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+		// アップロードファイルを一時ディレクトリへ
+		list( $filePath, $output["tmpFaqCSVName"] ) = $class["csvImport_1"]->copy_tempDir( $output["importCSVFile"]["tmp_name"] );
+
+		// コピーできない場合は終了
+		if( !file_exists( $filePath ) ) {
+			return;
+		}
+
+
+		// CSVファイル読み込み
+		$i   = 0;
+		$row = 1;
+		$handle = fopen ( $filePath, "r" );
+
+		while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+			if( $row == 1){
+				$row++;
+				continue;
+			}
+
+			// 文字コード変換（SJIS-winからUTF-8に変換）
+			$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+			// 入力チェック
+			unset( $errData );
+			$errData = check_CSVData( $CSVData );
+
+			// エラーメッセージ格納
+			if( count( $errData ) > 0 ) {
+				$output["errList"][$i]["row"]    = $row;
+				$output["errList"][$i]["detail"] = $errData;
+				$i++;
+				// エラーが100行ある場合はチェックをストップする
+				if( $i > 100 ) {
+					break;
+				}
+			}
+
+			// 読み込み行のカウントアップ
+			$row++;
+		}
+
+		fclose($handle);
+
+
+		// 登録予定件数エラーがない場合表示
+		if( count( $output["errList"] ) == 0 ) {
+			$output["entryCount"] = $row - 2;
+		}
+
+
+
+
+
+	/*--------------------------------------------------
+	  入力チェック
+	---------------------------------------------------*/
+	function check_CSVData ( $CSVData ) {
+
+		unset( $modelID );
+
+		foreach( $CSVData as $key => $val ) {
+
+			unset( $err );
+
+			// 都道府県ID（１フィールド目）
+			if( $key == 0 ) {
+				$err = check_prefectureID( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 都道府県名（２フィールド目）
+			if( $key == 1 ) {
+				$err = check_prefectureName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ガソリン価格(レギュラー)（３フィールド目）
+			if( $key == 2 ) {
+				$err = check_gasoline( $val, $key, $makerCode );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ガソリン価格(ハイオク)（４フィールド目）
+			if( $key == 3 ) {
+				$err = check_gasoline( $val, $key, $makerCode );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ガソリン価格(軽油)（５フィールド目）
+			if( $key == 4 ) {
+				$err = check_gasoline( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+		}
+
+		return $ret;
+	}
+
+
+
+
+
+
+
+
+
+?>

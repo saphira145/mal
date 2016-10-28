@@ -1,0 +1,10 @@
+{frame /_common/outerFrame_err.tmp}
+
+<div id="userErr">
+	<div class="notCarData">
+		<p>
+		大変申し訳ございませんが、<br />
+		お客様のアクセスしたページが見つかりません。
+		</p>
+	</div>
+</div>

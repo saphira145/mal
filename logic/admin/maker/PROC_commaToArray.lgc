@@ -1,0 +1,17 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	if( $output["dispSortIDs"] != "" ) {
+		$list = explode( ",", $output["dispSortIDs"] );
+	}
+
+	for( $i=0; $i<count( $list ); $i++ ) {
+		$output["makerList"][$i]["makerCode"] = $list[$i];
+	}
+
+
+?>

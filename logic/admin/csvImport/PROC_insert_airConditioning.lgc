@@ -1,0 +1,284 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_airConditioning( $insertData );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "airConditioning", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "airConditioning", "reserve", $reserveDatetime );
+	}
+
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$carGradeID = $val;
+			}
+
+			// クーラー_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$coolerName = $val;
+			}
+
+			// クーラー_有無（３フィールド目）
+			if( $key == 2 ) {
+				$coolerType = $val;
+			}
+
+			// クーラー_注目（４フィールド目）
+			if( $key == 3 ) {
+				$coolerSpot = $val;
+			}
+
+			// エアコン_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$airConditionerName = $val;
+			}
+
+			// エアコン_有無（６フィールド目）
+			if( $key == 5 ) {
+				$airConditionerType = $val;
+			}
+
+			// エアコン_注目（７フィールド目）
+			if( $key == 6 ) {
+				$airConditionerSpot = $val;
+			}
+
+			// フルオートエアコン_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$fullAirConditionerName = $val;
+			}
+
+			// フルオートエアコン_有無（９フィールド目）
+			if( $key == 8 ) {
+				$fullAirConditionerType = $val;
+			}
+
+			// フルオートエアコン_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$fullAirConditionerSpot = $val;
+			}
+
+			// デュアルエアコン_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$dualAirConditionerName = $val;
+			}
+
+			// デュアルエアコン_有無（１２フィールド目）
+			if( $key == 11 ) {
+				$dualAirConditionerType = $val;
+			}
+
+			// デュアルエアコン_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$dualAirConditionerSpot = $val;
+			}
+
+			// クリーンフィルター_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$cleanFilterName = $val;
+			}
+
+			// クリーンフィルター_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$cleanFilterType = $val;
+			}
+
+			// クリーンフィルター_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$cleanFilterSpot = $val;
+			}
+
+			// ピュアトロン_正式名（１７フィールド目）
+			if( $key == 16 ) {
+				$pureTronName = $val;
+			}
+
+			// ピュアトロン_有無（１８フィールド目）
+			if( $key == 17 ) {
+				$pureTronType = $val;
+			}
+
+			// ピュアトロン_注目（１９フィールド目）
+			if( $key == 18 ) {
+				$pureTronSpot = $val;
+			}
+
+			// 花粉フィルター_正式名（２０フィールド目）
+			if( $key == 19 ) {
+				$pollenFilterName = $val;
+			}
+
+			// 花粉フィルター_有無（２１フィールド目）
+			if( $key == 20 ) {
+				$pollenFilterType = $val;
+			}
+
+			// 花粉フィルター_注目（２２フィールド目）
+			if( $key == 21 ) {
+				$pollenFilterSpot = $val;
+			}
+
+			// 新脱臭機能付クリーンフィルター_正式名（２３フィールド目）
+			if( $key == 22 ) {
+				$deodorizationCleanFilterName = $val;
+			}
+
+			// 新脱臭機能付クリーンフィルター_有無（２４フィールド目）
+			if( $key == 23 ) {
+				$deodorizationCleanFilterType = $val;
+			}
+
+			// 新脱臭機能付クリーンフィルター_注目（２５フィールド目）
+			if( $key == 24 ) {
+				$deodorizationCleanFilterSpot = $val;
+			}
+
+			// リヤヒーターダクト_正式名（２６フィールド目）
+			if( $key == 25 ) {
+				$rearHeaterDuctName = $val;
+			}
+
+			// リヤヒーターダクト_有無（２７フィールド目）
+			if( $key == 26 ) {
+				$rearHeaterDuctType = $val;
+			}
+
+			// リヤヒーターダクト_注目（２８フィールド目）
+			if( $key == 27 ) {
+				$rearHeaterDuctSpot = $val;
+			}
+
+			// マイルドフローシステム_正式名（２９フィールド目）
+			if( $key == 28 ) {
+				$mildFlowSystemName = $val;
+			}
+
+			// マイルドフローシステム_有無（３０フィールド目）
+			if( $key == 29 ) {
+				$mildFlowSystemType = $val;
+			}
+
+			// マイルドフローシステム_注目（３１フィールド目）
+			if( $key == 30 ) {
+				$mildFlowSystemSpot = $val;
+			}
+
+
+		}
+
+		// 登録用配列に入れ替える
+		$data["carGradeID"]                       = $carGradeID;
+		$data["coolerName"]                       = $coolerName;
+		$data["coolerType"]                       = CSV2DB_commonType( $coolerType );
+		$data["coolerSpot"]                       = CSV2DB_commonSpot( $coolerSpot );
+		$data["airConditionerName"]               = $airConditionerName;
+		$data["airConditionerType"]               = CSV2DB_commonType( $airConditionerType );
+		$data["airConditionerSpot"]               = CSV2DB_commonSpot( $airConditionerSpot );
+		$data["fullAirConditionerName"]           = $fullAirConditionerName;
+		$data["fullAirConditionerType"]           = CSV2DB_commonType( $fullAirConditionerType );
+		$data["fullAirConditionerSpot"]           = CSV2DB_commonSpot( $fullAirConditionerSpot );
+		$data["dualAirConditionerName"]           = $dualAirConditionerName;
+		$data["dualAirConditionerType"]           = CSV2DB_commonType( $dualAirConditionerType );
+		$data["dualAirConditionerSpot"]           = CSV2DB_commonSpot( $dualAirConditionerSpot );
+		$data["cleanFilterName"]                  = $cleanFilterName;
+		$data["cleanFilterType"]                  = CSV2DB_commonType( $cleanFilterType );
+		$data["cleanFilterSpot"]                  = CSV2DB_commonSpot( $cleanFilterSpot );
+		$data["pureTronName"]                     = $pureTronName;
+		$data["pureTronType"]                     = CSV2DB_commonType( $pureTronType );
+		$data["pureTronSpot"]                     = CSV2DB_commonSpot( $pureTronSpot );
+		$data["pollenFilterName"]                 = $pollenFilterName;
+		$data["pollenFilterType"]                 = CSV2DB_commonType( $pollenFilterType );
+		$data["pollenFilterSpot"]                 = CSV2DB_commonSpot( $pollenFilterSpot );
+		$data["deodorizationCleanFilterName"]     = $deodorizationCleanFilterName;
+		$data["deodorizationCleanFilterType"]     = CSV2DB_commonType( $deodorizationCleanFilterType );
+		$data["deodorizationCleanFilterSpot"]     = CSV2DB_commonSpot( $deodorizationCleanFilterSpot );
+		$data["rearHeaterDuctName"]               = $rearHeaterDuctName;
+		$data["rearHeaterDuctType"]               = CSV2DB_commonType( $rearHeaterDuctType );
+		$data["rearHeaterDuctSpot"]               = CSV2DB_commonSpot( $rearHeaterDuctSpot );
+		$data["mildFlowSystemName"]               = $mildFlowSystemName;
+		$data["mildFlowSystemType"]               = CSV2DB_commonType( $mildFlowSystemType );
+		$data["mildFlowSystemSpot"]               = CSV2DB_commonSpot( $mildFlowSystemSpot );
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

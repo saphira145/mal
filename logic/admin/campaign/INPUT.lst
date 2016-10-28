@@ -1,0 +1,8 @@
+modifyFields
+	a, campaignInfo/campaignNum          = campaignNum                              // キャンペーンNo
+	a, campaignInfo/campaignName         = campaignName({.campaignURL})             // キャンペーン名
+	a, campaignInfo/campaignURL          = campaignUrl({.campaignName})             // 遷移先URL
+	a, campaignInfo/campaignPhoto        = campaignPhoto({.campaignName}:{.campaignURL}:{.dispNum}:{.delete_campaignPhoto}:{.input_campaignPhoto})                            // キャンペーン画像
+	a, campaignInfo/delete_campaignPhoto = delete_campaignPhoto                     // キャンペーン画像削除フラグ
+	a, campaignInfo/dispNum              = dispNum({.campaignName}:{.campaignURL})  // 表示順
+	a, campaignInfo/input_campaignPhoto  = input_campaignPhoto                     // キャンペーン画像削除フラグ

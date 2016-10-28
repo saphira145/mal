@@ -1,0 +1,157 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	ini_set("memory_limit", "256M");
+	ini_set("post_max_size", "32M");
+	ini_set("upload_max_filesize", "32M");
+	ini_set("max_execution_time", "120");
+	ini_set("max_input_time", "120");
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		if( $row == 1){
+			$row++;
+			continue;
+		}
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $tmp_insertData );
+		// 登録データ取得
+		$tmp_insertData = get_insertData( $CSVData );
+
+		if( count( $tmp_insertData["lease"] ) > 0 ) {
+			$insertData[]  = $tmp_insertData;
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// データ登録
+	for( $i = 0, $iMax = count($insertData);  $i < $iMax; $i++){
+			$class["csvImport_1"]->insert_lease( $insertData[$i]["lease"] );
+			$class["csvImport_1"]->insert_maintenance( $insertData[$i]["mainte"] );
+	}
+
+	// 登録したデータの総件数
+	$output["entryCount"] = count($insertData);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "lease", "work" );
+	update_datetimeBySelectTableIDFiledName( "maintenance", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "lease", "reserve", $reserveDatetime );
+		update_datetimeBySelectTableIDFiledName( "maintenance", "reserve", $reserveDatetime );
+	}
+
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// メーカーＣＤ（１フィールド目）
+			if( $key == 0 ) {
+				$data["lease"]["makerCode"]  = $val;
+				$data["mainte"]["makerCode"] = $val;
+			}
+
+			// 車種ＣＤ（３フィールド目）
+			if( $key == 2 ) {
+				$data["lease"]["modelCode"]  = $val;
+				$data["mainte"]["modelCode"] = $val;
+			}
+
+			// 車種グレードＩＤ（５フィールド目）
+			if( $key == 4 ) {
+				$data["lease"]["carGradeID"]  = $val;
+				$data["mainte"]["carGradeID"] = $val;
+			}
+
+			// 調達価格（１８フィールド目）
+			if( $key == 17 ) {
+				$data["lease"]["procurementCost"]  = $val;
+			}
+
+			// 登録法定費用（１９フィールド目）
+			if( $key == 18 ) {
+				$data["lease"]["costLegal"]  = $val;
+			}
+
+			// 登録代行費用（２０フィールド目）
+			if( $key == 19 ) {
+				$data["lease"]["costActing"]  = $val;
+			}
+
+			// 資金管理料金（２１フィールド目）
+			if( $key == 20 ) {
+				$data["lease"]["costManagement"]  = $val;
+			}
+
+			// メンテナンス区分（２２フィールド目）
+			if( $key == 21 ) {
+				$data["mainte"]["mainteID"]       = $val;
+			}
+
+			// 区分状態（２３フィールド目）
+			if( $key == 22 ) {
+				$data["mainte"]["mainteState"]    = $val;
+			}
+		}
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

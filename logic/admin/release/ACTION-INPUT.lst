@@ -1,0 +1,12 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	form,              
+	releaseExecute,    releaseFields
+	deleteExecute,     
+	dispModeChange,    
+	backExecute,     
+

@@ -1,0 +1,33 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// 詳細取得
+	$this->callPROC( "get_info" );
+
+	// 固定表示
+	$this->callPROC( "fix_display" );
+
+	// 表示
+	$this->callVIEW( "form" );
+
+	// 登録画像表示
+	$this->callVIEW( "dispEntryPhoto" );
+
+
+
+
+
+
+
+
+
+
+
+?>

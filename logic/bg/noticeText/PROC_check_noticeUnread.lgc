@@ -1,0 +1,25 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	if( $output["notice"]["noticeText"] ){
+		$dataDatetime = mktime( $output["notice"]["updateDatetime"]["hour"], $output["notice"]["updateDatetime"]["min"], $output["notice"]["updateDatetime"]["sec"], $output["notice"]["updateDatetime"]["month"], $output["notice"]["updateDatetime"]["day"], $output["notice"]["updateDatetime"]["year"]);
+		$arrCheckList = array();
+		
+		if( $_COOKIE["noticeUnread"] ){
+			list($cookieDatetime, $checkList) = explode( "_", $_COOKIE["noticeUnread"] );
+			if( !check_noticeUnread( $class["session"]->memberID ,$checkList) ){
+				$arrCheckList   = explode( "#", $checkList );
+			}
+		}
+		$arrCheckList[] = get_cryptText($class["session"]->memberID);
+
+		$setList = @implode("#", $arrCheckList );
+		$sql_escape["notice"] = sql_escapeString($dataDatetime . "_" . $setList);
+
+		setcookie( "noticeUnread", $sql_escape["notice"], 0, "/", $path["host"]["name"] );
+	}
+
+?>

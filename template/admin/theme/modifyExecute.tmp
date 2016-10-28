@@ -1,0 +1,14 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input menu_theme=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+<div class="contentSection">
+	<p class="actionMsg">バリュー情報の変更が完了しました。</p>
+
+	{file parts/backtolist.tmp}
+
+	<div class="btnArea txt_left">
+		<input type="button" value="バリューリストに戻る" class="btnW01" onclick="location.href='{val UNIT_URL}/'; return false;" />
+	</div>
+</div>

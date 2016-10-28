@@ -1,0 +1,9 @@
+searchs
+	a, modelName1                         = targetModelName({carGradeCode1})
+	a, carGradeCode1                      = carGradeCode({modelName1})
+	a, modelName2                         = modelName({carGradeCode2})
+	a, carGradeCode2                      = carGradeCode({modelName2})
+	a, modelName3                         = modelName({carGradeCode3})
+	a, carGradeCode3                      = carGradeCode({modelName3})
+	a, modelName4                         = modelName({carGradeCode4})
+	a, carGradeCode4                      = carGradeCode({modelName4})

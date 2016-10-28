@@ -1,0 +1,53 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// リリース準備開始時間
+	$prepTime = date( "Y-m-d H:i:s", mktime( date( "H" ), date( "i" ) + $ini["reserveSet"]["limit"], date( "s" ), date( "m" ), date( "d" ), date( "Y" ) ) );
+
+	// コピーするテーブル一覧取得
+	$tableList = (array)$class["releaseUser_1"]->get_tableList( $prepTime );
+
+	// リリース準備する場合の処理
+	if( count( $tableList ) > 0 ){
+
+		if( $class["releaseUser_1"]->is_workDBLocked() ){
+
+			// ワークDBがロックされていたらリリース時間を延期して終了
+			$class["releaseUser_1"]->postpone_reserveDatetime();
+
+		}
+		else{
+
+			// アクティブDBの取得
+			$activeDBNum = get_activeDBNum();
+			// 非アクティブDBの取得
+			$inactiveDBNum = $activeDBNum == 1 ? 2 : 1;
+
+			// 非アクティブDBの全データ削除
+			$class["releaseUser_1"]->delete_allData( $inactiveDBNum );
+
+			// 検索DBコピー
+			$class["releaseUser_1"]->copy_tables( $tableList, $inactiveDBNum );
+
+			// 画像コピー
+			$class["releaseUser_1"]->copy_photo( $inactiveDBNum );
+
+			// carList.jsの作成
+			$class["releaseUser_1"]->make_carListJs( $inactiveDBNum );
+
+			// ロールバックフラグをオフにする
+			change_rollBackDBLockFlg( 0 );
+
+		}
+
+	}
+
+
+
+
+
+?>

@@ -1,0 +1,5 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_theme=1}
+
+{file dispNumInputCommon.tmp}
+

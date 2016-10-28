@@ -1,0 +1,18 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 検索条件の設定
+	$output["searchSalesGroup"] = $class["session"]->sales["salesGroup"];
+
+	// 入力フォームの設定
+	$output["memberInfo"]["salesGroup"]     = $class["session"]->sales["salesGroup"];
+	$output["memberInfo"]["authorityLevel"] = $ini["expirationUserLevel"];
+
+	// ログインID
+	$output["memberInfo"]["loginID"] = $class["memberAdmin_1"]->set_userDefaultLoginID();
+	
+?>

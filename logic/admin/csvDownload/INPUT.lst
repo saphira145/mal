@@ -1,0 +1,8 @@
+fields
+	a, downloadInfo.from.date                 = dateFrom
+	a, downloadInfo.to.date                   = dateTo
+	a, downloadInfo.outputType                = outputType
+	 , Hit0                                   = Hit0({downloadInfo.from.date}:{downloadInfo.to.date}:{downloadInfo.outputType})
+
+importOnlyFields
+	a, importOnlyDownloadInfo.outputType      = outputType

@@ -1,0 +1,8 @@
+<div class="noticeBox">
+	<h2>お知らせ</h2>
+	<div>
+		<span>更新日時&nbsp;：&nbsp;<time>{val notice.updateDatetime.year}年{val notice.updateDatetime.month|zeroPadding:2}月{val notice.updateDatetime.day|zeroPadding:2}日 {val notice.updateDatetime.hour|zeroPadding:2}:{val notice.updateDatetime.min|zeroPadding:2}</time></span>
+		<!--{set notice.noticeText}-->{val notice.noticeText|dispComment}<!--{/set}-->
+		<!--{unset notice.noticeText}-->お知らせはありません。<!--{/unset}-->
+	</div>
+</div>

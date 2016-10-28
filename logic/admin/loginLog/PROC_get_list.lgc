@@ -1,0 +1,21 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	if( !isset($output["searchYear"]) ){
+		$output["searchYear"] = date("Y");
+	}
+    if( !isset($output["searchLogType"]) ){
+        $output["searchLogType"] = "2";
+    }
+
+	list($output["loginLogList"], $output["pageInfo"]) = $class["loginLog_1"]->get_loginList( $output );
+
+
+
+
+
+?>

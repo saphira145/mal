@@ -1,0 +1,31 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	for( $i=0; $i<count( $output["makerList"] ); $i++ ) {
+		if( $output["makerList"][$i]["makerCode"] == $output["targetMakerCode"] ) {
+			$updateInfo["makerCode"]    = $output["targetMakerCode"];
+			$updateInfo["makerName"]    = $output["makerList"][$i]["makerName"];
+			$updateInfo["makerNameEng"] = $output["makerList"][$i]["makerNameEng"];
+			$updateInfo["countryID"]    = $output["makerList"][$i]["countryID"];
+			break;
+		}
+	}
+
+	$class["makerAdmin_1"]->update_DB( $updateInfo );
+
+	// 更新成功
+	$output["modify_sucessFlg"] = 1;
+
+
+
+
+
+
+
+
+
+?>

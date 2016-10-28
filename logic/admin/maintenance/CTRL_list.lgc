@@ -1,0 +1,17 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// メンテ料リスト取得
+	$this->callPROC( "get_maintenanceList" );
+
+	// 入力へ戻る
+	$this->callVIEW( "list" );
+
+?>

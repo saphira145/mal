@@ -1,0 +1,13 @@
+/COMPARE
+	KEYWORD="クルマ, 自動車, 車種, オートリース, 仕様, スペック, 諸元, 比較, {val title.modelList}"
+	ERRER="user"
+
+http,/COMPARE
+	TITLE = "クルマを比べる ({val title.modelList}) :: Car sagacité [カー サガシティ] 三菱オートリースの車種比較サイト"
+	DESCRIPTION="気になる {val title.modelList} をまとめて比べよう! 三菱オートリースの車種比較サイト Car sagacité (カー サガシティ) では、ビジネスのクルマ選びをお手伝いします。"
+	H1="クルマを比べる ({val title.modelList}) :: Car sagacité [カー サガシティ] 三菱オートリースの車種比較サイト"
+
+https,/COMPARE
+	TITLE = "クルマを比べる ({val title.modelList}) :: Car sagacité+ [カー サガシティ+] 三菱オートリースの車種比較サイト"
+	DESCRIPTION="気になる {val title.modelList} をまとめて比べよう! 三菱オートリースの車種比較サイト Car sagacité+ (カー サガシティ+) では、ビジネスのクルマ選びをお手伝いします。"
+	H1="クルマを比べる ({val title.modelList}) :: Car sagacité+ [カー サガシティ+] 三菱オートリースの車種比較サイト"

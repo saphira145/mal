@@ -1,0 +1,6 @@
+/* -------------------------------------
+	ACTION-INPUT.lst
+	for NetGRID PHP Framework v2
+------------------------------------- */
+changePassword,            
+passWordUpdate,            fields

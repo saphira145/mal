@@ -1,0 +1,23 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// リスト取得
+	$this->callPROC( "get_list" );
+
+	// 入力
+	$this->callVIEW( "form_dispNumList" );
+
+
+
+
+
+
+
+?>

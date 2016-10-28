@@ -1,0 +1,22 @@
+fields
+	a, email              = email
+	a, password           = password({.email})
+
+models
+	a, modelName          = targetModelName
+
+searchs
+	a, modelName          = targetModelName
+	a, carAddDate         = carAddDate
+	a, gasoline           = gasoline
+	a, voluntaryInsurance = voluntaryInsurance
+	a, baseMode           = baseMode
+	a, profit             = profit
+	a, option             = option
+
+carGradeCode
+	a, carGradeCode       = carGradeCode({modelName})
+	a, mileage            = mileage
+
+options
+	a, optionSet          = optionSet

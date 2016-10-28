@@ -1,0 +1,5 @@
+<div class="priceBox">
+	<span class="priceName">予算 ： </span>
+	<ul><!--{set search.price}--><li class="setCol P{val search.price.ID|zeroPadding:3}"><div>{val search.price.name}</div></li><!--{/set}--></ul>
+	<span class="{val searchListBtnEventClass} clearBtn"><a href="javascript:void(0)" class="{val searchListBtnClass} ">{val searchListBtnName}</a></span>
+</div>

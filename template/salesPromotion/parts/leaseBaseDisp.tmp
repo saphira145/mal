@@ -1,0 +1,14 @@
+<!--{set LEASEMODECHANGE_FLG}-->
+<div id="leaseBaseDisp" <!--{set LEASEBASE_FLG}-->class="leaseBase"<!--{/set}-->>
+	<!--{set LEASEBASE_FLG}-->社外秘<!--{/set}-->
+	<!--{unset LEASEBASE_FLG}-->勉強中<!--{/unset}-->
+	<span class="faExchange" onclick="endLeaseMode()">通常モードに戻す</span>
+</div>
+<script type="text/javascript">
+function endLeaseMode(){
+	document.cookie        = '{val cookieName}=;path=/;domain=.{val HTTP_HOST};expires="Thu, 01 Jan 1970 00:00:00 GMT"';
+	form_leaseInfoS.action = location.href;
+	form_leaseInfoS.submit();
+}
+</script>
+<!--{/set}-->

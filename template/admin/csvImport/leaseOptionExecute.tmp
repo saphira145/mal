@@ -1,0 +1,12 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_csv=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<p class="actionMsg">オプションデータの取り込みが完了しました。<br />登録した件数は 『 <span>{val entryCount|number_format}</span> 』 件です。</p>
+
+	<div class="btnArea txt_left">
+		<input type="button" value="CSV取り込みに戻る" class="btnW06" onclick="location.href='{val UNIT_URL}'; return false;" />
+	</div>
+</div>

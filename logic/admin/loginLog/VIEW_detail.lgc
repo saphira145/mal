@@ -1,0 +1,20 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	switch( $output["logType"] ) {
+        case 2 :
+            $output["logTypeLabel"] = "自動ログイン";
+            $output["logAuto"] = true;
+            $output["logManual"] = false;
+            break;
+        case 3 :
+            $output["logTypeLabel"] = "手動ログイン";
+            $output["logAuto"] = false;
+            $output["logManual"] = true;
+            break;
+    }
+
+?>

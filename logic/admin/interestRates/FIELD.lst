@@ -1,0 +1,19 @@
+// 金利
+rates
+	check,  100,  isset,                必須入力項目です
+	check,  100,  numeric,              半角数字で入力してください
+	check,  100,  decimalPoint({1}),    小数点の形式が正しくありません
+
+
+// 金利区分
+ratesID
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+// リース期間
+payNumID
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,

@@ -1,0 +1,8 @@
+<?php
+
+
+		// ロックアウト画面表示
+		$viewStatus = "lockout";
+
+
+?>

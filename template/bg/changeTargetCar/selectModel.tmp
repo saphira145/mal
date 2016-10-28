@@ -1,0 +1,121 @@
+<div id="changeTargetModel">
+	<div class="actionBox">
+		<h2 class="faRefresh">車種を変更する</h2>
+		{file /_common/parts/selectPrice.tmp}
+		<div class="carGradeNum">該当数<span>{val carGradeNum}</span>車種</div>
+	<!--/#actionBox--></div>
+
+<!-- メーカーリスト -->
+<!--{set carGradeNum}-->
+	<div class="searchForm">
+		<div id="makerChange" class="searchMakerList" style="overflow-x: scroll; overflow-y: hidden;">
+		<!--{set makerList}-->
+			<!--{loop makerList}-->
+			<span class="makerArea makerBox">
+				<span class="setCol">
+					<span class="makerName">
+						{val makerList/makerName}
+					</span>
+					<span class="makerItem">
+						<span class="makerCnt">{val makerList/carCnt}</span>
+					</span>
+					<input type="hidden" name="targetArea" value="makerArea_{val makerList/makerCode}">
+				</span>
+			</span>
+			<!--{/loop}-->
+		<!--{/set}-->
+		<!--/#makerChange--></div>
+	<!--/.searchForm--></div>
+<!--{/set}-->
+<!-- メーカー別 車種リスト -->
+	<div id="makerList">
+	<!--{set carGradeList}-->
+		<!--{loop carGradeList}-->
+			<div class="makerArea makerArea_{val carGradeList/byMaker.0.byBody.0.makerCode}">
+			<!--{loop carGradeList/byMaker}-->
+				<!--{set carGradeList/byMaker/byBody.0.bodyModel}-->
+				<div>
+					<h2>{val carGradeList/byMaker/byBody.0.bodyModel}</h2>
+					<ul>
+					<!--{loop carGradeList/byMaker/byBody}-->
+						<li  onclick="changeTargetCarSelectGrade('{val carGradeList/byMaker/byBody/modelNameEng}','{val carGradeList/byMaker/byBody/carGradeID}')" <!--{loop_count_between carGradeList/byMaker/byBody=4}-->class="liMargin"<!--{/loop_count_between}-->><a href="javascript:void(0)"  class="faChevronRight" ><span>{val carGradeList/byMaker/byBody/modelName}</span></a></li>
+					<!--{/loop}-->
+					</ul>
+				</div>
+				<!--{/set}-->
+			<!--{/loop}-->
+			</div>
+		<!--{/loop}-->
+	<!--{/set}-->
+<!--{unset carGradeNum}-->
+		<div class="notCarData">
+			<p>
+			申し訳ございません。<br />
+			ご指定の条件のクルマは該当いたしませんでした。
+			</p>
+		</div>
+<!--{/unset}-->
+	</div>
+	<div class="searchBtn">
+		<a href="javascript:void(0)" data-linkName="no" onclick="tb_remove();$(document).scrollTop(0);" class="faTimesCircle">キャンセル</a>
+		<a href="javascript:void(0)" data-linkName="back" onclick="$('#selectMakerTab').css({display: 'block'});$('#selectModelTab').css({display: 'none'});$('#TB_ajaxContent').scrollTop(0);" class="faReply">価格・メーカー・タイプ選択に戻る</a>
+		<div class="carGradeNum">該当数<span>{val carGradeNum}</span>車種</div>
+	<!--/.searchBtn--></div>
+<!--/#changeTargetCar--></div>
+
+<script type="text/javascript">
+$(function(){
+	// 初期表示時（先頭１件以外非表示）
+	var isFirst  = true;
+	var isFirstM = true;
+
+	$("#makerList div").each(function(){
+		if( $(this).hasClass("makerArea") ){
+			if( isFirst ){
+				isFirst = false;
+			}else{
+				$(this).hide();
+			}
+		}
+	});
+	$("#makerChange span").each(function(){
+		if( $(this).hasClass("makerArea") ){
+			if( isFirstM ){
+				isFirstM = false;
+			}else{
+				$(this).find(".setCol").addClass("disabledMaker");
+			}
+		}
+	});
+
+	// メーカーボタン選択時
+	$("#makerChange .makerArea").each(function(){
+		$(this).on("click", function(){
+			// 一旦全メーカーを非表示
+			$("#makerList div").each(function(){
+				if( $(this).hasClass("makerArea") ){
+					$(this).hide();
+				}
+			});
+			$("#makerChange span").each(function(){
+				if( $(this).hasClass("makerArea") ){
+					$(this).find(".setCol").addClass("disabledMaker");
+				}
+			});
+
+			// クリックを行ったメーカーを表示
+			var targetArea = $(this).find(":hidden[name='targetArea']").val();
+			$(this).find(".setCol").removeClass("disabledMaker");
+			$("#makerList div").each(function(){
+				if( $(this).hasClass( targetArea ) ){
+					$(this).show();
+				}
+			});
+		});
+	});
+
+	/* マウスオーバー設定 */
+	setMouseOverEvent();
+
+});
+</script>

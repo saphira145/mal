@@ -1,0 +1,95 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input menu_login=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼ログの検索</h2>
+	<p class="actionMsg">検索内容を選択して「検索」ボタンを押してください。</p>
+	<form name="form_search" method="get" action="{val UNIT_URL}/ls/">
+		<input type="hidden" name="st" value="ls" />
+		<input type="hidden" name="pageNum" value="" />
+		<table class="tblForm">
+		<tr>
+			<th class="w150">ログ種別</th>
+			<td>
+				<select name="searchLogType">
+				<!--{loop logTypeList}-->
+						<option value="{val logTypeList/id}"<!--{set logTypeList/selected}--> selected="selected"<!--{/set}-->>{val logTypeList/name}</option>
+				<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th class="w150">形式</th>
+			<td>
+<!--{loop loginTypeList}-->
+				<label><input type="radio" name="searchType" value="{val loginTypeList/id}"<!--{set loginTypeList/selected}--> checked="checked"<!--{/set}--> />&nbsp;{val loginTypeList/name}</label>&nbsp;
+<!--{/loop}-->
+			</td>
+		</tr>
+		<tr>
+			<th class="w150">対象年月</th>
+			<td>
+					<input type="text" class="w10" name="searchYear" value="{val searchYear}" />&nbsp;年
+					<select name="searchMonth">
+						<option value=""></option>
+					<!--{loop monthList}-->
+						<option value="{val monthList/id}"<!--{set monthList/selected}--> selected="selected"<!--{/set}-->>{val monthList/name}</option>
+					<!--{/loop}-->
+					</select>&nbsp;月
+			</td>
+		</tr>
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input class="btnW01" type="button" value="クリア" onclick="clear_form( this.form ); return;" />
+			<input class="btnW01" type="button" onClick="actionSubmit(); return false;" value="検索" />
+		</div>
+	</form>
+</div>
+
+<div class="contentSection">
+	<h2 class="mrgB_10">▼ログ一覧</h2>
+	<div class="LoginLog">
+	<div class="dv_csvBtn">
+        <form name="form_csv" method="get" action="{val UNIT_URL}">
+            <input type="hidden" name="st" value="csv" />
+            <input type="hidden" name="searchLogType" value="{val searchLogType}" />
+            <input type="hidden" name="searchType" value="{val searchType}" />
+            <input type="hidden" name="searchYear" value="{val searchYear}" />
+            <input type="hidden" name="searchMonth" value="{val searchMonth}" />
+		    <input class="btnW01" type="button" onClick="actionCsvSubmit(); return false;" value="CSVダウンロード" />&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;{val startDate}&nbsp;～&nbsp;{val endDate}&nbsp;&nbsp;&nbsp;までのログインログ
+        </form>
+	</div>
+    <form name="form_detail" method="get" action="{val UNIT_URL}/dtl">
+        <input type="hidden" name="st" value="" />
+        <input type="hidden" name="date" value="" />
+        <input type="hidden" name="logType" value="" />
+    </form>
+<!--{set loginLogListDisp}-->
+		{file parts/pageControl.tmp}
+		<p>合計&nbsp;：&nbsp;{val loginLogList.total|number_format}&nbsp;名</p>
+		<table class="tblList">
+			<tr>
+				<th class="w120">ログイン年月</th>
+				<th class="w100">利用者数</th>
+				<th class="w70">機能</th>
+			</tr>
+<!--{loop loginLogList.list}-->
+			<tr>
+				<td class="txt_right">{val loginLogList.list/date.year}年&nbsp;<!--{set loginLogList.list/date.month}-->{val loginLogList.list/date.month}月&nbsp;<!--{/set}--><!--{set loginLogList.list/date.day}-->{val loginLogList.list/date.day}日<!--{/set}--></td>
+				<td class="txt_right">{val loginLogList.list/cnt|number_format} 名</td>
+				<td class="txt_center"><!--{unset logTypeAll}--><!--{set loginLogList.list/loginLog}--><input type="button"  class="btnW03" value="詳細" onclick="actionDetailSubmit('{val loginLogList.list/date.year}-<!--{set loginLogList.list/date.month}-->{val loginLogList.list/date.month}-<!--{/set}--><!--{set loginLogList.list/date.day}-->{val loginLogList.list/date.day}<!--{/set}-->', {val searchLogType}); return false;" /><!--{/set}--><!--{/unset}--></td>
+			</tr>
+<!--{/loop}-->
+		</table>
+		{file parts/pageControl.tmp}
+<!--{/set}-->
+<!--{unset loginLogListDisp}-->
+	<p class="txt_result">登録されているデータはありません。</p>
+<!--{/unset}-->
+	</div>
+</div>
+{input jsList/jsName=/_common/js/loginLog.js}
+

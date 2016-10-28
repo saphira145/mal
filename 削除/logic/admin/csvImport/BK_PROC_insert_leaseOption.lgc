@@ -1,0 +1,170 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	ini_set("memory_limit", "256M");
+	ini_set("post_max_size", "32M");
+	ini_set("upload_max_filesize", "32M");
+	ini_set("max_execution_time", "120");
+	ini_set("max_input_time", "120");
+
+	// パスの設定
+	$filePath  = "{$path["csv"]["tmpDir"]}/{$input["tmpFaqCSVName"]}";
+
+	// ファイルが無ければ終了
+	if( !file_exists( $filePath ) ) {
+		return;
+	}
+
+	// CSVファイル読み込み
+	$i   = 0;
+	$row = 1;
+	$handle = fopen ( $filePath, "r" );
+	while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+		if( $row == 1){
+			$row++;
+			continue;
+		}
+
+		// 文字コード変換（SJIS-winからUTF-8に変換）
+		$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+		unset( $insertData );
+		// 登録データ取得
+		$insertData = get_insertData( $CSVData );
+
+		// データ登録
+		if( count( $insertData ) > 0 ) {
+
+			$class["csvImport_1"]->insert_leaseOption( $insertData );
+
+			// 登録したデータの総件数
+			$output["entryCount"] += 1;
+
+		}
+
+		// 読み込み行のカウントアップ
+		$row++;
+	}
+
+	fclose($handle);
+
+	// ファイルの削除
+	if( file_exists( $filePath ) ) {
+		@unlink( $filePath );
+	}
+
+	// 最終更新日時更新
+	update_datetimeBySelectTableIDFiledName( "leaseOption", "work" );
+
+	// 本番設定されているか？（されていれば日付を取得）
+	$reserveDatetime = get_newReserveDatetime();
+
+	if( $reserveDatetime != "" ) {
+		// 本番更新日時更新
+		update_datetimeBySelectTableIDFiledName( "leaseOption", "reserve", $reserveDatetime );
+	}
+
+
+	// 一時アーカイブファイルの削除
+	$class["csvImport_1"]->delete_tmpCSVFile();
+
+
+
+
+
+	/*--------------------------------------------------
+	  データ登録
+	---------------------------------------------------*/
+	function get_insertData ( $CSVData ) {
+
+		global $class;
+
+		unset( $data );
+
+		foreach( $CSVData as $key => $val ) {
+
+			// 余分な空白はとる
+			$val = $class["csvImport_1"]->conv_textData( $val );
+
+			// メーカーＣＤ（１フィールド目）
+			if( $key == 0 ) {
+				$makerCode = $val;
+			}
+
+			// メーカー名（２フィールド目）
+			if( $key == 1 ) {
+				$makerName = $val;
+			}
+
+			// 車種ＣＤ（３フィールド目）
+			if( $key == 2 ) {
+				$modelCode = $val;
+			}
+
+			// 車種名（４フィールド目）
+			if( $key == 3 ) {
+				$modelName = $val;
+			}
+
+			// オプション項目（５フィールド目）
+			if( $key == 4 ) {
+				$optionItem = $val;
+			}
+
+			// オプションID（６フィールド目）
+			if( $key == 5 ) {
+				$optionID = $val;
+			}
+
+			// オプション名（７フィールド目）
+			if( $key == 6 ) {
+				$optionName = $val;
+			}
+
+			// オプション説明（８フィールド目）
+			if( $key == 7 ) {
+				$optionDescription = $val;
+			}
+
+			// メーカー希望価格（９フィールド目）
+			if( $key == 8 ) {
+				$taxIncludedPrice = $val;
+			}
+
+			// 調達価格（１０フィールド目）
+			if( $key == 9 ) {
+				$procurementCost = $val;
+			}
+
+			// キャンペーンフラグ（１１フィールド目）
+			if( $key == 10 ) {
+				$campaignFlg = $val;
+			}
+		}
+
+		// 登録用配列に入れ替える
+		$data["optionID"]          = $optionID;
+		$data["makerCode"]         = $makerCode;
+		$data["modelCode"]         = $modelCode;
+		$data["optionItem"]        = $optionItem;
+		$data["optionName"]        = $optionName;
+		$data["optionDescription"] = $optionDescription;
+		$data["taxIncludedPrice"]  = $taxIncludedPrice;
+		$data["procurementCost"]   = $procurementCost;
+		$data["campaignFlg"]       = $campaignFlg;
+
+		return $data;
+	}
+
+
+
+
+
+
+
+
+?>

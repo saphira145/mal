@@ -1,0 +1,66 @@
+<?php
+
+	// ステータスプルダウン取得
+	$output["levelList"]            = get_levelSelect( $output["memberInfo"]["level"] );
+
+	// 権限レベルの取得
+	$output["authorityLevelList"] = get_authorityLevelSelectMulti( $output["memberInfo"]["authorityLevel"] );
+
+	// 所属グループの取得
+	$output["salesGroupList"]     = get_salesGroupSelectMulti( $output["memberInfo"]["salesGroup"] );
+
+
+	//** グループ管理者用の名称
+	// 権限レベルの取得
+	$output["authorityLevelName"] = get_authorityLevelName( $output["memberInfo"]["authorityLevel"] );
+
+	// 所属グループ名の取得
+	$output["salesGroupName"]     = get_salesGroupName( $output["memberInfo"]["salesGroup"] );
+
+	// パスワード有効日数のプルダウン取得
+	$output["expirationDay"]      = get_expirationDaySelectMulti( $output["memberInfo"]["expirationDay"] );
+
+	// 各項目に日付を設定
+	for( $i = 0, $iMax = count($output["expirationDay"]); $i < $iMax; $i++ ){
+		$expirationDayInfo = get_expirationDayInfo($output["expirationDay"][$i]["id"]);
+
+		if( !empty($expirationDayInfo["num"]) ){
+			$output["expirationDay"][$i]["day"] = date("Y-m-d", strtotime( $expirationDayInfo["num"]. " day" ));
+		} else {
+			// 延長なしの場合、デフォルト(登録されている日付)を設定
+			if( count($output["memberInfo"]["defaultExpirationDatetime"]) == 1 ){
+				$output["memberInfo"]["defaultExpirationDatetime"] = db2val_date($output["memberInfo"]["defaultExpirationDatetime"]);
+			}
+			$defaultExpirationDatetime = $output["memberInfo"]["defaultExpirationDatetime"];
+			$output["expirationDay"][$i]["day"] = date("Y-m-d" , mktime(0, 0, 0, $defaultExpirationDatetime["month"], $defaultExpirationDatetime["day"], $defaultExpirationDatetime["year"]));
+		}
+	}
+
+	// パスワード有効日数
+	if( empty($output["memberID"]) ){
+		// 新規登録時
+		$output["memberInfo"]["expirationDatetime"] = db2val_dateType1( date("Y-m-d", strtotime(  $ini["expirationDays" ]. " day"  )) );
+		$output["memberInfo"]["expirationDays"]     = $ini["expirationDays" ];
+
+	} else {
+		// 更新時
+
+		// 選択した日数を選択
+		if( empty($output["memberInfo"]["expirationDatetime"]) ){
+			$output["memberInfo"]["expirationDatetime"]    = $output["expirationDay"][$output["memberInfo"]["expirationDay"]]["day"];
+			$output["memberInfo"]["expirationDatetime"] = db2val_date($output["memberInfo"]["expirationDatetime"]);
+		} 
+		else if( count($output["memberInfo"]["expirationDatetime"]) == 1){
+			$output["memberInfo"]["expirationDatetime"] = db2val_date($output["memberInfo"]["expirationDatetime"]);
+		}
+
+		// ステータスチェック
+		if( $output["memberInfo"]["level"] == "100" || $ini["systemLevel"]["salesGroup"] == $output["memberInfo"]["salesGroup"]){
+			$output["memberInfo"]["expirationDisablFlg"] = 1;
+		}
+
+		// メッセージ
+		$output["memberInfo"] = $class["memberAdmin_1"]->convert_expirationDay( $output["memberInfo"] );
+	}
+
+?>

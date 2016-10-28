@@ -1,0 +1,78 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// ファイル名取得
+	$output["fileName"] = $ini["csvDownload"]["fileName"]["leaseOption"];
+
+	// ディレクトリパスの設定
+	$dirPath  = $path["csv"]["tmpDir"];
+
+	// ファイルパスの設定
+	$output["filePath"] = "$dirPath/{$output["fileName"]}";
+
+	// すでにあれば削除
+	if( file_exists ( $output["filePath"] ) ) {
+		@unlink( $output["filePath"] );
+	}
+
+	// ファイルの作成
+	$fp = fopen( $output["filePath"], "w" );
+
+	$txts  = "\"メーカーコード\",\"メーカー名\",\"車種コード\",\"車種名\",\"＊項目(0=おすすめ、1=その他純正品、2=その他社外品)＊\",\"＊表示順＊\",\"＊オプション名＊\",\"＊オプション説明＊\",\"＊メーカー希望価格＊\",\"＊調達価格＊\",\"＊キャンペーン(0=なし、1=あり)＊\"";
+
+	// 配列対応（SJIS-winに変換）
+	$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+	fputs( $fp, $txts . "\n" );
+	fclose( $fp );
+
+	// データ取得＆出力
+	$makerList = get_makerSelect();
+
+	for( $i = 0, $iMax = count($makerList); $i < $iMax; $i++ ){
+		// オプションリストの取得
+		$list = $class["csvDownload_1"]->get_leaseOptionList( $makerList[$i] );
+
+		if( count( $list ) == 0 ) {
+			continue;
+		}
+
+		// CSV データ作成
+		for( $j=0; $j<count( $list ); $j++ ) {
+
+			$fp = fopen( $output["filePath"], "a" );
+
+			unset( $txt, $systemName );
+
+			$txt[] = "\"" . $list[$j]["makerCode"];
+			$txt[] =        $list[$j]["makerName"];
+			$txt[] =        $list[$j]["modelCode"];
+			$txt[] =        $list[$j]["modelName"];
+			$txt[] =        $list[$j]["optionItem"];
+			$txt[] =        $list[$j]["optionID"];
+			$txt[] =        $list[$j]["optionName"];
+			$txt[] =        $list[$j]["optionDescription"];
+			$txt[] =        $list[$j]["taxIncludedPrice"];
+			$txt[] =        $list[$j]["procurementCost"];
+			$txt[] =        $list[$j]["campaignFlg"];
+			$txts = join( $txt, "\",\"");
+			$txts = $txts . "\"\n";
+
+			// 配列対応（SJIS-winに変換）
+			$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+			fputs( $fp, $txts );
+			fclose( $fp );
+		}
+	}
+
+	// 古いＣＳＶは削除
+	$class["csvDownload_1"]->delete_tmpCSVFile();
+
+	// 配列対応（SJIS-winに変換）
+	$output["fileName"] = $class["csvDownload_1"]->mbConvertEncodingDeep( $output["fileName"], "UTF-8", "SJIS-win" );
+
+?>

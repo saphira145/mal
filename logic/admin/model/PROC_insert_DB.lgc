@@ -1,0 +1,22 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$class["modelAdmin_1"]->insert_DB( $output );
+
+	// 車種テーマ登録
+	for( $i = 0, $iMax = count($output["theme"]); $i < $iMax; $i++){
+		$class["themeAdmin_1"]->insert_carTheme( $output["theme"][$i]["themeID"], $output["modelInfo"]["makerCode"], $output["modelInfo"]["modelCode"] );
+	}
+
+
+
+
+
+
+
+
+?>

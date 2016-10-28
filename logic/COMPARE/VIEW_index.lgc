@@ -1,0 +1,573 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	/* -----------------------------------
+	   ＤＢ名取得
+	----------------------------------- */
+	$output["PHOTO_DIR"] = get_activeDirName ();
+
+	/* -----------------------------------
+	   検索条件
+	----------------------------------- */
+	// メーカー名の取得
+	for( $i = 0, $iMax = count($output["search"]["maker"]); $i < $iMax; $i++ ){
+		$output["search"]["maker"][$i]["name"] = get_makerName( $output["search"]["maker"][$i]["ID"] , "active");
+
+		$tmp_search["maker"][] = sprintf( "M%03d", $output["search"]["maker"][$i]["ID"] );
+	}
+
+	// ボディタイプ名の取得
+	for( $i = 0, $iMax = count($output["search"]["type"]); $i < $iMax; $i++ ){
+		$output["search"]["type"][$i] = get_bodyTypeInfo( $output["search"]["type"][$i]["ID"]);
+		$output["search"]["type"][$i]["name"] = get_bodyTypeName( $output["search"]["type"][$i]["ID"]);
+
+		$tmp_search["type"][] = sprintf( "B%03d", $output["search"]["type"][$i]["ID"] );
+	}
+
+	// テーマ名の取得
+	for( $i = 0, $iMax = count($output["search"]["theme"]); $i < $iMax; $i++ ){
+		// モードによって取得先を決定する
+		$testFlg = get_dispModeFlg();
+		$DBName = "work";
+		if( $testFlg != 1) {
+			$DBName = "active";
+		}
+		$get_themeName = get_themeName( $output["search"]["theme"][$i]["ID"] , $DBName);
+
+
+		$output["search"]["theme"][$i]["name"] = $get_themeName["themeName"];
+		$chkSearch[] = $output["search"]["theme"][$i]["ID"];
+
+		$tmp_search["theme"][] = sprintf( "T%03d", $output["search"]["theme"][$i]["ID"] );
+	}
+
+	// 価格名の取得
+	for( $i = 0, $iMax = count($output["search"]["price"]); $i < $iMax; $i++ ){
+		$output["search"]["price"][$i] = get_priceInfo( $output["search"]["price"][$i]["ID"]);
+
+		$tmp_search["price"][] = sprintf( "P%03d", $output["search"]["price"][$i]["ID"] );
+	}
+
+
+	// 戻り先URLの設定
+	$output["search"]["backURL"]["maker"] = "MMM";
+	$output["search"]["backURL"]["type"]  = "BBB";
+	$output["search"]["backURL"]["theme"] = "TTT";
+	$output["search"]["backURL"]["price"] = "PPP";
+	if( count($tmp_search) > 0 ){
+		foreach( $tmp_search as $key => $val){
+			$output["search"]["backURL"][$key] = @implode( "-", $val );
+		}
+	}
+
+	/* -----------------------------------
+	   比較車種のグレード情報取得
+	----------------------------------- */
+	$modelInfoListNew = array();
+	$modelDataList    = array();
+	$carNum           = 0; 
+
+	foreach( array( $output["model1Info"], $output["model2Info"], $output["model3Info"], $output["model4Info"] ) as $modelInfo ){
+		$carNum++;
+		
+		
+		if( empty($modelInfo) ){
+			$modelInfo["carNum"]           = $carNum;
+			$modelInfo["notData"]          = "notData";
+			$modelInfo["makerCarName"]     = "---";
+			$modelInfo["changeTarget"]     = "設定";
+			$modelInfo["campaignScore"]    = get_campaignScoreName(9);
+			$modelInfo["carBodyPhotoName"] = "noCar";
+			$modelInfo["carGradeFlg"]      = "disabled";
+
+			$modelInfoListNew[] = $modelInfo;
+			$modelDataList[]    =$modelInfo;
+			
+			continue;
+		}
+		
+		$modelInfoNew = $modelInfo;
+		
+		$modelInfoNew                 = $class["modelUser_1"]->convert_info( $modelInfo );
+		$modelInfoNew["carNum"]       = $carNum;
+		$modelInfoNew["changeTarget"] = "変更";
+
+		// テーマ名の取得
+		unset($tmp_theme, $sCnt, $vCnt);
+		$tmp_theme["search"] = array();
+		$tmp_theme["val"] = array();
+		$sCnt = 0;
+		$vCnt = 0;
+		for( $i = 0, $iMax = count($modelInfo["theme"]); $i < $iMax; $i++ ){
+			$get_themeName = get_themeName( $modelInfo["theme"][$i]["themeID"] , "active");
+
+			if( !empty($chkSearch) && in_array( $modelInfo["theme"][$i]["themeID"], $chkSearch ) ){
+				$tmp_theme["search"][$sCnt]["ID"]   = $modelInfo["theme"][$i]["themeID"];
+				$tmp_theme["search"][$sCnt]["name"] = $get_themeName["themeName"];
+				$tmp_theme["search"][$sCnt]["search"] = 1;
+				$sCnt++;
+			} else {
+				$tmp_theme["val"][$vCnt]["ID"]   = $modelInfo["theme"][$i]["themeID"];
+				$tmp_theme["val"][$vCnt]["name"] = $get_themeName["themeName"];
+				$vCnt++;
+			}
+		}
+		$modelInfoNew["theme"] = array_merge($tmp_theme["search"],$tmp_theme["val"]);
+
+		// 車種グレードのプルダウン作成(代表車種グレードが設定されていない項目は削除)
+		$carGradeSelectList = get_carGradeSelect();
+		unset($tmp_carGradeSelectList);
+		$tmp_carGradeCodeList = array();
+		foreach( $carGradeSelectList as $listKey => $listVal){
+			foreach( $modelInfo["carGradeList"] as $key => $val){
+				if( $val["name"] == $listVal["ID"] ){
+					// 廉価対応（2WD,4WDと廉価に同じ代表車種グレードを設定した場合）
+					if( ($idx = array_search($val["ID"], $tmp_carGradeCodeList)) !== false ){
+						$tmp_gradeName = $class["carGradeUser_1"]->get_carGradeInfo( $val["ID"] );
+						$tmp_carGradeSelectList[$idx]["name"] .= "/" . $listVal["name"];
+						
+					}else{
+						$tmp_carGradeCodeList[] = $val["ID"];	// carGradeCode
+						
+						$tmp_carGradeSelectList[$key] = $carGradeSelectList[$listKey];
+						$tmp_carGradeSelectList[$key]["carGradeCode"] = $val["ID"];
+
+						// グレード名称設定
+						unset($tmp_gradeName);
+						$tmp_gradeName = $class["carGradeUser_1"]->get_carGradeInfo( $tmp_carGradeSelectList[$key]["carGradeCode"] );
+						$tmp_carGradeSelectList[$key]["gradeName"] = $tmp_gradeName["grade"];
+
+						if( $val["ID"] == $modelInfo["carGradeCode"] ){
+							$tmp_carGradeSelectList[$key]["selected"] = 1;
+							
+							// グレード名称設定
+							$modelInfoNew["gradeName"] = $tmp_gradeName["grade"];
+						}
+					}
+				}
+			}
+		}
+
+		$modelInfoNew["carGradeList"] = $tmp_carGradeSelectList;
+		$modelDataList[]              = $modelInfoNew;
+
+		// スペック
+		$modelInfoNew["spec"]         = $class["carGradeUser_1"]->convert_info( $modelInfoNew["spec"] );
+		$modelInfoNew["spec"]         = $class["carGradeUser_1"]->convert_disp( $modelInfoNew["spec"] );
+
+
+		$modelInfoListNew[] = $modelInfoNew;
+	}
+
+	list( $output["model1Info"], $output["model2Info"], $output["model3Info"], $output["model4Info"] ) = $modelInfoListNew;
+	$output["modelDataList"] = $modelDataList;
+
+	/* -----------------------------------
+	   HTMLタイトルの作成
+	----------------------------------- */
+	$carNum = 0; 
+	foreach( $output["modelDataList"] as $modelInfo ){
+		
+		if( !empty($modelInfo["makerName"]) ){
+			$tmp_modelList[$carNum]["makerName"] = $modelInfo["makerName"];
+			$tmp_modelList[$carNum]["modelName"] = $modelInfo["modelName"];
+
+			$tmp_gradeName = $class["carGradeUser_1"]->get_carGradeInfo( $modelInfo["carGradeCode"] );
+			$tmp_modelList[$carNum]["gradeName"] = $tmp_gradeName["grade"];
+			$carNum++;
+		}
+	}
+
+	// HTMLタイトルの作成
+	if ( count( $tmp_modelList ) > 0 ) {
+		foreach( $tmp_modelList as $list ){
+			$modelList[] =  @implode( " ", $list );
+		}
+		$output["title"]["modelList"] = mb_convert_kana(@implode(", ", $modelList), "asKV");
+	}
+
+
+	/* -----------------------------------
+	   見積りフォームの引数作成
+	----------------------------------- */
+	foreach( $output["modelDataList"] as $key => $modelInfo ){
+		unset($tmpEstimate);
+		$num = $key + 1;
+
+		if( empty($modelInfo["notData"]) ){
+			// 名称
+			$tmpEstimate["list"]["makerName"] = $modelInfo["makerName"];
+			$tmpEstimate["list"]["modelName"] = $modelInfo["modelName"];
+			$tmpEstimate["list"]["gradeName"] = $modelInfo["gradeName"];
+			$tmpEstimate["modelList"]         = @implode( " ", $tmpEstimate["list"] );
+			$tmpEstimate["name"]              = mb_convert_kana($tmpEstimate["modelList"], "asKV");
+			$output["estimate"]["c{$num}n"]   = $tmpEstimate["name"];
+
+			// 駆動方式(2WD、4WD)
+			switch( mb_convert_kana($modelInfo["spec"]["carGrade"]["driveSystem"], "as") ){
+				case "FF":
+				case "FR":
+				case "MR":
+				case "RR":
+					$tmpEstimate["driveSystem"] = 1;
+					break;
+				case "4WD":
+					$tmpEstimate["driveSystem"] = 2;
+					break;
+				default:
+					$tmpEstimate["driveSystem"] = 3;
+					break;
+			}
+			$output["estimate"]["c{$num}d"] = $tmpEstimate["driveSystem"];
+
+			// 排気量
+			$output["estimate"]["c{$num}e"] = $modelInfo["spec"]["carGrade"]["totalEmission"];
+
+		}
+	}
+
+
+	/* --------------------------------------------
+	   総件数取得
+	-------------------------------------------- */
+	$totalNum = get_totalNum();
+	$output["totalMaker"] = number_format( $totalNum["totalMaker"] );
+	$output["totalModel"] = number_format( $totalNum["totalModel"] );
+
+
+	/* -----------------------------------
+	   検索フォーム(ダイアログ用)
+	----------------------------------- */
+	// メーカーリスト
+	$output["searchForm"]["makerList"]    = get_makerSelect( $output["searchMakerCode"] , "active" );
+
+	// ボディタイプリスト取得
+	$output["searchForm"]["bodyTypeList"] = set_checked ( $ini["bodyType"], $output["searchBodyType"], "ID", "selected" );
+
+
+	/* -----------------------------------
+	   比較画面表示用の$output生成
+	----------------------------------- */
+	// 基本スペック情報
+	$settings = array(
+		array("itemDispName" => "グレード名称",			"itemName" => "gradeName"), 		// ダミー
+		array("itemDispName" => "車両本体価格", 		"itemName" => "taxIncludedPrice"), 
+		array("itemDispName" => "タイプ", 				"itemName" => "bodyModelName"), 
+		array("itemDispName" => "乗車定員", 			"itemName" => "capacity"), 
+		array("itemDispName" => "駆動方式／排気量", 	"itemName" => "driveSystem_totalEmission"), 
+		array("itemDispName" => "燃料消費率 JC08", 		"itemName" => "fuelConsumptionRateJC08mode"), 
+		array("itemDispName" => "燃料消費率 10-15", 	"itemName" => "fuelConsumptionRate10_15mode"), 
+		array("itemDispName" => "全長", 				"itemName" => "totalLength"), 
+		array("itemDispName" => "全幅", 				"itemName" => "totalWidth"), 
+		array("itemDispName" => "全高", 				"itemName" => "totalHeight"), 
+	);
+	$output["modelInfoList"]["carGrade1"] = setCompareObjHash("carGrade", $settings, $output);
+
+	// 型式タイプ
+	$settings = array(
+		array("itemDispName" => "車名型式", 			"itemName" => "carNameModel"), 
+		array("itemDispName" => "ルーフ形状", 			"itemName" => "roofModel"), 
+		array("itemDispName" => "ドア数", 				"itemName" => "door"), 
+		array("itemDispName" => "トランスミッション",	"itemName" => "transmission"), 
+		array("itemDispName" => "駆動方式名称", 		"itemName" => "driveSystemName"), 
+	);
+	$output["modelInfoList"]["carGrade2"] = setCompareObj("carGrade", $settings, $output);
+
+	// 寸法
+	$settings = array(
+		array("itemDispName" => "全長", 				"itemName" => "totalLength"), 
+		array("itemDispName" => "全幅", 				"itemName" => "totalWidth"), 
+		array("itemDispName" => "全高", 				"itemName" => "totalHeight"), 
+		array("itemDispName" => "室内寸法 長", 			"itemName" => "roomLength"), 
+		array("itemDispName" => "室内寸法 幅", 			"itemName" => "roomWidth"), 
+		array("itemDispName" => "室内寸法 高", 			"itemName" => "roomHeight"), 
+		array("itemDispName" => "ホイールベース", 		"itemName" => "wheelbase"), 
+		array("itemDispName" => "トレッド 前", 			"itemName" => "frontTread"), 
+		array("itemDispName" => "トレッド 後", 			"itemName" => "rearTread"), 
+		array("itemDispName" => "最低地上高", 			"itemName" => "minHeight"), 
+		array("itemDispName" => "種別", 				"itemName" => "type"), 
+	);
+	$output["modelInfoList"]["carGrade3"] = setCompareObj("carGrade", $settings, $output);
+
+	// 重量・定員
+	$settings = array(
+		array("itemDispName" => "車両重量", 			"itemName" => "vehicleWeight"), 
+		array("itemDispName" => "車両総重量", 			"itemName" => "vehicleTotalWeight"), 
+		array("itemDispName" => "乗車定員", 			"itemName" => "capacity"), 
+	);
+	$output["modelInfoList"]["carGrade4"] = setCompareObj("carGrade", $settings, $output);
+
+	// 性能
+	$settings = array(
+		array("itemDispName" => "最小回転半径", 		"itemName" => "turningCircle"), 
+		array("itemDispName" => "燃料消費率 JC08", 		"itemName" => "fuelConsumptionRateJC08mode"), 
+		array("itemDispName" => "燃料消費率 10-15", 	"itemName" => "fuelConsumptionRate10_15mode"), 
+		array("itemDispName" => "適合規制・認定レベル", "itemName" => "recognitionLevel"), 
+	);
+	$output["modelInfoList"]["carGrade5"] = setCompareObjHash("carGrade", $settings, $output);
+
+	// 諸装置
+	$settings = array(
+		array("itemDispName" => "駆動方式", 			"itemName" => "driveSystem"), 
+		array("itemDispName" => "ハンドル位置", 		"itemName" => "handlePosition"), 
+		array("itemDispName" => "ステアリングギヤ形式", "itemName" => "steeringGearModel"), 
+		array("itemDispName" => "サスペンション 前", 	"itemName" => "frontSuspension"), 
+		array("itemDispName" => "サスペンション 後", 	"itemName" => "rearSuspension"), 
+		array("itemDispName" => "主ブレーキ 前", 		"itemName" => "frontMainBrake"), 
+		array("itemDispName" => "主ブレーキ 後", 		"itemName" => "rearMainBrake"), 
+		array("itemDispName" => "タイヤ 前", 			"itemName" => "frontTire"), 
+		array("itemDispName" => "タイヤ 後", 			"itemName" => "rearTire"), 
+	);
+	$output["modelInfoList"]["carGrade6"] = setCompareObj("carGrade", $settings, $output);
+
+	// エンジン主要諸元
+	$settings = array(
+		array("itemDispName" => "エンジン型式", 		"itemName" => "engineModel"), 
+		array("itemDispName" => "種類・シリンダー数", 	"itemName" => "cylinderType"), 
+		array("itemDispName" => "エンジン種類", 		"itemName" => "engineKind"), 
+		array("itemDispName" => "気筒配列", 			"itemName" => "cylinderArr"), 
+		array("itemDispName" => "気筒数", 				"itemName" => "cylinderAmount"), 
+		array("itemDispName" => "バルブ数", 			"itemName" => "valveAmount"), 
+		array("itemDispName" => "シリンダー内径", 		"itemName" => "cylinderBore"), 
+		array("itemDispName" => "シリンダー行程", 		"itemName" => "cylinderStroke"), 
+		array("itemDispName" => "総排気量", 			"itemName" => "totalEmission"), 
+		array("itemDispName" => "圧縮比", 				"itemName" => "compressionRatio"), 
+		array("itemDispName" => "最高出力", 			"itemName" => "maxPower"), 
+		array("itemDispName" => "最大トルク", 			"itemName" => "maxTorque"), 
+		array("itemDispName" => "燃料供給装置", 		"itemName" => "fuelSupplySystem"), 
+		array("itemDispName" => "使用燃料", 			"itemName" => "useFuel"), 
+		array("itemDispName" => "給油口位置", 			"itemName" => "fillOpeningPosition"), 
+		array("itemDispName" => "タンク容量", 			"itemName" => "tankVolume"), 
+	);
+	$output["modelInfoList"]["carGrade7"] = setCompareObj("carGrade", $settings, $output);
+
+	// 視界
+	$settings = array(
+		array("itemDispName" => "HID", 								"itemName" => "xenonHeadlampDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["view"]["xenonHeadlampTypeNotDispFlg"]), 
+		array("itemDispName" => "プロジェクターヘッドランプ", 		"itemName" => "projectorHeadlampDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["projectorHeadlampTypeNotDispFlg"]), 
+		array("itemDispName" => "フォグランプ（フロント）", 		"itemName" => "frontFogLampDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["view"]["frontFogLampTypeNotDispFlg"]), 
+		array("itemDispName" => "フォグランプ（リヤ）", 			"itemName" => "rearFogLampDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["view"]["rearFogLampTypeNotDispFlg"]), 
+		array("itemDispName" => "バックビューモニター", 			"itemName" => "backViewMonitorDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["backViewMonitorTypeNotDispFlg"]), 
+		array("itemDispName" => "アクティブＡＦＳ", 				"itemName" => "activeAFSDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["view"]["activeAFSTypeNotDispFlg"]), 
+		array("itemDispName" => "オートライトシステム", 			"itemName" => "autoLightSystemDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["autoLightSystemTypeNotDispFlg"]), 
+		array("itemDispName" => "電動リモコンドアミラー", 			"itemName" => "remoteDoorMirrorDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["remoteDoorMirrorTypeNotDispFlg"]), 
+		array("itemDispName" => "電動格納式ドアミラー", 			"itemName" => "storageDoorMirrorDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["storageDoorMirrorTypeNotDispFlg"]), 
+		array("itemDispName" => "ヒーターミラー", 					"itemName" => "heaterMirrorDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["view"]["heaterMirrorTypeNotDispFlg"]), 
+		array("itemDispName" => "リバース電動ミラー", 				"itemName" => "reverseMirrorDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["view"]["reverseMirrorTypeNotDispFlg"]), 
+		array("itemDispName" => "ＵＶカットガラス（フロント）", 	"itemName" => "frontUVBlockGlassDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["frontUVBlockGlassTypeNotDispFlg"]), 
+		array("itemDispName" => "ＵＶカットガラス（リヤ）", 		"itemName" => "rearUVBlockGlassDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["rearUVBlockGlassTypeNotDispFlg"]), 
+		array("itemDispName" => "ＵＶカットガラス（サイド）", 		"itemName" => "sideUVBlockGlassDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["sideUVBlockGlassTypeNotDispFlg"]), 
+		array("itemDispName" => "ＵＶカットガラス（フロントドア）", "itemName" => "frontDoorUVBlockGlassDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["view"]["frontDoorUVBlockGlassTypeNotDispFlg"]), 
+		array("itemDispName" => "ＵＶカットガラス（リヤドア）", 	"itemName" => "rearDoorUVBlockGlassDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["view"]["rearDoorUVBlockGlassTypeNotDispFlg"]), 
+		array("itemDispName" => "プライバシーガラス（リヤ）", 		"itemName" => "rearPrivacyGlassDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["rearPrivacyGlassTypeNotDispFlg"]), 
+		array("itemDispName" => "プライバシーガラス（リヤドア）", 	"itemName" => "rearDoorPrivacyGlassDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["view"]["rearDoorPrivacyGlassTypeNotDispFlg"]), 
+		array("itemDispName" => "プライバシーガラス（サイド）", 	"itemName" => "sideDoorPrivacyGlassDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["view"]["sideDoorPrivacyGlassTypeNotDispFlg"]), 
+		array("itemDispName" => "コーナーリングランプ", 			"itemName" => "cornerRingLampDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["cornerRingLampTypeNotDispFlg"]), 
+		array("itemDispName" => "サイドブラインドモニター", 		"itemName" => "sideBlindMonitorDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["view"]["sideBlindMonitorTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤワイパー", 					"itemName" => "rearWiperDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["view"]["rearWiperTypeNotDispFlg"]), 
+	);
+	$output["modelInfoList"]["view"] = setCompareObj("view", $settings, $output);
+
+	// 運転席まわり
+	$settings = array(
+		array("itemDispName" => "本革巻きステアリング", 					"itemName" => "leatherSteeringDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["leatherSteeringTypeNotDispFlg"]), 
+		array("itemDispName" => "ステアリングスイッチ", 					"itemName" => "steeringSwitchDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["steeringSwitchTypeNotDispFlg"]), 
+		array("itemDispName" => "パワーステアリング", 						"itemName" => "powerSteeringDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["powerSteeringTypeNotDispFlg"]), 
+		array("itemDispName" => "テレスコピックステアリング", 				"itemName" => "telescopicSteeringDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["telescopicSteeringTypeNotDispFlg"]), 
+		array("itemDispName" => "チルトステアリング", 						"itemName" => "tiltSteeringDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["tiltSteeringTypeNotDispFlg"]), 
+		array("itemDispName" => "集中ドアロック", 							"itemName" => "concentratedDoorLockDisp",	"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["concentratedDoorLockTypeNotDispFlg"]), 
+		array("itemDispName" => "インテリジェントキー", 					"itemName" => "intelligentKeyDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["intelligentKeyTypeNotDispFlg"]), 
+		array("itemDispName" => "リモートコントロールエントリーシステム", 	"itemName" => "remoteEntrySystemDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["remoteEntrySystemTypeNotDispFlg"]), 
+		array("itemDispName" => "エンジンイモビライザー", 					"itemName" => "engineImmobilizerDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["engineImmobilizerTypeNotDispFlg"]), 
+		array("itemDispName" => "車間自動制御システム", 					"itemName" => "remoteEntrySystemDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["remoteEntrySystemTypeNotDispFlg"]), 
+		array("itemDispName" => "オートスピードコントロール装置", 	"itemName" => "ASCDDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["ASCDTypeNotDispFlg"]), 
+		array("itemDispName" => "タコメーター", 							"itemName" => "tachometerDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["tachometerTypeNotDispFlg"]), 
+		array("itemDispName" => "自発光メーター", 							"itemName" => "glowMeterDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["glowMeterTypeNotDispFlg"]), 
+		array("itemDispName" => "木目調パネル", 							"itemName" => "woodgrainPanelDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["woodgrainPanelTypeNotDispFlg"]), 
+		array("itemDispName" => "カーボン調パネル", 						"itemName" => "carbonPanelDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["carbonPanelTypeNotDispFlg"]), 
+		array("itemDispName" => "ピアノ調パネル", 							"itemName" => "pianoPanelDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["pianoPanelTypeNotDispFlg"]), 
+		array("itemDispName" => "メタリック調パネル", 						"itemName" => "metallicPanelDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["metallicPanelTypeNotDispFlg"]), 
+		array("itemDispName" => "パワーウインドウ", 						"itemName" => "powerWindowDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatCircumference"]["powerWindowTypeNotDispFlg"]), 
+	);
+	$output["modelInfoList"]["seatCircumference"] = setCompareObj("seatCircumference", $settings, $output);
+
+	// 空調
+	$settings = array(
+		array("itemDispName" => "クーラー", 								"itemName" => "coolerDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["coolerTypeNotDispFlg"]), 
+		array("itemDispName" => "エアコン", 								"itemName" => "airConditionerDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["airConditionerTypeNotDispFlg"]), 
+		array("itemDispName" => "フルオートエアコン", 						"itemName" => "fullAirConditionerDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["fullAirConditionerTypeNotDispFlg"]), 
+		array("itemDispName" => "デュアルエアコン", 						"itemName" => "dualAirConditionerDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["dualAirConditionerTypeNotDispFlg"]), 
+		array("itemDispName" => "クリーンフィルター", 						"itemName" => "cleanFilterDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["cleanFilterTypeNotDispFlg"]), 
+		array("itemDispName" => "除菌イオン",	 							"itemName" => "pureTronDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["pureTronTypeNotDispFlg"]), 
+		array("itemDispName" => "花粉フィルター", 							"itemName" => "pollenFilterDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["pollenFilterTypeNotDispFlg"]), 
+		array("itemDispName" => "新脱臭機能付クリーンフィルター", 			"itemName" => "deodorizationCleanFilterDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["deodorizationCleanFilterTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤヒーターダクト", 						"itemName" => "rearHeaterDuctDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["rearHeaterDuctTypeNotDispFlg"]), 
+		array("itemDispName" => "マイルドフローシステム", 					"itemName" => "mildFlowSystemDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["airConditioning"]["mildFlowSystemTypeNotDispFlg"]), 
+	);
+	$output["modelInfoList"]["airConditioning"] = setCompareObj("airConditioning", $settings, $output);
+
+	// オーディオ
+	$settings = array(
+		array("itemDispName" => "ＡＭ電子チューナーラジオ", 				"itemName" => "AMRadioDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["AMRadioTypeNotDispFlg"]), 
+		array("itemDispName" => "ＦＭ電子チューナーラジオ", 				"itemName" => "FMRadioDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["FMRadioTypeNotDispFlg"]), 
+		array("itemDispName" => "カセット", 								"itemName" => "cassetteDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["cassetteTypeNotDispFlg"]), 
+		array("itemDispName" => "ＣＤ", 									"itemName" => "CDDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["CDTypeNotDispFlg"]), 
+		array("itemDispName" => "ＭＤ", 									"itemName" => "MDDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["MDTypeNotDispFlg"]), 
+		array("itemDispName" => "ＤＶＤビデオ再生", 						"itemName" => "DVDDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["DVDTypeNotDispFlg"]), 
+		array("itemDispName" => "ＴＶ", 									"itemName" => "TVDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["TVTypeNotDispFlg"]), 
+		array("itemDispName" => "ナビゲーションシステム", 					"itemName" => "naviDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["naviTypeNotDispFlg"]), 
+		array("itemDispName" => "スピーカー", 								"itemName" => "speakerDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["speakerTypeNotDispFlg"]), 
+		array("itemDispName" => "アンテナ", 								"itemName" => "antennaDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["antennaTypeNotDispFlg"]), 
+		array("itemDispName" => "ETCユニット", 								"itemName" => "ETCDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["ETCTypeNotDispFlg"]), 
+		array("itemDispName" => "外部接続端子", 							"itemName" => "ExternalJoinTerminalDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["ExternalJoinTerminalTypeNotDispFlg"]), 
+		array("itemDispName" => "ミュージック録音再生", 					"itemName" => "musicRecordDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["musicRecordTypeNotDispFlg"]), 
+		array("itemDispName" => "ハンズフリーフォン", 						"itemName" => "handsFreeDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["audio"]["handsFreeTypeNotDispFlg"]), 
+	);
+	$output["modelInfoList"]["audio"] = setCompareObj("audio", $settings, $output);
+
+	// シート・内装関係変換
+	$settings = array(
+		array("itemDispName" => "シート地", 								"itemName" => "seatGroundDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["seatGroundTypeNotDispFlg"]), 
+		array("itemDispName" => "運転席・助手席パワーシート", 				"itemName" => "powerSeatDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["powerSeatTypeNotDispFlg"]), 
+		array("itemDispName" => "セカンドパワーシート", 					"itemName" => "secondPowerSeatDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["secondPowerSeatTypeNotDispFlg"]), 
+		array("itemDispName" => "シートリフター", 							"itemName" => "seatLifterDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["seatLifterTypeNotDispFlg"]), 
+		array("itemDispName" => "フロントアームレスト", 					"itemName" => "frontArmWrestDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["frontArmWrestTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤ（セカンド）アームレスト", 			"itemName" => "secondArmWrestDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["secondArmWrestTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤ（セカンド）シートリクライニング", 	"itemName" => "secondSeatRecliningDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["secondSeatRecliningTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤ（セカンド）シートスライド", 			"itemName" => "secondSeatSlideDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["secondSeatSlideTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤ（セカンド）シート機構", 				"itemName" => "secondSeatMechanismDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["secondSeatMechanismTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤ（セカンド）シート形状", 				"itemName" => "secondSeatShapeDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["secondSeatShapeTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤ（セカンド）可倒式シート", 			"itemName" => "secondFoldingSeatShapeDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["secondFoldingSeatShapeTypeNotDispFlg"]), 
+		array("itemDispName" => "サードアームレスト", 						"itemName" => "thirdArmWrestDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["thirdArmWrestTypeNotDispFlg"]), 
+		array("itemDispName" => "サードシートスライド", 					"itemName" => "thirdSeatSlideDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["thirdSeatSlideTypeNotDispFlg"]), 
+		array("itemDispName" => "サードシートリクライニング", 				"itemName" => "thirdSeatRecliningDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["thirdSeatRecliningTypeNotDispFlg"]), 
+		array("itemDispName" => "サードシート機構", 						"itemName" => "thirdSeatMechanismDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["thirdSeatMechanismTypeNotDispFlg"]), 
+		array("itemDispName" => "サードシート形状", 						"itemName" => "thirdSeatShapeDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["thirdSeatShapeTypeNotDispFlg"]), 
+		array("itemDispName" => "サードパワーシート", 						"itemName" => "thirdPowerSeatDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["thirdPowerSeatTypeNotDispFlg"]), 
+		array("itemDispName" => "サード可倒式シート", 						"itemName" => "thirdFoldingSeatShapeDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["thirdFoldingSeatShapeTypeNotDispFlg"]), 
+		array("itemDispName" => "シートアレンジ", 							"itemName" => "seatArrangementDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["seatArrangementTypeNotDispFlg"]), 
+		array("itemDispName" => "シートトレイ", 							"itemName" => "seatTrayDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["seatTrayTypeNotDispFlg"]), 
+		array("itemDispName" => "オットマン", 								"itemName" => "ottomanDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["ottomanTypeNotDispFlg"]), 
+		array("itemDispName" => "オートドライビングポジションメモリー", 	"itemName" => "autoDrivingPositionMemoryDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["autoDrivingPositionMemoryTypeNotDispFlg"]), 
+		array("itemDispName" => "車内電源", 								"itemName" => "carInPowerDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["carInPowerTypeNotDispFlg"]), 
+		array("itemDispName" => "シートバックポケット", 					"itemName" => "seatBackPocketDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["seatBackPocketTypeNotDispFlg"]), 
+		array("itemDispName" => "ヒーターシート", 							"itemName" => "heaterSeatDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["heaterSeatTypeNotDispFlg"]), 
+		array("itemDispName" => "エアコンディションシート", 				"itemName" => "airConditionerSeatDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["airConditionerSeatTypeNotDispFlg"]), 
+		array("itemDispName" => "床下収納", 								"itemName" => "floorStorageDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["seatInterior"]["floorStorageTypeNotDispFlg"]), 
+	);
+	$output["modelInfoList"]["seatInterior"] = setCompareObj("seatInterior", $settings, $output);
+
+	// 外装
+	$settings = array(
+		array("itemDispName" => "チルトアップルーフ", 						"itemName" => "tiltuproofDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["tiltuproofTypeNotDispFlg"]), 
+		array("itemDispName" => "ガラスサンルーフ", 						"itemName" => "glassSunroofDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["glassSunroofTypeNotDispFlg"]), 
+		array("itemDispName" => "ツインサンルーフ", 						"itemName" => "twinSunroofDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["twinSunroofTypeNotDispFlg"]), 
+		array("itemDispName" => "ルーフレール", 							"itemName" => "roofRailDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["roofRailTypeNotDispFlg"]), 
+		array("itemDispName" => "オートスライドドア", 						"itemName" => "autoSlideDoorDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["autoSlideDoorTypeNotDispFlg"]), 
+		array("itemDispName" => "フロントプロテクター", 					"itemName" => "frontProtectorDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["frontProtectorTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤプロテクター", 						"itemName" => "rearProtectorDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["rearProtectorTypeNotDispFlg"]), 
+		array("itemDispName" => "サイドシルプロテクター", 					"itemName" => "sideProtectorDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["sideProtectorTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤガラス開閉機構（＝ガラスハッチ）", 	"itemName" => "rearGlassHatchDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["exterior"]["rearGlassHatchTypeNotDispFlg"]), 
+	);
+	$output["modelInfoList"]["exterior"] = setCompareObj("exterior", $settings, $output);
+
+	// 足まわり
+	$settings = array(
+		array("itemDispName" => "４ＷＡＳ", 								"itemName" => "4WASDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["footSurroundings"]["4WASTypeNotDispFlg"]), 
+		array("itemDispName" => "強化ブレーキ", 							"itemName" => "powerfulBrakeDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["footSurroundings"]["powerfulBrakeTypeNotDispFlg"]), 
+		array("itemDispName" => "強化サスペンション", 						"itemName" => "powerfulSuspensionDisp", "NotDispFlg" => $output["model1Info"]["spec"]["footSurroundings"]["powerfulSuspensionTypeNotDispFlg"]), 
+		array("itemDispName" => "アルミロードホイール", 					"itemName" => "aluminumWheelDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["footSurroundings"]["aluminumWheelTypeNotDispFlg"]), 
+		array("itemDispName" => "スペアタイヤ", 							"itemName" => "spareTireDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["footSurroundings"]["spareTireTypeNotDispFlg"]), 
+	);
+	$output["modelInfoList"]["footSurroundings"] = setCompareObj("footSurroundings", $settings, $output);
+
+	// 安全
+	$settings = array(
+		array("itemDispName" => "運転席SRSエアバックシステム", 										"itemName" => "driverSeatSRSAirBackSystemDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["driverSeatSRSAirBackSystemTypeNotDispFlg"]), 
+		array("itemDispName" => "助手席SRSエアバックシステム", 										"itemName" => "passengerSeatSRSAirBackSystemDisp", 	"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["passengerSeatSRSAirBackSystemTypeNotDispFlg"]), 
+		array("itemDispName" => "前席SRSサイドエアバックシステム（SRSカーテンエアバックシステム）", "itemName" => "frontSRSSideAirBackSystemDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["frontSRSSideAirBackSystemTypeNotDispFlg"]), 
+		array("itemDispName" => "後席SRSサイドエアバックシステム（SRSカーテンエアバックシステム）", "itemName" => "rearSRSSideAirBackSystemDisp", 		"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["rearSRSSideAirBackSystemTypeNotDispFlg"]), 
+		array("itemDispName" => "ABS（アンチロックブレーキシステム）", 								"itemName" => "ABSDisp", 							"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["ABSTypeNotDispFlg"]), 
+		array("itemDispName" => "ブレーキアシスト", 												"itemName" => "brakeAssistDisp", 					"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["brakeAssistTypeNotDispFlg"]), 
+		array("itemDispName" => "トラクションコントロールシステム", 							"itemName" => "TCSDisp", 							"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["TCSTypeNotDispFlg"]), 
+		array("itemDispName" => "ビークルダイナミクスコントロール", 							"itemName" => "VDCDisp", 							"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["VDCTypeNotDispFlg"]), 
+		array("itemDispName" => "プリテンショナーシートベルト", 									"itemName" => "pretensionerSeatBeltDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["pretensionerSeatBeltTypeNotDispFlg"]), 
+		array("itemDispName" => "フォースリミッターシートベルト", 									"itemName" => "forceLimiterSeatBeltDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["forceLimiterSeatBeltTypeNotDispFlg"]), 
+		array("itemDispName" => "チャイルドシート用アンカー", 										"itemName" => "childSeatAnchorDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["childSeatAnchorTypeNotDispFlg"]), 
+		array("itemDispName" => "ハイマウントストップランプ", 										"itemName" => "highMountStoplampDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["highMountStoplampTypeNotDispFlg"]), 
+		array("itemDispName" => "後席ELR付3点式シートベルト", 										"itemName" => "rearELRSeatBeltDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["rearELRSeatBeltTypeNotDispFlg"]), 
+		array("itemDispName" => "挟み込み防止機能付パワーウインドウ", 								"itemName" => "scissorsPowerWindowDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["scissorsPowerWindowTypeNotDispFlg"]), 
+		array("itemDispName" => "衝突安全ボディ", 													"itemName" => "safetyStructureBodyDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["safetyStructureBodyTypeNotDispFlg"]), 
+		array("itemDispName" => "プリクラッシュシートベルト", 										"itemName" => "priCrashSeatBeltDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["priCrashSeatBeltTypeNotDispFlg"]), 
+		array("itemDispName" => "プリクラッシュブレーキアシスト", 									"itemName" => "priCrashBrakeAssistDisp", 			"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["priCrashBrakeAssistTypeNotDispFlg"]), 
+		array("itemDispName" => "盗難防止アラーム", 												"itemName" => "antiTheftAlarmDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["antiTheftAlarmTypeNotDispFlg"]), 
+		array("itemDispName" => "アクティブヘッドレスト", 											"itemName" => "activeHeadrestDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["activeHeadrestTypeNotDispFlg"]), 
+		array("itemDispName" => "フロントスタビライザー", 											"itemName" => "frontStabilizerDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["frontStabilizerTypeNotDispFlg"]), 
+		array("itemDispName" => "リヤスタビライザー", 												"itemName" => "rearStabilizerDisp", 				"NotDispFlg" => $output["model1Info"]["spec"]["safety"]["rearStabilizerTypeNotDispFlg"]), 
+	);
+	$output["modelInfoList"]["safety"] = setCompareObj("safety", $settings, $output);
+
+
+	// templateのLOOP処理用の配列を生成
+	function setCompareObj($categoryName, $settings, $output){
+		$obj             = array();
+		$cnt             = 0;
+		$backgroundColor = "lineBgCol";
+		
+		foreach( $settings as $setting ){
+
+			if( isset($setting["NotDispFlg"]) ){
+				continue;
+			}
+
+			$obj[] = array(
+					"itemDispName"       => $setting["itemDispName"],
+					"model1Info"         => $output["model1Info"]["spec"][$categoryName][$setting["itemName"]], 
+					"model2Info"         => $output["model2Info"]["spec"][$categoryName][$setting["itemName"]], 
+					"model3Info"         => $output["model3Info"]["spec"][$categoryName][$setting["itemName"]], 
+					"model4Info"         => $output["model4Info"]["spec"][$categoryName][$setting["itemName"]], 
+					"backgroundColor"    => $backgroundColor,
+			);
+			
+			// 背景色の設定
+			unset($backgroundColor);
+			if( $cnt % 2 != 0 ){
+				$backgroundColor = "lineBgCol";
+			}
+			$cnt++;
+		}
+		return $obj;
+	}
+
+	// templateのvalで出力するための連想配列を生成
+	function setCompareObjHash($categoryName, $settings, $output){
+		$obj             = array();
+		$cnt             = 0;
+		$backgroundColor = "lineBgCol";
+
+		foreach( $settings as $setting ){
+			$obj[$setting["itemName"]] = array(
+					"itemDispName"       => $setting["itemDispName"],
+					"model1Info"         => $output["model1Info"]["spec"][$categoryName][$setting["itemName"]], 
+					"model2Info"         => $output["model2Info"]["spec"][$categoryName][$setting["itemName"]], 
+					"model3Info"         => $output["model3Info"]["spec"][$categoryName][$setting["itemName"]], 
+					"model4Info"         => $output["model4Info"]["spec"][$categoryName][$setting["itemName"]], 
+					"backgroundColor"    => $backgroundColor,
+			);
+			
+			// 背景色の設定
+			unset($backgroundColor);
+			if( $cnt % 2 != 0 ){
+				$backgroundColor = "lineBgCol";
+			}
+			$cnt++;
+		}
+		return $obj;
+	}
+
+
+
+?>

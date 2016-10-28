@@ -1,0 +1,40 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	ls,                      list                         // リスト
+	carGradeC,               carGradeConfirm              // 車種グレード（確認）
+	carGradeE,               carGradeExecute              // 車種グレード（完了）
+	viewC,                   viewConfirm                  // 視界（確認）
+	viewE,                   viewExecute                  // 視界（完了）
+	seatCircumferenceC,      seatCircumferenceConfirm     // 運転席まわり（確認）
+	seatCircumferenceE,      seatCircumferenceExecute     // 運転席まわり（完了）
+	airConditioningC,        airConditioningConfirm       // 空調（確認）
+	airConditioningE,        airConditioningExecute       // 空調（完了）
+	audioC,                  audioConfirm                 // オーディオ（確認）
+	audioE,                  audioExecute                 // オーディオ（完了）
+	seatInteriorC,           seatInteriorConfirm          // シート・内装関係（確認）
+	seatInteriorE,           seatInteriorExecute          // シート・内装関係（完了）
+	exteriorC,               exteriorConfirm              // 外装（確認）
+	exteriorE,               exteriorExecute              // 外装（完了）
+	footSurroundingsC,       footSurroundingsConfirm      // 足廻り（確認）
+	footSurroundingsE,       footSurroundingsExecute      // 足廻り（完了）
+	safetyC,                 safetyConfirm                // 安全（確認）
+	safetyE,                 safetyExecute                // 安全（完了）
+	carThemeC,               carThemeConfirm              // 車種バリュー（確認）
+	carThemeE,               carThemeExecute              // 車種バリュー（完了）
+	leaseC,                  leaseConfirm                 // リース料(調達価格・諸税)（確認）
+	leaseE,                  leaseExecute                 // リース料(調達価格・諸税)（完了）
+	leaseValueC,             leaseValueConfirm            // リース料(残価・メンテ料)（確認）
+	leaseValueE,             leaseValueExecute            // リース料(残価・メンテ料)（完了）
+	gasolineC,               gasolineConfirm              // ガソリン価格（確認）
+	gasolineE,               gasolineExecute              // ガソリン価格（完了）
+	leaseOptionC,            leaseOptionConfirm           // オプション（確認）
+	leaseOptionE,            leaseOptionExecute           // オプション（完了）
+
+
+	ix,   ls
+
+

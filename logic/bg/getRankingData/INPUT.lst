@@ -1,0 +1,7 @@
+fields
+	a, maker       = maker
+	a, bodyModel   = bodytype
+	a, theme       = theme
+	a, price       = price
+	a, pageNum     = pageNum
+	a, carGradeNum = carGradeNum

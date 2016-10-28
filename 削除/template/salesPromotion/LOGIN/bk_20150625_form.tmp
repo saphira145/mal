@@ -1,0 +1,26 @@
+{frame /_common/outerFrame_err.tmp}
+{input SALESPROMOTION_FLG=1}
+
+<div class="salesLoginBox">
+	<div class="actionMsg mrgB_10"><h2 class="mrgB_0 txt_center faLock">ログイン</h2></div>
+	<form name="loginForm" method="post">
+		<input type="hidden" name="st" value="tr" />
+		<div class="form">
+			<!--{set session.errmsg}-->
+			<div class="actionMsg"><span>▼{val session.errmsg}</span></div>
+			<!--{/set}-->
+			<table>
+				<tr>
+					<th>ID</th>
+					<td><input type="text" name="ngdFW034[loginID]" value="" class="text" /></td>
+				</tr>
+				<tr>
+					<th>パスワード</th>
+					<td><input type="password" name="ngdFW034[password]" value="" class="text" /></td>
+				</tr>
+			</table>
+		</div>
+		<div class="btnArea"><a href="javascript:void(0)" onclick="loginForm.submit()" class="faSignIn">ログイン</a></div>
+	</form>
+</div>
+<!--/ #contents -->

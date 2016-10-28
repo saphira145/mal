@@ -1,0 +1,46 @@
+// キャンペーンNo
+campaignNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+
+
+// キャンペーン名
+campaignName
+	convert,  0,  trim,
+	filter,   0,  length_cut(200),
+	check,  200,  length(0-100),     文字数が制限値外です
+	check,  300,  campaignMust({1}), 必須入力項目です
+
+
+// 遷移先URL
+campaignUrl
+	convert,   0,  1byte,
+	convert,   0,  trim
+	check,   100,  url,               URLとしてが正しくありません
+	check,   200,  campaignMust({1}), 必須入力項目です
+
+
+// キャンペーン画像
+campaignPhoto
+	check,  100,  campaignPhotoExtension,                     対応していない拡張子です
+	check,  100,  campaignPhotoSize,                          画像容量が「0」または制限を超えています
+	check,  100,  onlyCampaignPhoto({1}:{2}:{3}:{4}:{5}),     画像のみの登録は出来ません
+
+
+// キャンペーン画像削除
+delete_campaignPhoto
+	convert,  0,  1byte,
+
+input_campaignPhoto
+	convert,  0,  1byte,
+
+
+// 表示順
+dispNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  200,  is_number,             1以上の半角数値を入れてください
+	check,  300,  campaignMust({1}:{2}),  必須入力項目です
+	check,  400,  overlap,               重複しています

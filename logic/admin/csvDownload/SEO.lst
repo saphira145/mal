@@ -1,0 +1,54 @@
+/admin/csvDownload
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+
+/admin/csvDownload/ls
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+
+/admin/csvDownload/mde
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+
+/admin/csvDownload/sde
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+
+/admin/csvDownload/ctde
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+
+/admin/csvDownload/gde
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+
+/admin/csvDownload/lde
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+
+/admin/csvDownload/lvde
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+
+/admin/csvDownload/lode
+	TITLE = "CSVダウンロード"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="CSVダウンロード"
+

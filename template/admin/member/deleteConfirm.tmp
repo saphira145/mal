@@ -1,0 +1,24 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input menu_member=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+<div class="contentSection">
+	<p class="actionMsg">以下の内容を削除します。よろしければ「削除する」ボタンを押してください。</p>
+
+	{file parts/backtolist.tmp}
+
+	{file parts/display.tmp}
+
+	<form action="{val UNIT_URL}/mi/{val memberID}" method="post" name="form_modifyInput">
+	</form>
+
+	<form action="{val UNIT_URL}/de/{val memberID}" method="post" name="form_deleteExecute">
+		{dbTicket}
+
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="戻る" class="btnW01" onclick="document.form_modifyInput.submit(); return false;" />
+			<input type="submit" value="削除する" class="btnW01" />
+		</div>
+	</form>
+</div>

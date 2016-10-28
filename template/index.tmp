@@ -1,0 +1,67 @@
+{frame /_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/searchForm.js}
+
+
+{input page.top=1}
+{input searchListBtnName="クリア"}
+{input searchListBtnClass="faUndo"}
+{input searchListBtnEventClass="clearChecked"}
+
+<div id="topPage">
+<!--{set SALESPROMOTION_FLG}-->
+	<div id="campaign">
+		<h1><img src="{val BASE_DIR}/_common/img/hl/hl_campaign.png" alt="キャンペーン" /></h1>
+		<!--{set campaignList}-->
+		<ul>
+		<!--{loop campaignList}-->
+			<!--{set campaignList/dispNum}-->
+			<li>
+				<a href="{val campaignList/campaignURL}" target="_blank"  alt="{val campaignList/campaignName}">
+					<!--{set campaignList/campaignimg}--><span class="campaignimg" style="background-image:url('{val BASE_DIR}/_common/PHOTO/CAMPAIGN/{val campaignList/campaignimg}');">&nbsp;</span><!--{/set}-->
+					<!--{unset campaignList/campaignimg}--><span class="campaignNoImg" style="background-image:url('{val BASE_DIR}/_common/img/hl/hl_noImgCampaign.png');">{val campaignList/campaignName}</span><!--{/unset}-->
+				</a>
+			</li>
+			<!--{/set}-->
+			<!--{loop_count_pad campaignList=3}-->
+			<li><span>&nbsp;</span></li>
+			<!--{/loop_count_pad}-->
+		<!--{/loop}-->
+		</ul>
+		<!--<a href="http://www.mal-marche.com/jp/campaign" target="_blank"><img src="{val BASE_DIR}/_common/img/hl/hl_campaignNext.png" alt="もっと見る" /></a>-->
+		<!--{/set}-->
+		<!--{unset campaignList}-->
+		<div>只今、キャンペーン商品を開発中です。<br>キャンペーンを展開次第、ご案内させて頂きます。</div>
+		<!--{/unset}-->
+	<!--/#topCampaign--></div>
+<!--{/set}-->
+
+	<div id="newCar">
+		<h1><img src="{val BASE_DIR}/_common/img/hl/hl_newCar.png" alt="今月の新車" /></h1>
+		<ul>
+		<!--{loop newCarList}-->
+			<li <!--{loop_count_between newCarList=1}-->class="r_border"<!--{/loop_count_between}-->>
+				<dl>
+					<dt><img src="{val BASE_DIR}/_common/PHOTO/{val PHOTO_DIR}/CARBODY/s_{val newCarList/carBodyPhotoName}.jpg" alt="{val newCarList/modelNameEng}"/></dt>
+					<dd><span>NEW</span><br />{val newCarList/makerName} {val newCarList/modelName}<br /><a href="{val BASE_DIR}/COMPARE/{val newCarList/modelNameEng}/?from=newcar" class="faChevronRight">スペックを見る</a></dd>
+				</dl>
+			</li>
+		<!--{/loop}-->
+		</ul>
+	<!--/#newCar--></div>
+
+	<div id="rankingSearch">
+		<h1>お探しのクルマは？<small>（AND検索）</small></h1>
+		<div class="allCnt">現在の登録数／ {val totalModel} 車種</div>
+		{file /_common/parts/searchForm.tmp}
+	<!--/#rankingSearch--></div>
+	
+	<div class="floating"><!--/#floating--></div>
+	{file /_common/parts/selectBox.tmp}
+	<div class="actionBox">
+		<h2>選択した検索条件</h2>
+		{file /_common/parts/selectPrice.tmp}
+		<div class="carGradeNum">該当数<span>{val searchForm.carGradeNum}</span>車種</div>
+		<a href="javascript:void(0)" data-linkName="ok" class="faSearch">この条件で検索</a>
+	<!--/.actionBox--></div>
+
+</div>

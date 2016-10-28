@@ -1,0 +1,11 @@
+<!--{set pageInfo.totalCount}-->
+<table class="tbl_pageSend">
+	<tr>
+		<td class="prev"><!--{set pageInfo.prevPage}--><a href="javascript:void(0)" onclick="move_page({val pageInfo.prevPage});return false;">←前の {val pageInfo.prevCount} 件を表示</a><!--{/set}-->&nbsp;</td>
+
+		<td class="txt">{val pageInfo.totalCount}&nbsp;件中&nbsp;<!--{unset pageInfo.rangeOne}-->{val pageInfo.rangeStart}&nbsp;～&nbsp;<!--{/unset}-->{val pageInfo.rangeEnd}&nbsp;件目</td>
+
+		<td class="next"><!--{set pageInfo.nextPage}-->&nbsp;<a href="javascript:void(0)" onclick="move_page({val pageInfo.nextPage});return false;">次の&nbsp;{val pageInfo.nextCount}&nbsp;件を表示→</a><!--{/set}-->&nbsp;</td>
+	</tr>
+</table>
+<!--{/set}-->

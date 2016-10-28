@@ -1,0 +1,18 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	ls,    list
+	mde,   modelDownloadExecute
+	sde,   searchDownloadExecute
+	ctde,  carThemeDownloadExecute
+	gde,   gasolineDownloadExecute
+	lde,   leaseDownloadExecute
+	lvde,  leaseValueDownloadExecute
+	lode,  leaseOptionDownloadExecute
+
+	ix,   ls
+
+

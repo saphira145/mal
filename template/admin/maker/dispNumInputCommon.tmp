@@ -1,0 +1,17 @@
+<h1 class="tit">{val SEO.H1}</h1>
+{input menu_maker=1}
+
+<div class="contentSection">
+	<p class="actionMsg">各項目を入力して「確認する」ボタンを押してください。</p>
+
+	<form name="toDispNumConfirm" method="post" action="{val UNIT_URL}/dnc/">
+		{dbTicket}
+		<input type="hidden" name="dispSortIDs" value="" />
+		{file parts/dispNumForm.tmp}
+
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="戻る" class="btnW01" onclick="location.href='{val UNIT_URL}/'; return false;" />
+			<input type="button" value="確認する" onclick="fix(); return false;" class="btnW01" />
+		</div>
+	</form>
+</div>

@@ -1,0 +1,12 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// キャンペーンリスト取得
+	$output["campaignInfo"] = $class["campaignAdmin_1"]->get_list( $ini["pageLimit"]["campaignAdmin"] );
+
+	$output["getListFlg"] = 1;
+?>

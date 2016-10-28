@@ -1,0 +1,44 @@
+{frame /admin/_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/openWindowBtnActionAdmin.js}
+{input menu_notice=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼お知らせの設定</h2>
+	<p class="actionMsg">
+		お知らせ内容を入力し、「更新」ボタンを押してください。<br>
+		<span>お知らせは、リアルタイムで更新されます。</span>
+	</p>
+
+	<form name="notice" id="notice" method="post" action="{val UNIT_URL}/">
+		{dbTicket}
+		<input type="hidden" name="st" value="me" />
+		<input type="hidden" id="url" name="url" value="{val BASE_DIR}">
+
+		<!--{set modify_sucessFlg}-->
+		<p class="actionMsg"><span>更新が完了しました。</span></p>
+		<!--{/set}-->
+		
+		<div><!--{set notice.updateDatetime.year}-->最終更新日時&nbsp;{val notice.updateDatetime.year}-{val notice.updateDatetime.month|zeroPadding:2}-{val notice.updateDatetime.day|zeroPadding:2} {val notice.updateDatetime.hour|zeroPadding:2}:{val notice.updateDatetime.min|zeroPadding:2}<!--{/set}--></div>
+		<table class="tblForm">
+			<tr>
+				<th class="w140">お知らせ</th>
+				<td>
+<!--{set noticeText+err}-->
+<!--{loop noticeText+err}-->
+					<p class="err">{val noticeText+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+ 					<textarea name="noticeText" class="mrgB_10" cols=100 style="height:200px;">{val notice.noticeText}</textarea>
+ 					<div class="selModelBtnArea">
+						<input type="button" class="btnW01" onclick="document.notice.noticeText.value ='';" value="クリア">
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="更新" class="btnW01" onClick="confirmDialog('notice',''); return false;">
+		</div>
+	</form>
+</div>

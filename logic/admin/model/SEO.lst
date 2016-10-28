@@ -1,0 +1,82 @@
+/admin/model
+	TITLE = "車種管理（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（一覧）"
+
+/admin/model/ls
+	TITLE = "車種管理（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（一覧）"
+
+/admin/model/dt
+	TITLE = "車種管理（詳細）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（詳細）"
+
+/admin/model/ai
+	TITLE = "車種管理（新規入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（新規入力）"
+
+/admin/model/ac
+	TITLE = "車種管理（新規確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（新規確認）"
+
+/admin/model/ar
+	TITLE = "車種管理（新規再入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（新規再入力）"
+
+/admin/model/ae
+	TITLE = "車種管理（新規完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（新規完了）"
+
+/admin/model/mi
+	TITLE = "車種管理（更新入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（更新入力）"
+
+/admin/model/mc
+	TITLE = "車種管理（更新確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（更新確認）"
+
+/admin/model/mr
+	TITLE = "車種管理（更新再入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（更新再入力）"
+
+/admin/model/me
+	TITLE = "車種管理（更新完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（更新完了）"
+
+/admin/model/dc
+	TITLE = "車種管理（削除確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（削除確認）"
+
+/admin/model/de
+	TITLE = "車種管理（削除完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種管理（削除完了）"
+
+
+
+
+

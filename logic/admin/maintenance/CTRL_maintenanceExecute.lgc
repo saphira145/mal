@@ -1,0 +1,36 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// 入力エラー
+	if( $ini["system"]["errRank"] == 2 ) {
+
+	}
+	// 登録 → リスト表示
+	else{
+
+		// テーブルにデータ投入
+		$this->callPROC( "update_maintenanceFee" );
+
+		// ＤＢチケットの破棄
+		drop_dbTicket();
+
+		// メンテ料リスト取得
+		$this->callPROC( "get_maintenanceList" );
+
+	}
+
+	// 入力へ戻る
+	$this->callVIEW( "list" );
+
+	// テンプレートは固定
+	$viewStatus = "list";
+
+
+?>

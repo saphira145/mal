@@ -1,0 +1,77 @@
+/admin/member
+	TITLE = "メンバー管理（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（一覧）"
+
+/admin/member/ls
+	TITLE = "メンバー管理（一覧）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（一覧）"
+
+/admin/member/dt
+	TITLE = "メンバー管理（詳細）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（詳細）"
+
+/admin/member/ai
+	TITLE = "メンバー管理（新規入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（新規入力）"
+
+/admin/member/ac
+	TITLE = "メンバー管理（新規確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（新規確認）"
+
+/admin/member/ar
+	TITLE = "メンバー管理（新規再入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（新規再入力）"
+
+/admin/member/ae
+	TITLE = "メンバー管理（新規完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（新規完了）"
+
+/admin/member/mi
+	TITLE = "メンバー管理（更新入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（更新入力）"
+
+/admin/member/mc
+	TITLE = "メンバー管理（更新確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（更新確認）"
+
+/admin/member/mr
+	TITLE = "メンバー管理（更新再入力）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（更新再入力）"
+
+/admin/member/me
+	TITLE = "メンバー管理（更新完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（更新完了）"
+
+/admin/member/dc
+	TITLE = "メンバー管理（削除確認）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（削除確認）"
+
+/admin/member/de
+	TITLE = "メンバー管理（削除完了）"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="メンバー管理（削除完了）"

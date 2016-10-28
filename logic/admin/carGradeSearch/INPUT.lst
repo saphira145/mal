@@ -1,0 +1,6 @@
+searchs
+	a, searchModelCode                     = searchModelCode                      // 車種コード                          name="searchModelCode"
+	a, searchMakerCode                     = searchMakerCode                      // メーカーコード                      name="searchMakerCode"
+	a, searchModelName                     = searchModelName                      // メーカー名                          name="searchModelName"
+	a, pageNum                             = pageNum                              // ページ番号                          name="pageNum"
+

@@ -1,0 +1,31 @@
+
+// メーカーコード（検索）
+searchMakerCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// メーカー名（検索）
+searchModelName
+	convert,  0,  trim,
+
+// ボディタイプ（検索）
+searchBodyType
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+// ページ番号
+pageNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// テーマID
+themeID
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+

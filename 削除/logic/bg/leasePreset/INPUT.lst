@@ -1,0 +1,6 @@
+fields
+	a, carAddDate         = carAddDate
+	a, mileage            = mileage
+	a, gasoline           = gasoline
+	a, voluntaryInsurance = voluntaryInsurance
+	a, option             = option

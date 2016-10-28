@@ -1,0 +1,41 @@
+{input cssList/cssMedia=all}
+{input cssList/cssName=/_common/css/admin_base.css}
+{input cssList/cssName=/_common/css/admin_layout.css}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<meta name="keywords" content="{val SEO.KEYWORD}" />
+	<meta name="description" content="{val SEO.DESCRIPTION}" />
+	<title>{val SEO.TITLE}</title>
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Cabin:400,600" />
+<!--{loop cssList}-->
+<!--{set cssList/cssName}-->
+	<link href="{val BASE_DIR}{val cssList/cssName}" rel="stylesheet" type="text/css" media="<!--{set cssList/cssMedia}-->{val cssList/cssMedia}<!--{/set}--><!--{unset cssList/cssMedia}-->all<!--{/unset}-->" />
+<!--{/set}-->
+<!--{/loop}-->
+</head>
+<body>
+<div id="container">
+	{file parts/header.tmp}
+	<div id="contentArea">
+		{file parts/menu.tmp}
+		<!--{set RELEASE}-->
+		<div class="actionMsg"><span>現在、リリース予定日時{val RELEASE.limit}分以内です。</span></div>
+		<!--{/set}-->
+		
+		{attach}
+	</div>
+	{file parts/footer.tmp}
+</div>
+<!--{loop jsList}-->
+<script type="text/javascript" src="{val BASE_DIR}{val jsList/jsName}"></script>
+<!--{/loop}-->
+</body>
+</html>

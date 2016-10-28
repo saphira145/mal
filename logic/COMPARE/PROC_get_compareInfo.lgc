@@ -1,0 +1,62 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	/* =========================================
+	   比較車種情報取得
+	========================================= */
+
+	// 比較車種１情報取得
+	if( !empty($output["model1"]["makerCode"]) && !empty($output["model1"]["modelCode"]) ){
+		$output["model1Info"]                  = $class["modelUser_1"]->get_info( $output["model1"]["makerCode"], $output["model1"]["modelCode"] );
+		$output["model1Info"]["carGradeCode"]  = $output["model1"]["carGradeCode"];
+		$output["model1Info"]["recomCar"]      = $output["model1"]["recomCar"];
+		$output["model1Info"]["systemSet"]     = $output["model1"]["systemSet"];
+		$output["model1Info"]["campaignScore"] = get_campaignScoreName($output["model1Info"]["campaignScore"]);
+		$output["model1Info"]["carGradeList"]  = $class["modelUser_1"]->get_carGradeIDList( $output["model1"]["makerCode"], $output["model1"]["modelCode"] );
+		$output["model1Info"]["theme"]         = $class["themeUser_1"]->get_themeList( $output["model1"]["makerCode"], $output["model1"]["modelCode"] );
+		$output["model1Info"]["spec"]          = $class["carGradeUser_1"]->get_info( $output["model1"]["carGradeCode"] );
+	}
+
+
+	// 比較車種２情報取得
+	if( !empty($output["model2"]["makerCode"]) && !empty($output["model2"]["modelCode"]) ){
+		$output["model2Info"]                  = $class["modelUser_1"]->get_info( $output["model2"]["makerCode"], $output["model2"]["modelCode"] );
+		$output["model2Info"]["carGradeCode"]  = $output["model2"]["carGradeCode"];
+		$output["model2Info"]["recomCar"]      = $output["model2"]["recomCar"];
+		$output["model2Info"]["systemSet"]     = $output["model2"]["systemSet"];
+		$output["model2Info"]["campaignScore"] = get_campaignScoreName($output["model2Info"]["campaignScore"]);
+		$output["model2Info"]["carGradeList"]  = $class["modelUser_1"]->get_carGradeIDList( $output["model2"]["makerCode"], $output["model2"]["modelCode"] );
+		$output["model2Info"]["theme"]         = $class["themeUser_1"]->get_themeList( $output["model2"]["makerCode"], $output["model2"]["modelCode"] );
+		$output["model2Info"]["spec"]          = $class["carGradeUser_1"]->get_info( $output["model2"]["carGradeCode"] );
+	}
+
+	// 比較車種３情報取得
+	if( !empty($output["model3"]["makerCode"]) && !empty($output["model3"]["modelCode"]) ){
+		$output["model3Info"]                  = $class["modelUser_1"]->get_info( $output["model3"]["makerCode"], $output["model3"]["modelCode"] );
+		$output["model3Info"]["carGradeCode"]  = $output["model3"]["carGradeCode"];
+		$output["model3Info"]["recomCar"]      = $output["model3"]["recomCar"];
+		$output["model3Info"]["systemSet"]     = $output["model3"]["systemSet"];
+		$output["model3Info"]["campaignScore"] = get_campaignScoreName($output["model3Info"]["campaignScore"]);
+		$output["model3Info"]["carGradeList"]  = $class["modelUser_1"]->get_carGradeIDList( $output["model3"]["makerCode"], $output["model3"]["modelCode"] );
+		$output["model3Info"]["theme"]         = $class["themeUser_1"]->get_themeList( $output["model3"]["makerCode"], $output["model3"]["modelCode"] );
+		$output["model3Info"]["spec"]          = $class["carGradeUser_1"]->get_info( $output["model3"]["carGradeCode"] );
+	}
+
+	// 比較車種４情報取得
+	if( !empty($output["model4"]["makerCode"]) && !empty($output["model4"]["modelCode"]) ){
+		$output["model4Info"]                  = $class["modelUser_1"]->get_info( $output["model4"]["makerCode"], $output["model4"]["modelCode"] );
+		$output["model4Info"]["carGradeCode"]  = $output["model4"]["carGradeCode"];
+		$output["model4Info"]["recomCar"]      = $output["model4"]["recomCar"];
+		$output["model4Info"]["systemSet"]     = $output["model4"]["systemSet"];
+		$output["model4Info"]["campaignScore"] = get_campaignScoreName($output["model4Info"]["campaignScore"]);
+		$output["model4Info"]["carGradeList"]  = $class["modelUser_1"]->get_carGradeIDList( $output["model4"]["makerCode"], $output["model4"]["modelCode"] );
+		$output["model4Info"]["theme"]         = $class["themeUser_1"]->get_themeList( $output["model4"]["makerCode"], $output["model4"]["modelCode"] );
+		$output["model4Info"]["spec"]          = $class["carGradeUser_1"]->get_info( $output["model4"]["carGradeCode"] );
+	}
+
+
+?>

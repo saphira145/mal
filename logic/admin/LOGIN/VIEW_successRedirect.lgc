@@ -1,0 +1,15 @@
+<?php
+
+
+
+	// セッションデータを取り出す
+	list( $output["originalURL"], $sessionData ) = $class["session"]->get_originalSessionData();
+
+
+	// ログインフォーム表示
+	$viewStatus = "successRedirect";
+
+
+
+
+?>

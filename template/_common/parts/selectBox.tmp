@@ -1,0 +1,38 @@
+<div class="selectBox">
+	<div class="themeBox">
+		<h2><span class="searchName">バリュー</span><span class="trians"></span><span class="{val searchListBtnEventClass} clearBtn"><a href="javascript:void(0)" class="{val searchListBtnClass} ">{val searchListBtnName}</a></span></h2>
+		<ul>
+	<!--{set search.theme}-->
+		<!--{loop search.theme}-->
+			<li class="setCol T{val search.theme/ID|zeroPadding:3}" >
+				<div style="background: url({val BASE_DIR}/_common/img/theme/s_{val search.theme/iconPath}.png) no-repeat 5px;">{val search.theme/nameAbbreviation}</div>
+			</li>
+		<!--{/loop}-->
+	<!--{/set}-->
+		</ul>
+	</div>
+	<div class="makerBox">
+		<h2><span class="searchName">メーカー</span><span class="trians"></span><span class="{val searchListBtnEventClass} clearBtn"><a href="javascript:void(0)" class="{val searchListBtnClass} ">{val searchListBtnName}</a></span></h2>
+		<ul>
+	<!--{set search.maker}-->
+		<!--{loop search.maker}-->
+			<li class="setCol M{val search.maker/ID|zeroPadding:3}">
+				<div>{val search.maker/name|lengthCut:9}</div>
+			</li>
+		<!--{/loop}-->
+	<!--{/set}-->
+		</ul>
+	</div>
+	<div class="typeBox">
+		<h2><span class="searchName">タイプ</span><span class="trians"></span><span class="{val searchListBtnEventClass} clearBtn"><a href="javascript:void(0)" class="{val searchListBtnClass} ">{val searchListBtnName}</a></span></h2>
+		<ul>
+	<!--{set search.type}-->
+		<!--{loop search.type}-->
+			<li class="setCol {val search.type/css} B{val search.type/ID|zeroPadding:3}">
+				<div style="background: url({val BASE_DIR}/_common/img/bodyType/s_{val search.type/icon}.png) no-repeat;">{val search.type/disp|lengthCut:5}</div>
+			</li>
+		<!--{/loop}-->
+	<!--{/set}-->
+		</ul>
+	</div>
+</div>

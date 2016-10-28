@@ -1,0 +1,324 @@
+@charset "utf-8";
+
+/*--------------------------------------
+	アイコン
+	参照【http://fortawesome.github.io/Font-Awesome/cheatsheet/】
+---------------------------------------*/
+/*--  fa-search --*/
+.faSearch:before{
+	content:"\f002";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/*--  fa-caret-up --*/
+.faCaretUp:before{
+	content:"\f0d8";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/*--  fa-caret-down --*/
+.faCaretDown:before{
+	content:"\f0d7";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/*--  fa-chevron-right --*/
+.faChevronRight:before{
+	content:"\f054";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/*--  fa-chevron-left  --*/
+.faChevronLeft:before{
+	content:"\f053";
+	margin:0 5px;
+	color:#FFFFFF;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/*--   class="fa-chevron-up"  --*/
+.faChevronUp:before{
+	content:"\f077";
+	margin:0 5px;
+	color:#FFFFFF;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-chevron-down"  --*/
+.faChevronBown:before{
+	content:"\f078";
+	margin:0 5px;
+	color:#FFFFFF;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-refresh"  --*/
+.faRefresh:before{
+	content:"\f021";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-undo"  --*/
+.faUndo:before{
+	content:"\f0e2";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-file-text-o"  --*/
+.faFileTexto:before{
+	content:"\f0f6";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-question-circle"  --*/
+.faQuestionCircle:before{
+	content:"\f059";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-times-circle"  --*/
+.faTimesCircle:before{
+	content:"\f057";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-repeat"  --*/
+.faRepeat:before{
+	content:"\f01e";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-reply"  --*/
+.faReply:before{
+	content:"\f112";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-check"  --*/
+.faCheck:before{
+	content:"\f00c";
+	margin:0 10px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-caret-right"  --*/
+.faCaretRight:before{
+	content:"\f0da";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-wrench"  --*/
+.faWrench:before{
+	content:"\f0ad";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+	color: #AAAAAA;
+}
+
+/*--   class="fa-envelope"  --*/
+.faEnvelope:before{
+	content:"\f0e0";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-arrow-up"  --*/
+.faArrowUp:before{
+	content:"\f062";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-exclamation-triangle"  --*/
+.faExclamationTriangle:before{
+	content:"\f071";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-desktop"  --*/
+.faDesktop:before{
+	content:"\f108";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--   class="fa-phone"  --*/
+.faPhone:before{
+	content:"\f095";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--  fa-book --*/
+.faBook:before{
+	content:"\f02d";
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*-- fa-camera --*/
+.faCamera:after{
+	content:"\f030";
+	margin:0 5px;
+	color:#464435;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*--------------------------------------
+	アイコン個別設定
+---------------------------------------*/
+/* 車種名検索 */
+#searchModelName .faSearch:before{
+	font-size: 18px;
+	color:#FFFFFF;
+}
+
+#searchModelName .faCaretUp:before{
+	font-size: 24px;
+	color:#555555;
+}
+
+#searchModelName .faChevronRight:before{
+	color: #CCCCCC;
+	margin: 0 5px;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+/* 検索ボタン */
+#topPage .faSearch:before,
+#rankingPage .faSearch:before{
+	font-size: 24px;
+}
+
+
+/* ランキング */
+#rankingPage .floating .faCaretUp:before{
+	font-size: 24px;
+}
+
+#rankingPage li .faChevronRight:before{
+	color:#FFFFFF;
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0 5px;
+}
+
+#rankingList .faChevronBown:before,
+#rankingList .faChevronBown:after{
+	content:"\f078";
+	margin:0 10px;
+	color:#545454;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/* 比較 */
+#compare .faCaretDown:before{
+	font-size: 24px;
+	color:#555555;
+}
+
+#compare .faChevronRight:before{
+	margin: 0 5px 1px 5px;
+	color:#FFFFFF;
+}
+
+#compare .back .faChevronLeft:before{
+	float: left;
+	padding: 15px 0 0 5px;
+}
+
+#compare .faRefresh:before{
+	color: #464435;
+}
+
+#compare .notData  .faRefresh:before{
+	color: #FFFFFF;
+}
+
+
+/* 車種の変更 */
+#makerList .faChevronRight:before{
+	color: #666666;
+	padding: 0 10px;
+	display: table-cell;
+	vertical-align: middle;
+	font-size: 11px;
+}
+
+
+/* ランキングのアラー度 */
+#checkAlert .faExclamationTriangle:before{
+	color: #F88F2E;
+	font-size: 28px;
+}
+

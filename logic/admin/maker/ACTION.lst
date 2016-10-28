@@ -1,0 +1,20 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	ls,   list                   // リスト
+	ae,   addExecute             // 新規登録（完了）
+	me,   modifyExecute          // 変更（完了）
+	dc,   deleteConfirm          // 削除（確認）
+	de,   deleteExecute          // 削除（完了）
+	dni,  dispNumInput           // 表示順変更（入力）
+	dnr,  dispNumReinput         // 表示順変更（再入力）
+	dnc,  dispNumConfirm         // 表示順変更（確認）
+	dne,  dispNumExecute         // 表示順変更（完了）
+
+
+	ix,   ls                     // ステータスがない場合はリスト
+
+

@@ -1,0 +1,25 @@
+<?php
+
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェック
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// カンマ区切りから配列へ
+	$this->callPROC( "commaToArray" );
+
+	// テーブルにデータ投入
+	$this->callPROC( "update_dispNumDB" );
+
+
+	// ＤＢチケットの破棄
+	drop_dbTicket();
+
+
+
+
+?>

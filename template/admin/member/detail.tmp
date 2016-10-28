@@ -1,0 +1,15 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_member=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+<div class="contentSection">
+	<p class="actionMsg">登録内容を変更する場合は「編集する」ボタンを押してください。</p>
+	{file parts/display.tmp}
+
+	<form action="{val UNIT_URL}/mi/{val memberID}" method="post">
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input type="button" value="戻る" class="btnW01" onClick="location.href='{val UNIT_URL}/ls/'; return false;" />
+			<input type="submit" value="編集する" class="btnW01" />
+		</div>
+	</form>
+</div>

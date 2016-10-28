@@ -1,0 +1,15 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	$output["modelInfo"] = $class["modelAdmin_1"]->get_info( $output["orgMakerCode"], $output["orgModelCode"] );
+
+	// テーマ取得
+	$output["theme"] = $class["themeAdmin_1"]->get_carThemeList( $output["orgMakerCode"], $output["orgModelCode"] );
+
+
+
+?>

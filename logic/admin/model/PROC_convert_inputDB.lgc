@@ -1,0 +1,20 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// 入力値入れ替え
+	$output["modelInfo"]["miniPrice"]          = $output["modelInfo"]["price"]["mini"];
+	$output["modelInfo"]["maxPrice"]           = $output["modelInfo"]["price"]["max"];
+	$output["modelInfo"]["miniTotalLength"]    = $output["modelInfo"]["totalLength"]["mini"];
+	$output["modelInfo"]["maxTotalLength"]     = $output["modelInfo"]["totalLength"]["max"];
+	$output["modelInfo"]["miniTotalWidth"]     = $output["modelInfo"]["totalWidth"]["mini"];
+	$output["modelInfo"]["maxTotalWidth"]      = $output["modelInfo"]["totalWidth"]["max"];
+	$output["modelInfo"]["miniTotalHeight"]    = $output["modelInfo"]["totalHeight"]["mini"];
+	$output["modelInfo"]["maxTotalHeight"]     = $output["modelInfo"]["totalHeight"]["max"];
+	$output["modelInfo"]["announcementDay"]    = val2db_dateType1( $output["modelInfo"]["announcementDay"] );
+	$output["modelInfo"]["topUpdateDay"]       = val2db_dateType1( $output["modelInfo"]["topUpdateDay"] );
+
+
+?>

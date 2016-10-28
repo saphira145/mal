@@ -1,0 +1,9 @@
+<!--{set pageInfo.totalCount}-->
+<table class="tbl_pageSend">
+	<tr>
+		<td class="prev"><!--{set pageInfo.prevPage}--><a href="javascript:void(0)" onclick="move_page({val pageInfo.prevPage});return false;">←&nbsp;{val pageInfo.prevPageName.year}年 <!--{set pageInfo.prevPageName.month}-->{val pageInfo.prevPageName.month}月<!--{/set}-->&nbsp;を表示</a><!--{/set}--></td>
+		<td class="txt">{val pageInfo.pageName.year}年 <!--{set pageInfo.pageName.month}-->{val pageInfo.pageName.month}月<!--{/set}-->&nbsp;(&nbsp;{val pageInfo.pageNum}&nbsp;/&nbsp;{val pageInfo.totalPageCount}&nbsp;ページ目&nbsp;)</td>
+		<td class="next"><!--{set pageInfo.nextPage}-->&nbsp;<a href="javascript:void(0)" onclick="move_page({val pageInfo.nextPage});return false;">{val pageInfo.nextPageName.year}年 <!--{set pageInfo.nextPageName.month}-->{val pageInfo.nextPageName.month}月<!--{/set}-->&nbsp;を表示&nbsp;→</a><!--{/set}-->&nbsp;</td>
+	</tr>
+</table>
+<!--{/set}-->

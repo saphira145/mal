@@ -1,0 +1,14 @@
+<?php
+
+
+
+	// セッションデータを取り出す
+	list( $output["originalURL"], $sessionData ) = $class["session"]->get_originalSessionData();
+
+	// クッキー保持
+	setcookie( "salesPromotion", "ON", 0, "/", $path["host"]["name"] );
+
+	// ログインフォーム表示
+	$viewStatus = "successRedirect";
+
+?>

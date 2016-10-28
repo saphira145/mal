@@ -1,0 +1,173 @@
+
+// 車種コード（登録済み）
+orgModelCode
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	filter, 100,  modelCodeExist,     車種コードは存在しません
+	check,  200,  must,                  必須入力項目です
+
+// メーカーコード（登録済み）
+orgMakerCode
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	filter, 100,  makerCodeExist,     メーカーコードは存在しません
+	check,  200,  must,               必須入力項目です
+
+// 車種コード
+modelCode
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	check,  100,  must,                       必須入力項目です
+	check,  200,  is_numeric,                 半角数字で入力してください
+	check,  300,  dupModelCode({1}:{2}:{3}),  すでに登録されています
+
+// メーカーコード
+makerCode
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	filter, 100,  makerCodeExist,     メーカーコードは存在しません
+	check,  200,  must,               必須入力項目です
+
+// 車種名
+modelName
+	convert,  0,  trim,
+	filter,   0,  length_cut(200),
+	check,  100,  must,              必須入力項目です
+	check,  200,  length(1-100),     文字数が制限値外です
+
+// 車種名（英語）
+modelNameEng
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	filter,   0,  length_cut(200),
+	check,  100,  must,              必須入力項目です
+	check,  200,  length(1-100),     文字数が制限値外です
+	check,  300,  URI_unreservedChars_and_space, 使用できるのは次の半角の文字種です: 英数字、スペース、ハイフン(-)、ドット(.)、アンダースコア(_)、チルダ(~)
+
+// 最小
+mini
+	convert,  0,  trim,
+
+// 最大
+max
+	convert,  0,  trim,
+
+// 価格
+priceCheck
+	check,  100,  mustArray_price,             最小値、最大値を入力してください
+	check,  200,  is_numericArray_price,       半角数字で入力してください
+	check,  300,  minMaxRange,           最小値、最大値が逆に入力されています
+
+// 価格
+price
+	check,  100,  mustArray,             必須入力項目です
+	check,  200,  is_numericArray,       半角数字で入力してください
+	check,  300,  minMaxRange,           最小値、最大値が逆に入力されています
+
+// 発売日
+announcementDay
+	convert,   0,  1byte,
+	convert,   0,  trim
+	convert,   0,  parseDate,
+	check,   100,  must,                 必須入力項目です
+	check,   200,  dateFormat,           年月日の形式が正しくありません
+	check,   300,  validDate,            不正な年月日が入力されました
+
+// 車体画像
+carBodyPhoto
+	check,  200,  carBodyPhotoExtension,       対応していない拡張子です
+	check,  300,  carPhotoSize,                画像容量が「0」または制限を超えています
+
+// 一時車体画像
+tempCarBodyPhoto
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	filter,   0,  length_cut(200),     
+
+// 車体画像削除
+delete_carBodyPhoto
+	convert,  0,  1byte,
+
+
+
+// テーマ
+theme
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+// キャンペーンスコア
+campaignScore
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+// 車種グレードID
+carGradeID
+	convert,   0,  1byte,
+	convert,   0,  trim
+	filter,  100,  carGradeExistCodeChk({1}:{2}),         車種とグレードが一致しません
+
+
+// 車種グレードID(重複あり)
+carGradeIDoverlap
+	convert,   0,  1byte,
+	convert,   0,  trim
+	filter,  100,  carGradeExistCodeChk({1}:{2}),         車種とグレードが一致しません
+	check,  200,  carGradeOverlap(),     標準グレードが重複しています
+
+
+// WebカタログURL
+webCatalogueUrl
+	convert,   0,  1byte,
+	convert,   0,  trim
+	check,   100,  url,                  URLとしてが正しくありません
+
+// バリュー誘導先URL
+valueUrl
+	convert,   0,  1byte,
+	convert,   0,  trim
+	check,   100,  url,                  URLとしてが正しくありません
+
+// 写真ギャラリーURL
+photoGalleryUrl
+	convert,   0,  1byte,
+	convert,   0,  trim
+	check,   100,  url,                  URLとしてが正しくありません
+
+
+
+
+
+
+
+
+
+
+
+
+// 車種コード（検索）
+searchModelCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// メーカーコード（検索）
+searchMakerCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// メーカー名（検索）
+searchModelName
+	convert,  0,  trim,
+
+// ページ番号
+pageNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+
+

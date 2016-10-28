@@ -1,0 +1,158 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_maker=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼メーカーの追加</h2>
+	<p class="actionMsg">下記の項目を入力して「新規追加」ボタンを押してください。</p>
+	
+	<form name="toAddExecute" method="post" action="{val UNIT_URL}/">
+		{dbTicket}
+		<input type="hidden" name="st" value="ae" />
+		<table class="tblForm">
+		<tr>
+			<th class="w150">メーカーコード<span class="must_mark">※</span></th>
+			<td>
+<!--{set makerInfo.makerCode+err}-->
+<!--{loop makerInfo.makerCode+err}-->
+				<p class="err">{val makerInfo.makerCode+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input type="text" name="makerInfo[makerCode]" value="{val makerInfo.makerCode|htmlspecialchars}" class="w60" />
+			</td>
+		</tr>
+		<tr>
+			<th>表示順<span class="must_mark">※</span></th>
+			<td>
+<!--{set makerInfo.dispNum+err}-->
+<!--{loop makerInfo.dispNum+err}-->
+				<p class="err">{val makerInfo.dispNum+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input type="text" name="makerInfo[dispNum]" value="{val makerInfo.dispNum|htmlspecialchars}" class="w20" />
+			</td>
+		</tr>
+		<tr>
+			<th>メーカー名<span class="must_mark">※</span></th>
+			<td>
+<!--{set makerInfo.makerName+err}-->
+<!--{loop makerInfo.makerName+err}-->
+				<p class="err">{val makerInfo.makerName+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input type="text" name="makerInfo[makerName]" value="{val makerInfo.makerName|htmlspecialchars}" class="w60" />
+			</td>
+		</tr>
+		<tr>
+			<th>メーカー名（英字）<span class="must_mark">※</span></th>
+			<td>
+<!--{set makerInfo.makerNameEng+err}-->
+<!--{loop makerInfo.makerNameEng+err}-->
+				<p class="err">{val makerInfo.makerNameEng+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input type="text" name="makerInfo[makerNameEng]" value="{val makerInfo.makerNameEng|htmlspecialchars}" class="w60" />
+			</td>
+		</tr>
+		<tr>
+			<th>生産国<span class="must_mark">※</span></th>
+			<td>
+<!--{set makerInfo.countryID+err}-->
+<!--{loop makerInfo.countryID+err}-->
+				<p class="err">{val makerInfo.countryID+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<select name="makerInfo[countryID]" />
+					<option value=""></option>
+<!--{loop makerInfo.countryList}-->
+					<option value="{val makerInfo.countryList/value}"<!--{set makerInfo.countryList/selected}--> selected<!--{/set}-->>{val makerInfo.countryList/name}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input class="btnW01" type="submit" value="新規追加" />
+		</div>
+	</form>
+</div>
+
+<div class="contentSection">
+	<h2 class="mrgB_10">▼メーカー情報変更</h2>
+<!--{set makerListDisp}-->
+	<div class="btnArea txt_left">
+		<input type="button" value="表示順変更" class="btnW01" onclick="location.href='{val UNIT_URL}/dni/'; return false;" />
+	</div>
+
+	<form name="toModifyExecute" method="post" action="{val UNIT_URL}/">
+		{dbTicket}
+		<input type="hidden" name="st" value="me" />
+		<input type="hidden" name="targetMakerCode" value="" />
+	<!--{loop makerList}-->
+		<input type="hidden" name="makerList[{val makerList/index}][makerCode]" value="{val makerList/makerCode}" />
+		<input type="hidden" name="makerList[{val makerList/index}][dispNum]" value="{val makerList/dispNum}" />
+		<input type="hidden" name="makerList[{val makerList/index}][index]" value="{val makerList/index}" />
+	<!--{/loop}-->
+	<!--{set insert_sucessFlg}-->
+		<p class="actionMsg"><span>新規追加が完了しました。</span></p>
+	<!--{/set}-->
+	<!--{set modify_sucessFlg}-->
+		<p class="actionMsg"><span>更新が完了しました。</span></p>
+	<!--{/set}-->
+	<!-- 機種リスト表示 -->
+		<table class="tblList">
+		<tr>
+			<th class="w80">メーカーコード</th>
+			<th class="w60">表示順</th>
+			<th>メーカー名</th>
+			<th>メーカー名（英字）</th>
+			<th class="w120">生産国</th>
+			<th class="w40">機能</th>
+			<th class="w40">機能</th>
+		</tr>
+	<!--{loop makerList}-->
+		<tr>
+			<td>{val makerList/makerCode|zeroPadding:3}&nbsp;</td>
+			<td>{val makerList/dispNum}</td>
+			<td>
+	<!--{set makerList/makerName+err}-->
+		<!--{loop makerList/makerName+err}-->
+			<p class="err">{val makerList/makerName+err/msg}</p>
+		<!--{/loop}-->
+	<!--{/set}-->
+				<input type="text" name="makerList[{val makerList/index}][makerName]" value="{val makerList/makerName|htmlspecialchars}" class="w60" />
+			</td>
+			<td>
+	<!--{set makerList/makerNameEng+err}-->
+		<!--{loop makerList/makerNameEng+err}-->
+			<p class="err">{val makerList/makerNameEng+err/msg}</p>
+		<!--{/loop}-->
+	<!--{/set}-->
+				<input type="text" name="makerList[{val makerList/index}][makerNameEng]" value="{val makerList/makerNameEng|htmlspecialchars}" class="w60" />
+			</td>
+			<td class="txt_center">
+	<!--{set makerList/countryID+err}-->
+		<!--{loop makerList/countryID+err}-->
+			<p class="err">{val makerList/countryID+err/msg}</p>
+		<!--{/loop}-->
+	<!--{/set}-->
+				<select name="makerList[{val makerList/index}][countryID]">
+					<option value=""></option>
+	<!--{loop makerList/countryList}-->
+					<option value="{val makerList/countryList/value}"<!--{set makerList/countryList/selected}--> selected<!--{/set}-->>{val makerList/countryList/name}</option>
+	<!--{/loop}-->
+				</select>
+			</td>
+			<td><input class="btnW03" type="button" value="変更" onclick="this.form.targetMakerCode.value='{val makerList/makerCode}'; this.form.submit(); return false;" /></td>
+			<td><input class="btnW03" type="button" value="削除" onclick="location.href='{val UNIT_URL}/dc/{val makerList/makerCode}/'; return false;" /></td>
+		</tr>
+	<!--{/loop}-->
+		</table>
+	<!-- /機種リスト表示 -->
+	</form>
+<!--{/set}-->
+<!--{unset makerListDisp}-->
+	登録されているデータはありません。
+<!--{/unset}-->
+</div>

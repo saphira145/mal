@@ -1,0 +1,17 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	list( $output["makerList"], $output["pageInfo"] ) = $class["makerAdmin_1"]->get_list( $output );
+
+	// 表示順デフォルト設定
+	if( $output["makerInfo"]["dispNum"] == "" ) {
+		$output["makerInfo"]["dispNum"] = $class["makerAdmin_1"]->get_lastDispNum() + 1;
+	}
+
+
+
+?>

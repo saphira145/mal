@@ -1,0 +1,20 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 件数付き検索条件取得
+	$rankingSearchFormData = $class["topModel_1"]->get_rankingSearchFormData();
+
+	// メーカーリスト
+	$output["makerList"] = $rankingSearchFormData["makerList"];
+
+	// ボディタイプリスト
+	$output["bodyTypeList"] = $rankingSearchFormData["bodyTypeList"];
+
+	// 価格リスト
+	$output["carPriceList"] = $rankingSearchFormData["carPriceList"];
+
+?>

@@ -1,0 +1,98 @@
+{frame /_common/outerFrame_popup.tmp}
+{input jsList_s/jsName=/_common/js/salesPromotion.js}
+
+{file /salesPromotion/parts/leaseBaseDisp.tmp}
+<div id="carLeaseOption" <!--{set LEASEMODECHANGE_FLG}-->class="filter"<!--{/set}-->>
+	<div class="carData">
+		<div class="modelInfo">
+			<div class="carImg">
+				<img src="{val BASE_DIR}/_common/PHOTO/{val PHOTO_DIR}/CARBODY/{val modelInfo.carBodyPhotoName}.jpg" alt="{val modelInfo.modelName}" />
+			</div>
+			<div class="carName">
+				<span>{val modelInfo.makerName}<br/>{val modelInfo.modelName}</span>
+			</div>
+			<div class="lease">
+				<ul>
+					<!--{set modelInfo.lease.y3}--><li class="y3">{val modelInfo.lease.y3.name}</li><!--{/set}-->
+					<!--{set modelInfo.lease.y4}--><li class="y4">{val modelInfo.lease.y4.name}</li><!--{/set}-->
+					<!--{set modelInfo.lease.y5}--><li class="y5">{val modelInfo.lease.y5.name}</li><!--{/set}-->
+				</ul>
+			</div>
+			<div class="themeBox">
+				<!--{set modelInfo.theme}-->
+				<ul>
+					<!--{loop modelInfo.theme}-->
+					<li class="setCol" ><span>{val modelInfo.theme/name|lengthCut:12}</span></li>
+					<!--{/loop}-->
+				</ul>
+				<!--{/set}-->
+			</div>
+		</div>
+		<div class="leaseInfo">
+			<dl>
+				<dt>ガソリン価格</dt>
+				<dd>{val leaseInfo.gasoline.name}</dd>
+				<dt>使用開始年月</dt>
+				<dd>{val leaseInfo.carAddDate.year}年 {val leaseInfo.carAddDate.month}月</dd>
+<!--{unset voluntaryInsuranceHidFlg}-->
+				<dt>任意保険</dt>
+				<dd>{val leaseInfo.voluntaryInsurance.name}</dd>
+<!--{/unset}-->
+				<dt>オプション</dt>
+				<dd class="optionTotalPrice <!--{set LEASEMODECHANGE_FLG}-->filterColor<!--{/set}-->">&yen; <span>{val totalPrice|number_format}</span> &ndash;</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="carLeaseOptionList">
+		<ul class="itemList">
+			<!--{loop optionItem}-->
+			<li><a href="javascript:void(0)" data-optionItem="optionItem{val optionItem/id|zeroPadding:2}" <!--{set optionItem/selected}-->class="selItem"<!--{/set}-->>{val optionItem/name}</a></li>
+			<!--{/loop}-->
+		</ul>
+		<form name="form_leaseInfoS" action="{val BASE_DIR}/LEASEINFO/{val modelInfo.modelNameEng}/{val leaseURL.base}/" method="post">
+			<!--{loop optionList}-->
+			<div id="optionItem{val optionList/item|zeroPadding:2}" class="itemBox <!--{set optionList/selected}-->selBox<!--{/set}--> <!--{set LEASEMODECHANGE_FLG}-->filterColor<!--{/set}-->" >
+			<!--{set optionList/option}-->
+				<ul>
+				<!--{loop optionList/option}-->
+					<li>
+						<span class="description">
+							<span class="name">
+								{val optionList/option/optionName}
+								<!--{set optionList/option/campaignFlg}--><span class="campaign">【キャンペーン中】</span><!--{/set}-->
+							</span>
+							{val optionList/option/optionDescription}
+						</span>
+						<!--{set optionList/option/price}--><span class="price">&yen; {val optionList/option/price|number_format} &ndash;</span><!--{/set}-->
+						<!--{unset optionList/option/price}--><span class="price noLease">お問い合わせください</span><!--{/unset}-->
+						<span class="optionCheck">
+							<span  class="faCheck <!--{set optionList/option/checked}-->selected<!--{/set}-->" >
+								<input type="checkbox" name="option[]" id="LO{val optionList/option/optionID|zeroPadding:3}I{val optionList/option/optionItem}" value="LO{val optionList/option/optionID|zeroPadding:3}I{val optionList/option/optionItem}" data-price="{val optionList/option/price}" <!--{set optionList/option/checked}-->checked<!--{/set}-->/>
+							</span>
+						</span>
+					</li>
+				<!--{/loop}-->
+				</ul>
+			<!--{/set}-->
+			<!--{unset optionList/option}-->
+				選択できるオプションはありません。
+			<!--{/set}-->
+			</div>
+			<!--{/loop}-->
+		</form>
+	</div>
+	<form name="form_leaseInfoR" action="{val BASE_DIR}/LEASEINFO/{val modelInfo.modelNameEng}/{val leaseURL.base}/" method="post">
+		<!--{loop option}-->
+		<input type="hidden" name="option[]" value="LO{val option/optionID|zeroPadding:3}I{val option/optionItem}">
+		<!--{/loop}-->
+	</form>
+	<div class="btnArea">
+		<a href="javascript:void(0)" class="returnButton faReply" onclick="document.form_leaseInfoR.submit(); return false;" />戻る</a>
+		<a href="javascript:void(0)" class="actionButton faCheck" onclick="document.form_leaseInfoS.submit(); return false;" />決定</a>
+	</div>
+	<input name="totalPrice" type="hidden" value="{val totalPrice}">
+</div>
+<ul class="note">
+	<li>オプションは消費税込みで参考価格です。</li>
+	<li>車両仕様並びに装備が実際の車両と異なる場合もありますのでご了承ください。</li>
+</ul>

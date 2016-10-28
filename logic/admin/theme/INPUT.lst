@@ -1,0 +1,27 @@
+ids
+	a, themeID                             = themeID                                 // テーマID                    name="themeID"
+	a, themeInfo.priorityNum               = priorityNum                             // 優先順位                    name="priorityNum"
+	a, themeInfo.dispNum                   = dispNum                                 // 表示順                      name="dispNum"
+
+
+fields
+	a, themeInfo.themeName                 = themeName                               // テーマ名                    name="themeInfo[themeName]"
+	a, themeInfo.nameAbbreviation          = nameAbbreviation                        // テーマ名(略称)              name="themeInfo[nameAbbreviation]"
+	a, themeInfo.iconNo                    = iconNo                                  // テーマアイコン              name="themeInfo[iconNo]"
+	a, themeInfo.statusType                = statusType                              // ステータス                  name="themeInfo[statusType]"
+	a, themeInfo.priorityNum               = priorityNum                             // 優先度                      name="priorityNum"
+	a, themeInfo.dispNum                   = dispNum                                 // 表示順                      name="dispNum"
+	a, themeInfo.bodyType/bodyTypeID       = bodyTypeID                              // メールアカウント            name="themeInfo[bodyType][bodyTypeID]"
+	a, themeInfo.bodyType/makerCode        = makerCode                               // メールアカウント            name="themeInfo[bodyType][makerCode]"
+	a, themeInfo.bodyType/modelCode        = modelCode({.bodyTypeID}:{.makerCode})   // 車種コード                  name="themeInfo[bodyType][modelCode]"
+	a, themeInfo.basisOfSelection          = basisOfSelection                        // 設定基準                    name="themeInfo[basisOfSelection]"
+
+searchs
+	a, searchThemeID                       = searchThemeID   // 会員ID                  name="searchThemeID"
+	a, searchThemeName                     = searchThemeName // 会員名                  name="searchThemeName"
+	a, searchLevel                         = searchLevel     // 権限                    name="searchLevel"
+	a, pageNum                             = pageNum         // ページ番号              name="pageNum"
+
+sortIDs
+	a, prioritySortIDs                     = sortIDs         // ソートID                name="prioritySortIDs"
+	a, dispSortIDs                         = sortIDs         // ソートID                name="dispSortIDs"

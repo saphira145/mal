@@ -1,0 +1,5 @@
+// 車種コード
+noticeText
+	convert,  0,  trim
+	check,  200,  length(-100000),                  文字数が制限外です
+

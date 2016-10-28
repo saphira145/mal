@@ -1,0 +1,522 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+		// アップロードファイルを一時ディレクトリへ
+		list( $filePath, $output["tmpFaqCSVName"] ) = $class["csvImport_1"]->copy_tempDir( $output["importCSVFile"]["tmp_name"] );
+
+		// コピーできない場合は終了
+		if( !file_exists( $filePath ) ) {
+			return;
+		}
+
+
+		// CSVファイル読み込み
+		$i   = 0;
+		$row = 1;
+		$handle = fopen ( $filePath, "r" );
+
+		while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+			// 文字コード変換（SJIS-winからUTF-8に変換）
+			$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+			// 入力チェック
+			unset( $errData );
+			$errData = check_CSVData( $CSVData );
+
+			// エラーメッセージ格納
+			if( count( $errData ) > 0 ) {
+				$output["errList"][$i]["row"]    = $row;
+				$output["errList"][$i]["detail"] = $errData;
+				$i++;
+				// エラーが100行ある場合はチェックをストップする
+				if( $i > 100 ) {
+					break;
+				}
+			}
+
+			// 読み込み行のカウントアップ
+			$row++;
+		}
+
+		fclose($handle);
+
+
+		// 登録予定件数エラーがない場合表示
+		if( count( $output["errList"] ) == 0 ) {
+			$output["entryCount"] = $row - 1;
+		}
+
+
+
+
+
+	/*--------------------------------------------------
+	  入力チェック
+	---------------------------------------------------*/
+	function check_CSVData ( $CSVData ) {
+
+		unset( $modelID );
+
+		foreach( $CSVData as $key => $val ) {
+
+			unset( $err );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$err = check_ommonCarGradeID( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 本革巻きステアリング_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 本革巻きステアリング_有無（３フィールド目）
+			if( $key == 2 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 本革巻きステアリング_注目（４フィールド目）
+			if( $key == 3 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ステアリングスイッチ_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ステアリングスイッチ_有無（６フィールド目）
+			if( $key == 5 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ステアリングスイッチ_注目（７フィールド目）
+			if( $key == 6 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// パワーステアリング_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// パワーステアリング_有無（９フィールド目）
+			if( $key == 8 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// パワーステアリング_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// テレスコピックステアリング_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// テレスコピックステアリング_有無	（１２フィールド目）
+			if( $key == 11 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// テレスコピックステアリング_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// チルトステアリング_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// チルトステアリング_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// チルトステアリング_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 集中ドアロック_正式名（１７フィールド目）
+			if( $key == 16 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 集中ドアロック_有無（１８フィールド目）
+			if( $key == 17 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 集中ドアロック_注目（１９フィールド目）
+			if( $key == 18 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// インテリジェントキー_正式名（２０フィールド目）
+			if( $key == 19 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// インテリジェントキー_有無（２１フィールド目）
+			if( $key == 20 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// インテリジェントキー_注目（２２フィールド目）
+			if( $key == 21 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// リモートコントロールエントリーシステム_正式名（２３フィールド目）
+			if( $key == 22 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// リモートコントロールエントリーシステム_有無（２４フィールド目）
+			if( $key == 23 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// リモートコントロールエントリーシステム_注目（２５フィールド目）
+			if( $key == 24 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// エンジンイモビライザー_正式名（２６フィールド目）
+			if( $key == 25 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// エンジンイモビライザー_有無（２７フィールド目）
+			if( $key == 26 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// エンジンイモビライザー_注目（２８フィールド目）
+			if( $key == 27 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車間自動制御システム_正式名（２９フィールド目）
+			if( $key == 28 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車間自動制御システム_有無（３０フィールド目）
+			if( $key == 29 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 車間自動制御システム_注目（３１フィールド目）
+			if( $key == 30 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ASCD(オートスピードコントロール装置)_正式名（３２フィールド目）
+			if( $key == 31 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ASCD(オートスピードコントロール装置)_有無（３３フィールド目）
+			if( $key == 32 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ASCD(オートスピードコントロール装置)_注目（３４フィールド目）
+			if( $key == 33 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// タコメーター_正式名（３５フィールド目）
+			if( $key == 34 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// タコメーター_有無（３６フィールド目）
+			if( $key == 35 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// タコメーター_注目（３７フィールド目）
+			if( $key == 36 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自発光メーター_正式名（３８フィールド目）
+			if( $key == 37 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自発光メーター_有無（３９フィールド目）
+			if( $key == 38 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 自発光メーター_注目（４０フィールド目）
+			if( $key == 39 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 木目調パネル_正式名（４１フィールド目）
+			if( $key == 40 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 木目調パネル_有無（４２フィールド目）
+			if( $key == 41 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 木目調パネル_注目（４３フィールド目）
+			if( $key == 42 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// カーボン調パネル_正式名（４４フィールド目）
+			if( $key == 43 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// カーボン調パネル_有無（４５フィールド目）
+			if( $key == 44 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// カーボン調パネル_注目（４６フィールド目）
+			if( $key == 45 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ピアノ調パネル_正式名（４７フィールド目）
+			if( $key == 46 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ピアノ調パネル_有無（４８フィールド目）
+			if( $key == 47 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ピアノ調パネル_注目（４９フィールド目）
+			if( $key == 48 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// メタリック調パネル_正式名（５０フィールド目）
+			if( $key == 49 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// メタリック調パネル_有無（５１フィールド目）
+			if( $key == 50 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// メタリック調パネル_注目（５２フィールド目）
+			if( $key == 51 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// パワーウインドウ_正式名（５３フィールド目）
+			if( $key == 52 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// パワーウインドウ_有無（５４フィールド目）
+			if( $key == 53 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// パワーウインドウ_注目（５５フィールド目）
+			if( $key == 54 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+		}
+
+		return $ret;
+	}
+
+
+
+
+
+
+
+
+
+?>

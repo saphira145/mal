@@ -1,0 +1,50 @@
+	<div id="selectDetail"  class="compareIcon">
+		<h2><span>スペック情報</span></h2>
+		
+		<!--{loop filterList}-->
+		<!--{unset filterList/fuelFlg}-->
+		<div <!--{set filterList/backgroundColor}-->class="{val filterList/backgroundColor}"<!--{/set}--> >
+			<table>
+				<tr>
+					<th>{val filterList/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val filterList/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val filterList/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val filterList/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val filterList/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/unset}-->
+
+		<!--{set filterList/fuelFlg}-->
+		<div>
+			<table class="fuelrate">
+				<tr <!--{set filterList/fuelConsumptionRateJC08mode.backgroundColor}-->class="{val filterList/fuelConsumptionRateJC08mode.backgroundColor}"<!--{/set}-->>
+					<th rowspan="2">
+						<table>
+							<tr>
+								<th rowspan="2" class="a">燃料消費率</th>
+								<td class="b"><img src="{val BASE_DIR}/_common/img/JC08mode.gif" alt="JC08mode"><br /><span>（国土交通省審査値）</span></td>
+							</tr>
+							<tr>
+								<td class="c"><img src="{val BASE_DIR}/_common/img/1015mode.gif" alt="1015mode"><br /><span>（国土交通省審査値）</span></td>
+							</tr>
+						</table>
+					</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val filterList/fuelConsumptionRateJC08mode.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val filterList/fuelConsumptionRateJC08mode.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val filterList/fuelConsumptionRateJC08mode.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val filterList/fuelConsumptionRateJC08mode.model4Info}</td>
+				</tr>
+				<tr <!--{set filterList/fuelConsumptionRate10_15mode.backgroundColor}-->class="{val filterList/fuelConsumptionRate10_15mode.backgroundColor}"<!--{/set}-->>
+					<td class="noBorder {val model1Info.notData}">{val filterList/fuelConsumptionRate10_15mode.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val filterList/fuelConsumptionRate10_15mode.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val filterList/fuelConsumptionRate10_15mode.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val filterList/fuelConsumptionRate10_15mode.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/set}-->
+
+		<!--{/loop}-->
+	</div>

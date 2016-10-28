@@ -1,0 +1,16 @@
+<?php
+
+
+	/* -------------------------------------
+		ビュー
+	------------------------------------- */
+	// HTMLテンプレートの読み込み
+	$retJSON["num"] = $output["carGradeNum"];
+
+	// ----------------------------------------------------------------
+	// JSONの出力
+	header("content-type: application/x-javascript; charset=utf-8");
+	die(json_encode($retJSON));
+	exit;
+
+?>

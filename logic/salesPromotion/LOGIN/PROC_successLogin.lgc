@@ -1,0 +1,17 @@
+<?php
+
+
+	// ■■ ログイン処理 ■■
+
+		// ログインIDの設定
+		$class["session"]->loginID = $justInput["ngdFW034"]["loginID"];
+
+		// ログイン処理
+		$class["session"]->exec_login( "idpw" );
+
+		// 自動ログイン追加
+		$class["session"]->set_autoLoginFlag( $justInput["ngdFW034"]["autoLogin"] );
+
+
+
+?>

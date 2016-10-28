@@ -1,0 +1,29 @@
+// メールアドレス
+email
+	check,  100,  must,
+
+// パスワード
+password
+	convert,  0,  trim,
+	convert,  0,  1byte,
+	filter,   0,  length_cut(30),
+	check,  100,  must,             必須項目です
+	check,  200,  dupPassword({1}), パスワードが違います
+
+
+// 新しいパスワード
+passwordNew
+	convert,  0,  trim,
+	convert,  0,  1byte,
+	filter,   0,  length_cut(30),
+	check,  100,  must,               必須項目です
+	check,  200,  length(8-20),       ８～２０文字で入力してください
+	check,  300,  alpha_num,          半角英数字で入力してください
+
+
+// グループ・パスワードコンファーム
+passwordConfirm
+	convert,  0,  trim,
+	check,  100,  must,                必須項目です
+	check,  400,  passwordEqual({1}),  新しいパスワードと確認用パスワードが一致しません
+

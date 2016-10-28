@@ -1,0 +1,37 @@
+searchType
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// ページ番号
+pageNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// ログ種別
+searchLogType
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// ログ種別
+logType
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+// ログ種別
+date
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+
+// 年
+year
+	convert,  0,  1byte,
+	convert,  0,  trim
+
+// 月
+month
+	convert,  0,  1byte,
+	convert,  0,  trim
+

@@ -1,0 +1,181 @@
+{frame /admin/_common/outerFrame.tmp}
+{input menu_release=1}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<h2 class="mrgB_10">▼本番リリース予定時間設定</h2>
+	<p class="actionMsg">次回本番更新予定日時を入力して「設定」ボタンを押してください。</p>
+<!--{set modify_sucessFlg}-->
+	<p class="actionMsg"><span>更新が完了しました。</span></p>
+<!--{/set}-->
+
+	<table class="tblList">
+	<tr>
+		<th class="w190">テーブル名</th>
+		<th>ＣＳＶ取込最終日時</th>
+	</tr>
+	<tr>
+		<td>車種グレード</td>
+		<td><!--{set carGradeUpdateInfo.workDatetime.year}-->{val carGradeUpdateInfo.workDatetime.year}-{val carGradeUpdateInfo.workDatetime.month|zeroPadding:2}-{val carGradeUpdateInfo.workDatetime.day|zeroPadding:2} {val carGradeUpdateInfo.workDatetime.hour|zeroPadding:2}:{val carGradeUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>視界</td>
+		<td><!--{set viewUpdateInfo.workDatetime.year}-->{val viewUpdateInfo.workDatetime.year}-{val viewUpdateInfo.workDatetime.month|zeroPadding:2}-{val viewUpdateInfo.workDatetime.day|zeroPadding:2} {val viewUpdateInfo.workDatetime.hour|zeroPadding:2}:{val viewUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>運転席まわり</td>
+		<td><!--{set seatCircumferenceUpdateInfo.workDatetime.year}-->{val seatCircumferenceUpdateInfo.workDatetime.year}-{val seatCircumferenceUpdateInfo.workDatetime.month|zeroPadding:2}-{val seatCircumferenceUpdateInfo.workDatetime.day|zeroPadding:2} {val seatCircumferenceUpdateInfo.workDatetime.hour|zeroPadding:2}:{val seatCircumferenceUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>空調</td>
+		<td><!--{set airConditioningUpdateInfo.workDatetime.year}-->{val airConditioningUpdateInfo.workDatetime.year}-{val airConditioningUpdateInfo.workDatetime.month|zeroPadding:2}-{val airConditioningUpdateInfo.workDatetime.day|zeroPadding:2} {val airConditioningUpdateInfo.workDatetime.hour|zeroPadding:2}:{val airConditioningUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>オーディオ</td>
+		<td><!--{set audioUpdateInfo.workDatetime.year}-->{val audioUpdateInfo.workDatetime.year}-{val audioUpdateInfo.workDatetime.month|zeroPadding:2}-{val audioUpdateInfo.workDatetime.day|zeroPadding:2} {val audioUpdateInfo.workDatetime.hour|zeroPadding:2}:{val audioUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>シート・内装関係</td>
+		<td><!--{set seatInteriorUpdateInfo.workDatetime.year}-->{val seatInteriorUpdateInfo.workDatetime.year}-{val seatInteriorUpdateInfo.workDatetime.month|zeroPadding:2}-{val seatInteriorUpdateInfo.workDatetime.day|zeroPadding:2} {val seatInteriorUpdateInfo.workDatetime.hour|zeroPadding:2}:{val seatInteriorUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>外装</td>
+		<td><!--{set exteriorUpdateInfo.workDatetime.year}-->{val exteriorUpdateInfo.workDatetime.year}-{val exteriorUpdateInfo.workDatetime.month|zeroPadding:2}-{val exteriorUpdateInfo.workDatetime.day|zeroPadding:2} {val exteriorUpdateInfo.workDatetime.hour|zeroPadding:2}:{val exteriorUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>足回り</td>
+		<td><!--{set footSurroundingsUpdateInfo.workDatetime.year}-->{val footSurroundingsUpdateInfo.workDatetime.year}-{val footSurroundingsUpdateInfo.workDatetime.month|zeroPadding:2}-{val footSurroundingsUpdateInfo.workDatetime.day|zeroPadding:2} {val footSurroundingsUpdateInfo.workDatetime.hour|zeroPadding:2}:{val footSurroundingsUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>安全</td>
+		<td><!--{set safetyUpdateInfo.workDatetime.year}-->{val safetyUpdateInfo.workDatetime.year}-{val safetyUpdateInfo.workDatetime.month|zeroPadding:2}-{val safetyUpdateInfo.workDatetime.day|zeroPadding:2} {val safetyUpdateInfo.workDatetime.hour|zeroPadding:2}:{val safetyUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>車種バリュー</td>
+		<td><!--{set carThemeUpdateInfo.workDatetime.year}-->{val carThemeUpdateInfo.workDatetime.year}-{val carThemeUpdateInfo.workDatetime.month|zeroPadding:2}-{val carThemeUpdateInfo.workDatetime.day|zeroPadding:2} {val carThemeUpdateInfo.workDatetime.hour|zeroPadding:2}:{val carThemeUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>リース料(調達価格・メンテ区分・諸税)</td>
+		<td><!--{set leaseUpdateInfo.workDatetime.year}-->{val leaseUpdateInfo.workDatetime.year}-{val leaseUpdateInfo.workDatetime.month|zeroPadding:2}-{val leaseUpdateInfo.workDatetime.day|zeroPadding:2} {val leaseUpdateInfo.workDatetime.hour|zeroPadding:2}:{val leaseUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>リース料(残価・任意保険料)</td>
+		<td><!--{set leaseValueUpdateInfo.workDatetime.year}-->{val leaseValueUpdateInfo.workDatetime.year}-{val leaseValueUpdateInfo.workDatetime.month|zeroPadding:2}-{val leaseValueUpdateInfo.workDatetime.day|zeroPadding:2} {val leaseValueUpdateInfo.workDatetime.hour|zeroPadding:2}:{val leaseValueUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	<tr>
+		<td>メンテナンス料</td>
+		<td><!--{set maintenanceUpdateInfo.workDatetime.year}-->{val maintenanceUpdateInfo.workDatetime.year}-{val maintenanceUpdateInfo.workDatetime.month|zeroPadding:2}-{val maintenanceUpdateInfo.workDatetime.day|zeroPadding:2} {val maintenanceUpdateInfo.workDatetime.hour|zeroPadding:2}:{val maintenanceUpdateInfo.workDatetime.min|zeroPadding:2}<!--{/set}-->&nbsp;</td>
+	</tr>
+	</table>
+
+	<div class="BB_btnWithText_A txt_center noBorderTop">
+		<form name="releaseExecute" method="post" action="{val UNIT_URL}/">
+			{dbTicket}
+			<input type="hidden" name="st" value="rle" />
+			<div class="BB_boxText">
+				<div class="BB_boxLeftText txt_left">
+<!--{set reserveInfo.reserveDatetime+err}-->
+	<!--{loop reserveInfo.reserveDatetime+err}-->
+					<p class="err">{val reserveInfo.reserveDatetime+err/msg}</p>
+	<!--{/loop}-->
+<!--{/set}-->
+					次回本番更新予定日時：
+					<input type="text" class="w10" name="reserveInfo[reserveDatetime][year]" value="{val reserveInfo.reserveDatetime.year}" />&nbsp;年
+					<select name="reserveInfo[reserveDatetime][month]">
+						<option value=""></option>
+					<!--{loop monthList}-->
+						<option value="{val monthList/id}"<!--{set monthList/selected}--> selected="selected"<!--{/set}-->>{val monthList/name}</option>
+					<!--{/loop}-->
+					</select>&nbsp;月
+					<select name="reserveInfo[reserveDatetime][day]">
+						<option value=""></option>
+					<!--{loop dayList}-->
+						<option value="{val dayList/id}"<!--{set dayList/selected}--> selected="selected"<!--{/set}-->>{val dayList/name}</option>
+					<!--{/loop}-->
+					</select>&nbsp;日
+					<select name="reserveInfo[reserveDatetime][hour]">
+						<option value=""></option>
+					<!--{loop hourList}-->
+						<option value="{val hourList/id}"<!--{set hourList/selected}--> selected="selected"<!--{/set}-->>{val hourList/name}</option>
+					<!--{/loop}-->
+					</select>&nbsp;時
+					<select name="reserveInfo[reserveDatetime][min]">
+						<option value=""></option>
+					<!--{loop minList}-->
+						<option value="{val minList/id}"<!--{set minList/selected}--> selected="selected"<!--{/set}-->>{val minList/name}</option>
+					<!--{/loop}-->
+					</select>&nbsp;分
+				</div>
+			</div>
+			<div class="BB_boxRightBtn"><input type="submit" value="設定" class="btnW01" /></div>
+		</form>
+	</div>
+</div>
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼本番リリース予定取消</h2>
+	<p class="actionMsg">※リリース予定日時まで15分以内の予定取消を行った場合は、<br />次の本番リリースが実行されるまで「以前のデータを戻す」が使用できません。</p>
+<!--{set delete_sucessFlg}-->
+	<p class="actionMsg"><span>予定を取り消しました。</span></p>
+<!--{/set}-->
+	
+<!--{set deleteReserveInfo.reserveDatetime.year}-->
+	<div class="BB_btnWithText_A">
+		<form name="deleteExecute" method="post" action="{val UNIT_URL}/">
+			{dbTicket}
+			<input type="hidden" name="st" value="de" />
+			<div class="BB_boxText">
+				次回本番更新予定日時： 
+				{val deleteReserveInfo.reserveDatetime.year}-{val deleteReserveInfo.reserveDatetime.month|zeroPadding:2}-{val deleteReserveInfo.reserveDatetime.day|zeroPadding:2} {val deleteReserveInfo.reserveDatetime.hour|zeroPadding:2}:{val deleteReserveInfo.reserveDatetime.min|zeroPadding:2}
+			</div>
+			<div class="BB_boxRightBtn"><input type="submit" value="取り消す" class="btnW01" /></div>
+		</form>
+	</div>
+<!--{/set}-->
+</div>
+
+<!--{set deleteReserveInfo.reserveDatetime.year}-->
+<div class="contentSection">
+	<h2 class="mrgB_10">▼テストサイト確認</h2>
+	<div class="BB_btnWithText_A">
+		<form name="changeMode" method="post" action="{val UNIT_URL}/">
+			<input type="hidden" name="st" value="ch" />
+			<div class="BB_boxText">
+				テストサイト想定日時：
+					{val deleteReserveInfo.reserveDatetime.year}-{val deleteReserveInfo.reserveDatetime.month|zeroPadding:2}-{val deleteReserveInfo.reserveDatetime.day|zeroPadding:2} {val deleteReserveInfo.reserveDatetime.hour|zeroPadding:2}:{val deleteReserveInfo.reserveDatetime.min|zeroPadding:2}
+				<span><a href="{val HTTP_URL}/{val BASE_DIR}" target="_blank">閲覧画面を開く</a></span>
+			</div>
+			<div class="BB_boxRightBtn">
+<!--{set testModeFlg}-->
+				<input type="submit" value="通常表示に切り替える" class="btnW02" />
+<!--{/set}-->
+<!--{set defaultModeFlg}-->
+				<input type="submit" value="テスト表示に切り替える" class="btnW02" />
+<!--{/set}-->
+			</div>
+		</form>
+	</div>
+</div>
+<!--{/set}-->
+
+<div class="contentSection">
+	<h2 class="mrgB_0">▼以前のデータに戻す</h2>
+	<p class="actionMsg">※最後の本番リリースを実行した状態から1回だけ戻すことができます。</p>
+<!--{set back_sucessFlg}-->
+	<p class="actionMsg"><span>以前のデータに戻りました。</span></p>
+<!--{/set}-->
+<!--{set rollbackFlg}-->
+	<div class="BB_btnWithText_A txt_right">
+		<form name="backExecute" method="post" action="{val UNIT_URL}/">
+			{dbTicket}
+			<input type="hidden" name="st" value="be" />
+			<input type="submit" value="データを戻す" class="btnW01" />
+		</form>
+	</div>
+<!--{/set}-->
+</div>
+
+
+
+

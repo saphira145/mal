@@ -1,0 +1,2714 @@
+@charset "utf-8";
+
+
+/*-- 共通 --*/
+.txt_center{	text-align: center!important; }
+.txt_right{	text-align:right!important; }
+.txt_left{	text-align:left!important; }
+
+/*-- [マウスオーバー] --*/
+.hover_opacity{
+	opacity : 0.7;
+	z-index : 1;/*opacity指定でz-indexが0になる対策*/
+}
+
+
+/*-- カーソルアイコン  --*/
+#rankingForm li label,
+#compareDetail div>h2 span+*,
+#makerList li,
+#rankingForm .themeBox li,
+#rankingPage .nextListButton,
+#changeTargetModel .setCol,
+.searchForm label ,
+.clearChecked,
+.selectBox .clearBtn,
+.compareCarData .themeBox li{
+	cursor: pointer;
+
+}
+
+
+/*--------------------------------------
+	ヘッダー
+---------------------------------------*/
+/*------ テスト表示 ------*/
+#testDisp{
+	background-color:#C71444;
+	color:#FFFFFF;
+	font-weight:bold;
+	padding: 10px 0 10px 20px;
+}
+
+/*------ ヘッダー ------*/
+#header h1{
+	padding:20px 0px;
+}
+
+.header_top h1{
+	padding:30px 20px !important;
+}
+
+/* トップページ専用 */
+.header_top{
+	background-image: url(../img/hl/top_header_1.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+	height: 212px;
+	background-color: #FFF;
+	margin-bottom: 10px;
+}
+
+/* お見積もり依頼, 使い方ガイド を右上に配置するため */
+#header{
+	 position: relative;
+}
+
+.faul{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	z-index: 1;
+}
+
+.faul li{
+	float: left;
+	margin: 0 1px 0 0;
+}
+
+.faul li a{
+	min-width: 100px;
+	color:#FFFFFF;
+	padding: 8px 10px;
+	display: block;
+}
+
+.faul li .howtoestimate{
+	background-image: url(../img/hl/hl_slanting_mesh_gray.png);
+	background-repeat: no-repeat;
+	width: 145px;
+	padding-left: 25px;
+}
+
+.faul li .howtouse{
+	background-image: url(../img/bg/bg_mesh_lightGray.png);
+	height: 18px;
+}
+
+
+/* 車種名で検索する - トップ用 */
+.header_top #searchModelName{
+	margin-left: 20px;
+}
+
+.header_top #searchModelName .floating{
+	right: 20px;
+}
+
+/* 現在の総件数 */
+.fadivCnt{
+	position: absolute;
+	bottom: 20px;
+	left: 235px;
+}
+/* 車種名で検索する - トップ以外用 */
+.fadivSearch{
+	position: absolute;
+	bottom: 15px;
+	left: 235px;
+}
+/* 現在ＸＸメーカー／ＸＸ車種 */
+#header .allCnt {
+	background-color: #DDDDDD;
+	padding: 0px 10px;
+	font-size: 24px;
+	display: inline-block;
+	border:1px solid #CCCCCC;
+}
+
+
+
+
+/*--------------------------------------
+	ページトップ
+---------------------------------------*/
+#gotoTop{
+	text-align:right;
+	padding: 30px 0 0;
+}
+
+#gotoTop a{
+	padding: 10px;
+	background-color:#444234;
+	color:#FFFFFF;
+	display: inline-block;
+}
+
+
+/*--------------------------------------
+	フッター
+---------------------------------------*/
+#footer,
+#footerMal{
+	border-top:1px solid #CCCCCC;
+	background-color:#EEEEEE;
+	display:table;
+	width:100%;
+	padding: 20px 0;
+	
+}
+
+
+#popup #footer{
+	background: none;
+	border: none;
+	text-align: center;
+}
+
+/* お問い合わせ・お見積りのご依頼ボタン */
+#footer li{
+	float:left;
+	margin: 0 10px 0 10px;
+}
+
+/* 説明文 */
+#footer div{
+	font-size:11px;
+	color:#878787;
+}
+
+#footer div a{
+	color:#878787;
+	text-decoration:underline;
+}
+
+/* 三菱オートリースフッター */
+#footerMal{
+	padding-top: 10px;
+}
+
+#footerMal .container>*{
+	display:table-cell;
+
+}
+
+#footerMal .container>div{
+	width: 600px;
+	border-right:1px solid #999999;
+	padding: 0 185px 0 0;
+}
+
+#footerMal small{
+	white-space:normal;
+}
+
+/* プライバシーポリシー・お問い合わせ */
+#footerMal .container ul{
+	padding: 0 0 0 30px;
+} 
+
+#footerMal .container ul li{
+	margin-bottom: 10px;
+	text-align: right;
+}
+
+#footerMal .container ul li a{
+	color: #555555;
+	text-decoration: underline;
+}
+
+/*--------------------------------------
+	車種名検索
+---------------------------------------*/
+#searchModelName{
+	display:table;
+	width:100%;
+}
+
+/* 背景 */
+#searchModelName .floating{
+	position: absolute;
+	top: 54px;
+	right: -445px;
+	width: 980px;
+	z-index: 2;
+}
+
+/* ▲アイコン */
+#searchModelName .arwIcon{
+	visibility: hidden;
+	display: none;
+	position: absolute;
+	left: 140px;
+	top: 32px;
+}
+
+/* 車種名リスト */
+#searchModelName ul{
+	margin: 5px 2px 5px 5px;
+}
+
+#searchModelName li{
+	float:left;
+	background:url(../img/bg/bg_mesh_thinGray.png);
+	width:230px;
+	margin: 0 3px 5px 0;
+	padding: 5px;
+	cursor: pointer;
+}
+
+#searchModelName li span{   
+    color: #333333;
+    font-weight: bold;
+    font-size: 11px;
+    height: 34px;
+    vertical-align: middle;
+	display: table-cell;
+	padding: 0 0 0 5px;
+}
+
+/* 検索フォーム */
+#searchModelName .left{
+	background-color : #555555;
+	border-radius:20px;
+	height: 45px;
+	display: inline-block;
+}
+
+#searchModelName .right{
+	margin: 0px 20px;
+	display: block;
+	padding: 12px 0;
+	line-height: normal;
+}
+
+#searchModelName input{
+	background-color : #555555;
+	border: none;
+	width: 233px;
+	font-weight: bold;
+	outline:0px none black;
+	color:#FFFFFF;
+}
+
+
+/*--------------------------------------
+	アクションボタン
+---------------------------------------*/
+.actionBox{
+	display:table;
+	width: 100%;
+	background-color: #555555;
+}
+
+.actionBox>*{
+	display: table-cell;
+}
+
+/* トップページ用 */
+#topPage .actionBox{
+	background-image: none;
+	background-color: #555555;
+}
+
+/* タイトル */
+.actionBox h2{
+	color:#FFFFFF;
+	font-size:18px;
+	padding: 10px 20px;
+}
+
+#rankingPage .actionBox h2,
+#selectModelTab .actionBox h2{
+	width: 150px;
+}
+
+
+.actionBox h2 small{
+	font-size:10px;
+	margin-left:10px;
+}
+
+/* 検索ボタン */
+.actionBox input[type=button],
+.actionBtn a[data-linkName=compareBtn],
+.searchBtn a[data-linkName=ok]{
+	height: 60px;
+	background: url(../img/bg/bg_mesh_darkOrange.png) repeat;
+	border: none;
+	color: #FFFFFF;
+}
+
+/* 車種の件数 */
+.carGradeNum{
+	color: #FFFFFF;
+	padding: 0 10px 0 0;
+	text-align:right;
+	background-image: url(../img/bg/bg_searchLabel.png);
+	background-repeat: no-repeat;
+	background-position: 0 center;
+}
+
+.carGradeNum span{
+	color: #FF9226;
+	font-size: 24px;
+	margin: 0 10px;
+	font-weight: bold;
+}
+
+/*--------------------------------------
+	探したいクルマの条件
+	(検索フォーム)
+---------------------------------------*/
+.searchForm>div{
+	display: table;
+	margin: 0 0 20px 0;
+	width: 100%;
+}
+
+/* 車種変更 - 結果画面 - ヘッダー部分 */
+#changeTargetModel #makerChange .makerArea{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+/*--------------------------------------
+	探したいクルマの条件
+	(各画面共通)
+---------------------------------------*/
+/* 一覧 */
+.searchForm li{
+	float:left;
+	margin: 0 5px 5px 0px;
+	display: table;
+}
+
+/* チェックボックス */
+#rankingForm li input[type=checkbox],
+.searchForm input[type=checkbox]{
+	position: relative;
+	visibility: hidden;
+	display:none;
+}
+
+#rankingForm li input[type=checkbox],
+.searchForm input[type=checkbox]{
+	z-index: -1;
+}
+
+/* ラベル */
+#rankingForm li label,
+.searchForm label {
+	font-weight: bold;
+	display: table-cell;
+    vertical-align: middle;
+	text-align:center;
+}
+
+
+
+/*--------------------------------------
+	探したいクルマの条件
+	(各画面共通)
+---------------------------------------*/
+/*------ 価格 ------*/
+.searchForm .priceBox>*{
+	width: 137px;
+	height: 40px;
+	font-size: 16px;
+	padding: 5px 8px;
+}
+
+
+/* 価格 - 名称 */
+.searchForm .priceBox .priceName{
+	vertical-align: middle;
+	display: table-cell;
+	width: 96px;
+}
+
+/* 価格 - 件数 */
+.searchForm .priceBox .priceItem{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.searchForm .priceBox .priceCnt{
+	vertical-align: middle;
+	display: table-cell;
+	background-color: #FFF;
+	display: table-cell;
+	width: 30px;
+	height: 30px;
+	border-radius: 20px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;
+
+}
+
+
+/*------ バリュー ------*/
+.searchForm .themeBox>*{
+	width: 296px;
+	height: 60px;
+	font-size: 16px;
+	padding: 5px 8px;
+}
+
+/* バリュー - イメージ */
+.searchForm .themeBox .themeImg{
+	vertical-align: middle;
+	display: table-cell;
+	width: 20px;
+	height: 60px;
+	padding-left: 35px;
+	background-repeat: no-repeat;
+	background-position: left;
+	text-align: left;
+}
+/* バリュー - 名称 */
+.searchForm .themeBox .themeName{
+	vertical-align: middle;
+	display: table-cell;
+	width: 204px;
+	height: 55px;
+	text-align: left;
+}
+
+/* バリュー - 件数 */
+.searchForm .themeBox .themeItem{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.searchForm .themeBox .themeCnt{
+	vertical-align: middle;
+	display: table-cell;
+	background-color: #FFF;
+	display: table-cell;
+	width: 30px;
+	height: 30px;
+	border-radius: 20px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;
+
+}
+
+
+
+/*------ メーカー ------*/
+.searchForm .makerBox>*{
+	width: 70px;
+	height: 76px;
+	font-size: 14px;
+	padding: 10px 10px 5px;
+	vertical-align: top;
+	padding: 5px 10px 10px;
+
+}
+
+
+/* 名称 */
+.searchForm .makerBox .makerName{
+	margin: 0;
+	text-align: center;
+	width: 70px;
+	display: table-cell;
+	height: 45px;
+	vertical-align: middle;
+
+}
+
+/* 件数 */
+.searchForm .makerBox .makerItem{
+	vertical-align: middle;
+	padding-left: 20px;
+	display: block;
+}
+
+.searchForm .makerBox .makerCnt{
+	vertical-align: middle;
+	display: table-cell;
+	background-color: #FFF;
+	display: table-cell;
+	width: 30px;
+	height: 30px;
+	border-radius: 20px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+
+/*------ ボディタイプ ------*/
+.searchForm .typeBox>*{
+	width: 129px;
+	height: 110px;
+	font-size: 14px;
+	padding: 5px 0 0 2px;
+}
+
+
+/* 名称 */
+.searchForm .typeBox .bodyTypeName{
+	margin: 0;
+	display: table-caption;
+	text-align: center;
+	width: 129px;
+	background-repeat: no-repeat;
+	background-position: top;
+	padding-top: 40px;
+}
+
+/* 件数 */
+.searchForm .typeBox .bodyTypeItem{
+	vertical-align: middle;
+	display: table-cell;
+	padding-left: 48px;
+}
+
+.searchForm .typeBox .bodyTypeCnt{
+	vertical-align: middle;
+	display: table-cell;
+	background-color: #FFF;
+	display: table-cell;
+	width: 30px;
+	height: 30px;
+	border-radius: 20px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+
+/*--------------------------------------
+	選択した検索条件
+	(各画面共通)
+---------------------------------------*/
+.selectBox{
+	display: table;
+	width: 100%;
+	z-index:1;
+}
+
+.selectBox>*{
+	display: table-cell;
+	width: 30%;
+}
+
+/* 背景色(ランキング用) */
+#rankingPage .selectBox>*{
+	background:url(../img/bg/bg_darkGray.png);
+}
+
+/* メーカーの領域に罫線を追加 */
+.selectBox .makerBox{
+	border-left: 1px solid rgba(255, 255, 255, 0.3);
+	border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* タイトル */
+.selectBox h2{
+	padding: 5px 0 5px 10px;
+	color: #FFFFFF;
+	font-size: 12px;
+	position:relative;
+	font-weight:bold;
+	line-height: normal;
+}
+
+.selectBox h2 a{
+	color: #FFFFFF;
+}
+
+/* クリアボタン */
+.selectBox span{
+	background-color: #000000;
+	position:absolute;
+	right:0;
+	bottom: 0;
+	padding: 5px;
+}
+
+/* ボタン(トップページ用) */
+#topPage .selectBox span{
+	background-color: #C9C9C9;
+}
+
+#topPage .selectBox span a{
+	color: #646458;
+}
+
+/* 選択した条件(リスト) */
+.selectBox ul{
+	height: 65px;
+	overflow-y: auto;
+}
+
+.selectBox li{
+	width: 140px;
+	min-height: 35px;
+	font-size: 16px;
+	float:left;
+	margin: 0 3px 5px 0;
+}
+
+.actionBox .priceBox div,
+.selectBox div{
+	padding: 0 0 0 10px;
+}
+
+/* 「選択した検索条件」 */
+.selectBox .themeBox .setCol img, .selectBox .makerBox .setCol img, .selectBox .typeBox .setCol img{
+	float: left;
+}
+
+.selectBox .themeBox .setCol div, .selectBox .makerBox .setCol div, .selectBox .typeBox .setCol div, .actionBox .priceBox .setCol div{
+	color: #333;
+	font-weight: bold;
+	font-size: 12px;
+	height: 35px;
+	display: table-cell;
+	vertical-align: middle;
+	width: 140px;
+}
+
+.selectBox .themeBox .setCol div{
+	margin-left: 0px;
+	padding-left: 40px;
+}
+
+.selectBox .makerBox .setCol div{
+	margin-left: 10px;
+}
+
+.selectBox .typeBox .setCol div{
+	margin-left: 0px;
+	padding-left: 50px;
+}
+
+
+/*--------------------------------------
+	検索項目(背景色)
+---------------------------------------*/
+/* データ無し */
+.noData{
+	background-color: #DDDDDD !important;
+}
+
+/* 選択済み(画像) */
+.selected .themeImg, .selected .bodyTypeName{
+	opacity: 0.4;
+}
+
+/* 選択済み(件数) */
+.selected .themeCnt, .selected .makerCnt, .selected .bodyTypeCnt, .selected .priceCnt,
+.makerBox .disabledMaker .makerCnt{
+	background-color: #A6A6A6 !important;
+}
+
+
+/*------ 価格 ------*/
+/* 検索した条件(比較画面用) */
+.priceBox .selCol{
+	background-color: #FFA2C0;
+}
+
+/* 通常 */
+.priceBox .setCol{
+	background:url(../img/bg/bg_mesh_pink.png);
+}
+
+/* 選択済み */
+.priceBox .selected{
+	background:url(../img/bg/bg_mesh_pink_s.png);
+}
+
+
+
+/*------ バリュー ------*/
+/* 検索した条件(比較画面用) */
+.themeBox .selCol{
+	background-color: #FFC926;
+}
+
+/* 通常 */
+.themeBox .setCol{
+	background:url(../img/bg/bg_mesh_yellow.png);
+}
+
+/* 選択済み */
+.themeBox .selected{
+	background:url(../img/bg/bg_mesh_yellow_s.png);
+}
+
+/* 追加 */
+.themeBox .chkCol{
+	background:url(../img/bg/bg_mesh_orange.png);
+}
+
+
+
+
+/*------ メーカー ------*/
+/* 検索した条件(比較画面用) */
+.makerBox .selCol{
+	background-color: #A3D900;
+}
+
+/* 通常 */
+.makerBox .setCol{
+	background:url(../img/bg/bg_mesh_green.png);
+}
+
+/* 選択済み */
+.makerBox .selected,
+.makerBox .disabledMaker{
+	background:url(../img/bg/bg_mesh_green_s.png);
+}
+
+
+/*------ ボディタイプ ------*/
+/* 検索した条件(比較画面用) */
+/*乗用 */
+.typeBox .selCol.passengerUse{
+	background-color: #51A8FF;
+}
+
+/*商用*/
+.typeBox .selCol.commercial{
+	background-color: #7396FF;
+}
+
+/*軽*/
+.typeBox .selCol.light{
+	background-color: #45C4E7;
+}
+
+
+/* 検索条件 */
+/*乗用 */
+.typeBox .setCol.passengerUse{
+	background:url(../img/bg/bg_mesh_blue_light.png);
+}
+
+/*商用*/
+.typeBox .setCol.commercial{
+	background:url(../img/bg/bg_mesh_blue_bark.png);
+}
+
+/*軽*/
+.typeBox .setCol.light{
+	background:url(../img/bg/bg_mesh_blue.png);
+}
+
+
+/* 選択済み */
+/*乗用 */
+.typeBox .selected.passengerUse{
+	background:url(../img/bg/bg_mesh_blue_light_s.png) !important;
+}
+
+/*商用*/
+.typeBox .selected.commercial{
+	background:url(../img/bg/bg_mesh_blue_bark_s.png) !important;
+}
+
+/*軽*/
+.typeBox .selected.light{
+	background:url(../img/bg/bg_mesh_blue_s.png) !important;
+}
+
+/*--------------------------------------
+	トップ画面
+---------------------------------------*/
+#topPage .carGradeNum{
+	width:255px;
+}
+
+#topPage>div{
+	display:table;
+	width:100%;
+	margin: 0 0 10px 0;
+}
+
+/*-- キャンペーン --*/
+#campaign{
+	background-color:#F5F5F5;
+	height: 100px;
+}
+
+#campaign>*{
+	float:left;
+}
+
+
+#campaign h1{
+	margin-right: 1px;
+}
+
+#campaign li{
+	display:table-cell;
+}
+
+/* キャンペーンなし */
+#campaign h1+div{
+	background-image: url(../img/hl/hl_notCampaign.png);
+	height: 70px;
+	width: 871px;
+	text-align: center;
+	font-size: 16px;
+	padding: 30px 0 0;
+	font-weight: bold;
+}
+
+/* 画像なし */
+#campaign a{
+	color:#333333;
+	font-weight:bold;
+	display: block;
+}
+
+#campaign span{
+	display: block;
+	width: 250px;
+	height: 90px;
+	background-color: #DDDDDD;
+	margin-right: 10px;
+	padding: 10px 5px 0;
+}
+
+/* 画像あり */
+#campaign .campaignimg{
+	display: inline-block;
+	text-align: center;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	/**
+	 * for Internet Explorer 8
+	 * http://louisremi.github.io/background-size-polyfill/
+	 */
+	-ms-behavior: url(_common/css/backgroundsize.min.htc);
+}
+
+/* キャンペーンあり＆画像なし */
+#campaign .campaignNoImg{
+	text-align: center;
+}
+
+/*------ 今月の新車 ------*/
+#newCar{
+	background-color:#FFFFFF;
+}
+
+#newCar>*{
+	display:table-cell;
+	vertical-align: middle;
+}
+
+#newCar .r_border{
+	border-right: 1px solid #E6E6E6;
+}
+
+#newCar h1{
+	width: 107px;
+}
+
+/* 一覧 */
+#newCar li{
+	display:table-cell;
+	width: 285px;
+	height: 90px;
+	padding: 4px 5px 2px 0;
+	vertical-align: middle;
+}
+
+/* 車種画像 */
+#newCar dt{
+	display:table-cell;
+	margin-right: 3px;
+	vertical-align: middle;
+}
+
+/* 車種名 */
+#newCar dd{
+	display:table-cell;
+	vertical-align: top;
+	line-height: 18px;
+	font-size:14px;
+	font-weight: bold;
+}
+
+/* 「NEW」 */
+#newCar dd>span{
+	color:#22C5E8;
+	margin: 0 5px 0 0;
+}
+
+
+/* 「スペックを見る」 */
+#newCar dd>a{
+	background:url(../img/bg/bg_mesh_darkBlue.png);
+	color:#FFFFFF;
+	font-weight: bold;
+	font-size: 11px;
+	padding: 2px 6px 1px 0px;
+	margin: 2px 0 3px;
+	display: inline-block;
+}
+
+/*------ ランキングで検索 ------*/
+#rankingSearch{
+	background-color: #FFFFFF;
+}
+
+#rankingSearch > *{
+	margin: 10px 0px 10px 16px;
+}
+
+/* メインタイトル */
+#rankingSearch h1{
+	border-left: 7px solid #464637;
+	padding-left:20px;
+	font-size:36px;
+	position:relative;
+	font-family:"HiraKakuProN-W6" !important;
+	line-height: normal;
+}
+
+/* 探したいクルマの条件 */
+/* (現在ＸＸメーカー～～を、横に付けるため) */
+#topPage #rankingSearch h1 {
+	display: inline-block;
+}
+
+/* 現在ＸＸメーカー／ＸＸ車種 */
+#topPage #rankingSearch .allCnt {
+	background-color: #F0F0E1;
+	font-size: 24px;
+	display: inline-block;
+	padding: 1px 12px;
+	vertical-align: baseline;
+}
+
+
+/* 各カテゴリのタイトル */
+#topPage #rankingSearch .searchForm h2,
+#rankingPage .searchForm h2{
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+#rankingPage .searchForm h2{
+	color:#FFFFFF;	
+}
+
+
+/*--------------------------------------
+	ランキング画面
+---------------------------------------*/
+/*------ 検索条件フォーム ------*/
+#rankingPage .floating{
+	position: absolute;
+	visibility: hidden;
+	top: 92px;
+	display: none;
+	padding: 10px 4px 10px 16px;
+	width: 98%;
+	z-index: 1;
+}
+
+/* ▲画像アイコン */
+#rankingPage .floating .faCaretUp{
+	position: absolute;
+	top: -17px;
+	line-height: normal;
+}
+
+/* 非表示対応 */
+#rankingPage .searchForm>div{
+	visibility: hidden;
+	display: none;
+}
+
+
+/* 車種の件数 */
+#rankingPage .carGradeNum{
+	width: 230px;
+}
+
+
+/*------ ランキング(大枠) ------*/
+#rankingForm li{
+	background-color:#FFFFFF;
+	margin:5px 0;
+	display: table;
+}
+
+#rankingForm li.rank_1{
+	margin-top:15px;
+}
+
+#rankingForm li.rank_3{
+	margin-bottom: 10px;
+}
+/* チェックラベル(通常) */
+#rankingForm li label{
+	display: table-cell;
+	background:#DDDDDD;
+	font-size: 24px;
+	border: 1px solid #DDDDDD;
+	color:#BBBBBB;
+}
+
+#rankingForm li label.hoverOpacity{
+	background:#E5E5E5;
+	color:#CCCCCC;
+	border: 1px solid #E5E5E5;
+	opacity: 1 !important;
+}
+
+/* チェックラベル(選択) */
+#rankingForm li label.checked{
+	background:#FFC58D;
+	border: 1px solid #FFC38A;
+	color:#FFFFFF;
+}
+
+#rankingForm li label.checked.hoverOpacity{
+	background:#FFD3A9;
+	border: 1px solid #FFD3A9;
+	opacity: 1 !important;
+}
+
+/* データ部分の罫線(通常) */
+#rankingForm li>div{
+	border: 1px solid #FFFFFF;
+}
+
+/* データ部分の罫線(選択) */
+#rankingForm li>div.checked{
+	border: 1px solid #FFC38A;
+}
+
+/* ラベルアニメーション */
+#rankingForm .animation{
+	display: none;
+}
+
+/*------ ランキング(内部) ------*/
+#rankingForm li>dl{
+	display: table-cell;
+	width: 100%;
+	padding: 10px 0 0;
+}
+
+
+#rankingForm li label+div{
+	display:table-cell;
+	width:100%;
+	padding: 10px 0;
+}
+
+#rankingForm li div>dl{
+	display:table;
+	width:100%;
+}
+
+#rankingForm li div>dl>dt{
+	display:table-cell;
+	width: 230px;
+	vertical-align: middle;
+}
+
+#rankingForm li div>dl>dd{
+	display:table-cell;
+}
+
+/* １～３位の順位削除(画像表示の為) */
+#rankingForm dt.rank_1 span,
+#rankingForm dt.rank_2 span,
+#rankingForm dt.rank_3 span{
+	visibility:hidden;
+	display: none;
+}
+
+
+/* １～３位のデータ高さ */
+#rankingForm li.rank_1 dl,
+#rankingForm li.rank_2 dl,
+#rankingForm li.rank_3 dl{
+	min-height: 100px;
+}
+
+/* １～３位の画像 */
+#rankingForm dt.rank_1,
+#rankingForm dt.rank_2,
+#rankingForm dt.rank_3{
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	margin: 0;
+}
+
+#rankingForm dt.rank_1{
+	background-image: url(../img/ico/ico_1st.png);
+}
+
+#rankingForm dt.rank_2{
+	background-image: url(../img/ico/ico_2nd.png);
+}
+
+#rankingForm dt.rank_3{
+	background-image: url(../img/ico/ico_3rd.png);
+}
+
+/* ４位～の順位 */
+#rankingForm .ranking span{
+	background-color:#EEEEEE;
+	display:inline-block;
+	text-align:center;
+	border-radius: 30px;
+	vertical-align: middle;
+	width:50px;
+	height:30px;
+	font-size:24px;
+	font-weight:bold;
+	margin-left: 15px;
+	padding:10px 0;
+	margin-top: 3px;
+	line-height: normal;
+}
+
+/* １～３位の車種画像 */
+#rankingForm dt.rank_1 img,
+#rankingForm dt.rank_2 img,
+#rankingForm dt.rank_3 img {
+	width: 135px;
+	margin-left: 78px;
+}
+
+/* ４位～の車種画像 */
+#rankingForm .ranking img{
+	width: 90px;
+	margin-left: 25px;
+}
+
+/* １～３位の車種名 */
+#rankingForm dt.rank_1+dd>dl>dt,
+#rankingForm dt.rank_2+dd>dl>dt,
+#rankingForm dt.rank_3+dd>dl>dt{
+	font-size:24px;
+}
+
+/* ４位～の車種名 */
+#rankingForm dd>dl>dt{
+	font-size:18px;
+	margin-bottom: 5px;
+	padding: 5px 0 0;
+}
+
+/* 本体車両価格 */
+#rankingForm dt.rank_1+dd>dl .price,
+#rankingForm dt.rank_2+dd>dl .price,
+#rankingForm dt.rank_3+dd>dl .price{
+	font-size:16px;
+}
+
+#rankingForm .price{
+	font-size:14px;
+	margin: 0 0 5px;
+}
+
+#rankingForm .price div{
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 1em;
+	margin: 0 5px 0 0;
+}
+
+#rankingForm .note{
+	font-size: 10px;
+	font-weight: normal;
+	color: #666666;
+}
+
+/* バリュー */
+#rankingForm .themeBox{
+	display: inline-block;
+	width: 100%;
+}
+
+#rankingForm .themeBox li{
+	float:left;
+	width: 220px;
+	margin: 0 3px 2px 0;
+	padding: 1px 5px 1px 0;
+	padding-top: 1px;
+	color: #FFFFFF;
+}
+
+#rankingForm .themeBox li span{
+	text-align: center;
+	display: table-cell;
+	vertical-align:middle;
+	width: 90%;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	color: #333333;
+}
+
+#rankingForm .themeBox a{
+	color:#333333;
+	font-weight:bold;
+}
+
+
+/* ランキング画面 - 上位のテーマの高さ */
+#rankingForm li.rank_1 .themeBox li,
+#rankingForm li.rank_2 .themeBox li,
+#rankingForm li.rank_3 .themeBox li{
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+/*------ 「もっと見る」ボタン ------*/
+#rankingForm .nextListButton{
+	width:100%;
+	background-color:rgba(192,192,192, 0.5);
+	text-align:center;
+}
+
+#rankingForm .nextListButton a{
+	display: block;
+	padding: 28px 0;
+	font-weight:bold;
+	font-size: 16px;
+	color:#555555;
+}
+
+/*------ 選択した条件(上部) ------*/
+#rankingPage .selectSelectListTop .selectSelectList{
+	position:relative;
+	z-index: 0;
+}
+
+/* ボタンを下に配置 */
+#rankingPage .selectSelectListTop .actionBtn{
+	position:relative;
+	display: table;
+	top: 92px;
+}
+
+/* 表示領域を上に配置 */
+#rankingPage .selectSelectListTop .selectBox{
+	position:relative;
+	bottom: 60px;
+}
+
+/*------ 選択した条件(下部) ------*/
+#rankingPage .selectSelectListBottom{
+	margin: 15px 0 0;
+}
+
+#rankingPage .selectSelectListBottom .actionBtn{
+	position:relative;
+}
+
+#rankingPage .selectSelectListBottom .actionBox{
+	height: 50px;
+	padding: 0 0 0 10px;
+	width: 970px;
+}
+
+
+#rankingPage .selectSelectListBottom .floating{
+	top: 210px;
+}
+
+/*------ ▲画像アイコン ------*/
+#rankingPage .actionBtn .caretDown{
+	position: absolute;
+	display: block;
+	width: 18px;
+	height: 10px;
+	left: 12px;
+}
+
+/* 上用 */
+#rankingPage .selectSelectListTop .caretDown{
+	background:url(../img/arw/arw_down_orange.png) no-repeat;
+	top: 60px;
+}
+
+/* 下用 */
+#rankingPage .selectSelectListBottom .caretDown{
+	background:url(../img/arw/arw_up_orange.png) no-repeat;
+	bottom: 59px;
+}
+
+/* アラート*/
+#checkAlert{
+	background-color: #FFFFFF;
+	padding: 5px;
+	border: 5px solid #FFBC67;
+	font-size: 14px;
+	line-height: 1.5em;
+}
+
+#checkAlert .checkAlertCntent{
+	padding: 5px;
+}
+
+#checkAlert .checkAlertCntent h2,
+#checkAlert .checkAlertCntent span{
+	display:table-cell;
+}
+
+#checkAlert h2{
+	font-weight: bold;
+	padding: 0 6px 0 0;
+	text-align: center;
+	font-size: 24px;
+	vertical-align: middle;
+}
+
+#checkAlert .closeBtn{
+	margin: 20px 0 0;
+	padding: 10px 0 0;
+	text-align: center;
+	border-top: 1px solid #D9D9D9;
+}
+
+#checkAlert .closeBtn a{
+	display: inline-block;
+	background:url(../img/bg/bg_mesh_gray.png);
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	padding: 3px 9px 3px 5px;
+}
+
+/*--------------------------------------
+	比較画面
+---------------------------------------*/
+#compare{
+	background-color:#FFFFFF;
+}
+
+#compareData>div{
+	display:table-cell;
+}
+
+#compareData{
+	position: relative;
+}
+
+
+/*------ 検索条件 ------*/
+.compareSearchData{
+	width: 167px;
+	min-width: 167px;
+	background:url(../img/bg/bg_darkGray.png);
+	padding:0 0 60px;
+	vertical-align: top;
+}
+
+/* タイトル */
+.compareSearchData h1{
+	color:#FFFFFF;
+	font-size:16px;
+	text-align:center;
+	background-color:#555555;
+	width:167px;
+	height:36px;
+	display:table-cell;
+	vertical-align:middle;
+}
+
+/* 検索条件 */
+.compareSearchData>div{
+	padding: 0 5px;
+}
+
+/* 検索条件(タイトル) */
+.compareSearchData h2{
+	font-size:10px;
+	color:#FFFFFF;
+	margin: 10px 0 8px;
+	font-weight: bold;
+}
+
+/* 検索条件(リスト) */
+.compareSearchData li{
+	text-align: center;
+	color: #333333;
+	font-weight: bold;
+	width: 157px;
+	margin:1px 0;
+	padding: 2px 0;
+	min-height: 0px;
+}
+
+/* 検索条件(リスト表示領域) */
+.compareSearchData li span {
+	vertical-align: middle;
+	height: 18px;
+	display: table-cell;
+	width: 157px;
+}
+
+/* 検索条件(戻るボタン) */
+#compare .back{
+	position: absolute;
+	bottom: 0px;
+	left:0;
+	font-size:12px;
+	width:167px;
+	height:40px;
+	text-align:left;
+	display:table-cell;
+	vertical-align: middle;
+	background:#FFFFFF;
+	padding:0 0 10px;
+}
+
+#compare .back span{
+	display: block;
+	padding: 10px;
+	margin: 0 0 0 23px;
+	line-height: 14px;
+}
+
+#compare .back a{
+	vertical-align:middle;
+	color:#FFFFFF;
+	display: table-cell;
+	background:url(../img/bg/bg_mesh_black.png);
+	font-family:"HiraKakuProN-W6" !important;
+}
+
+
+/* ▲画像アイコン */
+.compareSearchData h1+span{
+	position: absolute;
+	top: 21px;
+	left: 72px;
+}
+
+#compare .caretRight{
+	background:url(../img/arw/arw_right_meshGray.png);
+	position: absolute;
+	top: 184px;
+	left: 167px;
+	display: block;
+	width: 9px;
+	height: 18px;
+}
+
+/*------ 車種情報 ------*/
+.compareCarData{
+	vertical-align: top;
+	border-left: 1px solid #D9D9D9;
+	width: 205px;
+}
+
+.compareSearchData+div{
+	border-left:none;
+}
+
+/* 表示領域 */
+.compareCarData table{
+	 width: 100%;
+}
+
+.compareCarData table td{
+	padding: 10px;
+	background-color: #FFFFFF;
+}
+
+/* クルマ画像 */
+.compareCarData .carImg td{
+	height: 165px;
+	padding: 0;
+	vertical-align: top;
+	position: relative;
+}
+
+.compareCarData .carImg td>div{
+	height:50px;
+	display:table-cell;
+	width:205px;
+	vertical-align: bottom;
+}
+
+.notData .carImg td>div{
+	vertical-align: middle;
+}
+
+/* Webカタログ */
+.compareCarData .webCatalogue{
+	display: block;
+	padding: 0 10px 0 0;
+	text-align: right;
+}
+
+.compareCarData .webCatalogue a{
+	color:#464435;
+	font-size:11px;
+	font-weight:bold;
+}
+
+.compareCarData a.photoGalleryUrl{
+	color:#464435;
+	position: absolute;
+	right: 5px;
+	top: 45px;
+}
+
+
+/* 車種名・車種変更 */
+.compareCarData .carName td,
+.compareCarData .carChange td{
+	background-color:#DDDDDD;
+}
+
+.notData .carName td,
+.notData .carChange td{
+	background-color:#CCCCCC!important;
+}
+
+/* 車種名 */
+.compareCarData .carName td>span{
+	color:#464435;
+	font-size:16px;
+	font-weight:bold;
+	display:block;
+	margin-bottom: 8px;
+}
+
+.compareCarData .carName td>a {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+/* 車種変更 */
+.compareCarData .carChange td{
+	padding: 0 0 10px;
+}
+
+.compareCarData .carChange td>a{
+	width:80px;
+	display: inline-block;
+	border:none;
+	color:#464435;
+	font-size:11px;
+	font-weight:bold;
+	background:url(../img/bg/bg_mesh_thinGray.png);
+	padding: 4px 8px 4px 4px;
+}
+
+.notData .carChange td>a{
+	background:url(../img/bg/bg_mesh_black.png);
+	color:#FFFFFF;
+	padding: 4px 8px 4px 5px;
+}
+
+/* バリュー */
+.compareCarData .themeBox{
+	vertical-align: top;
+	height:100%;
+}
+
+.compareCarData .themeBox li{
+	font-weight:bold;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	margin-bottom: 1px;
+}
+
+.compareCarData .themeBox li span{
+	text-align: center;
+	display: inline-block;
+	vertical-align:middle;
+}
+
+.compareCarData .themeBox a{
+	color:#464637;
+	vertical-align: middle;
+	height: 18px;
+	display: table-cell;
+	width: 160px;
+}
+
+/* グレード選択 */
+.compareCarData .changeGrade select{
+	width:100%;
+}
+
+
+/*------ 詳細 ------*/
+#compareDetail > div{
+	border-bottom: 1px solid #D9D9D9;
+}
+
+#compareDetail div>h2{
+	background-color: #4A4A4A;
+	color:#FFFFFF;
+	font-size:16px;
+	font-weight:bold;
+	height:50px;
+	display:table;
+	width:100%;
+}
+
+/* 閉じる／開くボタン */
+#compareDetail div>h2 span{
+	display:table-cell;
+	vertical-align:middle;
+	padding:0 0 0 20px;
+}
+
+#compareDetail div>h2 span+*{
+	background-color:#8A8A7B;
+	text-align:center;
+	height:100%;
+	padding:0;
+	width:100px;
+}
+
+#compareDetail div>h2 span a{
+	color:#FFFFFF;
+	font-size:12px;
+	font-weight:bold;
+}
+
+/* 詳細データ */
+#compareDetail div>table{
+	width: 980px;
+	border-top: 1px solid #DDDDDD;
+}
+
+/* 詳細データ(項目) */
+#compareCarName th,
+#compareDetail div>table th{
+	padding: 10px;
+	width: 140px;
+}
+
+#compareDetail .note{
+	font-size: 10px;
+	font-weight: normal;
+	display: inline-block;
+	color: #666666;
+}
+
+#compareDetail div>table.fuelrate th{
+	padding: 0!important;
+}
+
+#compareDetail table.fuelrate table th{
+	padding: 0 17px 0 10px!important;
+}
+
+/* 詳細データ(内容) */
+#compareDetail div>table.fuelrate td{
+	height: 35px;
+}
+
+/* 詳細データ(燃料消費率) */
+#compareDetail div>table.fuelrate table th+td{
+	border-bottom: 1px solid #DDDDDD;
+}
+
+#compareCarName td,
+#compareDetail div>table td{
+	width: 180px;
+	padding: 10px 5px 10px 10px;
+	border-left: 1px solid #D9D9D9;
+}
+
+#compareDetail th>table th{
+	vertical-align:middle;
+	white-space:nowrap;
+	
+}
+
+#compareDetail th>table td{
+	padding: 5px 10px;
+	font-size:7px;
+	border-left: none;
+}
+
+/* 背景色 */
+#compareCarName th,
+#compareDetail th{
+	background-color:#B1B1B1;
+}
+
+#compareCarName .notData,
+#compare .lineBgCol,
+#compare .notData,
+#compare .notData td{
+	background-color:#EEEEEE;
+}
+
+#compareDetail .lineBgCol .notData{
+	background-color:#D9D9D9;
+}
+
+#compareDetail div>table th+td,
+#compare .noBorder{
+	border-left:none;
+}
+
+/*------ 車種名(フローティング) ------*/
+/*フローティング領域*/
+#compareCarName{
+	position: static;
+	bottom: 0px;
+	left: 0px;
+	margin: 10px 0 0;
+	width: 100%;
+}
+
+/*表示領域*/
+#compareCarName .boxShadow{
+	box-shadow: rgba(0,0,0,0.5) 0px 0px 20px 10px;
+	margin: 0 auto;
+	width: 980px;
+}
+
+
+#compareCarName table{
+	width: 100%;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #D9D9D9;
+}
+
+
+#compareCarName td{
+	text-align: center;
+	vertical-align: top;
+	color: #464435;
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 8px;
+	padding: 5px 5px 5px 10px;
+}
+
+#compareCarName img{
+	width: 90px;
+}
+
+/*------ アイコン ------*/
+.compareIcon .fa{
+	padding:0 5px 0 0;
+}
+
+.compareIcon .fa-tag{
+	padding:  3px;
+	margin: 0 3px 0 0;
+	color: #ffffff;
+}
+
+.compareIcon .fa-tag{
+	padding:  3px;
+	color: #ffffff;
+}
+.compareIcon .mop{
+	background: #cc3333;
+}
+
+.compareIcon .dop{
+	background: #666666;
+}
+
+/*------ アイコン説明 ------*/
+.compareIcon{
+	width: 100%;
+}
+
+.compareIcon ul{
+	margin: 5px 0 0px;
+	display: inline-block;
+}
+
+.compareIcon li{
+	float:left;
+	margin:0 10px 0 0;
+}
+
+.compareIcon.bgImage{
+	background-image: url(../img/bg/bg_gray.png);
+}
+
+/*--------------------------------------
+	車種の変更
+---------------------------------------*/
+#TB_window{
+	border:none!important;
+	width:0!important;
+}
+
+#TB_ajaxContent,
+#TB_ajaxContent.TB_modal{
+	padding:0!important;
+}
+
+/* 共通 */
+#selectMakerTab,
+#selectModelTab{
+    background-color: #333333;
+}
+
+/* 共通(ボタン) */
+#selectMakerTab .searchBtn,
+#selectModelTab .searchBtn{
+	width:100%;
+	display: table;
+	margin-bottom:0;
+}
+
+#selectMakerTab .searchBtn>*,
+#selectModelTab .searchBtn>*{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#selectMakerTab .searchBtn a[data-linkName=no],
+#selectModelTab .searchBtn a[data-linkName=no]{
+    color: #FFFFFF;
+	text-align: center;
+	padding: 0 5px 0 0;
+	height: 45px;
+}
+
+#selectMakerTab .actionBox .carGradeNum,
+#selectModelTab .actionBox .carGradeNum{
+	width: 230px;
+}
+
+
+#selectMakerTab .searchBtn .carGradeNum,
+#selectModelTab .searchBtn .carGradeNum{
+	background-image: none;
+}
+
+#selectMakerTab .actionBox h2,
+#selectModelTab .actionBox h2{
+	padding: 15px 20px;
+}
+
+
+/*------ メーカー・ボディタイプ選択 ------*/
+#selectMakerTab .carPriceList,
+#selectMakerTab .makerList,
+#selectMakerTab .typehList{
+	background: #FFFFFF;
+	padding: 10px 0 10px 0;
+	position: relative;
+}
+
+#selectMakerTab .searchForm>div{
+	margin: 0 0 10px 0;
+}
+
+#selectMakerTab .searchForm h2{
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0px 0 5px 10px;
+}
+
+#selectMakerTab .searchForm ul{
+	margin: 0px 0 5px 10px;
+}
+
+#selectMakerTab .actionBox{
+	margin: 0 0 10px 0;
+}
+
+
+/* ボタン */
+#selectMakerTab .searchBtn a[data-linkName=ok]{
+	float: none;
+	font-size: 18px;
+	text-align: left;
+	color: #FFFFFF;
+	width: 235px;
+	padding: 0 0 0 10px;
+}
+
+/* クリアボタン */
+#selectMakerTab .clearChecked{
+	background-color: #666666;
+	padding: 2px 15px 2px 0;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+#selectMakerTab .clearChecked a{
+	color: #FFFFFF;
+}
+
+/*------ 車種選択 ------*/
+#selectModelTab .searchForm div{
+	margin: 0 0 3px 0;
+}
+
+#selectModelTab .searchBtn a[data-linkName=back]{
+    color: #FFFFFF;
+    width: 265px;
+	background:url(../img/bg/bg_mesh_black.png);
+	font-size:14px;
+	height:45px;
+	text-align:center;
+}
+
+/* メーカーリスト */
+#selectModelTab .searchMakerList{
+	display: block;
+	padding: 0 0 5px 0;
+}
+
+#changeTargetModel .searchForm{
+	min-height: 122px;
+	background-image: url(../img/bg/bg_mesh_green.png);
+	background-position: 0px 101px;
+	background-repeat: repeat-x;
+
+}
+
+#makerChange .makerArea{
+	border-radius: 0px;
+	background-color:#333333;
+}
+
+#makerChange .makerArea .setCol{
+	display: block;
+	border-radius: 0px;
+	margin: 10px 5px 0 0;
+	font-weight: bold;
+	text-align: center;
+}
+
+/* メーカー別車種リスト */
+#makerList{
+	min-height: 382px;
+}
+
+#makerList h2{
+	background-color:#6ED0EC;
+	padding:10px;
+	font-size:14px;
+	color:#FFFFFF;
+	font-weight:bold;
+}
+
+#makerList .makerArea > div{
+	display: table;
+	width: 100%;
+	margin: 0 0 10px;
+}
+
+#makerList li{
+	display:table-cell;
+	width: 238px;
+	float:left;
+	background:url(../img/bg/bg_mesh_thinGray.png);
+	padding: 5px 0;
+	font-size:14px;
+	font-weight:bold;
+	margin: 3px 0px 2px 0;
+	vertical-align:middle;
+}
+
+#makerList li span{
+	display: table-cell;
+	height: 35px;
+	vertical-align: middle;
+	padding: 0 5px 0 0;
+}
+
+#makerList li a{
+	vertical-align:middle;
+	color:#666666;
+	display: table-cell;
+	
+}
+
+#makerList .liMargin{
+	margin: 3px 3px 2px 0;
+}
+
+
+/*--------------------------------------
+	検索結果なし(共通)
+---------------------------------------*/
+.notCarData{
+	background-color:#FFFFFF;
+	text-align:center;
+	padding:50px;
+	line-height: 2em;
+	min-height: 402px;
+}
+
+.notCarData p{
+	border-bottom: 1px solid #DDDDDD;
+	font-size:24px;
+	width:600px;
+	margin:0 auto;
+	line-height: 30px;
+	padding-bottom: 20px;
+}
+
+.notCarData small{
+	color:#999999;
+	font-size:12px;
+}
+
+#rankingList .notCarData{
+	margin: 15px 0;
+	min-height: 0;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+#userErr .notCarData{
+	min-height: 0px;
+}
+
+/*--------------------------------------
+	フローティング(共通)
+---------------------------------------*/
+/*------ 背景 ------*/
+/* 車種名検索、ランキング用 */
+#searchModelName,
+#rankingPage .selectSelectList{
+	position: relative;
+}
+
+
+/* 選択した条件(共通) */
+.selectBox .themeBox,
+.selectBox .makerBox,
+.selectBox .typeBox{
+	padding: 0px 0px 0px 10px;
+}
+
+.selectBox .themeBox h2,
+.selectBox .makerBox h2,
+.selectBox .typeBox  h2 {
+	height: 17px;
+}
+
+.selectBox .searchName{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	color: #FFF !important;
+	background-color: transparent!important;
+	overflow: hidden;
+}
+
+
+/* 選択した検索条件のフローティングメニュークリアボタン */
+.selectBox .clearBtn{
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 14px;
+	padding: 3px 7px 3px 0px;
+}
+
+#topPage .priceBox .clearBtn{
+	display: table-cell;
+	vertical-align: bottom;
+}
+
+#topPage .priceBox .clearBtn a{
+	background: none;
+	height: auto;
+	width: auto;
+	font-size: 12px;
+}
+
+/* トップ用 */
+#topPage #rankingSearch .searchPriceList .clearBtn,
+#topPage #rankingSearch .searchThemeList .clearBtn,
+#topPage #rankingSearch .searchMakerList .clearBtn,
+#topPage #rankingSearch .searchTypeList .clearBtn{
+	display: none;
+}
+
+/* ランキング用 */
+#rankingPage .floating .searchPriceList .clearBtn,
+#rankingPage .floating .searchThemeList .clearBtn,
+#rankingPage .floating .searchMakerList .clearBtn,
+#rankingPage .floating .searchTypeList .clearBtn{
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 12px;
+	padding: 2px 7px 3px 0px;
+	cursor: pointer;
+	font-weight: bold;
+	color: #333333;
+}
+
+#rankingPage .floating .clearBtn a{
+	color: #333333;
+}
+
+/*----- クリアボタンの△ ------*/
+.trians{
+	border-left: 18px solid transparent;
+	position: absolute;
+	top: 0px!important;
+	right: 50px!important;
+	width: 0;
+	height: 0;
+	background: none!important;
+}
+
+/* トップ用 */
+#topPage .selectBox .trians{
+	right: 50px!important;
+	border-top: 20px solid rgb(201, 201, 201);
+}
+
+/* ランキング用 */
+#rankingPage .searchForm .trians{
+	right: 0px!important;
+	border-top: 18px solid rgb(201, 201, 201);
+	width: 60px;
+}
+
+#rankingPage .selectSelectListTop .selectBox .trians{
+	right: 101px!important;
+	border-top: 20px solid rgb(0, 0, 0);
+}
+
+#rankingPage .selectSelectListBottom .selectBox .trians{
+	right: 106px!important;
+	border-top: 20px solid rgb(0, 0, 0);
+}
+
+/* 車種の変更用 */
+#selectMakerTab .trians{
+	right: 0px!important;
+	width: 71px;
+	border-top: 21px solid rgb(102, 102, 102);
+}
+
+/*------ ボタン(共通) ------*/
+/* 実行ボタン */
+.actionBtn{
+	background-color:#666666;
+	width: 100%;
+	color: #ffffff;
+	
+}
+
+.actionBtn small{
+	font-size: 12px;
+	display: table-cell;
+	padding: 0 0 0 10px;
+	vertical-align: middle;
+}
+
+.actionBtn a[data-linkName=compareBtn]{
+	width:345px;
+	font-size: 16px;
+	margin-right: 10px;
+	height: 60px;
+	vertical-align: middle;
+	display: table-cell;
+	text-align: center;
+}
+
+/* 検索ボタン */
+.searchBtn{
+	background-color:#555555;
+	display:inline-table;
+	width:946px;
+	margin: 10px 0;
+}
+
+.searchBtn input[type=button]{
+	height: 45px;
+	color: #FFFFFF;
+	font-weight:bold;
+	border: none;
+}
+
+.searchBtn a[data-linkName=ok]{
+	width:124px;
+	font-size: 24px;
+	float:right;
+	display: block;
+	text-align: center;
+	height: 38px;
+	padding: 8px 0 0;
+}
+
+#popup #footer a,
+.searchBtn a[data-linkName=no]{
+	display: table-cell;
+	vertical-align: middle;
+	width:110px;
+	background:url(../img/bg/bg_mesh_gray.png);
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 14px;
+	padding: 0 5px 0 0;
+	text-align: center;
+}
+
+
+
+/*------ トップ用 ------*/
+/* 左端 - 選択した検索条件 */
+#topPage h2{
+	vertical-align: middle;
+	text-align: left;
+	line-height: normal;
+}
+/* 中央 - 対象件数 */
+#topPage .carGradeNum{
+	vertical-align: middle;
+	padding-bottom: 5px;
+	background-image: url(../img/bg/bg_searchLabel.png);
+	background-repeat: no-repeat;
+	background-position: left;
+	width: 280px;
+	text-align: center;
+}
+/* 右端 - この条件で検索 */
+#topPage .actionBox a{
+	width: 225px;
+	font-size: 16px;
+	height: 45px;
+	vertical-align: middle;
+	display: table-cell;
+	text-align: center;
+	background: url(../img/bg/bg_mesh_darkOrange.png) repeat;
+	border: none;
+	color: #FFF;
+}
+
+/* 選択した条件領域 */
+#topPage .selectBox{
+	width : 100%;
+	height: 92px;
+	position : fixed;
+	left : 0px;
+	bottom: 45px;
+	margin: 0px;
+	z-index: 2;
+}
+
+/* ボタン領域 */
+#topPage .actionBox{
+	width : 100%;
+	position : fixed;
+	top : auto;
+	left : 0px;
+	bottom : 0px;
+	text-align : center;
+	white-space: nowrap;
+	margin: 0px;
+	z-index: 2;
+}
+
+/* 価格表示 */
+#topPage .actionBox .priceBox{
+	position:absolute;
+	top:10px;
+	left:200px;
+	height: 30px;
+
+}
+
+.actionBox .priceBox{
+	vertical-align: middle;
+}
+
+#rankingPage  .priceBox .clearBtn{
+	display:table-cell;
+	vertical-align: bottom;
+}
+
+#rankingPage  .priceBox .clearBtn a{
+	color: #FFFFFF;
+}
+
+.actionBox .priceBox .priceName{
+	font-size: 12px;
+	vertical-align: middle;
+	display:table-cell;
+	color: #FFFFFF;
+}
+
+.actionBox .priceBox ul{
+	display:table-cell;
+	vertical-align: middle;
+	width: 110px;
+	height: 30px;
+}
+
+.actionBox .priceBox li{
+	width: 100px;
+	min-height: 30px;
+	margin: 0 0 0 5px;
+	text-align: center;
+}
+
+.actionBox .priceBox li div{
+	height: 30px !important;
+	padding: 0;
+}
+
+/*--------------------------------------
+	popup
+---------------------------------------*/
+/* 呼び出し元リンク */
+.basisOfSelectionLink{
+	margin: 0 0 0 10px;
+}
+
+#rankingPage .basisOfSelectionLink a{
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+#topPage .basisOfSelectionLink a{
+	color: #333333;
+	text-decoration: underline;
+}
+
+#basisOfSelection,
+#estimateMethod{
+	background-color: #FFFFFF;
+	padding: 10px;
+	min-width:690px;
+}
+
+#popup h2{
+	border-left: 7px solid #464637;
+	padding-left: 10px;
+	font-size: 24px;
+	font-family:"HiraKakuProN-W6" !important;
+	text-align: left;
+}
+
+#popup h2+div{
+	margin: 15px 0 10px;
+	padding: 10px 0;
+}
+
+/* 見積りのご依頼方法 */
+#estimateMethod{
+	text-align: center;
+}
+
+#estimateMethod div{
+	clear: both;
+}
+
+#estimateMethod h3{
+	border-bottom: 1px solid #AAAAAA;
+	font-weight: bold;
+	letter-spacing: 1px;
+	font-family:"HiraKakuProN-W6" !important;
+}
+
+#estimateMethod .speak{
+	display: inline-block;
+	width: 600px;
+	margin: 0 auto;
+}
+
+#estimateMethod .user span,
+#estimateMethod .operator span{
+	padding: 10px;
+	display: inline-block;
+	min-height: 40px;
+}
+
+/*お客様*/
+#estimateMethod .user{
+	display: inline-block;
+	float:left;
+	
+	text-align: left;
+}
+
+#estimateMethod .user span{
+	background: #FFE384;
+}
+
+#estimateMethod .user img{
+	float:left;
+}
+
+
+/*オペレーター*/
+#estimateMethod .operator{
+	display: inline-block;
+	float:right;
+	margin: 0 0 30px;
+	text-align: left;
+}
+
+#estimateMethod .operator span{
+	background: #FFD0FF;
+}
+
+#estimateMethod .operator img{
+	float:right;
+}
+
+/*見積り方法*/
+#estimateMethod .web,
+#estimateMethod .phone{
+	padding: 0 10px;
+	text-align: left;
+}
+
+/* Web */
+#estimateMethod .web .mainBtn{
+	vertical-align: middle;
+	margin: 0 5px;
+}
+
+#estimateMethod .web .sabBtn{
+	background: #777;
+	padding: 7px;
+	width: 15px;
+	margin: 0 5px;
+}
+
+/* 電話 */
+#estimateMethod .phone{
+	margin: 30px 0 10px;
+}
+
+/* 手順 */
+#estimateMethod dl {
+	border-top: none;
+}
+
+#estimateMethod dt{
+	padding: 5px;
+	clear: left;
+	float:left;
+	background: #FA5A00;
+	color: #FFFFFF;
+	font-weight: bold;
+	width:17px;
+	text-align: center;
+	margin: 0 0 10px 0;
+}
+
+#estimateMethod dd{
+	margin: 10px 0 10px 30px;
+	padding: 6px 10px;
+}
+
+#estimateMethod .web dt:first-child+dd{
+	padding: 0px 10px;
+}
+
+#estimateMethod .note{
+	font-size: 11px;
+	color: #999999;
+}
+
+/* 選定基準 */
+#basisOfSelection .themeIcon{
+	padding: 10px 0 10px 50px;
+	display: block;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+
+#basisOfSelection dt{
+	float: left;
+	width: 260px;
+	margin: 10px 0 0;
+}
+
+#basisOfSelection dd{
+	padding: 10px 0 10px 270px;
+	border-top: 1px solid #DADAC6;
+}
+
+#basisOfSelection dd:after{
+	content: "";
+    clear: both;
+    height: 0;
+    display: block;
+    visibility: hidden;
+}
+
+#popup #footer a{
+	display: inline-block;
+	padding: 5px 5px 5px 0;
+	width: 100px;
+}
+
+#topPage .floating{
+	width : 100%;
+	height: 92px;
+	position : fixed;
+	left : 0px;
+	bottom: 45px;
+	background: url(../img/bg/bg_darkGray.png);
+	opacity:0.9;
+	margin: 0px;
+	z-index: 2;
+}
+
+
+
+/*--------------------------------------
+	使い方ガイド
+---------------------------------------*/
+.introjs-tooltipbuttons a,
+.introjs-tooltipbuttons a:link,
+.introjs-tooltipbuttons a:visited,
+.introjs-tooltipbuttons a:active,
+.introjs-tooltipbuttons a:hover{
+	color:#7a7a7a;
+}
+
+.introjs-bullets ul li a.active {
+	background-color: #cc3333 !important;
+}
+
+.introjs-tooltiptext .fsmall{
+	font-size: 9px;
+	color: #999999;
+}
+
+#topPage .selectBox.introjs-fixParent,
+#topPage .actionBox.introjs-fixParent{
+	z-index: 1000000 !important;
+}
+
+.introjs-overlay.addIntrojs-overlay{
+	z-index: 1 !important;
+}
+
+.introjs-helperLayer.addIntrojs-fixed{
+	position: fixed !important;
+}
+
+.introjs-helperLayer.addIntrojs-boder{
+	background: transparent !important;
+	border: 5px solid rgba(252, 252, 252, 1) !important;
+}
+
+#searchModelName .floating.introjs-showElement,
+#rankingPage .floating.introjs-showElement{
+	z-index: 10000000 !important;
+	background-color: #222222;
+}
+
+.introjs-tooltip.positionSet{
+	left: -100px !important;
+}
+
+.introjs-tooltip.positionSet .introjs-arrow{
+	right: 10px;
+}
+
+/*--------------------------------------
+	サイドメニュー
+---------------------------------------*/
+#rightfloatingPanel{
+	position: fixed;
+	right: 0px;
+	z-index: 0;
+	top: 60%;
+	opacity: 0.0;
+	visibility: hidden;
+}
+
+#rightfloatingPanel .linkBlock {
+	display: table-cell;
+	height: 55px;
+	background-color: #aaaaaa;
+	vertical-align: middle;
+	padding: 5px;
+}
+
+#rightfloatingPanel .linkBlock a{
+	display: block;
+	width: 45px;
+	height: 35px;
+	padding: 5px 0;
+	background-color: #777777;
+	font-size: 24px;
+	text-align: center;
+	color: #FFFFFF;
+	margin: 0 0 2px;
+}
+
+#rightfloatingPanel .linkBlock a img{
+	width: 18px;
+	padding: 5px;
+}
+
+#rightfloatingPanel #rightfloatingPanelClose {
+	display: table-cell;
+	clear: both;
+	width: 20px;
+	text-align: center;
+	vertical-align: middle;
+	color: #FFFFFF;
+
+}
+
+#rightfloatingPanel #rightfloatingPanelClose a {
+	display: table-cell;
+	height: 80px;
+	width: 20px;
+	vertical-align: middle;
+	background-color: #777777;
+	color: #FFFFFF;
+}
+
+@media screen and (max-device-width: 1024px){
+
+	/*トップ(フローティング)*/
+	#topPage .selectBox .trians{
+		right: 55px!important;
+	}
+
+	#topPage .carGradeNum{
+		width: 240px;
+	}
+
+	.selectBox .clearBtn{
+		padding: 2px 7px 4px 0px;
+	}
+
+
+	/*ランキング、車種変更(対象件数)*/
+	#rankingPage .actionBox h2,
+	#selectModelTab .actionBox h2{
+		width: 160px;
+	}
+}

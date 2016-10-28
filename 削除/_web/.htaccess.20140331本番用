@@ -1,0 +1,139 @@
+#  *** UTF-8 Encoded ***
+#---------------------------------------
+#  三菱オートリース
+#  Car sagacité(カー サガシティ)
+#  http://www.mal-marche.com/mald/sagacite/
+#
+#  (C)2013-2014 株式会社ホーユー
+#---------------------------------------
+
+##
+## BASIC 認証
+##
+#AuthUserFile /var/www/sagacite/htpasswd.sagacite
+#AuthGroupFile /dev/null
+#AuthName "Password Required"
+#AuthType Basic
+#Require valid-user
+
+##
+## PHP 設定
+##
+php_flag  display_startup_errors          off
+php_flag  display_errors                  off
+php_flag  html_errors                     off
+php_flag  log_errors                      on
+php_flag  ignore_repeated_errors          off
+php_flag  ignore_repeated_source          off
+php_flag  report_memleaks                 on
+php_flag  track_errors                    on
+php_value docref_root                     0
+php_value docref_ext                      0
+php_value error_log                       /var/www/sagacite/log/PHP_errors.log
+php_value error_reporting                 22519
+php_value log_errors_max_len              0
+php_value post_max_size                   16M
+php_value upload_max_filesize             16M
+php_value default_charset                 UTF-8
+php_value mbstring.language               Japanese
+php_value mbstring.http_input             pass
+php_value mbstring.http_output            pass
+php_value mbstring.encoding_translation   Off
+php_value mbstring.internal_encoding      UTF-8
+php_value mbstring.substitute_character   none
+php_value date.timezone                   Asia/Tokyo
+php_flag  session.use_trans_sid           Off
+php_flag  session.use_cookies             On
+php_flag  session.use_only_cookies        On
+php_flag  session.auto_start              Off
+
+##
+## MIME タイプ設定
+##
+AddType text/x-component .htc
+
+##
+## HTTP ヘッダ
+##
+<IfModule mod_headers.c>
+	Header append X-Frame-Options "SAMEORIGIN"
+	Header append X-Content-Type-Options "nosniff"
+	Header append X-XSS-Protection "1; mode=block"
+	Header append Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' code.jquery.com netdna.bootstrapcdn.com fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' code.jquery.com www.google-analytics.com sygrip.info; img-src 'self' code.jquery.com www.google-analytics.com sygrip.info; font-src 'self' netdna.bootstrapcdn.com themes.googleusercontent.com"
+	Header append X-Permitted-Cross-Domain-Policies "master-only"
+#	Header append Strict-Transport-Security "max-age=31536000; includeSubDomains"
+#	Header append Access-Control-Allow-Origin "http://www.example.com"
+	Header append Access-Control-Allow-Methods "POST, GET, OPTIONS"
+#	Header append Access-Control-Allow-Headers "X-TRICORDER"
+#	Header append Access-Control-Max-Age "1728000"
+#	Header append X-Download-Options "noopen"
+#	Header append Set-Cookie "name=value; secure; HttpOnly"
+	Header set Connection keep-alive
+	Header set Vary Accept-Encoding,Cookie
+</IfModule>
+
+##
+## キャッシュ有効期限
+##
+FileETag Size
+ExpiresActive On
+ExpiresByType text/css "access plus 1 days"
+ExpiresByType text/javascript "access plus 1 days"
+ExpiresByType application/javascript "access plus 1 days"
+ExpiresByType application/x-javascript "access plus 1 days"
+ExpiresByType image/gif "access plus 1 days"
+ExpiresByType image/png "access plus 1 days"
+ExpiresByType image/jpeg "access plus 1 days"
+
+##
+## gzip 圧縮転送
+##
+<IfModule mod_deflate.c>
+	SetOutputFilter DEFLATE
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+	SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/xml
+	AddOutputFilterByType DEFLATE application/xhtml
+	AddOutputFilterByType DEFLATE application/xhtml+xml
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE text/x-component
+	AddOutputFilterByType DEFLATE text/javascript
+	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE application/x-javascript
+	AddOutputFilterByType DEFLATE application/x-httpd-php
+</IfModule>
+
+##
+## URL 正規化 & PHP フロントコントローラ設定
+##
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /mald/sagacite/
+
+	RewriteCond %{THE_REQUEST} "!^GET /.*"
+	RewriteCond %{THE_REQUEST} "!^HEAD /.*"
+	RewriteCond %{THE_REQUEST} "!^POST /.*"
+	RewriteCond %{THE_REQUEST} "!^OPTIONS .*"
+	RewriteRule ^.*$ - [F]
+
+	RewriteCond %{REQUEST_URI} COMPARE/-/-/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)-/-/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)-/-/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)-/-/?
+	RewriteRule COMPARE/(.*)-/-/(.*)$ COMPARE/$1$2 [R,L]
+
+	RewriteCond %{REQUEST_URI} COMPARE/--/--/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)--/--/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)--/--/? [OR]
+	RewriteCond %{REQUEST_URI} COMPARE/([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)([0-9a-zA-Z-\ ]*/[0-9-]*/)--/--/?
+	RewriteRule COMPARE/(.*)--/--/(.*)$ COMPARE/$1$2 [R,L]
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !health.html
+	RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>

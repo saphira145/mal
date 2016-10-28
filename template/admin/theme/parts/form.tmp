@@ -1,0 +1,141 @@
+	<table class="tblForm">
+		<tr>
+			<th class="w150">バリューID</th>
+			<td>
+				<!--{set themeID}-->{val themeID}<!--{set themeInfo.autoTheme}--> (自動設定)<!--{/set}--><!--{/set}-->
+				<!--{unset themeID}-->自動取番されます<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>画面の表示順</th>
+			<td>
+				<!--{set themeID}-->
+					<!--{set themeInfo.dispNum}-->{val themeInfo.dispNum}<!--{/set}-->
+					<!--{unset themeInfo.dispNum}-->&ndash;<!--{/unset}-->
+				<!--{/set}-->
+				<!--{unset themeID}-->最下位が設定されます<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>対抗車選定の優先度</th>
+			<td>
+				<!--{set themeID}-->
+					<!--{set themeInfo.priorityNum}-->{val themeInfo.priorityNum}<!--{/set}-->
+					<!--{unset themeInfo.priorityNum}-->&ndash;<!--{/unset}-->
+				<!--{/set}-->
+				<!--{unset themeID}-->最下位が設定されます<!--{/unset}-->
+			</td>
+		</tr>
+		<tr>
+			<th>バリュー名<span class="must_mark">※</span></th>
+			<td>
+<!--{set themeInfo.themeName+err}-->
+<!--{loop themeInfo.themeName+err}-->
+				<p class="err">{val themeInfo.themeName+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w60" type="text" name="themeInfo[themeName]" value="{val themeInfo.themeName|htmlspecialchars}" />
+			</td>
+		</tr>
+		<tr>
+			<th>バリュー名(略称)<span class="must_mark">※</span></th>
+			<td>
+<!--{set themeInfo.nameAbbreviation+err}-->
+<!--{loop themeInfo.nameAbbreviation+err}-->
+				<p class="err">{val themeInfo.nameAbbreviation+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<input class="w20" type="text" name="themeInfo[nameAbbreviation]" value="{val themeInfo.nameAbbreviation|htmlspecialchars}" />
+			</td>
+		</tr>
+		<tr>
+			<th>バリューアイコン<span class="must_mark">※</span></th>
+			<td>
+<!--{set themeInfo.iconNo+err}-->
+<!--{loop themeInfo.iconNo+err}-->
+				<p class="err">{val themeInfo.iconNo+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<table class="tbl_inner">
+<!--{loop themeIcon}-->
+	<!--{loop_count_head themeIcon=10}-->
+				<tr>
+	<!--{/loop_count_head}-->
+					<td>
+						<label>
+							<input class="themeCheckbox" type="radio" name="themeInfo[iconNo]" value="{val themeIcon/id}"<!--{set themeIcon/selected}--> checked="checked"<!--{/set}--> />
+							<div class="themeIcon">
+								<img src="{val BASE_DIR}/_common/img/theme/{val themeIcon/path}.png" class="icon" alt="{val themeIcon/name}" />
+							</div>
+						</label>
+					</td>
+	<!--{loop_count_tail themeIcon=10}-->
+				</tr>
+	<!--{/loop_count_tail}-->
+	<!--{/loop}-->
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th>ステータス<span class="must_mark">※</span></th>
+			<td>
+<!--{set themeInfo.statusType+err}-->
+<!--{loop themeInfo.statusType+err}-->
+				<p class="err">{val themeInfo.statusType+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<select class="w60" name="themeInfo[statusType]">
+					<option value=""></option>
+<!--{loop statusType}-->
+					<option value="{val statusType/id}"<!--{set statusType/selected}--> selected<!--{/set}-->>{val statusType/name}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>おすすめ車種</th>
+			<td>
+
+<!--{set themeInfo.bodyType}-->
+				<table class="tbl_inner">
+<!--{loop themeInfo.bodyType}-->
+				<tr>
+					<th class="w120">{val themeInfo.bodyType/disp}</th>
+					<td>
+						<div id="carModel[{val themeInfo.bodyType/lgcNum}][modelName]" class="selModelName">
+<!--{set themeInfo.bodyType/modelCode+err}-->
+<!--{loop themeInfo.bodyType/modelCode+err}-->
+							<p class="err">{val themeInfo.bodyType/modelCode+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+
+							<!--{set themeInfo.bodyType/isBodyModel}-->{val themeInfo.bodyType/makerName}　{val themeInfo.bodyType/modelName}<!--{/set}-->
+							<!--{unset themeInfo.bodyType/isBodyModel}--><span>未設定</span><!--{/unset}-->
+						</div>
+						<input type="hidden" id="carModel[{val themeInfo.bodyType/lgcNum}][bodyTypeID]" name="themeInfo[bodyType][{val themeInfo.bodyType/lgcNum}][bodyTypeID]" value="{val themeInfo.bodyType/ID}">
+						<input type="hidden" id="carModel[{val themeInfo.bodyType/lgcNum}][makerCode]"  name="themeInfo[bodyType][{val themeInfo.bodyType/lgcNum}][makerCode]"  value="{val themeInfo.bodyType/makerCode}">
+						<input type="hidden" id="carModel[{val themeInfo.bodyType/lgcNum}][modelCode]"  name="themeInfo[bodyType][{val themeInfo.bodyType/lgcNum}][modelCode]"  value="{val themeInfo.bodyType/modelCode}">
+						<div class="selModelBtnArea">
+							<input type="button" class="btnW01" onclick="openCarSearchWindow('tm', {val themeInfo.bodyType/lgcNum}, {val themeInfo.bodyType/ID});" value="車種検索">
+							<input type="button" id="delBtn_{val themeInfo.bodyType/lgcNum}" class="btnW03" onclick="delCarModel({val themeInfo.bodyType/lgcNum},'{val themeInfo.bodyType/disp}');" value="解除" <!--{unset themeInfo.bodyType/isBodyModel}-->disabled="disabled"<!--{/unset}-->>
+						</div>
+					</td>
+				</tr>
+<!--{/loop}-->
+				</table>
+<!--{/set}-->
+			</td>
+		</tr>
+		<tr>
+			<th>選定基準</th>
+			<td>
+<!--{set themeInfo.basisOfSelection+err}-->
+<!--{loop themeInfo.basisOfSelection+err}-->
+				<p class="err">{val themeInfo.basisOfSelection+err/msg}</p>
+<!--{/loop}-->
+<!--{/set}-->
+				<textarea name="themeInfo[basisOfSelection]" cols=100 style="height:80px;">{val themeInfo.basisOfSelection}</textarea>
+			</td>
+		</tr>
+	</table>
+	<input type="hidden" id="url" name="url" value="{val BASE_DIR}">

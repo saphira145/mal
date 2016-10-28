@@ -1,0 +1,22 @@
+<?php
+
+	/**
+	 * ビュー
+	 */
+
+	// メーカ名・車種名取得
+	for( $i = 0, $iMax = $ini["pageLimit"]["newCarAdmin"]; $i < $iMax; $i++){
+		$output["newCar"][$i]["carNum"] = $i +1;
+		$output["newCar"][$i]["lgcNum"] = $i;
+
+		if( !empty($output["newCar"][$i]["makerCode"]) && !empty( $output["newCar"][$i]["modelCode"]) ){
+			$getMakerInfo = $class["makerAdmin_1"]->get_info( $output["newCar"][$i]["makerCode"] );
+			$getModelInfo = $class["modelAdmin_1"]->get_info( $output["newCar"][$i]["makerCode"], $output["newCar"][$i]["modelCode"] );
+			
+			$output["newCar"][$i]["makerName"] = $getMakerInfo["makerName"];
+			$output["newCar"][$i]["modelName"] = $getModelInfo["modelName"];
+			$output["newCar"][$i]["carFlg"]    = 1;
+		}
+	}
+
+?>

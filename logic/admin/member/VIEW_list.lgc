@@ -1,0 +1,32 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// 権限(ステータス)プルダウン取得
+	$output["levelList"]          = get_levelSelectMulti( $output["searchLevel"] );
+
+	// 権限レベルの取得
+	$output["authorityLevelList"] = get_authorityLevelSelectMulti( $output["searchAuthorityLevel"]);
+
+	// 所属グループの取得
+	$output["salesGroupList"]     = get_salesGroupSelectMulti( $output["searchSalesGroup"]);
+
+	// 所属グループ名の取得
+	$output["searchSalesGroupName"] = get_salesGroupName( $output["searchSalesGroup"] );
+
+
+
+	// 会員情報を表示用に変換
+	for( $i=0; $i<count( $output["memberList"] ); $i++ ) {
+		$output["memberList"][$i] = $class["memberAdmin_1"]->convert_Info( $output["memberList"][$i]);
+	}
+
+	if( count( $output["memberList"] ) > 0 ) {
+		$output["memberListDisp"] = 1;
+	}
+
+
+
+?>

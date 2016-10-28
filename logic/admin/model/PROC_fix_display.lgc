@@ -1,0 +1,19 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// メーカー名取得
+	$output["makerName"] = get_makerName( $output["modelInfo"]["makerCode"] );
+
+	// 車種コード取得
+	$output["modelCode"] = $output["modelInfo"]["modelCode"];
+
+
+	// 変更不可フラグ
+	$output["fix_displayFlg"] = 1;
+
+
+
+?>

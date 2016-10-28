@@ -1,0 +1,26 @@
+<?php
+
+	/* -------------------------------------
+		ロジックコントロール
+	------------------------------------- */
+	// 入力チェックの実行（常にチェックする場合は、第二パラメータに "everyTime" と入れること）
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// http環境の場合、エラー画面を表示する
+	$salesPromotionFlg = get_dispModeSalesPromotionFlg();
+
+	if( $salesPromotionFlg != 1 || $ini["system"]["errRank"] == 1 || $ini["system"]["errRank"] == 2 ) {
+		$ini["system"]["errRank"] = 1;
+		return 404;
+	}
+
+
+	// 入力値変換
+	$this->callPROC( "convert_input" );
+
+	// バリューの取得
+	$this->callPROC( "get_list" );
+
+	// 表示
+	$this->callVIEW( "index" );
+?>

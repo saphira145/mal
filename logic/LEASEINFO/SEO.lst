@@ -1,0 +1,13 @@
+/LEASEINFO
+	KEYWORD="クルマ, 自動車, 車種, オートリース, 仕様, スペック, 諸元, ランキング, 比較, {val title.model}"
+	ERRER="user"
+
+http,/LEASEINFO
+	TITLE = "車種詳細({val title.model}) :: Car sagacité [カー サガシティ] 三菱オートリースの車種比較サイト"
+	DESCRIPTION="気になるクルマをランキングから選んで比べよう! 三菱オートリースの車種比較サイト Car sagacité [カー サガシティ] では、ビジネスのクルマ選びをお手伝いします。"
+	H1="車種詳細({val title.model}) :: Car sagacité [カー サガシティ] 三菱オートリースの車種比較サイト"
+
+https,/LEASEINFO
+	TITLE = "車種詳細({val title.model}) :: Car sagacité+ [カー サガシティ+] 三菱オートリースの車種比較サイト"
+	DESCRIPTION="気になるクルマをランキングから選んで比べよう! 三菱オートリースの車種比較サイト Car sagacité+ [カー サガシティ+] では、ビジネスのクルマ選びをお手伝いします。"
+	H1="車種詳細({val title.model}) :: Car sagacité+ [カー サガシティ+] 三菱オートリースの車種比較サイト"

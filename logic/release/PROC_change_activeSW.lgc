@@ -1,0 +1,38 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+
+	// リリース時間
+	$releaseTime = date( "Y-m-d H:i:s" );
+
+	// コピーするテーブル一覧取得
+	$tableList = (array)$class["releaseUser_1"]->get_tableList( $releaseTime );
+
+	// リリースする場合の処理
+	if( count( $tableList ) > 0 ){
+
+		// アクティブDBの切り替え
+		$class["releaseUser_1"]->activeDBSwitch();
+
+		// リリース済みの予定時間削除
+		$class["releaseUser_1"]->delete_releasedReserveDatetime( $releaseTime );
+
+		// 最終切り替え日更新
+		$class["releaseUser_1"]->update_activeDatetime( $releaseTime );
+
+		// ロールバックフラグをオンにする
+		change_rollBackDBLockFlg( 1 );
+
+	}
+
+
+
+
+
+
+
+?>

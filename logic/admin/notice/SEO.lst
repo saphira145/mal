@@ -1,0 +1,12 @@
+/admin/notice
+	TITLE = "お知らせ設定"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="お知らせ設定"
+
+/admin/notice/me
+	TITLE = "お知らせ設定"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="お知らせ設定"
+

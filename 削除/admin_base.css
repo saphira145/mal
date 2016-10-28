@@ -1,0 +1,246 @@
+@charset "shift_jis";
+
+/*====================
+	*base.css*
+
+1.	grobal_reset
+2.	link
+3.	input
+4.	textarea
+5.	select
+====================*/
+
+/*--------------------------------------
+							grobal_reset
+---------------------------------------*/
+
+html,body{
+	height: 100%;
+}
+
+body{
+	margin:0;
+	padding:0;
+	font-size: 12px;
+	font-family:"MS UI Gothic","Arial","Hiragino Kaku Gothic Pro W3";
+	color: #000000;
+	background-color: #e7e7e7;
+}
+
+body,div,dl,dt,dd,ul,li,form,h1,h2,h3,input,table,th,td,tr,td{ margin: 0; padding: 0; line-height: 1.4em;}
+table{ border-collapse:collapse; border-spacing:0;}
+img{ border: 0; vertical-align: top;}
+address,h1,h2,h3,h4,h5,h6,th{ font-style: normal; font-weight: normal;}
+td,th{text-align: left;}
+ul,li,ol{list-style: none;}
+
+/*--------------------------------------
+							link
+---------------------------------------*/
+
+a:link,
+a:visited,
+a:active{
+	color: #10640C;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #10640C;
+	text-decoration: underline;
+}
+
+#comp a:link,
+#comp a:visited,
+#comp a:active{
+	color: #f44204;
+	text-decoration: none;
+}
+
+#comp a:hover{
+	color: #f44204;
+	text-decoration: underline;
+}
+
+input{
+	font-size: 12px;
+	font-family:"MS UI Gothic","Arial","Hiragino Kaku Gothic Pro W3";
+}
+
+input[type=text]{
+	height: 18px;
+}
+
+input.login{
+	background: #e6e6e6;
+	border: 1px solid #cdcdcd;
+	width: 148px;
+	height: 18px;
+}
+
+textarea.w10,
+select.w10,
+input.w10{
+	width: 40px;
+}
+
+textarea.w15,
+select.w15,
+input.w15{
+	width: 80px;
+}
+
+textarea.w20,
+select.w20,
+input.w20{
+	width: 120px;
+}
+
+textarea.w25,
+select.w25,
+input.w25{
+	width: 170px;
+}
+
+textarea.w30,
+select.w30,
+input.w30{
+	width: 220px;
+}
+
+select.w35{
+	width: 280px;
+}
+
+textarea.w40,
+select.w40,
+input.w40{
+	width: 320px;
+}
+
+textarea.w50,
+select.w50,
+input.w50{
+	width: 480px;
+}
+
+textarea.w60,
+select.w60,
+input.w60{
+	width: 220px;
+}
+
+input.w10,
+input.w20,
+input.w30,
+input.w40{
+	padding: 2px 0 0 0;
+}
+
+.h1{
+	height: 200px;
+}
+
+.h2{
+	height: 100px;
+}
+
+.radio{
+	position: relative;
+	top: 1px;
+}
+
+.radioTxt,
+.checkTxt{
+	margin: 0 15px 0 0;
+}
+
+.checkbox{
+	margin: 0 3px 0 0;
+	position: relative;
+	top: 1px;
+}
+
+input.btnW01{
+	width: 100px;
+	padding: 2px 3px 1px 3px;
+}
+
+input.btnW02{
+	width: 160px;
+	padding: 2px 3px 1px 3px;
+}
+
+input.btnW03{
+	width: 40px;
+	padding: 2px 3px 1px 3px;
+}
+
+input.btnW04{
+	width: 60px;
+	padding: 2px 3px 1px 3px;
+}
+
+input.btnW05{
+	width: 240px;
+	padding: 2px 3px 1px 3px;
+}
+
+input.btnW06{
+	width: 110px;
+	padding: 2px 3px 1px 3px;
+}
+
+/*--------------------------------------
+							textarea
+---------------------------------------*/
+textarea{
+	height:44px;
+	font-size: 12px;
+	font-family:"MS UI Gothic","Arial","Hiragino Kaku Gothic Pro W3";
+}
+
+textarea.photoCmt{
+	height:30px;
+}
+
+/*--------------------------------------
+							select
+---------------------------------------*/
+select{
+	font-size: 12px;
+	height: 18px;
+}
+
+select option{
+}
+
+/*--------------------------------------
+							table
+---------------------------------------*/
+th.w20,td.w20{	width:20px;}
+th.w30,td.w30{	width:30px;}
+th.w40,td.w40{	width:40px;}
+th.w45,td.w45{	width:45px;}
+th.w50,td.w50{	width:50px;}
+th.w55,td.w55{	width:55px;}
+th.w60,td.w60{	width:60px;}
+th.w70,td.w70{	width:70px;}
+th.w80,td.w80{	width:80px;}
+th.w90,td.w90{	width:90px;}
+th.w100,td.w100{	width:100px;}
+th.w120,td.w120{	width:120px;}
+th.w140,td.w140{	width:140px;}
+th.w150,td.w150{	width:150px;}
+th.w160,td.w160{	width:160px;}
+th.w170,td.w170{	width:170px;}
+th.w190,td.w190{	width:190px;}
+th.w220,td.w220{	width:220px;}
+th.w240,td.w240{	width:240px;}
+th.w310,td.w310{	width:310px;}
+th.w400,td.w400{	width:400px;}
+th.w450,td.w450{	width:450px;}
+th.w650,td.w650{	width:650px;}
+th.w770,td.w770{	width:770px;}
+
+th.minw40,td.minw40{	min-width:40px;}

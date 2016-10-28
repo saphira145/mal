@@ -1,0 +1,90 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// ファイル名取得
+	$output["fileName"] = $ini["csvDownload"]["fileName"]["lease"];
+
+	// ディレクトリパスの設定
+	$dirPath  = $path["csv"]["tmpDir"];
+
+	// ファイルパスの設定
+	$output["filePath"] = "$dirPath/{$output["fileName"]}";
+
+	// すでにあれば削除
+	if( file_exists ( $output["filePath"] ) ) {
+		@unlink( $output["filePath"] );
+	}
+
+	// ファイルの作成
+	$fp = fopen( $output["filePath"], "w" );
+
+	$txts  = "\"メーカーコード\",\"メーカー名\",\"車種コード\",\"車種名\",\"グレードID\",\"グレード名\",\"駆動方式\",\"車両本体価格(税抜き)\",\"認定型式\",\"ミッション区分\",\"積載量(kg)\",\"乗車定員\",\"燃料区分\",\"排気量(cc)\",\"車検サイクル[初回](年)\",\"車検サイクル[2回目以降](年)\",\"代表車種グレード(1=代表車種)\",\"＊調達価格＊\",\"＊登録法定費用＊\",\"＊登録代行費用＊\",\"＊資金管理料金＊\",\"＊メンテナンス区分＊\",\"＊区分状態(0=未確定、1=確定)＊\"";
+
+	// 配列対応（SJIS-winに変換）
+	$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+	fputs( $fp, $txts . "\n" );
+	fclose( $fp );
+
+	// データ取得＆出力
+	$makerList = get_makerSelect();
+
+	for( $i = 0, $iMax = count($makerList); $i < $iMax; $i++ ){
+
+		// 車種別の比較回数リスト取得
+		$list = $class["csvDownload_1"]->get_leaseList( $makerList[$i] );
+
+		if( count( $list ) == 0 ) {
+			continue;
+		}
+
+		// CSV データ作成
+		for( $j=0; $j<count( $list ); $j++ ) {
+
+			$fp = fopen( $output["filePath"], "a" );
+
+			unset( $txt, $systemName );
+			$txt[] = "\"" . $list[$j]["makerCode"];
+			$txt[] =        $list[$j]["makerName"];
+			$txt[] =        $list[$j]["modelCode"];
+			$txt[] =        $list[$j]["modelName"];
+			$txt[] =        $list[$j]["carGradeID"];
+			$txt[] =        $list[$j]["grade"];
+			$txt[] =        $list[$j]["driveSystem"];
+			$txt[] =        $list[$j]["taxIncludedPrice"];
+			$txt[] =        $list[$j]["carNameModel"];
+			$txt[] =        $list[$j]["transmissionType"];
+			$txt[] =        $list[$j]["maxCapacity"];
+			$txt[] =        $list[$j]["capacity"];
+			$txt[] =        $list[$j]["useFuel"];
+			$txt[] =        $list[$j]["totalEmission"];
+			$txt[] =        $list[$j]["carInspection_years"];
+			$txt[] =        $list[$j]["carInspection_nextYear"];
+			$txt[] =        $list[$j]["carGrade"];
+			$txt[] =        $list[$j]["procurementCost"];
+			$txt[] =        $list[$j]["costLegal"];
+			$txt[] =        $list[$j]["costActing"];
+			$txt[] =        $list[$j]["costManagement"];
+			$txt[] =        $list[$j]["mainteID"];
+			$txt[] =        $list[$j]["mainteState"];
+			$txts = join( $txt, "\",\"");
+			$txts = $txts . "\"\n";
+
+			// 配列対応（SJIS-winに変換）
+			$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+			fputs( $fp, $txts );
+			fclose( $fp );
+		}
+	}
+
+	// 古いＣＳＶは削除
+	$class["csvDownload_1"]->delete_tmpCSVFile();
+
+	// 配列対応（SJIS-winに変換）
+	$output["fileName"] = $class["csvDownload_1"]->mbConvertEncodingDeep( $output["fileName"], "UTF-8", "SJIS-win" );
+
+?>

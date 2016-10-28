@@ -1,0 +1,19 @@
+// 車種コード
+modelCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  100,  newCarModelCodeExist({1}),     車種コードは存在しません
+
+// メーカーコード
+makerCode
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim
+	check,  100,  newCarMakerCodeExist,     メーカーコードは存在しません
+
+// 新型車No
+carNum
+	convert,  0,  paramNumeric,
+	convert,  0,  1byte,
+	convert,  0,  trim

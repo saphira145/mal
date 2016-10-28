@@ -1,0 +1,393 @@
+	<div id="detail01">
+		<h2><span>基本スペック情報</span><span><a href="javascript:void(0)" data-detail="detail01" class="faChevronUp">閉じる</a></span></h2>
+		<div data-detailItem="{val modelInfoList.carGrade1.gradeName.itemKey}">
+			<table>
+				<tr <!--{set modelInfoList.carGrade1.gradeName.backgroundColor}-->class="{val modelInfoList.carGrade1.gradeName.backgroundColor}"<!--{/set}-->>
+					<th>グレード名称</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val model1Info.gradeName}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val model2Info.gradeName}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val model3Info.gradeName}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val model4Info.gradeName}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade1.taxIncludedPrice.itemKey}">
+			<table>
+				<tr <!--{set modelInfoList.carGrade1.taxIncludedPrice.backgroundColor}-->class="{val modelInfoList.carGrade1.taxIncludedPrice.backgroundColor}"<!--{/set}-->>
+					<th>{val modelInfoList.carGrade1.taxIncludedPrice.itemDispName}<span class="note">メーカー希望小売価格（消費税込）</span></th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.taxIncludedPrice.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.taxIncludedPrice.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.taxIncludedPrice.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.taxIncludedPrice.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade1.bodyModelName.itemKey}">
+			<table>
+				<tr <!--{set modelInfoList.carGrade1.bodyModelName.backgroundColor}-->class="{val modelInfoList.carGrade1.bodyModelName.backgroundColor}"<!--{/set}-->>
+					<th>{val modelInfoList.carGrade1.bodyModelName.itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.bodyModelName.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.bodyModelName.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.bodyModelName.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.bodyModelName.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade1.capacity.itemKey}">
+			<table>
+				<tr <!--{set modelInfoList.carGrade1.capacity.backgroundColor}-->class="{val modelInfoList.carGrade1.capacity.backgroundColor}"<!--{/set}-->>
+					<th>{val modelInfoList.carGrade1.capacity.itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.capacity.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.capacity.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.capacity.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.capacity.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade1.driveSystem_totalEmission.itemKey}">
+			<table>
+				<tr <!--{set modelInfoList.carGrade1.driveSystem_totalEmission.backgroundColor}-->class="{val modelInfoList.carGrade1.driveSystem_totalEmission.backgroundColor}"<!--{/set}-->>
+					<th>{val modelInfoList.carGrade1.driveSystem_totalEmission.itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.driveSystem_totalEmission.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.driveSystem_totalEmission.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.driveSystem_totalEmission.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.driveSystem_totalEmission.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade1.fuelConsumptionRateJC08mode.itemKey}">
+			<table class="fuelrate">
+				<tr <!--{set modelInfoList.carGrade1.fuelConsumptionRateJC08mode.backgroundColor}-->class="{val modelInfoList.carGrade1.fuelConsumptionRateJC08mode.backgroundColor}"<!--{/set}-->>
+					<th rowspan="2">
+						<table>
+							<tr>
+								<th rowspan="2" class="a">燃料消費率</th>
+								<td class="b"><img src="{val BASE_DIR}/_common/img/JC08mode.gif" alt="JC08mode"><br /><span>（国土交通省審査値）</span></td>
+							</tr>
+							<tr>
+								<td class="c"><img src="{val BASE_DIR}/_common/img/1015mode.gif" alt="1015mode"><br /><span>（国土交通省審査値）</span></td>
+							</tr>
+						</table>
+					</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.fuelConsumptionRateJC08mode.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.fuelConsumptionRateJC08mode.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.fuelConsumptionRateJC08mode.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.fuelConsumptionRateJC08mode.model4Info}</td>
+				</tr>
+				<tr <!--{set modelInfoList.carGrade1.fuelConsumptionRate10_15mode.backgroundColor}-->class="{val modelInfoList.carGrade1.fuelConsumptionRate10_15mode.backgroundColor}"<!--{/set}-->>
+					<td class="noBorder {val model1Info.notData}">{val modelInfoList.carGrade1.fuelConsumptionRate10_15mode.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.fuelConsumptionRate10_15mode.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.fuelConsumptionRate10_15mode.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.fuelConsumptionRate10_15mode.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade1.totalLength.itemKey}">
+			<table>
+				<tr <!--{set modelInfoList.carGrade1.totalLength.backgroundColor}-->class="{val modelInfoList.carGrade1.totalLength.backgroundColor}"<!--{/set}-->>
+					<th>{val modelInfoList.carGrade1.totalLength.itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalLength.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalLength.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalLength.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalLength.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade1.totalWidth.itemKey}">
+			<table>
+				<tr <!--{set modelInfoList.carGrade1.totalWidth.backgroundColor}-->class="{val modelInfoList.carGrade1.totalWidth.backgroundColor}"<!--{/set}-->>
+					<th>{val modelInfoList.carGrade1.totalWidth.itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalWidth.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalWidth.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalWidth.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalWidth.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade1.totalHeight.itemKey}">
+			<table>
+				<tr <!--{set modelInfoList.carGrade1.totalHeight.backgroundColor}-->class="{val modelInfoList.carGrade1.totalHeight.backgroundColor}"<!--{/set}-->>
+					<th>{val modelInfoList.carGrade1.totalHeight.itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalHeight.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalHeight.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalHeight.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade1.totalHeight.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+	<!--/#detail01--></div>
+
+	<div id="detail02">
+		<h2><span>型式タイプ</span><span><a href="javascript:void(0)" data-detail="detail02" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.carGrade2}-->
+		<div data-detailItem="{val modelInfoList.carGrade2/itemKey}" <!--{set modelInfoList.carGrade2/backgroundColor}-->class="{val modelInfoList.carGrade2/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.carGrade2/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade2/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade2/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade2/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade2/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail02--></div>
+
+	<div id="detail03">
+		<h2><span>寸法</span><span><a href="javascript:void(0)" data-detail="detail03" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.carGrade3}-->
+		<div data-detailItem="{val modelInfoList.carGrade3/itemKey}" <!--{set modelInfoList.carGrade3/backgroundColor}-->class="{val modelInfoList.carGrade3/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.carGrade3/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade3/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade3/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade3/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade3/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail03--></div>
+
+	<div id="detail04">
+		<h2><span>重量・定員</span><span><a href="javascript:void(0)" data-detail="detail04" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.carGrade4}-->
+		<div data-detailItem="{val modelInfoList.carGrade4/itemKey}" <!--{set modelInfoList.carGrade4/backgroundColor}-->class="{val modelInfoList.carGrade4/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.carGrade4/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade4/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade4/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade4/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade4/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail04--></div>
+
+	<div id="detail05">
+		<h2><span>性能</span><span><a href="javascript:void(0)" data-detail="detail05" class="faChevronUp">閉じる</a></span></h2>
+		<div data-detailItem="{val modelInfoList.carGrade5.turningCircle.itemKey}" <!--{set modelInfoList.carGrade5.turningCircle.backgroundColor}-->class="{val modelInfoList.carGrade5.turningCircle.backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.carGrade5.turningCircle.itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.turningCircle.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.turningCircle.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.turningCircle.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.turningCircle.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade5.fuelConsumptionRateJC08mode.itemKey}">
+			<table class="fuelrate">
+				<tr <!--{set modelInfoList.carGrade5.fuelConsumptionRateJC08mode.backgroundColor}-->class="{val modelInfoList.carGrade5.fuelConsumptionRateJC08mode.backgroundColor}"<!--{/set}-->>
+					<th rowspan="2">
+						<table>
+							<tr>
+								<th rowspan="2" class="a">燃料消費率</th>
+								<td class="b"><img src="{val BASE_DIR}/_common/img/JC08mode.gif" alt="JC08mode"><br /><span>（国土交通省審査値）</span></td>
+							</tr>
+							<tr>
+								<td class="c"><img src="{val BASE_DIR}/_common/img/1015mode.gif" alt="1015mode"><br /><span>（国土交通省審査値）</span></td>
+							</tr>
+						</table>
+					</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.fuelConsumptionRateJC08mode.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.fuelConsumptionRateJC08mode.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.fuelConsumptionRateJC08mode.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.fuelConsumptionRateJC08mode.model4Info}</td>
+				</tr>
+				<tr <!--{set modelInfoList.carGrade5.fuelConsumptionRate10_15mode.backgroundColor}-->class="{val modelInfoList.carGrade5.fuelConsumptionRate10_15mode.backgroundColor}"<!--{/set}-->>
+					<td class="noBorder {val model1Info.notData}">{val modelInfoList.carGrade5.fuelConsumptionRate10_15mode.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.fuelConsumptionRate10_15mode.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.fuelConsumptionRate10_15mode.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.fuelConsumptionRate10_15mode.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<div data-detailItem="{val modelInfoList.carGrade5.recognitionLevel.itemKey}" <!--{set modelInfoList.carGrade5.recognitionLevel.backgroundColor}-->class="{val modelInfoList.carGrade5.recognitionLevel.backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.carGrade5.recognitionLevel.itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.recognitionLevel.model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.recognitionLevel.model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.recognitionLevel.model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade5.recognitionLevel.model4Info}</td>
+				</tr>
+			</table>
+		</div>
+	<!--/#detail05--></div>
+
+	<div id="detail06">
+		<h2><span>諸装置</span><span><a href="javascript:void(0)" data-detail="detail06" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.carGrade6}-->
+		<div data-detailItem="{val modelInfoList.carGrade6/itemKey}" <!--{set modelInfoList.carGrade6/backgroundColor}-->class="{val modelInfoList.carGrade6/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.carGrade6/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade6/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade6/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade6/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade6/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail06--></div>
+
+	<div id="detail07">
+		<h2><span>エンジン主要諸元</span><span><a href="javascript:void(0)" data-detail="detail07" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.carGrade7}-->
+		<div data-detailItem="{val modelInfoList.carGrade7/itemKey}" <!--{set modelInfoList.carGrade7/backgroundColor}-->class="{val modelInfoList.carGrade7/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.carGrade7/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade7/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade7/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade7/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.carGrade7/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail07--></div>
+
+
+	<div id="detail08" class="compareIcon">
+		<h2><span>視界</span><span><a href="javascript:void(0)" data-detail="detail08" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.view}-->
+		<div data-detailItem="{val modelInfoList.view/itemKey}" <!--{set modelInfoList.view/backgroundColor}-->class="{val modelInfoList.view/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.view/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.view/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.view/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.view/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.view/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail08--></div>
+
+	<div id="detail09" class="compareIcon">
+		<h2><span>運転席まわり</span><span><a href="javascript:void(0)" data-detail="detail09" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.seatCircumference}-->
+		<div data-detailItem="{val modelInfoList.seatCircumference/itemKey}" <!--{set modelInfoList.seatCircumference/backgroundColor}-->class="{val modelInfoList.seatCircumference/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.seatCircumference/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.seatCircumference/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.seatCircumference/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.seatCircumference/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.seatCircumference/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail09--></div>
+
+	<div id="detail10" class="compareIcon">
+		<h2><span>空調</span><span><a href="javascript:void(0)" data-detail="detail10" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.airConditioning}-->
+		<div data-detailItem="{val modelInfoList.airConditioning/itemKey}" <!--{set modelInfoList.airConditioning/backgroundColor}-->class="{val modelInfoList.airConditioning/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.airConditioning/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.airConditioning/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.airConditioning/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.airConditioning/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.airConditioning/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail10--></div>
+
+	<div id="detail11" class="compareIcon">
+		<h2><span>オーディオ</span><span><a href="javascript:void(0)" data-detail="detail11" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.audio}-->
+		<div data-detailItem="{val modelInfoList.audio/itemKey}" <!--{set modelInfoList.audio/backgroundColor}-->class="{val modelInfoList.audio/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.audio/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.audio/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.audio/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.audio/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.audio/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail11--></div>
+
+	<div id="detail12" class="compareIcon">
+		<h2><span>シート・内装関係</span><span><a href="javascript:void(0)" data-detail="detail12" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.seatInterior}-->
+		<div data-detailItem="{val modelInfoList.seatInterior/itemKey}" <!--{set modelInfoList.seatInterior/backgroundColor}-->class="{val modelInfoList.seatInterior/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.seatInterior/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.seatInterior/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.seatInterior/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.seatInterior/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.seatInterior/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail12--></div>
+
+	<div id="detail13" class="compareIcon">
+		<h2><span>外装</span><span><a href="javascript:void(0)" data-detail="detail13" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.exterior}-->
+		<div data-detailItem="{val modelInfoList.exterior/itemKey}" <!--{set modelInfoList.exterior/backgroundColor}-->class="{val modelInfoList.exterior/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.exterior/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.exterior/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.exterior/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.exterior/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.exterior/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail13--></div>
+
+	<div id="detail14" class="compareIcon">
+		<h2><span>足まわり</span><span><a href="javascript:void(0)" data-detail="detail14" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.footSurroundings}-->
+		<div data-detailItem="{val modelInfoList.footSurroundings/itemKey}" <!--{set modelInfoList.footSurroundings/backgroundColor}-->class="{val modelInfoList.footSurroundings/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.footSurroundings/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.footSurroundings/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.footSurroundings/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.footSurroundings/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.footSurroundings/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail14--></div>
+
+	<div id="detail15" class="compareIcon">
+		<h2><span>安全</span><span><a href="javascript:void(0)" data-detail="detail15" class="faChevronUp">閉じる</a></span></h2>
+		<!--{loop modelInfoList.safety}-->
+		<div data-detailItem="{val modelInfoList.safety/itemKey}" <!--{set modelInfoList.safety/backgroundColor}-->class="{val modelInfoList.safety/backgroundColor}"<!--{/set}-->>
+			<table>
+				<tr>
+					<th>{val modelInfoList.safety/itemDispName}</th>
+					<td <!--{set model1Info.notData}-->class="{val model1Info.notData}"<!--{/set}-->>{val modelInfoList.safety/model1Info}</td>
+					<td <!--{set model2Info.notData}-->class="{val model2Info.notData}"<!--{/set}-->>{val modelInfoList.safety/model2Info}</td>
+					<td <!--{set model3Info.notData}-->class="{val model3Info.notData}"<!--{/set}-->>{val modelInfoList.safety/model3Info}</td>
+					<td <!--{set model4Info.notData}-->class="{val model4Info.notData}"<!--{/set}-->>{val modelInfoList.safety/model4Info}</td>
+				</tr>
+			</table>
+		</div>
+		<!--{/loop}-->
+	<!--/#detail15--></div>

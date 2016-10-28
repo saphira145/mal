@@ -1,0 +1,23 @@
+<?php
+
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	//****** グループ管理者の場合、専用ロジックを実行
+	if( !get_dispModeAdminFlg() ){
+		$this->callPROC( "set_groupMember" );
+	}
+
+	// 表示
+	$this->callVIEW( "form" );
+
+
+
+
+?>

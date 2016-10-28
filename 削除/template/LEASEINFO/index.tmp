@@ -1,0 +1,197 @@
+{frame /_common/outerFrame_popup.tmp}
+{input CARLEASEINFO=1}
+
+{file /salesPromotion/myPage.tmp}
+{file /salesPromotion/parts/leaseBaseDisp.tmp}
+<div id="carLeaseInfo" <!--{set LEASEMODECHANGE_FLG}-->class="filter"<!--{/set}--> >
+	<div class="carData">
+		<div class="modelInfo">
+			<div class="carImg">
+				<img src="{val BASE_DIR}/_common/PHOTO/{val PHOTO_DIR}/CARBODY/{val modelInfo.carBodyPhotoName}.jpg" alt="{val modelInfo.modelName}" />
+			</div>
+			<div class="carName">
+				<span>{val modelInfo.makerName}<br/>{val modelInfo.modelName}</span>
+			</div>
+			<div class="lease">
+				<ul>
+					<!--{set modelInfo.lease.y3}-->
+					<li class="y3">{val modelInfo.lease.y3.name}</li>
+					<!--{/set}-->
+					<!--{set modelInfo.lease.y4}-->
+					<li class="y4">{val modelInfo.lease.y4.name}</li>
+					<!--{/set}-->
+					<!--{set modelInfo.lease.y5}-->
+					<li class="y5">{val modelInfo.lease.y5.name}</li>
+					<!--{/set}-->
+				</ul>
+			</div>
+			<div class="themeBox">
+				<!--{set modelInfo.theme}-->
+				<ul>
+					<!--{loop modelInfo.theme}-->
+					<li class="setCol" ><span>{val modelInfo.theme/name|lengthCut:12}</span></li>
+					<!--{/loop}-->
+				</ul>
+				<!--{/set}-->
+			</div>
+		</div>
+		<div class="leaseInfo">
+			<dl>
+				<dt>月間走行距離</dt>
+				<dd>{val leaseInfo.mileage.distance|number_format} km</dd>
+				<dt>ガソリン価格</dt>
+				<dd>{val leaseInfo.gasoline.name}</dd>
+				<dt>使用開始年月</dt>
+				<dd>{val leaseInfo.carAddDate.year}年 {val leaseInfo.carAddDate.month}月</dd>
+<!--{unset voluntaryInsuranceHidFlg}-->
+				<dt>任意保険</dt>
+				<dd>{val leaseInfo.voluntaryInsurance.name}</dd>
+<!--{/unset}-->
+			</dl>
+		</div>
+		<div class="leaseOption">
+			<!--{set leaseOption}-->
+			<dl>
+				<dt>オプション</dt>
+				<dd <!--{set LEASEMODECHANGE_FLG}-->class="filterColor"<!--{/set}-->>&yen; {val totalPrice|number_format} &ndash;</dd>
+			</dl>
+			<ul>
+			<!--{loop leaseOption}-->
+			<li <!--{set leaseOption/start}-->class="optionStart"<!--{/set}--> >
+				<span class="leaseOptionName">{val leaseOption/name}</span>
+				<span class="leaseOptionPrice"><!--{set leaseOption/price}-->&yen; {val leaseOption/price|number_format} &ndash;<!--{/set}--></span>
+			</li>
+			<!--{/loop}-->
+			</ul>
+			<!--{/set}-->
+			<form name="form_leaseInfoS" action="{val BASE_DIR}/LEASEOPTION/{val modelInfo.modelNameEng}/-/{val leaseURL}" method="post">
+				<!--{loop option}-->
+				<input type="hidden" name="option[]" value="LO{val option/optionID|zeroPadding:3}I{val option/optionItem}">
+				<!--{/loop}-->
+			</form>
+			<div class="btnArea">
+				<a href="javascript:void(0)" class="actionButton faCheckSquareo" onclick="document.form_leaseInfoS.submit(); return false;">オプション選択</a>
+			</div>
+		</div>
+	</div>
+	<div class="carGradeList">
+		<!--{loop modelInfo.carGradeList}-->
+		<div id="cg{val modelInfo.carGradeList/carGradeCode}">
+			<h2>
+				<span>【{val modelInfo.carGradeList/name}】</span>
+				<span><a href="javascript:void(0)" data-carGrade="cg{val modelInfo.carGradeList/carGradeCode}" class="faChevronBown">開く</a></span>
+			</h2>
+			<div>
+				<dl class="gradeInfo">
+					<dt>グレード</dt>
+					<dd><span>{val modelInfo.carGradeList/gradeName}</span></dd>
+					<dt>車両本体価格</dt>
+					<dd><span>&yen; {val modelInfo.carGradeList/taxIncludedPrice|number_format} &ndash;</span></dd>
+					<dt>駆動方式</dt>
+					<dd><span>{val modelInfo.carGradeList/transmissionType}</span></dd>
+					<dt>使用燃料</dt>
+					<dd><span>{val modelInfo.carGradeList/useFuel}</span></dd>
+					<dt>排気量</dt>
+					<dd><span>{val modelInfo.carGradeList/totalEmission|number_format} cc</span></dd>
+				</dl>
+				<!--{loop modelInfo.carGradeList/leaseList}-->
+					<!--{unset modelInfo.carGradeList/leaseList/noLease}-->
+					<dl class="leaseBox <!--{set LEASEMODECHANGE_FLG}-->filterColor<!--{/set}-->">
+						<dt class="title {val modelInfo.carGradeList/leaseList/paynum.class}">
+							<span class="name"><span class="{val modelInfo.carGradeList/leaseList/paynum.class}">{val modelInfo.carGradeList/leaseList/paynum.name}</span> {val modelInfo.carGradeList/leaseList/contract.name}</span>
+							<span class="lease"><span>月々のリース料：</span>&yen; {val modelInfo.carGradeList/leaseList/lease|number_format} &ndash;</span>
+						</dt>
+						<dd>
+							<dl class="leaseData" id="cg{val modelInfo.carGradeList/carGradeCode}_{val modelInfo.carGradeList/leaseList/paynum.class}_{val modelInfo.carGradeList/leaseList/contract.disp}">
+								<dt class="total">月額トータルコスト</dt>
+								<dd><!--{set modelInfo.carGradeList/leaseList/fuelCost}--><span>&yen; {val modelInfo.carGradeList/leaseList/total|number_format} &ndash;</span><!--{/set}--><!--{unset modelInfo.carGradeList/leaseList/fuelCost}--><span>&ndash;</span><!--{/unset}--><a href="javascript:void(0)" data-totalDetail="cg{val modelInfo.carGradeList/carGradeCode}_{val modelInfo.carGradeList/leaseList/paynum.class}_{val modelInfo.carGradeList/leaseList/contract.disp}" class="faCaretDown"></a>
+									<dl class="totalDetail">
+										<dt>リース料</dt>
+										<dd>
+											<span>&yen; {val modelInfo.carGradeList/leaseList/financial|number_format} &ndash;</span>
+										</dd>
+										<!--{unset modelInfo.carGradeList/leaseList/contract.id}-->
+										<dt>メンテナンス料</dt>
+										<dd>
+											<span>&yen; {val modelInfo.carGradeList/leaseList/maintenance|number_format} &ndash;</span>
+										</dd>
+										<!--{/unset}-->
+<!--{unset voluntaryInsuranceHidFlg}-->
+										<!--{set voluntaryInsurance}-->
+										<dt>任意保険料</dt>
+										<dd>
+											<span>&yen; {val modelInfo.carGradeList/leaseList/voluntaryInsurance|number_format} &ndash;</span>
+										</dd>
+										<!--{/set}-->
+<!--{/unset}-->
+										<dt>燃料費</dt>
+										<dd>
+											<!--{set modelInfo.carGradeList/leaseList/fuelCost}--><span>&yen; {val modelInfo.carGradeList/leaseList/fuelCost|number_format} &ndash;</span><!--{/set}-->
+											<!--{unset modelInfo.carGradeList/leaseList/fuelCost}--><span>算出できません</span><!--{/unset}-->
+										</dd>
+									</dl>
+								</dd>
+							</dl>
+						</dd>
+					</dl>
+					<!--{/unset}-->
+
+					<!--{set modelInfo.carGradeList/leaseList/noLease}-->
+					<dl class="leaseBox <!--{set LEASEMODECHANGE_FLG}-->filterColor<!--{/set}-->">
+						<dt class="title {val modelInfo.carGradeList/leaseList/paynum.class}">
+							<span class="name"><span class="{val modelInfo.carGradeList/leaseList/paynum.class}">{val modelInfo.carGradeList/leaseList/paynum.name}</span> {val modelInfo.carGradeList/leaseList/contract.name}</span>
+							<span class="lease noLease"><span>月々のリース料：</span>お問い合わせください</span>
+						</dt>
+						<dd>
+							<dl class="leaseData" id="cg{val modelInfo.carGradeList/carGradeCode}_{val modelInfo.carGradeList/leaseList/paynum.class}_{val modelInfo.carGradeList/leaseList/contract.disp}">
+								<dt class="total">月額トータルコスト</dt>
+								<dd><span> &ndash;</span><a href="javascript:void(0)" data-totalDetail="cg{val modelInfo.carGradeList/carGradeCode}_{val modelInfo.carGradeList/leaseList/paynum.class}_{val modelInfo.carGradeList/leaseList/contract.disp}" class="faCaretDown"></a>
+									<dl class="totalDetail">
+										<dt>リース料</dt>
+										<dd>
+											<span> &ndash;</span>
+										</dd>
+										<!--{unset modelInfo.carGradeList/leaseList/contract.id}-->
+										<dt>メンテナンス料</dt>
+										<dd>
+											<span> &ndash;</span>
+										</dd>
+										<!--{/unset}-->
+<!--{unset voluntaryInsuranceHidFlg}-->
+										<!--{set voluntaryInsurance}-->
+										<dt>任意保険料</dt>
+										<dd>
+											<span> &ndash;</span>
+										</dd>
+										<!--{/set}-->
+<!--{/unset}-->
+										<dt>燃料費</dt>
+										<dd>
+											<!--{set modelInfo.carGradeList/leaseList/fuelCost}--><span>&yen; {val modelInfo.carGradeList/leaseList/fuelCost|number_format} &ndash;</span><!--{/set}-->
+											<!--{unset modelInfo.carGradeList/leaseList/fuelCost}--><span>&ndash;</span><!--{/unset}-->
+										</dd>
+									</dl>
+								</dd>
+							</dl>
+						</dd>
+					</dl>
+					<!--{/set}-->
+				<!--{/loop}-->
+			</div>
+		</div>
+		<!--{/loop}-->
+	</div>
+</div>
+<!--{set modelInfo.carGradeList}-->
+<ul class="note">
+	<li>表示しているリース料は <b>税抜き</b> で参考価格となります。</li>
+	<li>リース料は、車体色が <b>白</b> 又は <b>シルバー</b> で算出しています。</li>
+	<li>車検・法定12点検・法定6点検・定期6点検は該当分を含む（車検がサイクルによって有無があります）</li>
+	<li>月走行1,500㎞は、Ｓ点検3か月を含む</li>
+	<li>オイル交換含む</li>
+	<li>臨時修理・消耗品の交換を含む</li>
+	<li>バッテリーは、必要個数（フリー）を含む</li>
+	<li>夏タイヤのみ、必要本数（フリー）を含む（冬タイヤは含めない）</li>
+	<li>代車は、車検・点検・修理とも48時間以降提供とする（事故代車は含めない）期間と車検サイクルにより車検代車が含まれないケースもある</li>
+</ul>
+<!--{/set}-->

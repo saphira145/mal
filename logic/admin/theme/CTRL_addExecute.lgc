@@ -1,0 +1,27 @@
+<?php
+
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// データ投入値の変換
+	$this->callPROC( "convertData" );
+
+	// テーブルにデータ投入
+	$this->callPROC( "insert_DB" );
+
+	// ＤＢチケットの破棄
+	drop_dbTicket();
+
+
+
+
+
+
+
+?>

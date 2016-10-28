@@ -1,0 +1,33 @@
+<?php
+
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// 入力チェックの実行
+	$output = $class["inputCheck"]->exec_inputCheck( $inputCheckGroup );
+
+	// データ投入入力値変換
+	$this->callPROC( "convert_inputDB" );
+
+	// 車体画像本番へ移動
+	$this->callPROC( "move_tempCarBodyPhoto" );
+
+	// テーブルにデータ投入
+	$this->callPROC( "update_DB" );
+
+	// 詳細取得
+	$this->callPROC( "get_info" );
+
+	// ＤＢチケットの破棄
+	drop_dbTicket();
+
+
+
+
+
+
+
+?>

@@ -1,0 +1,97 @@
+<?php
+
+
+	/* -------------------------------------
+		ビュー
+	------------------------------------- */
+
+	/* -----------------------------------
+	   表示項目
+	----------------------------------- */
+	// 試算モード
+	$output["modeChange"]["baseMode"] = $ini["modeChange"]["modeChange"];
+	$output["modeChange"]["baseMode"] = set_checked( $ini["modeChange"]["modeChange"], $ini["modeChange"]["defaultId"]["modeChange"], "id", "checked" );
+
+	// 走行距離
+	$output["modeChange"]["mileage"] = set_checked( $ini["lease"]["mileage"], 0, "id", "checked" );
+
+	// デフォルト金額(利益額ベース)
+	$output["modeChange"]["profit"]   = $output["basePrice"]["profit"];
+
+	// オプション有無
+	$optionSet = 1;
+	if( count($output["option"]) > 0 ){
+		$optionSet = 0;
+	}
+	$output["modeChange"]["optionSet"] = $ini["modeChange"]["optionSet"];
+	$output["modeChange"]["optionSet"] = set_checked( $ini["modeChange"]["optionSet"], $optionSet, "id", "checked" );
+
+	/* -----------------------------------
+	   グレード別リース情報の取得
+	----------------------------------- */
+	// 車種グレード名の取得
+	$carGradeSelectList = get_carGradeSelect();
+	unset($tmp_carGradeSelectList);
+	$tmp_carGradeCodeList = array();
+	foreach( $carGradeSelectList as $listKey => $listVal){
+		foreach( $output["model"]["carGradeList"] as $key => $val){
+
+			if( $val["name"] == $listVal["ID"] ){
+				// 廉価対応（2WD,4WDと廉価に同じ代表車種グレードを設定した場合）
+				if( ($idx = array_search($val["ID"], $tmp_carGradeCodeList)) !== false ){
+					$tmp_gradeName = $class["carGradeUser_1"]->get_carGradeInfo( $val["ID"] );
+					$tmp_carGradeSelectList[$idx]["name"] .= "/" . $listVal["name"];
+					
+				}else{
+					$tmp_carGradeCodeList[] = $val["ID"];	// carGradeCodeを保持
+
+					$tmp_carGradeSelectList[$key] = $carGradeSelectList[$listKey];
+					$tmp_carGradeSelectList[$key]["carGradeCode"] = $val["ID"];
+
+					// グレード名称設定
+					unset($tmp_gradeName);
+					$tmp_gradeName = $class["carGradeUser_1"]->get_carGradeInfo( $tmp_carGradeSelectList[$key]["carGradeCode"] );
+					$tmp_carGradeSelectList[$key]["gradeName"] = $tmp_gradeName["grade"];
+				}
+			}
+		}
+	}
+	$output["model"]["carGradeList"] = $tmp_carGradeSelectList;
+
+
+	/* -----------------------------------
+	   算出条件の表示
+	----------------------------------- */
+	// 開始年月の取得
+	if( !empty($output["carAddDate"]) ){
+		$year  = substr($output["carAddDate"], 0, 4);
+		$month = substr($output["carAddDate"], 4, 2);
+		$output["leaseConditions"]["carAddDate"] = array( "carAddDate" => $output["carAddDate"] . "01", "year" => $year, "month" => $month );
+	}
+
+	// 使用地域(ガソリン価格)の取得
+	if( isset($output["gasoline"]) ){
+		$output["leaseConditions"]["gasoline"] = get_prefectureInfo($output["gasoline"]);
+	}
+
+	// 任意保険の取得
+	if( isset($output["voluntaryInsurance"]) ){
+		$output["leaseConditions"]["voluntaryInsurance"] = get_voluntaryInsuranceInfo($output["voluntaryInsurance"]);
+	}
+
+	// ベース価格の取得
+	if( isset($output["msrp"]) ){
+		$output["leaseConditions"]["msrp"] = get_msrpPriceInfo($output["msrp"]);
+	}
+
+
+	// 選択済みオプションの合計金額取得
+	$tml_totalPrice = $class["leaseUser_1"]->get_leaseOptionPrice($output["model"]["makerCode"], $output["model"]["modelCode"], $output["option"]);
+	$tmp_msrp       = get_msrpPriceInfo( $output["msrp"] );
+	$output["leaseConditions"]["option"]["totalOptionPrice"] = $tml_totalPrice[ $tmp_msrp["disp"] ];
+
+	if( isset($output["leaseConditions"]["option"]["totalOptionPrice"]) ){
+		$output["leaseConditions"]["option"]["count"] = count($output["option"]);
+	}
+
+?>

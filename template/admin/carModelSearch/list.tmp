@@ -1,0 +1,87 @@
+{frame /admin/_common/outerFrame_popup.tmp}
+{input jsList/jsName=/_common/js/memberAdmin.js}
+{input jsList/jsName=/_common/js/carSearchAdmin.js}
+
+<h1 class="tit">{val SEO.H1}</h1>
+
+<div class="contentSection">
+	<p class="actionMsg">検索内容を選択して「検索」ボタンを押してください。</p>
+	
+	<form name="form_search" method="get" action="{val UNIT_URL}/{val actionSt}/<!--{set themeID}-->{val themeID}/<!--{/set}-->">
+		<input type="hidden" name="pageNum" value="" />
+		<table class="tblForm">
+		<tr>
+			<th class="w150">メーカー名</th>
+			<td>
+				<select name="searchMakerCode" class="w20">
+					<option value=""></option>
+<!--{loop makerList}-->
+					<option value="{val makerList/makerCode}"<!--{set makerList/selected}--> selected="selected"<!--{/set}-->>{val makerList/makerName}</option>
+<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>車種名</th>
+			<td><input type="text" name="searchModelName" value="{val searchModelName|htmlspecialchars}" class="w60" /></td>
+		</tr>
+		<tr>
+			<th class="w150">タイプ</th>
+			<td>
+				<select name="searchBodyType" class="w20">
+					<option value=""></option>
+<!--{loop bodyTypeList}-->
+					<option value="{val bodyTypeList/ID}"<!--{set bodyTypeList/selected}--> selected="selected"<!--{/set}-->>{val bodyTypeList/disp}</option>
+<!--{/loop}-->
+				</select>
+			
+			</td>
+		</tr>
+		</table>
+		<div class="BB_btnWithText_A txt_center noBorderTop">
+			<input class="btnW01" type="button" value="クリア" onclick="clear_form( this.form ); return;" />
+			<input class="btnW01" type="submit" value="検索" />
+		</div>
+	</form>
+</div>
+<div class="contentSection">
+<!--{set carModelListDisp}-->
+	<!-- ページコントロール -->
+	{file /admin/_common/parts/pageControl.tmp}
+	<!-- /ページコントロール -->
+
+	<table class="tblList">
+	<tr>
+		<th class="w220">メーカー名</th>
+		<th class="w450">車種名</th>
+		<th class="w220">タイプ</th>
+		<th class="w40">機能</th>
+	</tr>
+	<!--{loop carModelList}-->
+	<tr>
+		<td>{val carModelList/makerName}</td>
+		<td>{val carModelList/modelName}</td>
+		<td>
+			<!--{loop carModelList/bodyModel}-->
+			{val carModelList/bodyModel/name}<!--{loop_count_between carModelList/bodyModel=1}--> / <!--{/loop_count_between}-->
+			<!--{/loop}-->
+		</td>
+		<td class="txt_center">
+			<input type="hidden" id="makerName[{val carModelList/makerCode}][{val carModelList/modelCode}]" value="{val carModelList/makerName}">
+			<input type="hidden" id="modelName[{val carModelList/makerCode}][{val carModelList/modelCode}]" value="{val carModelList/modelName}">
+			<input class="btnW03" type="button" value="選択" onclick="javascript:setCarModel('{val carModelList/makerCode}','{val carModelList/modelCode}');" />
+		</td>
+	</tr>
+	<!--{/loop}-->
+	</table>
+
+	<!-- ページコントロール -->
+	{file /admin/_common/parts/pageControl.tmp}
+	<!-- /ページコントロール -->
+<!--{/set}-->
+
+
+<!--{unset carModelListDisp}-->
+	<p class="txt_result">登録されているデータはありません。</p>
+<!--{/unset}-->
+</div>

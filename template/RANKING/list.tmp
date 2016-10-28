@@ -1,0 +1,73 @@
+{frame /_common/outerFrame.tmp}
+{input jsList/jsName=/_common/js/searchForm.js}
+{input jsList/jsName=/_common/js/ranking.js}
+{input jsList/jsName=/_common/js/thickbox.js}
+{input cssList/cssName=/_common/css/thickbox.css}
+
+{input searchListBtnName="条件を変更する"}
+{input searchListBtnClass="faChevronRight"}
+{input searchListBtnEventClass="showSearchForm"}
+
+<div id="rankingPage">
+	<div class="selectSelectListTop">
+		<div class="actionBox">
+			<h2>選択した検索条件</h2>
+			{file /_common/parts/selectPrice.tmp}
+			<div class="carGradeNum">該当数<span>{val carGradeNum}</span>車種</div>
+		<!--/.actionBox--></div>
+		{file parts/selectSelectList.tmp}
+	<!--/.selectSelectListTop--></div>
+
+	<div id="rankingList">
+	<!--{set rankingList}-->
+		<form id="rankingForm" method="post" action="{val BASE_DIR}/COMPARE/" >
+			<ul>
+			{file parts/dataList.tmp}
+			</ul>
+
+			<!--{set rankingBtnFlg}-->
+			<div class="nextListButton">
+				<a href="javascript:void(0)" class="faChevronBown" data-linkName="nextListBtn" >ランキングの続きをもっと見る</a>
+				<input type="hidden" name="pageNum" value="2" />
+			</div>
+			<!--{/set}-->
+
+			<input type="hidden" name="maker" value="<!--{loop search.maker}-->{val search.maker/ID}<!--{loop_count_between search.maker=1}-->+<!--{/loop_count_between}--><!--{/loop}-->" />
+			<input type="hidden" name="searchMaker" value="<!--{loop search.maker}-->M{val search.maker/ID|zeroPadding:3}<!--{loop_count_between search.maker=1}-->-<!--{/loop_count_between}--><!--{/loop}-->" />
+			<input type="hidden" name="type" value="<!--{loop search.type}-->{val search.type/ID}<!--{loop_count_between search.type=1}-->+<!--{/loop_count_between}--><!--{/loop}-->" />
+			<input type="hidden" name="searchType" value="<!--{loop search.type}-->B{val search.type/ID|zeroPadding:3}<!--{loop_count_between search.type=1}-->-<!--{/loop_count_between}--><!--{/loop}-->" />
+			<input type="hidden" name="theme" value="<!--{loop search.theme}-->{val search.theme/ID}<!--{loop_count_between search.theme=1}-->+<!--{/loop_count_between}--><!--{/loop}-->" />
+			<input type="hidden" name="searchTheme" value="<!--{loop search.theme}-->T{val search.theme/ID|zeroPadding:3}<!--{loop_count_between search.theme=1}-->-<!--{/loop_count_between}--><!--{/loop}-->" />
+			<input type="hidden" name="price" value="{val search.price.ID}" />
+			<input type="hidden" name="searchPrice" value="P{val search.price.ID|zeroPadding:3}" />
+			<input type="hidden" name="carGradeNum" value="{val carGradeNum}" />
+		</form>
+
+		<div class="selectSelectListBottom" style="display: none;">
+			{file parts/selectSelectList.tmp}
+			<div class="actionBox">{file /_common/parts/selectPrice.tmp}</div>
+		<!--/.selectSelectListBottom--></div>
+
+	<!--{/set}-->
+	<!--{unset rankingList}-->
+		<div class="notCarData">
+			<p>
+			申し訳ございません。<br />
+			ご指定の条件のクルマは該当いたしませんでした。
+			</p>
+		</div>
+	<!--{/unset}-->
+	<!--/#rankingList--></div>
+</div>
+
+<a id="thickboxjs" href="" class="thickbox"></a>
+<div id="thickboxjsContent" style="display:none;padding:0;">
+	<div id="checkAlert">
+		<div class="checkAlertCntent">
+			<h2 class="faExclamationTriangle"></h2>
+			<span class="checkCarNone">気になるクルマがチェックされていません。<br>気になるクルマにチェックを入れてください。<br>(最大3車種)</span>
+			<span class="checkCarOrver">気になるクルマのチェックが3車種以上されています。<br>チェックは3車種までにしてください。</span>
+			<div class="closeBtn"><a href="javascript:void(0)" class="faTimesCircle">閉じる</a></div>
+		</div>
+	</div>
+</div>

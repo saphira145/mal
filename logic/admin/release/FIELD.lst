@@ -1,0 +1,34 @@
+
+// 年
+year
+	convert,  0,  1byte,
+	convert,  0,  trim
+
+// 月
+month
+	convert,  0,  1byte,
+	convert,  0,  trim
+
+// 日
+day
+	convert,  0,  1byte,
+	convert,  0,  trim
+
+// 時
+hour
+	convert,  0,  1byte,
+	convert,  0,  trim
+
+// 分
+min
+	convert,  0,  1byte,
+	convert,  0,  trim
+
+// リリース日
+reserveDatetime
+	check,  100,  mustArg({1}:{2}:{3}:{4}:{5}),                必須入力項目です
+	check,  200,  dateType({1}:{2}:{3}:{4}:{5}:{6}),           日時として正しくありません
+	check,  300,  setReserveLimit({1}:{2}:{3}:{4}:{5}:{6}),    現在本番設定の準備をしているため、変更できません
+	check,  400,  reserveLimit({1}:{2}:{3}:{4}:{5}:{6}),       現在より１５分以内のリリース時間は設定できません
+
+

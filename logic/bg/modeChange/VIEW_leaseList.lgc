@@ -1,0 +1,24 @@
+<?php
+
+
+	/* -------------------------------------
+		ビュー
+	------------------------------------- */
+	$thList = array("MLy3", "FLy3", "MLy4", "FLy4", "MLy5", "FLy5");
+	$tdList = array("lease", "financial", "maintenance", "lease_total", "profit", "rate", "irr", "margins", "noLease");
+
+	foreach( $thList as $thListVal ){
+		foreach( $tdList as $tdListVal ){
+			if( !isset( $output["leaseList"][$thListVal][$tdListVal] ) ){
+				$output["leaseList"][$thListVal][$tdListVal] = "－";
+			}
+
+			$tmp_leaseList[$thListVal][$tdListVal]["value"] = $output["leaseList"][$thListVal][$tdListVal];
+			if( is_numeric($output["leaseList"][$thListVal][$tdListVal]) && $output["leaseList"][$thListVal][$tdListVal] < 0 ){
+				$tmp_leaseList[$thListVal][$tdListVal]["minFlg"] = 1;
+			}
+		}
+	}
+
+	$output["leaseList"] = $tmp_leaseList;
+?>

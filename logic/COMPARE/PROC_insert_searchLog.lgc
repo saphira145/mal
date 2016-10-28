@@ -1,0 +1,22 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 表示モード取得
+	$testFlg = get_dispModeFlg();
+
+	// テストモードの場合はログに追加しない
+	if( $testFlg == 1 ) {
+		return NULL;
+	}
+
+	// 検索ログ日時
+	$searchDatetime = date( "Y-m-d H:i:s" );
+
+	// 検索ログ追加
+	$class["searchLog_1"]->insert_DB( $output, $searchDatetime );
+
+?>

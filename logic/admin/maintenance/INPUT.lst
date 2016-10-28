@@ -1,0 +1,5 @@
+maintenanceFields
+	a, maintenanceList/mainteID          = mainteID   // メンテナンス区分
+	a, maintenanceList/mainte/payNumID   = payNumID   // リース期間ID
+	a, maintenanceList/mainte/mileageID  = mileageID  // 走行距離ID
+	a, maintenanceList/mainte/mainteFee  = mainteFee  // メンテ料

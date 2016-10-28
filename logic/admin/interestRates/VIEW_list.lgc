@@ -1,0 +1,17 @@
+<?php
+
+	/**
+	 * ビュー
+	 */
+	// ランク名の取得
+	for( $i = 0, $iMax = count($output["interestRatesList"]); $i < $iMax; $i++){
+		$output["interestRatesList"][$i]["name"] = get_interestRatesName($output["interestRatesList"][$i]["ratesID"]);
+	}
+	
+	// 更新情報取得
+	$output["interestRatesDatetime"] = $class["leaseAdmin_1"]->get_interestRatesDatetime();
+
+	// リース期間の取得
+	$output["paynumList"]  = $ini["lease"]["paynum"];
+
+?>

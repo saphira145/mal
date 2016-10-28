@@ -1,0 +1,12 @@
+/admin/newCar
+	TITLE = "新型車設定"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="新型車設定"
+
+/admin/newCar/me
+	TITLE = "新型車設定"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="新型車設定"
+

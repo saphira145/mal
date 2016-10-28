@@ -1,0 +1,35 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// パラメータ設定
+	$output["maker"]     = $output["maker"];
+	$output["theme"]     = $output["theme"];
+	$output["bodyModel"] = $output["type"];
+	$output["price"]     = $output["price"];
+	$output["pageNum"]   = 1;
+
+	// ランキングの検索フォーム(検索条件)
+	$output["searchForm"] = $class["topModel_1"]->get_rankingSearchFormData();
+
+	// ランキングの検索フォーム(初期件数)
+	$output["carGradeNum"] = $class["carGradeUser_1"]->get_carGradeNum($output);
+
+	// ランキングデータの取得
+	$output["rankingList"] = $class["carGradeUser_1"]->get_rankingData( $output );
+
+	for( $i = 0, $iMax = count($output["rankingList"]); $i < $iMax; $i++ ){
+		// テーマの取得
+		$output["rankingList"][$i]["theme"] = $class["themeUser_1"]->get_themeList( $output["rankingList"][$i]["makerCode"], $output["rankingList"][$i]["modelCode"] );
+
+		// 価格の調整(最小と最大が同じ場合、1つにまとめる)
+		if( $output["rankingList"][$i]["minTaxIncludedPrice"] == $output["rankingList"][$i]["maxTaxIncludedPrice"] ){
+			unset($output["rankingList"][$i]["maxTaxIncludedPrice"]);
+		}
+	}
+
+
+?>

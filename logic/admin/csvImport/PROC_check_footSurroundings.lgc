@@ -1,0 +1,211 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+		// アップロードファイルを一時ディレクトリへ
+		list( $filePath, $output["tmpFaqCSVName"] ) = $class["csvImport_1"]->copy_tempDir( $output["importCSVFile"]["tmp_name"] );
+
+		// コピーできない場合は終了
+		if( !file_exists( $filePath ) ) {
+			return;
+		}
+
+
+		// CSVファイル読み込み
+		$i   = 0;
+		$row = 1;
+		$handle = fopen ( $filePath, "r" );
+
+		while ( ( $data = fgetcsv_reg ( $handle ) ) !== FALSE) {
+
+			// 文字コード変換（SJIS-winからUTF-8に変換）
+			$CSVData = $class["csvImport_1"]->mbConvertEncodingDeep( $data, "SJIS-win", "UTF-8" );
+
+			// 入力チェック
+			unset( $errData );
+			$errData = check_CSVData( $CSVData );
+
+			// エラーメッセージ格納
+			if( count( $errData ) > 0 ) {
+				$output["errList"][$i]["row"]    = $row;
+				$output["errList"][$i]["detail"] = $errData;
+				$i++;
+				// エラーが100行ある場合はチェックをストップする
+				if( $i > 100 ) {
+					break;
+				}
+			}
+
+			// 読み込み行のカウントアップ
+			$row++;
+		}
+
+		fclose($handle);
+
+
+		// 登録予定件数エラーがない場合表示
+		if( count( $output["errList"] ) == 0 ) {
+			$output["entryCount"] = $row - 1;
+		}
+
+
+
+
+
+	/*--------------------------------------------------
+	  入力チェック
+	---------------------------------------------------*/
+	function check_CSVData ( $CSVData ) {
+
+		unset( $modelID );
+
+		foreach( $CSVData as $key => $val ) {
+
+			unset( $err );
+
+			// 車種グレードＩＤ（１フィールド目）
+			if( $key == 0 ) {
+				$err = check_ommonCarGradeID( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ４ＷＡＳ_正式名（２フィールド目）
+			if( $key == 1 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ４ＷＡＳ_有無（３フィールド目）
+			if( $key == 2 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// ４ＷＡＳ_注目（４フィールド目）
+			if( $key == 3 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 強化ブレーキ_正式名（５フィールド目）
+			if( $key == 4 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 強化ブレーキ_有無（６フィールド目）
+			if( $key == 5 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 強化ブレーキ_注目（７フィールド目）
+			if( $key == 6 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 強化サスペンション_正式名（８フィールド目）
+			if( $key == 7 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 強化サスペンション_有無（９フィールド目）
+			if( $key == 8 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// 強化サスペンション_注目（１０フィールド目）
+			if( $key == 9 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// アルミロードホイール_正式名（１１フィールド目）
+			if( $key == 10 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// アルミロードホイール_有無（１２フィールド目）
+			if( $key == 11 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// アルミロードホイール_注目（１３フィールド目）
+			if( $key == 12 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// スペアタイヤ_正式名（１４フィールド目）
+			if( $key == 13 ) {
+				$err = check_ommonName( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// スペアタイヤ_有無（１５フィールド目）
+			if( $key == 14 ) {
+				$err = check_oommonType( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+			// スペアタイヤ_注目（１６フィールド目）
+			if( $key == 15 ) {
+				$err = check_oommonSpot( $val, $key );
+				if( count( $err ) > 0 ) {
+					$ret[] = $err;
+				}
+			}
+
+
+		}
+
+		return $ret;
+	}
+
+
+
+
+
+
+
+
+
+?>

@@ -1,0 +1,24 @@
+// メンテ料
+mainteFee
+	convert,  0,  paramNumeric,
+	check,  100,  issetM,        必須入力項目です
+	check,  200,  is_numeric,   半角数字で入力してください
+
+
+// メンテナンス区分
+mainteID
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+// リース期間
+payNumID
+	convert,  0,  1byte,
+	convert,  0,  trim,
+
+
+// 走行距離
+mileageID
+	convert,  0,  1byte,
+	convert,  0,  trim,
+

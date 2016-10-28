@@ -1,0 +1,18 @@
+<table class="tblForm">
+	<tr>
+		<th class="w140">画面の表示順</th>
+		<td>
+<!--{loop dispNumList}-->
+				{val dispNumList/no}. {val dispNumList/themeName}<!--{loop_count_between makerList=1}--><br /><!--{/loop_count_between}-->
+<!--{/loop}-->
+		</td>
+	</tr>
+	<tr>
+		<th class="w140">対抗車選定の優先度</th>
+		<td>
+<!--{loop priorityNumList}-->
+				{val priorityNumList/no}. {val priorityNumList/themeName}<!--{loop_count_between makerList=1}--><br /><!--{/loop_count_between}-->
+<!--{/loop}-->
+		</td>
+	</tr>
+</table>

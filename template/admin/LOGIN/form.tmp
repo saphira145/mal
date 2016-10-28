@@ -1,0 +1,65 @@
+{input cssList/cssMedia=all}
+{input cssList/cssName=/_common/css/admin_base.css}
+{input cssList/cssName=/_common/css/admin_layout.css}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<meta name="keywords" content="{val SEO.KEYWORD}">
+	<meta name="description" content="{val SEO.DESCRIPTION}">
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Cabin:400,600" />
+	<title>{val SEO.TITLE}</title>
+	<!--{loop cssList}-->
+<!--{set cssList/cssName}-->
+	<link href="{val BASE_DIR}{val cssList/cssName}" rel="stylesheet" type="text/css" media="<!--{set cssList/cssMedia}-->{val cssList/cssMedia}<!--{/set}--><!--{unset cssList/cssMedia}-->all<!--{/unset}-->" />
+<!--{/set}-->
+<!--{/loop}-->
+<!--{loop jsList}-->
+	<script type="text/javascript" src="{val BASE_DIR}{val jsList/jsName}"></script>
+<!--{/loop}-->
+</head>
+<body>
+	<div id="header">
+		<div class="logo">
+			<a href="{val BASE_DIR}/admin/">
+				三菱オートリース 車種比較アプリ <span class="sitename">Car <strong>sagacité</strong></span> 管理ツール
+			</a>
+		</div>
+	</div>
+	<div id="contentArea">
+		<div class="loginBox">
+			<div class="actionMsg mrgB_10"><h2 class="mrgB_0 txt_center">ログイン</h2></div>
+			<form name="loginForm" method="post">
+				<input type="hidden" name="st" value="tr" />
+				<div class="form">
+					<!--{set session.errmsg}-->
+					<div class="actionMsg"><span>▼{val session.errmsg}</span></div>
+					<!--{/set}-->
+					<table>
+						<tr>
+							<th>ログインＩＤ</th>
+							<td><input type="text" name="ngdFW034[loginID]" value="{val ngdFW034.loginID}" class="text" /></td>
+						</tr>
+						<tr>
+							<th>パスワード</th>
+							<td><input type="password" name="ngdFW034[password]" value="{val ngdFW034.password}" class="text" /></td>
+						</tr>
+						<tr>
+							<th>自動ログイン</th>
+							<td><input type="checkbox" name="ngdFW034[autoLogin]" value="1"<!--{set ngdFW034.autoLogin}--> checked<!--{/set}-->/></td>
+						</tr>
+					</table>
+				</div>
+				<div class="btnArea"><input type="submit" value="ログイン" class="submit"></div>
+			</form>
+		</div>
+		<!--/ #contents -->
+	</div>
+</body>
+</html>

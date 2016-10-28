@@ -1,0 +1,69 @@
+<?php
+
+
+
+	/*----------------------------------------------------
+	    ロジックコントロール
+	----------------------------------------------------*/
+
+	// ロックアウトチェック
+	if ( $class["session"]->is_lockout( $justInput["ngdFW034"]["loginID"] ) ) {
+
+		// ロックアウト表示
+		$this->callVIEW ( "lockout" );
+
+	}
+
+	// ＩＤ・パスワード認証に成功
+	elseif ( $class["session"]->is_authorized( $justInput["ngdFW034"]["loginID"], $justInput["ngdFW034"]["password"] ) ) {
+
+		// 権限チェック
+		if ( $class["session"]->is_authorityLevel( "sales" ) ) {
+			// COOKIE 削除
+			setcookie( "ngdfw_zoneID", "", time() - 3600, "/", $path["host"]["name"] );
+
+			// 成功処理
+			$this->callPROC ( "successLogin" );
+
+			// ログインログ収集
+			$this->callPROC ( "inset_loginLog" );
+
+			// 成功なのでリダイレクト
+			$this->callVIEW ( "successRedirect" );
+		} else {
+			// 失敗処理
+			$this->callPROC ( "faultLogin" );
+
+			// 失敗表示
+			$this->callVIEW ( "faultForm" );
+		}
+	}
+
+	// ログイン失敗
+	else {
+
+		// 失敗処理
+		$this->callPROC ( "faultLogin" );
+
+		// 失敗表示
+		$this->callVIEW ( "faultForm" );
+
+
+	}
+
+
+	$output["ngdFW034"]["dataID"] = $justInput["ngdFW034"]["dataID"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>

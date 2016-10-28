@@ -1,0 +1,74 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 車種別の比較回数リスト取得
+	$list = $class["csvDownload_1"]->get_gasolineList( $output );
+
+	// ファイル名取得
+	$output["fileName"] = $ini["csvDownload"]["fileName"]["gasoline"];
+
+	if( count( $list ) == 0 ) {
+		exit;
+	}
+
+	// ディレクトリパスの設定
+	$dirPath  = $path["csv"]["tmpDir"];
+
+	// ファイルパスの設定
+	$output["filePath"] = "$dirPath/{$output["fileName"]}";
+
+	// すでにあれば削除
+	if( file_exists ( $output["filePath"] ) ) {
+		@unlink( $output["filePath"] );
+	}
+
+	// ファイルの作成
+	$fp = fopen( $output["filePath"], "w" );
+
+	$txts  = "\"都道府県ID\",\"都道府県名\",\"＊レギュラー＊\",\"＊ハイオク＊\",\"＊軽油＊\"";
+
+	// 配列対応（SJIS-winに変換）
+	$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+	fputs( $fp, $txts . "\n" );
+	fclose( $fp );
+
+	if( count( $list ) == 0 ) {
+		return NULL;
+	}
+
+	// CSV データ作成
+	for( $i=0; $i<count( $list ); $i++ ) {
+
+		$fp = fopen( $output["filePath"], "a" );
+
+		unset( $txt, $systemName );
+
+		$txt[] = "\"" . $list[$i]["regionID"];
+		$txt[] =        $list[$i]["regionName"];
+		$txt[] =        $list[$i]["regularGasoline"];
+		$txt[] =        $list[$i]["highOctaneGasoline"];
+		$txt[] =        $list[$i]["dieselGasoline"];
+		$txts = join( $txt, "\",\"");
+		$txts = $txts . "\"\n";
+
+		// 配列対応（SJIS-winに変換）
+		$txts = $class["csvDownload_1"]->mbConvertEncodingDeep( $txts, "UTF-8", "SJIS-win" );
+
+		fputs( $fp, $txts );
+		fclose( $fp );
+	}
+
+
+	// 古いＣＳＶは削除
+	$class["csvDownload_1"]->delete_tmpCSVFile();
+
+	// 配列対応（SJIS-winに変換）
+	$output["fileName"] = $class["csvDownload_1"]->mbConvertEncodingDeep( $output["fileName"], "UTF-8", "SJIS-win" );
+
+
+?>

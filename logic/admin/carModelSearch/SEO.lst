@@ -1,0 +1,18 @@
+/admin/carModelSearch
+	TITLE = "車種検索"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種検索"
+
+/admin/carModelSearch/nc
+	TITLE = "車種検索"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種検索"
+
+/admin/carModelSearch/tm
+	TITLE = "車種検索"
+	KEYWORD=""
+	DESCRIPTION=""
+	H1="車種検索"
+

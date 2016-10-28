@@ -1,0 +1,55 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// 条件の取得
+	// オプション
+	for( $i = 0, $iMax = count($output["option"]); $i < $iMax; $i++ ){
+		list( $optionID, $optionItem ) = explode( "-", $output["option"][$i] );
+		$tmp_output["option"][] = array( "optionID" => $optionID, "optionItem" => $optionItem );
+	}
+	$output["option"] = $tmp_output["option"];
+
+	// デフォルト
+	foreach( $ini["lease"]["defaultValue"] as $key => $val ){
+		$defaultValue[$key] = $val;
+	}
+	$defaultValue["carAddDate"] = date("Ym") . "01";
+
+	// クッキー(事前設定)
+	if( $_COOKIE["leasePreset"] ){
+		list($cookieValue["mileage"], $cookieValue["gasoline"], $cookieValue["voluntaryInsurance"], $cookieValue["carAddDate"] ) = explode(",", $_COOKIE["leasePreset"] );
+		$cookieValue["carAddDate"] = $cookieValue["carAddDate"] . "01";
+	}
+
+	// クッキー(ベース価格変更)：車種詳細・オプション選択以外の場合は、削除する
+	$cookieName = "lease_" . str_replace(" ", "_", $output["model"]["modelNameEng"]);
+	if( $_COOKIE[ $cookieName ] && ( preg_match( "#/LEASEINFO/#", $path["referer"]["url"] ) || preg_match( "#/LEASEOPTION/#", $path["referer"]["url"] ) )){
+		list($cookieValue["msrp"], $cookieValue["profit"]) = explode(",", $_COOKIE[ $cookieName ] );
+	} else {
+		setcookie( $cookieName, "", time() - 3600, "/", $path["host"]["name"] );
+	}
+
+	// URL設定
+	$output["carAddDate"] = str_replace( "/", "", $output["carAddDate"] );
+
+	/**** 算出条件の設定(優先度：URL、クッキー、デフォルト) */
+	$checkArr = array("msrp", "contract", "voluntaryInsurance", "mileage", "gasoline", "rates", "paynum", "profit", "carAddDate");
+
+	foreach( $checkArr as $key){
+		if( isset($output[$key]) ){
+			// 何もしない
+		} else if( isset($cookieValue[$key]) ){
+			// COOKIE
+			$output[$key] = $cookieValue[$key];
+		} else {
+			// デフォルト
+			$output[$key] = $defaultValue[$key];
+		}
+	}
+
+
+
+?>

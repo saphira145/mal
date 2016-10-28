@@ -1,0 +1,33 @@
+<?php
+
+	/*----------------------------------------------------
+	    ビュー
+	----------------------------------------------------*/
+
+	// 表示用に変換
+	$output["modelInfo"]        = $class["modelAdmin_1"]->convert_Info( $output["modelInfo"] );
+
+	// 画像ＩＤ用に変換
+	if( $output["noImageDispCarBody"] == 1 ) {
+		// noImage画像名取得
+		$output["carBodyPhotoID"] = $ini["noImageName"];
+	}
+	else{
+		// 画像名取得
+		$output["carBodyPhotoID"] = get_carBodyPhotoName( $output["modelInfo"]["makerCode"], $output["modelInfo"]["modelCode"] );
+	}
+
+	// テーマ名取得
+	for( $i = 0, $iMax = count($output["theme"]); $i < $iMax; $i++){
+		$get_themeName = get_themeName( $output["theme"][$i]["themeID"]);
+
+		$output["themeList"][$i]              = $output["theme"][$i];
+		$output["themeList"][$i]["themeName"] = $get_themeName["themeName"];
+	}
+
+	// 価格(最小・最大共に0の場合、空欄にする)
+	if( empty($output["modelInfo"]["price"]["mini"]) && empty($output["modelInfo"]["price"]["max"]) ){
+		$output["modelInfo"]["price"]["noneFlg"] = 1;
+	}
+
+?>

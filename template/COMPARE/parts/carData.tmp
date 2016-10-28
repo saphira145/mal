@@ -1,0 +1,229 @@
+
+<!--{loop modelDataList}-->
+	<div class="compareCarData {val modelDataList/notData}">
+		<table>
+		<tr class="txt_center carImg">
+			<td>
+				<div class="rank_{val modelDataList/rankingNo}">
+                    <!--{set modelDataList/recomCar}-->
+                        <!--{set SALESPROMOTION_FLG}-->
+                            <!--{set modelDataList/valueUrl}-->
+                            <a href="javascript:void(0)" data-url="{val modelDataList/valueUrl}" class="compare-recomCar" ><img src="{val BASE_DIR}/_common/img/hl/hl_recomCar.png" /></a>
+                            <input type="hidden" name="compare[string_en]" value="{val compare.string_en}" />
+                            <!--{/set}-->
+                            <!--{unset modelDataList/valueUrl}-->
+                            <img src="{val BASE_DIR}/_common/img/hl/hl_recomCar.png" />
+                            <!--{/unset}-->
+                        <!--{/set}-->
+                        <!--{unset SALESPROMOTION_FLG}-->
+                        <img src="{val BASE_DIR}/_common/img/hl/hl_recomCar.png" />
+                        <!--{/unset}-->
+                    <!--{/set}-->
+					<!--{set modelDataList/notData}-->車種の設定がありません<!--{/set}-->
+				</div>
+				<img src="{val BASE_DIR}/_common/PHOTO/{val PHOTO_DIR}/CARBODY/s_{val modelDataList/carBodyPhotoName}.jpg" alt="{val modelDataList/modelName}" />
+				<!--{set modelDataList/photoGalleryUrl}--><a href="{val modelDataList/photoGalleryUrl}" class="faCamera photoGalleryUrl" target="_blank"></a><!--{/set}-->
+				<!--{unset modelDataList/notData}-->
+				<span class="webCatalogue">
+					<!--{unset modelDataList/webCatalogueUrl}-->&nbsp;<!--{/unset}-->
+					<!--{set modelDataList/webCatalogueUrl}--><a href="{val modelDataList/webCatalogueUrl}" class="faBook" target="_blank">Webカタログを見る</a><!--{/set}-->
+				</span>
+				<!--{/unset}-->
+			</td>
+		</tr>
+		<tr class="txt_center carName">
+			<td>
+				<span>{val modelDataList/makerName}<br/>{val modelDataList/modelName}</span>
+			</td>
+		</tr>
+		<tr class="txt_center carChange">
+			<td>
+				<a href="javascript:void(0)" onclick="changeTargetCarSelectMaker({val modelDataList/carNum})" class="faRefresh"/>車種を{val modelDataList/changeTarget}</a>
+			</td>
+		</tr>
+	<!--{unset SALESPROMOTION_FLG}-->
+		<tr class="campaignScore">
+			<td>
+				<span>今月のキャンペーン</span>
+				<span class="star">
+				<!--{loop modelDataList/campaignScore.icon}-->
+					<img src="{val BASE_DIR}/_common/img/ico/ico_star_{val modelDataList/campaignScore.icon/name}.png" width="19px" height="18px" />
+				<!--{/loop}-->
+				</span>
+			</td>
+		</tr>
+	<!--{/unset}-->
+
+	<!--{set SALESPROMOTION_FLG}-->
+		<tr class="leaseMileage">
+			<td>
+				<div>走行距離</div>
+
+		<!--{unset modelDataList/notData}-->
+				<ul>
+					<!--{loop leaseMileage}-->
+						<li class="LM{val leaseMileage/id} <!--{set leaseMileage/selected}-->selLease<!--{/set}-->" ><a href="javascript:void(0)">{val leaseMileage/distance|number_format} km</a></li>
+					<!--{/loop}-->
+				</ul>
+		<!--{/unset}-->
+		<!--{set modelDataList/notData}-->
+				<p class="leaseMileageVal">-</p>
+		<!--{/set}-->
+			</td>
+		</tr>
+		<tr class="lease">
+			<td>
+				<div>リース料(月額)</div>
+
+		<!--{unset modelDataList/notData}-->
+				<ul>
+					<!--{set modelDataList/leaseInfo.y3}-->
+					<li class="y3">
+						<a href="javascript:void(0)">{val modelDataList/leaseInfo.y3.name}</a>
+						<span class="faCaretDown"></span>
+					</li>
+					<!--{/set}-->
+					<!--{set modelDataList/leaseInfo.y4}-->
+					<li class="y4">
+						<a href="javascript:void(0)">{val modelDataList/leaseInfo.y4.name}</a>
+						<span class="faCaretDown"></span>
+					</li>
+					<!--{/set}-->
+					<!--{set modelDataList/leaseInfo.y5}-->
+					<li class="y5">
+						<a href="javascript:void(0)">{val modelDataList/leaseInfo.y5.name}</a>
+						<span class="faCaretDown"></span>
+					</li>
+					<!--{/set}-->
+				</ul>
+				<div class="leaseVal">
+					<div class="y3">
+					<!--{set modelDataList/leaseInfo.y3}-->
+					<!--{loop modelDataList/leaseInfo.y3.list}-->
+						<span class="leaseBox LM{val modelDataList/leaseInfo.y3.list/mileage}">
+						<!--{set modelDataList/leaseInfo.y3.list/noLease}-->
+							<span class="month noLease">お問い合わせください</span>
+							<span class="total">トータルコスト：<span>&ndash;</span></span>
+						<!--{/set}-->
+						<!--{unset modelDataList/leaseInfo.y3.list/noLease}-->
+							<!--{set modelDataList/leaseInfo.y3.list/exist_maintenance}-->
+                                <span class="month">&yen; {val modelDataList/leaseInfo.y3.list/lease|number_format}&ndash;</span>
+                                <span class="total">トータルコスト：
+                                    <!--{set modelDataList/leaseInfo.y3.list/fuelCost}--><span>&yen; {val modelDataList/leaseInfo.y3.list/total|number_format}&ndash;</span><!--{/set}-->
+                                    <!--{unset modelDataList/leaseInfo.y3.list/fuelCost}--><span>&ndash;</span><!--{/unset}-->
+                                </span>
+                            <!--{/set}-->
+                            <!--{unset modelDataList/leaseInfo.y3.list/exist_maintenance}-->
+                                <span class="month noLease">お問い合わせください</span>
+                                <span class="total">トータルコスト：<span>&ndash;</span></span>
+                            <!--{/unset}-->
+						<!--{/unset}-->
+						</span>
+					<!--{/loop}-->
+					<!--{/set}-->
+					<!--{unset modelDataList/leaseInfo.y3}-->
+							<!--{loop leaseMileage}-->
+							<span class="leaseBox month notLease LM{val leaseMileage/id}">&ndash;</span>
+							<!--{/loop}-->
+					<!--{/unset}-->
+					</div>
+
+					<div class="y4">
+					<!--{set modelDataList/leaseInfo.y4}-->
+					<!--{loop modelDataList/leaseInfo.y4.list}-->
+						<span class="leaseBox LM{val modelDataList/leaseInfo.y4.list/mileage}">
+						<!--{set modelDataList/leaseInfo.y4.list/noLease}-->
+							<span class="month noLease">お問い合わせください</span>
+							<span class="total">トータルコスト：<span>&ndash;</span></span>
+						<!--{/set}-->
+						<!--{unset modelDataList/leaseInfo.y4.list/noLease}-->
+							<!--{set modelDataList/leaseInfo.y4.list/exist_maintenance}-->
+                                <span class="month">&yen; {val modelDataList/leaseInfo.y4.list/lease|number_format}&ndash;</span>
+                                <span class="total">トータルコスト：
+                                    <!--{set modelDataList/leaseInfo.y4.list/fuelCost}--><span>&yen; {val modelDataList/leaseInfo.y4.list/total|number_format}&ndash;</span><!--{/set}-->
+                                    <!--{unset modelDataList/leaseInfo.y4.list/fuelCost}--><span>&ndash;</span><!--{/unset}-->
+                                </span>
+                            <!--{/set}-->
+                            <!--{unset modelDataList/leaseInfo.y4.list/exist_maintenance}-->
+                                <span class="month noLease">お問い合わせください</span>
+							    <span class="total">トータルコスト：<span>&ndash;</span></span>
+                            <!--{/unset}-->
+						<!--{/unset}-->
+						</span>
+					<!--{/loop}-->
+
+					<!--{/set}-->
+					<!--{unset modelDataList/leaseInfo.y4}-->
+							<!--{loop leaseMileage}-->
+							<span class="leaseBox month notLease LM{val leaseMileage/id}">&ndash;</span>
+							<!--{/loop}-->
+					<!--{/unset}-->
+					</div>
+
+					<div class="y5">
+					<!--{set modelDataList/leaseInfo.y5}-->
+					<!--{loop modelDataList/leaseInfo.y5.list}-->
+						<span class="leaseBox LM{val modelDataList/leaseInfo.y5.list/mileage}">
+						<!--{set modelDataList/leaseInfo.y5.list/noLease}-->
+							<span class="month noLease">お問い合わせください</span>
+							<span class="total">トータルコスト：<span>&ndash;</span></span>
+						<!--{/set}-->
+						<!--{unset modelDataList/leaseInfo.y5.list/noLease}-->
+							<!--{set modelDataList/leaseInfo.y5.list/exist_maintenance}-->
+                                <span class="month">&yen; {val modelDataList/leaseInfo.y5.list/lease|number_format}&ndash;</span>
+                                <span class="total">トータルコスト：
+                                    <!--{set modelDataList/leaseInfo.y5.list/fuelCost}--><span>&yen; {val modelDataList/leaseInfo.y5.list/total|number_format}&ndash;</span><!--{/set}-->
+                                    <!--{unset modelDataList/leaseInfo.y5.list/fuelCost}--><span>&ndash;</span><!--{/unset}-->
+                                </span>
+                            <!--{/set}-->
+                            <!--{unset modelDataList/leaseInfo.y5.list/exist_maintenance}-->
+                                <span class="month noLease">お問い合わせください</span>
+							    <span class="total">トータルコスト：<span>&ndash;</span></span>
+                            <!--{/unset}-->
+						<!--{/unset}-->
+						</span>
+					<!--{/loop}-->
+
+					<!--{/set}-->
+					<!--{unset modelDataList/leaseInfo.y5}-->
+							<!--{loop leaseMileage}-->
+							<span class="leaseBox month notLease LM{val leaseMileage/id}">&ndash;</span>
+							<!--{/loop}-->
+					<!--{/unset}-->
+					</div>
+				</div>
+				<div class="leaseDetail">
+					<a href="javascript:void(0)" onclick="openDetailWindow('cg{val modelDataList/URLmodelNameEng}', '/LEASEINFO/{val modelDataList/URLmodelNameEng}/{val leaseURL.url}', '1024', '550');" />詳細</a>
+				</div>
+		<!--{/unset}-->
+		<!--{set modelDataList/notData}-->
+				<p class="leaseVal">-</p>
+		<!--{/set}-->
+			</td>
+		</tr>
+	<!--{/set}-->
+
+		<tr class="changeGrade">
+			<td>
+				<span>グレードを変更</span>
+				<select id="carGradeID_{val modelDataList/carNum}" {val modelDataList/carGradeFlg} onchange="changeSelectGrade('{val modelDataList/carNum}', '{val modelDataList/modelNameEng}');">
+					<!--{loop modelDataList/carGradeList}-->
+					<option value="{val modelDataList/carGradeList/carGradeCode}" <!--{set modelDataList/carGradeList/selected}-->selected="selected"<!--{/set}-->>[{val modelDataList/carGradeList/name}] {val modelDataList/carGradeList/gradeName}</option>
+					<!--{/loop}-->
+				</select>
+			</td>
+		</tr>
+		<tr class="themeBox">
+			<td>
+				<!--{set model1Info}-->
+				<ul>
+					<!--{loop modelDataList/theme}-->
+					<li class="faChevronRight <!--{set modelDataList/theme/search}-->setCol<!--{/set}--><!--{unset modelDataList/theme/search}-->chkCol<!--{/unset}-->" onClick="changeRnkingData('T{val modelDataList/theme/ID|zeroPadding:3}')" ><span><a href="javascript:void(0)">{val modelDataList/theme/name|lengthCut:12}</a></span></li>
+					<!--{/loop}-->
+				</ul>
+				<!--{/set}-->
+			</td>
+		</tr>
+		</table>
+<!--/#compareCarData--></div>
+<!--{/loop}-->

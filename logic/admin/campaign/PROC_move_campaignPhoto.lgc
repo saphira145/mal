@@ -1,0 +1,24 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	for( $i = 0, $iMax = $ini["pageLimit"]["campaignAdmin"]; $i < $iMax; $i++){
+
+		// 登録画像を削除
+		if( $output["campaignInfo"][$i]["delete_campaignPhoto"] == 1){
+			$class["campaignAdmin_1"]->delete_campaignPhoto( $i+1 );
+		}
+		
+		// 登録画像を移動
+		if( $output["campaignInfo"][$i]["campaignPhoto"]["tmp_name"] != "" ) {
+			// 前の画像を削除
+			$class["campaignAdmin_1"]->delete_campaignPhoto( $i+1 );
+			
+			// 画像移動
+			$class["campaignAdmin_1"]->move_campaignPhoto( $output["campaignInfo"][$i]["tempCampaignPhoto"], $i+1 );
+		}
+	}
+
+?>

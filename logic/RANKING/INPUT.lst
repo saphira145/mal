@@ -1,0 +1,6 @@
+fields
+	a, maker = maker
+	a, type  = bodytype
+	a, theme = theme
+	a, price = price
+

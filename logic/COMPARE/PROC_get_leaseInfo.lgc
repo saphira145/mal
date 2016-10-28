@@ -1,0 +1,208 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+	// 表示モード取得
+	$salesPromotionFlg = get_dispModeSalesPromotionFlg();
+
+	// 通常モードの場合は処理をしない
+	if( $salesPromotionFlg != 1 ) {
+		return NULL;
+	}
+
+	//比較車のランキングを取得する
+	if( $output["parameter"]["from"] ){
+		for( $i = 0; $i < count($output["search"]["maker"]); $i++ ){
+			$rnking_search["maker"][]     = $output["search"]["maker"][$i]["ID"];
+		}
+		for( $i = 0; $i < count($output["search"]["theme"]); $i++ ){
+			$rnking_search["theme"][]     = $output["search"]["theme"][$i]["ID"];
+		}
+		for( $i = 0; $i < count($output["search"]["type"]); $i++ ){
+			$rnking_search["bodyModel"][]     = $output["search"]["type"][$i]["ID"];
+		}
+		for( $i = 0; $i < count($output["search"]["price"]); $i++ ){
+			$rnking_search["price"]     = $output["search"]["price"][$i]["ID"];
+		}
+		$rnking_search["pageNum"]   = 1;
+
+		$tmp_rnkingList = $class["carGradeUser_1"]->get_rankingData( $rnking_search );
+		for( $i = 0, $iMax = count($tmp_rnkingList); $i < $iMax; $i++ ){
+			$key = $tmp_rnkingList[$i]["makerCode"] . "_" . $tmp_rnkingList[$i]["modelCode"];
+			$tmp_rnking[$key] = $i + 1;
+		}
+	}
+
+	// 走行距離の取得
+	$output["leaseMileage"] = set_checked( $ini["lease"]["mileage"], 0, "id", "selected" );
+
+
+	//--- 比較車種のリース料を算出 -----------------------
+	// 条件の設定
+	foreach( $ini["lease"]["defaultValue"] as $key => $val ){
+		$leaseConditions[$key] = $val;
+	}
+	
+	if( $_COOKIE["leasePreset"] ){
+		list($leaseConditions["gasoline"], $leaseConditions["voluntaryInsurance"], $lease["carAddDate"], $tmp_lease["option"] ) = explode(",", $_COOKIE["leasePreset"] );
+
+		// クッキー内の使用開始年月が現在より過去の場合、現在年月に変換してクッキーを削除する。
+		$nowAddDate = date("Ym");
+		if(strtotime($nowAddDate) > strtotime($lease["carAddDate"])){
+			$lease["carAddDate"] = date("Ym");
+			setcookie( "leasePreset", "", time() - 3600, "/", $path["host"]["name"] );
+		}
+		$lease["carAddDate"] .=  "01";
+
+		if( !empty($tmp_lease["option"]) ){
+			$tmp_optionList = explode("-", $tmp_lease["option"]);
+			for( $i = 0, $iMax = count($tmp_optionList); $i < $iMax; $i++ ){
+				$tmp_option = explode("I", $tmp_optionList[$i]);
+				$lease["option"][] = array("optionID" => $tmp_option[0], "optionItem" => $tmp_option[1]);
+			}
+		}
+
+		// 任意保険料
+		if( empty($leaseConditions["voluntaryInsurance"]) ){
+			$leaseConditions["voluntaryInsurance"] = 0;
+		}
+	} else {
+		// デフォルトの設定
+		$lease["carAddDate"] = date("Ym")."01";
+	}
+
+	// 車種のリース料算出
+	foreach( array( $output["model1Info"], $output["model2Info"], $output["model3Info"], $output["model4Info"] ) as $modelInfo ){
+		if( empty($modelInfo) ){
+			$modelInfoListNew[] = $modelInfo;
+			continue;
+		}
+		$modelInfoNew = $modelInfo;
+
+		// リース期間の取得
+		$leaseInfo = $class["leaseUser_1"]->get_payNumInfo($modelInfoNew["spec"]["carGrade"]["makerCode"], $modelInfoNew["spec"]["carGrade"]["modelCode"], $modelInfoNew["spec"]["carGrade"]["carGradeID"]);
+
+		// リース料の取得
+		for( $i = 0, $iMax = count($leaseInfo["period"]); $i < $iMax; $i++ ){
+			$leaseConditions["paynum"] = $leaseInfo["period"][$i]["id"];
+
+			for( $j = 0, $jMax = count($ini["lease"]["mileage"]); $j < $jMax; $j++ ){
+				$leaseFlg                   = 1;
+				$leaseConditions["mileage"] = $ini["lease"]["mileage"][$j]["id"];
+				$keyID                      = $leaseConditions["contract"] . "_" .  $leaseConditions["paynum"] . $leaseConditions["mileage"];
+
+				// 金利・ガソリン代の取得
+				$lease["data"] = $class["leaseUser_1"]->get_leaseCarInfo( $modelInfoNew["spec"]["carGrade"], $lease );
+				$lease["info"] = $class["leaseUser_1"]->get_leaseInfo( $leaseConditions );
+
+				// 残価・メンテ料(MLのみ)のチェック：NULL or 0 の場合、リース料を算出しない
+				if( empty($lease["data"]["leaseInfo"]["residualValue"][$keyID]) ){
+					unset($leaseFlg);
+				}
+
+				if( isset($leaseFlg) ){
+					// リース料、燃料費の取得
+					$getLease    = $class["leaseUser_1"]->get_profit_by_lease($lease, $leaseConditions["profit"]);
+					$getFuelCost = $class["leaseUser_1"]->get_fuelCost($lease["data"]["leaseInfo"], $lease["info"]);
+
+					$outList = array( "lease"      => $getLease["financial"] + $getLease["maintenance"]
+									, "financial"          => $getLease["financial"]
+									, "maintenance"        => $getLease["maintenance"]
+									, "voluntaryInsurance" => $lease["data"]["leaseInfo"]["voluntaryInsurance"][$keyID]
+									, "mileage"            => $leaseConditions["mileage"]
+								);
+                    if (!$getLease["maintenance"]) {
+                        $outList['exist_maintenance'] = 0;
+                    } else {
+                        $outList['exist_maintenance'] = 1;
+                    }
+/*
+任意保険リリース前の為、コメントアウト
+				if( empty($leaseConditions["voluntaryInsurance"]) ){
+					// 任意保険なし
+					unset($outList["voluntaryInsurance"]);
+				} else {
+					// 任意保険あり
+					$outList["lease"] += $lease["data"]["leaseInfo"]["voluntaryInsurance"][$keyID];
+				}
+*/
+
+					// トータルコスト(リース料(メンテ含む)+燃料費)
+					$outList["total"]    = $outList["lease"] + $getFuelCost;
+					$outList["fuelCost"] = $getFuelCost;
+				} else {
+					$leaseConditions["noLease"] = 1;
+					$outList = $leaseConditions;
+				}
+
+				$modelInfoNew["leaseInfo"][ $leaseInfo["period"][$i]["class"] ]["list"][ $leaseConditions["mileage"] ]  = $outList;
+
+				// 名前の取得
+				$modelInfoNew["leaseInfo"][ $leaseInfo["period"][$i]["class"] ]["name"]  = $leaseInfo["period"][$i]["name"];
+			}
+		}
+
+		// ランキング順位
+		$rnkingKey = $modelInfoNew["spec"]["carGrade"]["makerCode"] . "_" . $modelInfoNew["spec"]["carGrade"]["modelCode"];
+		if( $tmp_rnking[$rnkingKey] < 4 && !$modelInfoNew["recomCar"]){
+			$modelInfoNew["rankingNo"] = $tmp_rnking[$rnkingKey];
+		}
+
+		// 文字の空白をブラウザの%20に変換してしまう
+		$modelInfoNew["URLmodelNameEng"]   = str_replace(" ", "%20", $modelInfoNew["modelNameEng"]);
+
+		$modelDataList[]    = $modelInfoNew;
+	}
+
+	$output["modelDataList"]   = $modelDataList;
+	$output["leaseConditions"] = $leaseConditions;
+
+	//--- 算出条件の表示 -----------------------
+	$output["leaseConditions"] = $leaseConditions;
+
+	// 開始年月の取得
+	if( !empty($lease["carAddDate"]) ){
+		$year  = substr($lease["carAddDate"], 0, 4);
+		$month = substr($lease["carAddDate"], 4, 2);
+		$output["leaseConditions"]["carAddDate"] = array( "carAddDate" => $lease["carAddDate"] . "01", "year" => $year, "month" => $month );
+	}
+    
+	// 契約形態の取得
+	if( isset($leaseConditions["contract"]) ){
+		$output["leaseConditions"]["contract"] = get_contractInfo($leaseConditions["contract"]);
+	}
+
+	// 走行距離の取得
+	if( isset($leaseConditions["mileage"]) ){
+		$output["leaseConditions"]["mileage"] = get_mileageInfo( $leaseConditions["mileage"] );
+	}
+    
+	// 使用地域(ガソリン価格)の取得
+	if( isset($leaseConditions["gasoline"]) ){
+		$output["leaseConditions"]["gasoline"] = get_prefectureInfo($leaseConditions["gasoline"]);
+	}
+
+	// 任意保険の取得
+	if( isset($leaseConditions["voluntaryInsurance"]) ){
+		$output["leaseConditions"]["voluntaryInsurance"] = get_voluntaryInsuranceInfo($leaseConditions["voluntaryInsurance"]);
+	}
+
+	// オプションの取得
+	for( $i = 0, $iMax = count($lease["option"]); $i < $iMax; $i++ ){
+		$output["leaseConditions"]["option"][] = get_leasePresetInfo( $lease["option"][$i]["optionID"] );
+	}
+
+	//--- 詳細画面遷移URLの作成 -----------------------
+	$tmp_leaseURL[] = $output["leaseConditions"]["carAddDate"]["year"] . sprintf( "%02d", $output["leaseConditions"]["carAddDate"]["month"] );
+	$tmp_leaseURL[] = sprintf( "LG%03d", $output["leaseConditions"]["gasoline"]["id"] );
+/*
+任意保険リリース前の為、コメントアウト
+	$tmp_leaseURL[] = sprintf( "LA%03d", $output["leaseConditions"]["voluntaryInsurance"]["id"] );
+*/
+
+	$output["leaseURL"]["url"]     = @implode( "/", $tmp_leaseURL ) . "/";
+	
+?>

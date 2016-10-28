@@ -1,0 +1,14 @@
+
+
+	/*----------------------------------------------------
+		ステータス別アクション設定
+	----------------------------------------------------*/
+
+	list,                  
+	modelDownloadExecute,        fields
+	searchDownloadExecute,       fields
+	carThemeDownloadExecute,     importOnlyFields
+	gasolineDownloadExecute,     importOnlyFields
+	leaseDownloadExecute,        importOnlyFields
+	leaseValueDownloadExecute,   importOnlyFields
+	leaseOptionDownloadExecute,  importOnlyFields

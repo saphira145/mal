@@ -1,0 +1,6 @@
+<?php
+if ( $justInput["ngdFW034"] && isset($justInput["ngdFW034"]['employeeNumber']) && !$justInput["ngdFW034"]['employeeNumber'] ) {
+    $output["session"]["errmsg"] = 'IDを入力してください。';
+}
+
+?>

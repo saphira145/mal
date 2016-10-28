@@ -1,0 +1,9 @@
+releaseFields
+	a, reserveInfo.reserveDatetime.year                  = year
+	a, reserveInfo.reserveDatetime.month                 = month
+	a, reserveInfo.reserveDatetime.day                   = day
+	a, reserveInfo.reserveDatetime.hour                  = hour
+	a, reserveInfo.reserveDatetime.min                   = min
+	 , reserveInfo.reserveDatetime                       = reserveDatetime({reserveInfo.reserveDatetime.year}:{reserveInfo.reserveDatetime.month}:{reserveInfo.reserveDatetime.day}:{reserveInfo.reserveDatetime.hour}:{reserveInfo.reserveDatetime.min}:00)
+
+

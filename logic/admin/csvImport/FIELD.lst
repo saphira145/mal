@@ -1,0 +1,23 @@
+
+// ＣＳＶファイル名
+importCSVFile
+	check,  100,  importCSVMast({1}),               ＣＳＶファイルを選択してください
+	check,  200,  importCSVExtension({1}),          対応していない拡張子です
+	check,  300,  importCSVSize({3}),               ファイル容量が制限外です
+	check,  400,  reserveLimit,                     ３０分以内にリリース設定されているため、更新できません
+	check,  500,  workLock,                         現在更新中です。しばらく経ってから再度更新してください
+	check,  600,  testLock,                         現在テスト環境作成中です。しばらく経ってから再度更新してください
+
+// 一時ＣＳＶファイル名
+tmpFaqCSVName
+	convert,  0,  1byte,
+	convert,  0,  trim,
+	filter,   0,  length_cut(200),   
+	check,  100,  must,                     必須入力項目です
+	check,  400,  reserveLimit,             ３０分以内にリリース設定されているため、更新できません
+	check,  500,  workLock,                 現在更新中です。しばらく経ってから再度更新してください
+	check,  600,  testLock,                 現在テスト環境作成中です。しばらく経ってから再度更新してください
+
+
+
+

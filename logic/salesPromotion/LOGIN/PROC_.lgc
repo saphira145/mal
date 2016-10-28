@@ -1,0 +1,7 @@
+<?php
+
+		// ロックアウトまでのカウントアップ
+		$class["session"]->countUp_loginTryCount( $justInput["ngdFW034"]["loginID"] );
+
+
+?>

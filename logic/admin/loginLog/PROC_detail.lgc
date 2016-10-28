@@ -1,0 +1,10 @@
+<?php
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+
+    $output["searchLogType"] = $output["logType"];
+    $output["loginLogList"] = $class["loginLog_1"]->get_loginLogListForDetail( $output );
+
+?>

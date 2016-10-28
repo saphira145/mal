@@ -1,0 +1,97 @@
+<?php
+
+
+	/*----------------------------------------------------
+	    ロジック
+	----------------------------------------------------*/
+	// グレードの取得
+	$output["modelInfo"]                 = $class["modelUser_1"]->get_info( $output["model"]["makerCode"], $output["model"]["modelCode"] );
+	$output["modelInfo"]["carGradeList"] = $class["modelUser_1"]->get_carGradeIDList( $output["model"]["makerCode"], $output["model"]["modelCode"] );
+	$output["modelInfo"]["theme"]        = $class["themeUser_1"]->get_themeList( $output["model"]["makerCode"], $output["model"]["modelCode"] );
+
+
+
+	// グレード毎に条件を作成
+	for( $i = 0, $iMax = count($output["modelInfo"]["carGradeList"]); $i < $iMax; $i++ ){
+		unset($getLeaseInfo);
+
+		$modelList = array(   "makerCode" => $output["model"]["makerCode"]
+							, "modelCode" => $output["model"]["modelCode"]
+							, "carGradeID" => $output["modelInfo"]["carGradeList"][$i]["ID"]
+						);
+
+		// 車両データの取得
+		$lease["data"] = $class["leaseUser_1"]->get_leaseCarInfo($modelList, $output);
+
+		// リース期間の取得
+		$leaseInfo = $class["leaseUser_1"]->get_payNumInfo($output["model"]["makerCode"], $output["model"]["modelCode"], $output["modelInfo"]["carGradeList"][$i]["ID"]);
+
+		for( $j = 0, $jMax = count($leaseInfo["period"]); $j < $jMax; $j++ ){
+			unset($leaseConditions);
+			
+			// 契約形態の取得
+			for( $y = 0, $yMax = count($ini["lease"]["contract"]); $y < $yMax; $y++ ){
+				$leaseFlg        = 1;
+				$keyID           = $ini["lease"]["contract"][$y]["id"] . "_" . $leaseInfo["period"][$j]["id"] . $output["mileage"];
+				$leaseConditions = array( "msrp"     => $output["msrp"]
+										, "rates"    => $output["rates"]
+										, "gasoline" => $output["gasoline"]
+										, "mileage"  => $output["mileage"]
+										, "paynum"   => $leaseInfo["period"][$j]["id"]
+										, "voluntaryInsurance" => $output["voluntaryInsurance"]
+										, "contract" => $ini["lease"]["contract"][$y]["id"]
+									);
+
+				// 金利・ガソリン代の取得
+				$lease["info"] = $class["leaseUser_1"]->get_leaseInfo( $leaseConditions );
+				$getFuelCost   = $class["leaseUser_1"]->get_fuelCost($lease["data"]["leaseInfo"], $lease["info"]);
+
+				// 残価・メンテ料(MLのみ)のチェック：NULL or 0 の場合、リース料を算出しない
+				$msrpKey = $lease["info"]["msrp"]["disp"];
+				if( empty($lease["data"]["leaseInfo"]["residualValue"][$keyID]) || empty($lease["data"]["leaseInfo"]["vehicleFee"][$msrpKey])
+					|| ( $ini["lease"]["contract"][$y]["id"] == 0 && empty($lease["data"]["leaseInfo"]["maintenance"][$keyID]) ) ){
+					unset($leaseFlg);
+				}
+
+				if( isset($leaseFlg) ){
+					$lease["carAddDate"] = $output["carAddDate"];
+
+					// リース料の取得
+					$getLease    = $class["leaseUser_1"]->get_profit_by_lease($lease, $output["profit"]);
+
+					$outList = array( "lease"              => $getLease["financial"] + $getLease["maintenance"]
+									, "financial"          => $getLease["financial"]
+									, "maintenance"        => $getLease["maintenance"]
+									, "voluntaryInsurance" => $lease["data"]["leaseInfo"]["voluntaryInsurance"][$keyID]
+									, "contract"           => $ini["lease"]["contract"][$y]["id"]
+									, "paynum"             => $leaseInfo["period"][$j]["id"]
+									, "mainteID"           => $getLease["mainteID"]
+								);
+
+/*
+任意保険リリース前の為、コメントアウト
+					if( empty($output["voluntaryInsurance"]) ){
+						// 任意保険なし
+						unset($outList["voluntaryInsurance"]);
+					} else {
+						// 任意保険あり
+						$outList["lease"] += $lease["data"]["leaseInfo"]["voluntaryInsurance"][$keyID];
+					}
+*/
+
+					// トータルコスト(リース料(メンテ含む)+燃料費)
+					$outList["total"] = $outList["lease"] + $getFuelCost;
+				} else {
+					$leaseConditions["noLease"] = 1;
+					$outList = $leaseConditions;
+				}
+
+				// ガソリン代の取得
+				$outList["fuelCost"] = $getFuelCost;
+
+				$getLeaseInfo[]  = $outList;
+			}
+		}
+		$output["modelInfo"]["carGradeList"][$i]["leaseList"] = $getLeaseInfo;
+	}
+?>

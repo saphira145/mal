@@ -1,0 +1,7 @@
+<div id="searchModelName">
+	<span class="left">
+		<span class="right faSearch"><input type="text" id="modelNameInput" autocomplete="off" placeholder="車種名で検索する" ></span>
+	</span>
+	<div class="arwIcon faCaretUp"></div>
+	<div id="modelNameResult" class="floating"></div>
+</div>
